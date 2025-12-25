@@ -9,6 +9,8 @@ import {
   Trade,
   ChallengePlan,
   EquityPoint,
+  ChallengeType,
+  LoadingState,
 } from "@/types";
 import { mockUser } from "@/data/mockUser";
 import { mockMarkets } from "@/data/mockMarkets";
@@ -16,6 +18,7 @@ import { mockPositions } from "@/data/mockPositions";
 import { mockTrades } from "@/data/mockTrades";
 import { mockPlans } from "@/data/mockPlans";
 import { mockEquityHistory } from "@/data/mockEquityHistory";
+import { challengeTypes } from "@/data/challengeTypes";
 import { calculateUnrealizedPnL, calculateNewAveragePrice } from "@/lib/calculations";
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -28,6 +31,11 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [equityHistory, setEquityHistory] = useState<EquityPoint[]>(mockEquityHistory);
   const [plans] = useState<ChallengePlan[]>(mockPlans);
   const [selectedPlan, setSelectedPlan] = useState<ChallengePlan | null>(null);
+  const [selectedChallengeType, setSelectedChallengeType] = useState<ChallengeType | null>(null);
+  const [loadingState, setLoadingState] = useState<LoadingState>({
+    isLoading: false,
+    message: undefined,
+  });
 
   // Update account balance
   const updateAccountBalance = (newBalance: number) => {
@@ -104,6 +112,14 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     const plan = plans.find((p) => p.planId === planId);
     if (plan) {
       setSelectedPlan(plan);
+    }
+  };
+
+  // Select challenge type
+  const selectChallengeType = (typeId: 'blitz' | '2step' | '3step') => {
+    const type = challengeTypes.find((t) => t.id === typeId);
+    if (type) {
+      setSelectedChallengeType(type);
     }
   };
 
@@ -225,6 +241,11 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     plans,
     selectedPlan,
     selectPlan,
+    challengeTypes,
+    selectedChallengeType,
+    selectChallengeType,
+    loadingState,
+    setLoadingState,
     executeTrade,
   };
 

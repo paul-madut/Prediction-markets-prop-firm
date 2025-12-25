@@ -93,9 +93,25 @@ export interface Trade {
   exitType: 'resolution' | 'manual_sell';
 }
 
+// Challenge Type
+export interface ChallengeType {
+  id: 'blitz' | '2step' | '3step';
+  name: string;
+  description: string;
+  phases: number;
+  profitTargetPercent: number;
+  dailyLossLimitPercent: number;
+  maxDrawdownPercent: number;
+  minTradingDays: number;
+  pricingMultiplier: number;
+  features: string[];
+  accentColor: 'orange' | 'blue' | 'purple';
+}
+
 // Challenge Plan
 export interface ChallengePlan {
   planId: string;
+  challengeTypeId: 'blitz' | '2step' | '3step';
   accountSize: number;               // in cents
   monthlyPrice: number;              // in cents
   profitTarget: number;              // in cents
@@ -112,6 +128,12 @@ export interface EquityPoint {
   date: string;
   equity: number;                    // in cents
   balance: number;                   // in cents
+}
+
+// Loading State
+export interface LoadingState {
+  isLoading: boolean;
+  message?: string;
 }
 
 // App Context Type
@@ -143,6 +165,13 @@ export interface AppContextType {
   plans: ChallengePlan[];
   selectedPlan: ChallengePlan | null;
   selectPlan: (planId: string) => void;
+  challengeTypes: ChallengeType[];
+  selectedChallengeType: ChallengeType | null;
+  selectChallengeType: (typeId: 'blitz' | '2step' | '3step') => void;
+
+  // Loading
+  loadingState: LoadingState;
+  setLoadingState: (state: LoadingState) => void;
 
   // Trading logic
   executeTrade: (ticker: string, side: 'yes' | 'no', shares: number) => boolean;

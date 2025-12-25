@@ -4,6 +4,7 @@ import React from "react";
 import { useApp } from "@/context/AppContext";
 import { formatCurrency, formatDate } from "@/lib/formatters";
 import { calculateUnrealizedPnL } from "@/lib/calculations";
+import { StatefulButton } from "@/components/ui/stateful-button";
 
 export const PositionsTable = () => {
   const { positions, markets, closePosition } = useApp();
@@ -102,18 +103,23 @@ export const PositionsTable = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <button
-                      onClick={() => {
+                    <StatefulButton
+                      onClick={async () => {
                         if (
                           confirm("Are you sure you want to close this position?")
                         ) {
+                          // Simulate async close operation
+                          await new Promise((resolve) => setTimeout(resolve, 500));
                           closePosition(position.ticker, position.side, currentPrice);
+                        } else {
+                          throw new Error("Cancelled");
                         }
                       }}
-                      className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                      className="!px-4 !py-2 !text-sm"
+                      successDuration={1000}
                     >
                       Close
-                    </button>
+                    </StatefulButton>
                   </td>
                 </tr>
               );
