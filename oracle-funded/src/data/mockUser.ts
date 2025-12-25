@@ -2,7 +2,7 @@ import { UserAccount } from "@/types";
 
 export const mockUser: UserAccount = {
   userId: "user_123",
-  username: "Alex Chen",
+  username: "John Smith",
   email: "alex@example.com",
   avatar: "/avatars/default.jpg",
 
