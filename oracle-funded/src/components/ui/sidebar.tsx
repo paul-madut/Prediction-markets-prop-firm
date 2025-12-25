@@ -5,6 +5,7 @@ import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 interface Links {
   label: string;
@@ -89,11 +90,12 @@ export const DesktopSidebar = ({
   return (
     <motion.div
       className={cn(
-        "h-full px-4 py-4 hidden md:flex md:flex-col bg-white w-[300px] flex-shrink-0 border-r border-gray-200",
+        "h-full py-4 hidden md:flex md:flex-col bg-white w-[300px] flex-shrink-0 border-r border-gray-200",
+        open ? "px-4" : "px-2",
         className
       )}
       animate={{
-        width: animate ? (open ? "300px" : "60px") : "300px",
+        width: animate ? (open ? "300px" : "70px") : "300px",
       }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
@@ -164,23 +166,43 @@ export const SidebarLink = ({
   props?: LinkProps;
 }) => {
   const { open, animate } = useSidebar();
+  const pathname = usePathname();
+
+  // Check if this is the current page
+  const isActive = pathname === link.href;
+
   return (
     <Link
       href={link.href}
       className={cn(
-        "flex items-center justify-start gap-2 group/sidebar py-2",
+        "flex items-center gap-3 group/sidebar py-3 rounded-lg relative transition-all duration-200",
+        "hover:bg-gray-100",
+        // When open, show full padding and border
+        open && "justify-start px-3",
+        open && isActive && "bg-blue-50 border-l-4 border-blue-600",
+        open && !isActive && "border-l-4 border-transparent",
+        // When closed, center icon with no border
+        !open && "justify-center px-2",
         className
       )}
       {...props}
     >
-      {link.icon}
+      <div className={cn(
+        "h-5 w-5 flex-shrink-0 transition-colors",
+        isActive ? "text-blue-600" : "text-neutral-700 group-hover/sidebar:text-blue-600"
+      )}>
+        {link.icon}
+      </div>
 
       <motion.span
         animate={{
           display: animate ? (open ? "inline-block" : "none") : "inline-block",
           opacity: animate ? (open ? 1 : 0) : 1,
         }}
-        className="text-neutral-700 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+        className={cn(
+          "text-base font-medium transition duration-150 whitespace-pre inline-block !p-0 !m-0",
+          isActive ? "text-blue-600" : "text-neutral-700 group-hover/sidebar:text-blue-600"
+        )}
       >
         {link.label}
       </motion.span>
