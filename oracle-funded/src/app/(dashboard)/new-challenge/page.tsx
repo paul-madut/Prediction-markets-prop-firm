@@ -8,12 +8,20 @@ import { ChallengeTypeCard } from "@/components/challenge/ChallengeTypeCard";
 import { StatefulButton } from "@/components/ui/stateful-button";
 import { NoiseBackground } from "@/components/ui/noise-background";
 import { formatCurrency } from "@/lib/formatters";
+import { ChevronDown } from "lucide-react";
 
 export default function NewChallengePage() {
   const { plans, challengeTypes, selectPlan } = useApp();
   const router = useRouter();
   const [localSelectedPlan, setLocalSelectedPlan] = useState<ChallengePlan | null>(
     null
+  );
+  // Global account size state - synced across all cards
+  const [selectedAccountSize, setSelectedAccountSize] = useState(5000000);
+
+  // Get unique account sizes from all plans
+  const accountSizes = [...new Set(plans.map((p) => p.accountSize))].sort(
+    (a, b) => a - b
   );
 
   const handleProceed = async () => {
@@ -41,6 +49,27 @@ export default function NewChallengePage() {
         </p>
       </div>
 
+      {/* Account Size Selector - Synced across all cards */}
+      <div className="flex justify-center">
+        <div className="inline-flex flex-col items-center gap-2">
+          <label className="text-sm font-medium text-gray-600">Select Account Size</label>
+          <div className="relative">
+            <select
+              value={selectedAccountSize}
+              onChange={(e) => setSelectedAccountSize(Number(e.target.value))}
+              className="appearance-none bg-white border-2 border-gray-200 rounded-xl px-6 py-3 pr-12 text-lg font-semibold text-gray-900 cursor-pointer hover:border-blue-300 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all shadow-sm"
+            >
+              {accountSizes.map((size) => (
+                <option key={size} value={size}>
+                  {formatCurrency(size)}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+          </div>
+        </div>
+      </div>
+
       {/* Challenge Type Cards Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {challengeTypes.map((challengeType) => {
@@ -56,6 +85,7 @@ export default function NewChallengePage() {
               selectedPlan={localSelectedPlan}
               onSelectPlan={setLocalSelectedPlan}
               isSelected={isSelected}
+              selectedAccountSize={selectedAccountSize}
             />
           );
         })}

@@ -3,8 +3,10 @@
 import React, { ReactNode } from "react";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
+import { PageTransition } from "./PageTransition";
 import { LoadingOverlay } from "@/components/ui/loader";
 import { useApp } from "@/context/AppContext";
+import { AnimatePresence } from "framer-motion";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -25,7 +27,11 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
 
         {/* Page Content */}
         <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
-          {children}
+          <AnimatePresence mode="wait">
+            <PageTransition>
+              {children}
+            </PageTransition>
+          </AnimatePresence>
         </main>
       </div>
 

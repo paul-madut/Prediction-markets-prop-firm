@@ -1,0 +1,928 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useApp } from "@/context/AppContext";
+import { formatCurrency, formatPercent, formatDate } from "@/lib/formatters";
+import {
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Area,
+  AreaChart,
+} from "recharts";
+import {
+  ChevronDown,
+  Calendar,
+  Key,
+  Share2,
+  DollarSign,
+  CheckCircle2,
+  XCircle,
+  Clock,
+  TrendingUp,
+  Rocket,
+  BarChart3,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import * as Tabs from "@radix-ui/react-tabs";
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  isSameDay,
+  addMonths,
+  subMonths,
+  getDay,
+} from "date-fns";
+import { MovingBorderCard } from "@/components/ui/moving-border";
+
+// Mock P&L calendar data
+const mockPnLCalendarData: Record<string, { pnl: number; trades: number; volume: number }> = {
+  "2025-01-05": { pnl: 7000, trades: 1, volume: 13000 },
+  "2025-01-08": { pnl: 7200, trades: 1, volume: 7800 },
+  "2025-01-09": { pnl: -3600, trades: 1, volume: 3600 },
+  "2025-01-10": { pnl: 2100, trades: 2, volume: 5100 },
+  "2025-01-11": { pnl: -6400, trades: 1, volume: 6400 },
+  "2025-01-12": { pnl: 1200, trades: 1, volume: 5680 },
+  "2025-01-13": { pnl: 300, trades: 1, volume: 4200 },
+  "2025-01-14": { pnl: 150, trades: 1, volume: 9600 },
+  "2025-01-15": { pnl: 1800, trades: 2, volume: 3900 },
+  "2025-01-16": { pnl: 2340, trades: 1, volume: 4500 },
+  "2025-01-17": { pnl: -1020, trades: 1, volume: 3200 },
+  "2025-01-18": { pnl: 7560, trades: 2, volume: 8900 },
+  "2025-01-19": { pnl: 6890, trades: 1, volume: 7200 },
+  "2025-01-20": { pnl: -2360, trades: 1, volume: 5100 },
+  "2025-01-21": { pnl: 5340, trades: 2, volume: 9800 },
+  "2025-01-22": { pnl: 1370, trades: 1, volume: 4200 },
+  "2025-01-23": { pnl: 2240, trades: 1, volume: 5600 },
+  "2025-01-24": { pnl: 2140, trades: 2, volume: 6300 },
+  "2025-01-25": { pnl: 3330, trades: 1, volume: 4800 },
+  "2025-01-26": { pnl: 2050, trades: 1, volume: 3900 },
+  "2025-01-27": { pnl: -1170, trades: 1, volume: 2800 },
+  "2025-01-28": { pnl: -7140, trades: 2, volume: 8100 },
+};
+
+// Circular Progress Component
+const CircularProgress = ({
+  progress,
+  size = 80,
+  strokeWidth = 8,
+  color,
+  backgroundColor = "#e5e7eb",
+}: {
+  progress: number;
+  size?: number;
+  strokeWidth?: number;
+  color: string;
+  backgroundColor?: string;
+}) => {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = radius * 2 * Math.PI;
+  const offset = circumference - (progress / 100) * circumference;
+
+  return (
+    <svg width={size} height={size} className="transform -rotate-90">
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={radius}
+        fill="none"
+        stroke={backgroundColor}
+        strokeWidth={strokeWidth}
+      />
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={radius}
+        fill="none"
+        stroke={color}
+        strokeWidth={strokeWidth}
+        strokeDasharray={circumference}
+        strokeDashoffset={offset}
+        strokeLinecap="round"
+        className="transition-all duration-500"
+      />
+    </svg>
+  );
+};
+
+// Time Since Counter Component
+const TimeSinceCounter = ({ startDate }: { startDate: string }) => {
+  const [timeElapsed, setTimeElapsed] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const calculateTime = () => {
+      const start = new Date(startDate).getTime();
+      const now = Date.now();
+      const diff = now - start;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setTimeElapsed({ days, hours, minutes, seconds });
+    };
+
+    calculateTime();
+    const interval = setInterval(calculateTime, 1000);
+    return () => clearInterval(interval);
+  }, [startDate]);
+
+  return (
+    <div className="flex justify-between text-center">
+      <div className="flex-1">
+        <div className="text-2xl font-bold text-gray-900">{String(timeElapsed.days).padStart(2, "0")}</div>
+        <div className="text-xs text-gray-500">DAY</div>
+      </div>
+      <div className="flex-1">
+        <div className="text-2xl font-bold text-gray-900">{String(timeElapsed.hours).padStart(2, "0")}</div>
+        <div className="text-xs text-gray-500">HR</div>
+      </div>
+      <div className="flex-1">
+        <div className="text-2xl font-bold text-gray-900">{String(timeElapsed.minutes).padStart(2, "0")}</div>
+        <div className="text-xs text-gray-500">MIN</div>
+      </div>
+      <div className="flex-1">
+        <div className="text-2xl font-bold text-gray-900">{String(timeElapsed.seconds).padStart(2, "0")}</div>
+        <div className="text-xs text-gray-500">SEC</div>
+      </div>
+    </div>
+  );
+};
+
+// P&L Calendar Component
+const PnLCalendar = () => {
+  const [currentMonth, setCurrentMonth] = useState(new Date(2025, 0, 1)); // January 2025
+  const [viewMode, setViewMode] = useState<"month" | "year">("month");
+
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(currentMonth);
+  const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
+
+  // Get the day of week for the first day (0 = Sunday)
+  const startDay = getDay(monthStart);
+
+  // Create padding for days before the month starts
+  const paddingDays = Array(startDay).fill(null);
+
+  const formatPnL = (pnlCents: number) => {
+    const dollars = pnlCents / 100;
+    if (dollars >= 1000) return `$${(dollars / 1000).toFixed(1)}k`;
+    return `$${dollars.toFixed(0)}`;
+  };
+
+  return (
+    <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-semibold text-gray-900">P&L Calendar</h3>
+        <div className="flex items-center gap-4">
+          <div className="flex bg-gray-100 rounded-lg p-1">
+            <button
+              onClick={() => setViewMode("month")}
+              className={`px-3 py-1 text-sm rounded-md transition ${
+                viewMode === "month" ? "bg-white shadow text-gray-900" : "text-gray-500"
+              }`}
+            >
+              Month
+            </button>
+            <button
+              onClick={() => setViewMode("year")}
+              className={`px-3 py-1 text-sm rounded-md transition ${
+                viewMode === "year" ? "bg-white shadow text-gray-900" : "text-gray-500"
+              }`}
+            >
+              Year
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
+              className="p-1 hover:bg-gray-100 rounded"
+            >
+              <ChevronLeft className="w-5 h-5 text-gray-500" />
+            </button>
+            <span className="text-sm font-medium text-gray-700 min-w-[100px] text-center">
+              {format(currentMonth, "yyyy-MM")}
+            </span>
+            <button
+              onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+              className="p-1 hover:bg-gray-100 rounded"
+            >
+              <ChevronRight className="w-5 h-5 text-gray-500" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Day headers */}
+      <div className="grid grid-cols-7 gap-1 mb-1">
+        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+          <div key={day} className="text-center text-sm font-medium text-gray-500 py-2">
+            {day}
+          </div>
+        ))}
+      </div>
+
+      {/* Calendar grid */}
+      <div className="grid grid-cols-7 gap-1">
+        {paddingDays.map((_, index) => (
+          <div key={`padding-${index}`} className="h-20 bg-gray-50/50 rounded-lg" />
+        ))}
+        {days.map((day) => {
+          const dateKey = format(day, "yyyy-MM-dd");
+          const dayData = mockPnLCalendarData[dateKey];
+          const isToday = isSameDay(day, new Date());
+          const hasData = !!dayData;
+
+          return (
+            <div
+              key={dateKey}
+              className={`h-20 rounded-lg border p-1.5 relative ${
+                isToday ? "border-blue-500 border-2" : "border-gray-100"
+              } ${
+                hasData
+                  ? dayData.pnl >= 0
+                    ? "bg-green-50"
+                    : "bg-red-50"
+                  : "bg-white"
+              }`}
+            >
+              <div className="text-xs text-gray-400 mb-0.5">{format(day, "d")}</div>
+              {hasData && (
+                <>
+                  <div
+                    className={`text-sm font-bold ${
+                      dayData.pnl >= 0 ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    {dayData.pnl >= 0 ? "+" : ""}
+                    {formatPnL(dayData.pnl)}
+                  </div>
+                  <div className="text-xs text-gray-400">
+                    {dayData.trades} trade{dayData.trades > 1 ? "s" : ""}
+                  </div>
+                  <div className="text-xs text-gray-300">${(dayData.volume / 100).toFixed(0)}</div>
+                </>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default function Dashboard() {
+  const { user, equityHistory, trades } = useApp();
+
+  // Calculate stats
+  const todaysProfit = 12690; // Mock for today's profit in cents
+  const maxPermittedLoss = Math.abs(user.maxDrawdownLimit * user.startingBalance);
+  const todaysPermittedLoss = Math.abs(user.dailyDrawdownLimit * user.peakBalance);
+
+  // Calculate highest and lowest volume from trades
+  const highestVolume = trades.reduce(
+    (max, trade) => Math.max(max, trade.shares * trade.entryPrice),
+    0
+  );
+  const lowestVolume = trades.reduce(
+    (min, trade) => Math.min(min, trade.shares * trade.entryPrice),
+    Infinity
+  );
+
+  const chartData = equityHistory.map((point) => ({
+    date: formatDate(point.date, "d"),
+    equity: point.equity / 100,
+    balance: point.balance / 100,
+  }));
+
+  // Progress calculations
+  const profitProgress = (user.currentProfit / user.profitTarget) * 100;
+  const dailyDDProgress = (Math.abs(user.currentDailyDrawdown) / user.dailyDrawdownLimit) * 100;
+  const maxDDProgress = (Math.abs(user.currentMaxDrawdown) / user.maxDrawdownLimit) * 100;
+  const tradingDaysProgress = (user.tradingDaysCompleted / user.tradingDaysRequired) * 100;
+
+  return (
+    <div className="space-y-6">
+      {/* Demo Mode Banner */}
+      <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg px-4 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 px-2.5 py-1 bg-amber-100 rounded-full">
+            <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+            <span className="text-xs font-semibold text-amber-700 uppercase tracking-wide">Demo Mode</span>
+          </div>
+          <span className="text-sm text-amber-800">
+            You&apos;re viewing sample data. This dashboard is fully customizable for your brand.
+          </span>
+        </div>
+        <Link
+          href="/for-firms"
+          className="text-sm font-medium text-amber-700 hover:text-amber-900 underline underline-offset-2"
+        >
+          Learn about whitelabeling
+        </Link>
+      </div>
+
+      {/* Account Selector Bar - At the top */}
+      <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            {/* Account Selector */}
+            <button className="flex items-center gap-3 px-4 py-2.5 bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-md transition-all duration-200 group">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm">
+                <DollarSign className="w-5 h-5 text-white" />
+              </div>
+              <div className="text-left">
+                <div className="text-xs text-gray-500 font-medium">Account Size</div>
+                <div className="font-semibold text-gray-900">{formatCurrency(user.accountSize)}</div>
+              </div>
+              <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
+            </button>
+
+            {/* Divider */}
+            <div className="h-10 w-px bg-gray-200 hidden sm:block" />
+
+            {/* Status Badges */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg">
+                <Calendar className="w-4 h-4 text-gray-500" />
+                <div>
+                  <div className="text-[10px] uppercase tracking-wide text-gray-400 font-medium">Start Date</div>
+                  <div className="text-sm font-semibold text-gray-700">{formatDate(user.challengeStartDate, "MMM dd, yyyy")}</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 px-3 py-2 bg-purple-50 border border-purple-100 rounded-lg">
+                <TrendingUp className="w-4 h-4 text-purple-500" />
+                <div>
+                  <div className="text-[10px] uppercase tracking-wide text-purple-400 font-medium">Profit Split</div>
+                  <div className="text-sm font-semibold text-purple-700">90%</div>
+                </div>
+              </div>
+
+              <div className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${
+                user.accountPhase === "funded"
+                  ? "bg-green-50 border-green-100"
+                  : "bg-blue-50 border-blue-100"
+              }`}>
+                <div className={`w-2 h-2 rounded-full ${
+                  user.accountPhase === "funded" ? "bg-green-500" : "bg-blue-500"
+                } animate-pulse`} />
+                <div>
+                  <div className={`text-[10px] uppercase tracking-wide font-medium ${
+                    user.accountPhase === "funded" ? "text-green-400" : "text-blue-400"
+                  }`}>Status</div>
+                  <div className={`text-sm font-semibold ${
+                    user.accountPhase === "funded" ? "text-green-700" : "text-blue-700"
+                  }`}>
+                    {user.accountPhase === "evaluation_1" ? "Phase 1" : user.accountPhase === "evaluation_2" ? "Phase 2" : "Funded"}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Account ID */}
+          <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg border border-gray-200">
+            <div className="text-[10px] uppercase tracking-wide text-gray-400 font-medium">Account ID</div>
+            <code className="text-sm font-mono font-semibold text-gray-600">PFLP8QMCPA</code>
+          </div>
+        </div>
+      </div>
+
+      {/* Welcome Back Section with Moving Border */}
+      <MovingBorderCard
+        borderRadius="0.75rem"
+        className="p-8"
+      >
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          {/* Left Content */}
+          <div className="relative z-10 max-w-lg">
+            <span className="text-xs font-semibold tracking-wider text-blue-600 uppercase mb-2 block">
+              Dashboard Overview
+            </span>
+            <h1 className="text-3xl font-bold text-gray-900 mb-1">
+              Welcome back
+            </h1>
+            <h2 className="text-3xl font-bold text-blue-600 mb-3">
+              {user.username}
+            </h2>
+            <p className="text-gray-500 mb-6">
+              Here&apos;s your trading overview and quick actions to manage your challenge.
+            </p>
+            <div className="flex items-center gap-3">
+              <Link
+                href="/new-challenge"
+                className="btn-hover px-5 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2 shadow-md"
+              >
+                <Rocket className="w-4 h-4" />
+                Get Funded
+              </Link>
+              <Link
+                href="/markets"
+                className="btn-hover px-5 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2 shadow-md"
+              >
+                <BarChart3 className="w-4 h-4" />
+                Browse Markets
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Decorative Illustration */}
+          <div className="hidden lg:block relative w-80 h-48">
+            {/* Background gradient circle */}
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-blue-50 via-blue-100 to-sky-50 rounded-full opacity-60" />
+
+            {/* Decorative elements */}
+            <div className="absolute right-8 top-4 w-40 h-28 bg-gradient-to-br from-blue-100 to-sky-100 rounded-lg transform rotate-3 shadow-lg" />
+            <div className="absolute right-12 top-8 w-36 h-24 bg-white rounded-lg shadow-md border border-gray-100 flex items-center justify-center">
+              <svg viewBox="0 0 100 60" className="w-28 h-16">
+                <polyline
+                  points="5,45 20,40 35,30 50,35 65,20 80,25 95,10"
+                  fill="none"
+                  stroke="#22c55e"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle cx="35" cy="30" r="4" fill="#22c55e" />
+                <circle cx="65" cy="20" r="4" fill="#ef4444" />
+                <circle cx="95" cy="10" r="4" fill="#22c55e" />
+              </svg>
+            </div>
+
+            {/* Gear icon */}
+            <div className="absolute right-4 top-0">
+              <svg className="w-10 h-10 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/>
+                <path fillRule="evenodd" d="M9.343 2.808a6 6 0 015.314 0l.353.177a6 6 0 012.005 1.541l.248.297a6 6 0 011.184 2.17l.1.376a6 6 0 010 3.262l-.1.376a6 6 0 01-1.184 2.17l-.248.297a6 6 0 01-2.005 1.541l-.353.177a6 6 0 01-5.314 0l-.353-.177a6 6 0 01-2.005-1.541l-.248-.297a6 6 0 01-1.184-2.17l-.1-.376a6 6 0 010-3.262l.1-.376a6 6 0 011.184-2.17l.248-.297a6 6 0 012.005-1.541l.353-.177zM12 10a2 2 0 100 4 2 2 0 000-4z"/>
+              </svg>
+            </div>
+
+            {/* Small decorative dots */}
+            <div className="absolute right-24 bottom-4 w-2 h-2 bg-blue-400 rounded-full" />
+            <div className="absolute right-16 bottom-8 w-1.5 h-1.5 bg-sky-400 rounded-full" />
+            <div className="absolute right-32 top-2 w-1 h-1 bg-blue-300 rounded-full" />
+
+            {/* Leaf decoration */}
+            <div className="absolute right-0 top-12">
+              <svg className="w-12 h-16 text-green-500" viewBox="0 0 24 32" fill="currentColor">
+                <ellipse cx="12" cy="10" rx="8" ry="10" opacity="0.3"/>
+                <ellipse cx="12" cy="10" rx="6" ry="8" opacity="0.5"/>
+                <ellipse cx="12" cy="10" rx="4" ry="6"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </MovingBorderCard>
+
+      {/* Main Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column - Chart and Stats */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Key Metrics Row */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-white rounded-lg border border-gray-200 px-4 py-6 card-hover cursor-default">
+              <div className="text-xs text-green-600 font-medium mb-2">Equity</div>
+              <div className="text-xl font-bold text-gray-900">{formatCurrency(user.accountBalance)}</div>
+            </div>
+            <div className="bg-white rounded-lg border border-gray-200 px-4 py-6 card-hover cursor-default">
+              <div className="text-xs text-green-600 font-medium mb-2">Balance</div>
+              <div className="text-xl font-bold text-gray-900">{formatCurrency(user.accountBalance)}</div>
+            </div>
+            <div className="bg-white rounded-lg border border-gray-200 px-4 py-6 card-hover cursor-default">
+              <div className="text-xs text-blue-600 font-medium mb-2">Min. Trading Days</div>
+              <div className="text-xl font-bold text-gray-900">
+                {user.tradingDaysCompleted}/{user.tradingDaysRequired}
+              </div>
+            </div>
+            <div className="bg-white rounded-lg border border-gray-200 px-4 py-6 card-hover cursor-default">
+              <div className="text-xs text-amber-600 font-medium mb-2">Win Ratio</div>
+              <div className="text-xl font-bold text-gray-900">{formatPercent(user.winRate, 0)}</div>
+            </div>
+          </div>
+
+          {/* Account Performance Chart */}
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">Account Performance</h3>
+              <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                user.currentProfit >= 0
+                  ? "bg-green-100 text-green-700"
+                  : "bg-red-100 text-red-700"
+              }`}>
+                Profit: {user.currentProfit >= 0 ? "+" : ""}{formatPercent(user.currentProfit)}
+              </span>
+            </div>
+            <ResponsiveContainer width="100%" height={280}>
+              <AreaChart data={chartData}>
+                <defs>
+                  <linearGradient id="colorEquity" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#2563eb" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#2563eb" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <XAxis dataKey="date" stroke="#9ca3af" style={{ fontSize: "12px" }} />
+                <YAxis
+                  stroke="#9ca3af"
+                  style={{ fontSize: "12px" }}
+                  tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                  domain={["auto", "auto"]}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "white",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "8px",
+                  }}
+                  formatter={(value: number | undefined) => [`$${(value ?? 0).toFixed(2)}`, "Equity"]}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="equity"
+                  stroke="#2563eb"
+                  strokeWidth={2}
+                  fill="url(#colorEquity)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* P&L Boxes */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-red-50 rounded-lg p-4 border border-red-100">
+              <div className="text-sm text-gray-500 mb-1">Max permitted loss</div>
+              <div className="text-2xl font-bold text-red-600">{formatCurrency(maxPermittedLoss)}</div>
+            </div>
+            <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
+              <div className="text-sm text-gray-500 mb-1">Today&apos;s permitted loss</div>
+              <div className="text-2xl font-bold text-amber-600">{formatCurrency(todaysPermittedLoss)}</div>
+            </div>
+            <div className="bg-green-50 rounded-lg p-4 border border-green-100">
+              <div className="text-sm text-gray-500 mb-1">Today&apos;s profit</div>
+              <div className="text-2xl font-bold text-green-600">
+                {todaysProfit >= 0 ? "+" : ""}
+                {formatCurrency(todaysProfit)}
+              </div>
+            </div>
+          </div>
+
+          {/* Objectives */}
+          <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-gray-900">Objectives</h3>
+              <Link href="/rules" className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
+                View Rules
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Profit Target */}
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border border-green-100">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-semibold text-green-700 uppercase tracking-wide">Profit Target</span>
+                  <CheckCircle2 className="w-4 h-4 text-green-500" />
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="relative flex-shrink-0">
+                    <CircularProgress progress={Math.min(profitProgress, 100)} size={56} strokeWidth={6} color="#22c55e" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-xs font-bold text-gray-900">{Math.round(profitProgress)}%</span>
+                    </div>
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-lg font-bold text-gray-900 truncate">
+                      {formatCurrency(user.currentProfit * user.startingBalance)}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      of {formatCurrency(user.profitTarget * user.startingBalance)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Daily Drawdown */}
+              <div className={`rounded-xl p-4 border ${dailyDDProgress > 80 ? "bg-gradient-to-br from-red-50 to-orange-50 border-red-100" : "bg-gradient-to-br from-green-50 to-emerald-50 border-green-100"}`}>
+                <div className="flex items-center justify-between mb-3">
+                  <span className={`text-xs font-semibold uppercase tracking-wide ${dailyDDProgress > 80 ? "text-red-700" : "text-green-700"}`}>Daily Drawdown</span>
+                  {dailyDDProgress > 80 ? (
+                    <XCircle className="w-4 h-4 text-red-500" />
+                  ) : (
+                    <CheckCircle2 className="w-4 h-4 text-green-500" />
+                  )}
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="relative flex-shrink-0">
+                    <CircularProgress
+                      progress={Math.min(dailyDDProgress, 100)}
+                      size={56}
+                      strokeWidth={6}
+                      color={dailyDDProgress > 80 ? "#ef4444" : "#22c55e"}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-xs font-bold text-gray-900">{Math.round(dailyDDProgress)}%</span>
+                    </div>
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-lg font-bold text-gray-900 truncate">
+                      {formatCurrency(Math.abs(user.currentDailyDrawdown) * user.peakBalance)}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      of {formatCurrency(user.dailyDrawdownLimit * user.peakBalance)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Maximum Loss */}
+              <div className={`rounded-xl p-4 border ${maxDDProgress > 80 ? "bg-gradient-to-br from-red-50 to-orange-50 border-red-100" : "bg-gradient-to-br from-green-50 to-emerald-50 border-green-100"}`}>
+                <div className="flex items-center justify-between mb-3">
+                  <span className={`text-xs font-semibold uppercase tracking-wide ${maxDDProgress > 80 ? "text-red-700" : "text-green-700"}`}>Max Drawdown</span>
+                  {maxDDProgress > 80 ? (
+                    <XCircle className="w-4 h-4 text-red-500" />
+                  ) : (
+                    <CheckCircle2 className="w-4 h-4 text-green-500" />
+                  )}
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="relative flex-shrink-0">
+                    <CircularProgress
+                      progress={Math.min(maxDDProgress, 100)}
+                      size={56}
+                      strokeWidth={6}
+                      color={maxDDProgress > 80 ? "#ef4444" : "#22c55e"}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-xs font-bold text-gray-900">{Math.round(maxDDProgress)}%</span>
+                    </div>
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-lg font-bold text-gray-900 truncate">
+                      {formatCurrency(Math.abs(user.currentMaxDrawdown) * user.startingBalance)}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      of {formatCurrency(user.maxDrawdownLimit * user.startingBalance)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Active Trading Days */}
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-semibold text-blue-700 uppercase tracking-wide">Trading Days</span>
+                  <CheckCircle2 className="w-4 h-4 text-blue-500" />
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="relative flex-shrink-0">
+                    <CircularProgress progress={Math.min(tradingDaysProgress, 100)} size={56} strokeWidth={6} color="#2563eb" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-xs font-bold text-gray-900">{Math.round(tradingDaysProgress)}%</span>
+                    </div>
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-lg font-bold text-gray-900">
+                      {user.tradingDaysCompleted} <span className="text-gray-400 font-normal">/ {user.tradingDaysRequired}</span>
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      days completed
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Right Column - Account Data */}
+        <div className="space-y-6">
+          {/* Account Data Card */}
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Data</h3>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-gray-500">
+                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  Login
+                </div>
+                <div className="font-medium text-gray-900">{user.userId.toUpperCase()}</div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-gray-500">
+                  <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                  Start
+                </div>
+                <div className="font-medium text-gray-900">{formatDate(user.challengeStartDate, "MM/dd/yyyy")}</div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-gray-500">
+                  <div className="w-2 h-2 rounded-full bg-purple-500"></div>
+                  Account Size
+                </div>
+                <div className="font-medium text-gray-900">{formatCurrency(user.accountSize)}</div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-gray-500">
+                  <div className="w-2 h-2 rounded-full bg-amber-500"></div>
+                  Result
+                </div>
+                <div className={`font-medium ${
+                  user.status === "active" ? "text-green-600" : user.status === "passed" ? "text-blue-600" : "text-red-600"
+                }`}>
+                  {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="mt-6 space-y-2">
+              <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium">
+                <Key className="w-4 h-4" />
+                Credentials
+              </button>
+              <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium">
+                <Share2 className="w-4 h-4" />
+                Share Metrics
+              </button>
+              <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium">
+                <DollarSign className="w-4 h-4" />
+                Request Payout
+              </button>
+            </div>
+          </div>
+
+          {/* Volume Stats */}
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <TrendingUp className="w-5 h-5 text-gray-500" />
+              <h3 className="text-sm font-medium text-gray-500">Volume</h3>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-gray-500">Highest volume</span>
+                <span className="font-bold text-gray-900">{formatCurrency(highestVolume)}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-gray-500">Lowest volume</span>
+                <span className="font-bold text-gray-900">{formatCurrency(lowestVolume === Infinity ? 0 : lowestVolume)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Time Since First Trade */}
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Clock className="w-5 h-5 text-gray-500" />
+              <h3 className="text-sm font-medium text-gray-500">Time since first trade</h3>
+            </div>
+            <div className="h-px bg-gray-200 w-full mb-4" />
+            <TimeSinceCounter startDate={user.challengeStartDate} />
+          </div>
+
+          {/* Quick Actions */}
+          <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg px-5 py-8 text-white">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <h3 className="font-semibold">Ready to Trade?</h3>
+                <p className="text-sm text-blue-100">
+                  Explore prediction markets and grow your account.
+                </p>
+              </div>
+              <Link
+                href="/markets"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 hover:shadow-lg hover:scale-105 transition-all duration-200 whitespace-nowrap"
+              >
+                <BarChart3 className="w-4 h-4" />
+                Browse Markets
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Tabs Section - Full Width */}
+      <Tabs.Root defaultValue="calendar" className="bg-white rounded-lg border border-gray-200">
+        <Tabs.List className="flex border-b border-gray-200 px-4">
+          <Tabs.Trigger
+            value="statistics"
+            className="px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600"
+          >
+            Statistics
+          </Tabs.Trigger>
+          <Tabs.Trigger
+            value="journal"
+            className="px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600"
+          >
+            Trading Journal
+          </Tabs.Trigger>
+          <Tabs.Trigger
+            value="calendar"
+            className="px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600"
+          >
+            P&L Calendar
+          </Tabs.Trigger>
+          <Tabs.Trigger
+            value="rules"
+            className="px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600"
+          >
+            Rules
+          </Tabs.Trigger>
+        </Tabs.List>
+
+        <Tabs.Content value="statistics" className="p-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-900">{trades.length}</div>
+              <div className="text-sm text-gray-500">Total Trades</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600">
+                {trades.filter((t) => t.result === "won").length}
+              </div>
+              <div className="text-sm text-gray-500">Winning Trades</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-red-600">
+                {trades.filter((t) => t.result === "lost").length}
+              </div>
+              <div className="text-sm text-gray-500">Losing Trades</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">{formatPercent(user.winRate, 0)}</div>
+              <div className="text-sm text-gray-500">Win Rate</div>
+            </div>
+          </div>
+        </Tabs.Content>
+
+        <Tabs.Content value="journal" className="p-6">
+          <div className="space-y-3 max-h-[400px] overflow-y-auto">
+            {trades.slice(0, 5).map((trade) => (
+              <div
+                key={trade.tradeId}
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+              >
+                <div>
+                  <div className="font-medium text-gray-900">{trade.market_title.substring(0, 40)}...</div>
+                  <div className="text-sm text-gray-500">
+                    {formatDate(trade.entryDate, "MMM dd, yyyy")} &bull; {trade.shares} shares @ {trade.entryPrice}¢
+                  </div>
+                </div>
+                <div
+                  className={`font-bold ${
+                    trade.pnl >= 0 ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {trade.pnl >= 0 ? "+" : ""}
+                  {formatCurrency(trade.pnl)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Tabs.Content>
+
+        <Tabs.Content value="calendar" className="p-6">
+          <PnLCalendar />
+        </Tabs.Content>
+
+        <Tabs.Content value="rules" className="p-6">
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+              <CheckCircle2 className="w-5 h-5 text-green-500" />
+              <div>
+                <div className="font-medium text-gray-900">Profit Target: {formatPercent(user.profitTarget, 0)}</div>
+                <div className="text-sm text-gray-500">Reach {formatCurrency(user.profitTarget * user.startingBalance)} in profit</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-amber-50 rounded-lg">
+              <Clock className="w-5 h-5 text-amber-500" />
+              <div>
+                <div className="font-medium text-gray-900">Min. Trading Days: {user.tradingDaysRequired}</div>
+                <div className="text-sm text-gray-500">Trade on at least {user.tradingDaysRequired} different days</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-red-50 rounded-lg">
+              <XCircle className="w-5 h-5 text-red-500" />
+              <div>
+                <div className="font-medium text-gray-900">Daily Loss Limit: {formatPercent(user.dailyDrawdownLimit, 0)}</div>
+                <div className="text-sm text-gray-500">Do not lose more than {formatCurrency(user.dailyDrawdownLimit * user.peakBalance)} in a day</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-red-50 rounded-lg">
+              <XCircle className="w-5 h-5 text-red-500" />
+              <div>
+                <div className="font-medium text-gray-900">Max Drawdown: {formatPercent(user.maxDrawdownLimit, 0)}</div>
+                <div className="text-sm text-gray-500">Do not draw down more than {formatCurrency(user.maxDrawdownLimit * user.startingBalance)} total</div>
+              </div>
+            </div>
+          </div>
+        </Tabs.Content>
+      </Tabs.Root>
+    </div>
+  );
+}
