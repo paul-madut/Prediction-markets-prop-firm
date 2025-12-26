@@ -29,7 +29,12 @@ export const formatPercent = (decimal: number, decimals = 2): string => {
  * @returns Formatted date string (e.g., "Jan 15, 2025")
  */
 export const formatDate = (dateString: string, formatString = "MMM dd, yyyy"): string => {
-  return format(new Date(dateString), formatString);
+  if (!dateString) return "N/A";
+
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return "N/A";
+
+  return format(date, formatString);
 };
 
 /**
