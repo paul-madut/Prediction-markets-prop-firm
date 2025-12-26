@@ -17,7 +17,7 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
   return (
     <button
       onClick={onClick}
-      className="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow text-left"
+      className="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-lg hover:border-blue-200 hover:scale-[1.02] transition-all duration-200 text-left"
     >
       {/* Category Badge */}
       <div className="flex items-center justify-between mb-3">

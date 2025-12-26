@@ -29,7 +29,7 @@ export const Sidebar = () => {
   const { user } = useApp();
   const [open, setOpen] = useState(false);
 
-  const links = [
+  const mainLinks = [
     {
       label: "Dashboard",
       href: "/",
@@ -65,6 +65,9 @@ export const Sidebar = () => {
       href: "/rules",
       icon: <FileText />,
     },
+  ];
+
+  const bottomLinks = [
     {
       label: "Help",
       href: "/help",
@@ -82,15 +85,19 @@ export const Sidebar = () => {
       <SidebarBody className="justify-between gap-10">
         <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
           {open ? <Logo /> : <LogoIcon />}
-          <div className="mt-8 flex flex-col gap-1">
-            {links.map((link, idx) => (
+
+          {/* Divider below logo */}
+          <div className="h-px bg-gray-200 w-full mb-6" />
+
+          <div className="flex flex-col gap-1">
+            {mainLinks.map((link, idx) => (
               <SidebarLink key={idx} link={link} />
             ))}
           </div>
         </div>
 
         {/* Bottom Section with Divider */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           {/* Divider */}
           <div className="h-px bg-gray-200 w-full" />
 
@@ -106,6 +113,13 @@ export const Sidebar = () => {
             <Rocket className="h-5 w-5 flex-shrink-0" />
             {open && <span className="text-sm whitespace-nowrap">Get Funded</span>}
           </Link>
+
+          {/* Help and Settings Links */}
+          <div className="flex flex-col gap-1">
+            {bottomLinks.map((link, idx) => (
+              <SidebarLink key={idx} link={link} />
+            ))}
+          </div>
 
           {/* User Account */}
           <div
