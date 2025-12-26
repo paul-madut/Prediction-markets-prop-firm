@@ -37,13 +37,15 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     message: undefined,
   });
   const [marketsLoaded, setMarketsLoaded] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // Fetch real markets from Polymarket API
-  const fetchMarkets = useCallback(async () => {
-    if (marketsLoaded) return;
-
+  const fetchMarkets = useCallback(async (showLoader = false) => {
     try {
-      setLoadingState({ isLoading: true, message: "Loading markets..." });
+      // Only show blocking loader on initial load when we have no real data
+      if (showLoader && isInitialLoad) {
+        setLoadingState({ isLoading: true, message: "Loading markets..." });
+      }
 
       const response = await fetch("/api/markets?limit=100");
       const data = await response.json();
@@ -60,24 +62,29 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       console.error("Failed to fetch markets, using mock data:", error);
       setMarkets(mockMarkets);
     } finally {
-      setLoadingState({ isLoading: false });
+      if (isInitialLoad) {
+        setLoadingState({ isLoading: false });
+        setIsInitialLoad(false);
+      }
       setMarketsLoaded(true);
     }
-  }, [marketsLoaded]);
+  }, [isInitialLoad]);
 
-  // Fetch markets on mount
+  // Fetch markets on mount (with blocking loader)
   useEffect(() => {
-    fetchMarkets();
-  }, [fetchMarkets]);
+    if (!marketsLoaded) {
+      fetchMarkets(true);
+    }
+  }, [marketsLoaded, fetchMarkets]);
 
-  // Refresh markets periodically (every 60 seconds)
+  // Background refresh markets periodically (every 5 minutes)
   useEffect(() => {
     const interval = setInterval(() => {
-      setMarketsLoaded(false); // Allow refetch
-    }, 60000);
+      fetchMarkets(false); // Silent background refresh
+    }, 300000); // 5 minutes
 
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchMarkets]);
 
   // Update account balance
   const updateAccountBalance = (newBalance: number) => {

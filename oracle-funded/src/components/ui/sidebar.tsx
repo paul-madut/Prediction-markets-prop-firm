@@ -90,12 +90,17 @@ export const DesktopSidebar = ({
   return (
     <motion.div
       className={cn(
-        "h-full py-4 hidden md:flex md:flex-col bg-white w-[300px] flex-shrink-0 border-r border-gray-200",
-        open ? "px-4" : "px-2",
+        "h-full py-4 hidden md:flex md:flex-col bg-white flex-shrink-0 border-r border-gray-200",
         className
       )}
       animate={{
         width: animate ? (open ? "300px" : "70px") : "300px",
+        paddingLeft: open ? "16px" : "8px",
+        paddingRight: open ? "16px" : "8px",
+      }}
+      transition={{
+        duration: 0.3,
+        ease: [0.4, 0, 0.2, 1],
       }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
@@ -175,7 +180,7 @@ export const SidebarLink = ({
     <Link
       href={link.href}
       className={cn(
-        "flex items-center gap-3 group/sidebar py-3 rounded-lg relative transition-all duration-200",
+        "flex items-center gap-3 group/sidebar py-3 rounded-lg relative",
         "hover:bg-gray-100",
         // When open, show full padding and border
         open && "justify-start px-3",
@@ -187,20 +192,27 @@ export const SidebarLink = ({
       )}
       {...props}
     >
-      <div className={cn(
-        "h-5 w-5 flex-shrink-0 transition-colors",
-        isActive ? "text-blue-600" : "text-neutral-700 group-hover/sidebar:text-blue-600"
-      )}>
+      <motion.div
+        className={cn(
+          "h-5 w-5 flex-shrink-0",
+          isActive ? "text-blue-600" : "text-neutral-700 group-hover/sidebar:text-blue-600"
+        )}
+        transition={{ duration: 0.2 }}
+      >
         {link.icon}
-      </div>
+      </motion.div>
 
       <motion.span
         animate={{
-          display: animate ? (open ? "inline-block" : "none") : "inline-block",
           opacity: animate ? (open ? 1 : 0) : 1,
+          width: animate ? (open ? "auto" : 0) : "auto",
+        }}
+        transition={{
+          duration: 0.3,
+          ease: [0.4, 0, 0.2, 1],
         }}
         className={cn(
-          "text-base font-medium transition duration-150 whitespace-pre inline-block !p-0 !m-0",
+          "text-base font-medium whitespace-pre !p-0 !m-0 overflow-hidden",
           isActive ? "text-blue-600" : "text-neutral-700 group-hover/sidebar:text-blue-600"
         )}
       >
