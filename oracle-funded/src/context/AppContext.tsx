@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
 import {
   AppContextType,
   UserAccount,
@@ -36,6 +36,48 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     isLoading: false,
     message: undefined,
   });
+  const [marketsLoaded, setMarketsLoaded] = useState(false);
+
+  // Fetch real markets from Polymarket API
+  const fetchMarkets = useCallback(async () => {
+    if (marketsLoaded) return;
+
+    try {
+      setLoadingState({ isLoading: true, message: "Loading markets..." });
+
+      const response = await fetch("/api/markets?limit=100");
+      const data = await response.json();
+
+      if (data.markets && data.markets.length > 0) {
+        setMarkets(data.markets);
+        console.log(`Loaded ${data.markets.length} markets from Polymarket`);
+      } else {
+        // Fallback to mock data if API returns empty
+        console.log("Using mock markets (API returned empty)");
+        setMarkets(mockMarkets);
+      }
+    } catch (error) {
+      console.error("Failed to fetch markets, using mock data:", error);
+      setMarkets(mockMarkets);
+    } finally {
+      setLoadingState({ isLoading: false });
+      setMarketsLoaded(true);
+    }
+  }, [marketsLoaded]);
+
+  // Fetch markets on mount
+  useEffect(() => {
+    fetchMarkets();
+  }, [fetchMarkets]);
+
+  // Refresh markets periodically (every 60 seconds)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMarketsLoaded(false); // Allow refetch
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   // Update account balance
   const updateAccountBalance = (newBalance: number) => {

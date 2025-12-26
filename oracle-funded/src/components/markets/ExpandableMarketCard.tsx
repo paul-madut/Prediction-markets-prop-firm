@@ -2,11 +2,12 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Market } from "@/types";
 import { useApp } from "@/context/AppContext";
 import { formatVolume, formatDate, formatCurrency } from "@/lib/formatters";
 import { calculateShares, calculateTotalCost } from "@/lib/calculations";
-import { TrendingUp } from "lucide-react";
+import { TrendingUp, BarChart3 } from "lucide-react";
 import { StatefulButton } from "@/components/ui/stateful-button";
 import { cn } from "@/lib/utils";
 
@@ -26,23 +27,45 @@ export const MarketCard = ({ market, layoutId, onClick }: MarketCardProps) => {
       className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
     >
       <div className="flex flex-col gap-4">
-        {/* Category and Featured Badge */}
-        <div className="flex items-center justify-between">
-          <motion.span
-            layoutId={`category-${market.ticker}-${layoutId}`}
-            className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800"
+        {/* Image and Category Row */}
+        <div className="flex items-start gap-3">
+          {/* Market Image */}
+          <motion.div
+            layoutId={`image-${market.ticker}-${layoutId}`}
+            className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100"
           >
-            {market.category}
-          </motion.span>
-          {market.featured && (
+            {market.image ? (
+              <Image
+                src={market.image}
+                alt={market.title}
+                fill
+                className="object-cover"
+                unoptimized
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                <BarChart3 className="w-6 h-6 text-white" />
+              </div>
+            )}
+          </motion.div>
+
+          <div className="flex-1 flex items-center justify-between">
             <motion.span
-              layoutId={`featured-${market.ticker}-${layoutId}`}
-              className="flex items-center gap-1 text-xs text-orange-600"
+              layoutId={`category-${market.ticker}-${layoutId}`}
+              className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800"
             >
-              <TrendingUp size={14} />
-              Featured
+              {market.category}
             </motion.span>
-          )}
+            {market.featured && (
+              <motion.span
+                layoutId={`featured-${market.ticker}-${layoutId}`}
+                className="flex items-center gap-1 text-xs text-orange-600"
+              >
+                <TrendingUp size={14} />
+                Featured
+              </motion.span>
+            )}
+          </div>
         </div>
 
         {/* Market Title */}
@@ -120,34 +143,58 @@ export const MarketModal = ({ market, layoutId, onClose }: MarketModalProps) => 
   return (
     <motion.div
       layoutId={layoutId}
-      className="w-full max-w-2xl h-full md:h-fit md:max-h-[90%] flex flex-col bg-white rounded-3xl overflow-hidden shadow-2xl"
+      className="w-full max-w-2xl max-h-[90vh] flex flex-col bg-white rounded-3xl overflow-y-auto shadow-2xl"
     >
-      {/* Header with Category and Featured */}
+      {/* Header with Image, Category and Featured */}
       <div className="p-6 border-b border-gray-200">
-        <div className="flex items-center justify-between mb-4">
-          <motion.span
-            layoutId={`category-${market.ticker}-${layoutId}`}
-            className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800"
+        <div className="flex items-start gap-4 mb-4">
+          {/* Market Image */}
+          <motion.div
+            layoutId={`image-${market.ticker}-${layoutId}`}
+            className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100"
           >
-            {market.category}
-          </motion.span>
-          {market.featured && (
-            <motion.span
-              layoutId={`featured-${market.ticker}-${layoutId}`}
-              className="flex items-center gap-1 text-xs text-orange-600"
-            >
-              <TrendingUp size={14} />
-              Featured
-            </motion.span>
-          )}
-        </div>
+            {market.image ? (
+              <Image
+                src={market.image}
+                alt={market.title}
+                fill
+                className="object-cover"
+                unoptimized
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                <BarChart3 className="w-8 h-8 text-white" />
+              </div>
+            )}
+          </motion.div>
 
-        <motion.h2
-          layoutId={`title-${market.ticker}-${layoutId}`}
-          className="text-2xl font-bold text-gray-900"
-        >
-          {market.title}
-        </motion.h2>
+          <div className="flex-1">
+            <div className="flex items-center justify-between mb-2">
+              <motion.span
+                layoutId={`category-${market.ticker}-${layoutId}`}
+                className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800"
+              >
+                {market.category}
+              </motion.span>
+              {market.featured && (
+                <motion.span
+                  layoutId={`featured-${market.ticker}-${layoutId}`}
+                  className="flex items-center gap-1 text-xs text-orange-600"
+                >
+                  <TrendingUp size={14} />
+                  Featured
+                </motion.span>
+              )}
+            </div>
+
+            <motion.h2
+              layoutId={`title-${market.ticker}-${layoutId}`}
+              className="text-2xl font-bold text-gray-900"
+            >
+              {market.title}
+            </motion.h2>
+          </div>
+        </div>
 
         <motion.div
           layoutId={`probability-${market.ticker}-${layoutId}`}
@@ -291,8 +338,8 @@ export const MarketModal = ({ market, layoutId, onClose }: MarketModalProps) => 
           </p>
           <div className="mt-3 grid grid-cols-2 gap-4 text-sm">
             <div>
-              <span className="text-gray-500">Category:</span>
-              <span className="ml-2 font-semibold">{market.category}</span>
+              <span className="text-gray-500">Volume:</span>
+              <span className="ml-2 font-semibold">{formatVolume(market.volume)}</span>
             </div>
             <div>
               <span className="text-gray-500">Status:</span>

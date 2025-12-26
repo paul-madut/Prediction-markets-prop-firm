@@ -23,6 +23,7 @@ export interface Market {
   result?: 'yes' | 'no';             // Kalshi: result
   settlement_value?: number;         // Kalshi: settlement_value
   featured?: boolean;                // Custom field for UI
+  image?: string;                    // Market image URL (Polymarket)
 }
 
 // Position (matches Kalshi schema)
