@@ -38,7 +38,9 @@ import {
   subMonths,
   getDay,
 } from "date-fns";
-import { MovingBorderCard } from "@/components/ui/moving-border";
+import { TextureCard, TextureCardContent, TextureSeparator } from "@/components/ui/texture-card";
+import { TextureButton } from "@/components/ui/texture-button";
+import { AnimatedNumber } from "@/components/ui/animated-number";
 
 // Mock P&L calendar data
 const mockPnLCalendarData: Record<string, { pnl: number; trades: number; volume: number }> = {
@@ -328,187 +330,167 @@ export default function Dashboard() {
         </Link>
       </div>
 
-      {/* Account Selector Bar - At the top */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            {/* Account Selector */}
-            <button className="flex items-center gap-3 px-4 py-2.5 bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-md transition-all duration-200 group">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm">
-                <DollarSign className="w-5 h-5 text-white" />
-              </div>
-              <div className="text-left">
-                <div className="text-xs text-gray-500 font-medium">Account Size</div>
-                <div className="font-semibold text-gray-900">{formatCurrency(user.accountSize)}</div>
-              </div>
-              <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
-            </button>
-
-            {/* Divider */}
-            <div className="h-10 w-px bg-gray-200 hidden sm:block" />
-
-            {/* Status Badges */}
-            <div className="flex items-center gap-2 flex-wrap">
-              <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg">
-                <Calendar className="w-4 h-4 text-gray-500" />
-                <div>
-                  <div className="text-[10px] uppercase tracking-wide text-gray-400 font-medium">Start Date</div>
-                  <div className="text-sm font-semibold text-gray-700">{formatDate(user.challengeStartDate, "MMM dd, yyyy")}</div>
+      {/* Account Selector Bar */}
+      <TextureCard>
+        <TextureCardContent className="py-4 px-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-5">
+              {/* Account Size */}
+              <button className="flex items-center gap-3 group">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm">
+                  <DollarSign className="w-5 h-5 text-white" />
                 </div>
-              </div>
-
-              <div className="flex items-center gap-2 px-3 py-2 bg-purple-50 border border-purple-100 rounded-lg">
-                <TrendingUp className="w-4 h-4 text-purple-500" />
-                <div>
-                  <div className="text-[10px] uppercase tracking-wide text-purple-400 font-medium">Profit Split</div>
-                  <div className="text-sm font-semibold text-purple-700">90%</div>
-                </div>
-              </div>
-
-              <div className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${
-                user.accountPhase === "funded"
-                  ? "bg-green-50 border-green-100"
-                  : "bg-blue-50 border-blue-100"
-              }`}>
-                <div className={`w-2 h-2 rounded-full ${
-                  user.accountPhase === "funded" ? "bg-green-500" : "bg-blue-500"
-                } animate-pulse`} />
-                <div>
-                  <div className={`text-[10px] uppercase tracking-wide font-medium ${
-                    user.accountPhase === "funded" ? "text-green-400" : "text-blue-400"
-                  }`}>Status</div>
-                  <div className={`text-sm font-semibold ${
-                    user.accountPhase === "funded" ? "text-green-700" : "text-blue-700"
-                  }`}>
-                    {user.accountPhase === "evaluation_1" ? "Phase 1" : user.accountPhase === "evaluation_2" ? "Phase 2" : "Funded"}
+                <div className="text-left">
+                  <div className="text-[10px] uppercase tracking-wider text-gray-400 font-medium">Account Size</div>
+                  <div className="text-xl font-bold text-gray-900">
+                    <AnimatedNumber
+                      value={user.accountSize / 100}
+                      format={(v) => `$${v.toLocaleString()}`}
+                    />
                   </div>
                 </div>
+                <ChevronDown className="w-4 h-4 text-gray-300 group-hover:text-blue-500 transition-colors" />
+              </button>
+
+              {/* Vertical Separator */}
+              <div className="h-10 w-px bg-gradient-to-b from-transparent via-gray-200 to-transparent hidden sm:block" />
+
+              {/* Inline Status Items */}
+              <div className="flex items-center gap-4 text-sm">
+                <div className="flex items-center gap-1.5">
+                  <Calendar className="w-3.5 h-3.5 text-gray-400" />
+                  <span className="text-gray-500">{formatDate(user.challengeStartDate, "MMM dd, yyyy")}</span>
+                </div>
+
+                <div className="h-4 w-px bg-gray-200" />
+
+                <div className="flex items-center gap-1.5">
+                  <TrendingUp className="w-3.5 h-3.5 text-purple-400" />
+                  <span className="text-gray-500">90% split</span>
+                </div>
+
+                <div className="h-4 w-px bg-gray-200" />
+
+                <div className="flex items-center gap-1.5">
+                  <div className={`w-2 h-2 rounded-full ${
+                    user.accountPhase === "funded" ? "bg-green-500" : "bg-blue-500"
+                  } animate-pulse`} />
+                  <span className={`font-medium ${
+                    user.accountPhase === "funded" ? "text-green-600" : "text-blue-600"
+                  }`}>
+                    {user.accountPhase === "evaluation_1" ? "Phase 1" : user.accountPhase === "evaluation_2" ? "Phase 2" : "Funded"}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Account ID */}
+            <code className="text-xs font-mono text-gray-400 bg-gray-50 px-3 py-1.5 rounded-md border border-gray-100">
+              PFLP8QMCPA
+            </code>
+          </div>
+        </TextureCardContent>
+      </TextureCard>
+
+      {/* Welcome Back Section */}
+      <TextureCard interactive={false}>
+        <TextureCardContent className="p-0 relative overflow-hidden">
+          <div className="flex flex-col lg:flex-row">
+            {/* Left — Greeting + CTAs */}
+            <div className="flex-1 p-8 relative">
+              <div className="absolute -left-16 -bottom-16 w-56 h-56 bg-gradient-to-tr from-blue-100/30 to-transparent rounded-full blur-3xl pointer-events-none" />
+              <div className="relative z-10">
+                <h1 className="text-lg font-medium text-gray-400 mb-0.5">
+                  Welcome back,
+                </h1>
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent mb-5">
+                  {user.username}
+                </h2>
+                <div className="flex items-center gap-3">
+                  <TextureButton variant="primary" size="lg" asChild>
+                    <Link href="/new-challenge">
+                      <Rocket className="w-5 h-5" />
+                      Get Funded
+                    </Link>
+                  </TextureButton>
+                  <TextureButton variant="secondary" size="lg" asChild>
+                    <Link href="/markets">
+                      <BarChart3 className="w-5 h-5" />
+                      Browse Markets
+                    </Link>
+                  </TextureButton>
+                </div>
+              </div>
+            </div>
+
+            {/* Vertical Separator */}
+            <div className="hidden lg:block w-px bg-gradient-to-b from-transparent via-gray-200 to-transparent my-6" />
+            <div className="lg:hidden mx-8">
+              <TextureSeparator className="mx-0" />
+            </div>
+
+            {/* Right — Quick Stats */}
+            <div className="flex-1 p-8 flex items-center">
+              <div className="grid grid-cols-3 gap-6 w-full text-center">
+                <div>
+                  <div className="text-2xl font-bold text-gray-900">{formatPercent(user.winRate, 0)}</div>
+                  <div className="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-1">Win Rate</div>
+                </div>
+                <div>
+                  <div className={`text-2xl font-bold ${user.currentProfit >= 0 ? "text-green-600" : "text-red-600"}`}>
+                    {user.currentProfit >= 0 ? "+" : ""}{formatPercent(user.currentProfit)}
+                  </div>
+                  <div className="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-1">Profit</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-gray-900">
+                    {user.tradingDaysCompleted}<span className="text-gray-300 font-normal">/{user.tradingDaysRequired}</span>
+                  </div>
+                  <div className="text-[10px] uppercase tracking-wider text-gray-400 font-medium mt-1">Trading Days</div>
+                </div>
               </div>
             </div>
           </div>
-
-          {/* Account ID */}
-          <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg border border-gray-200">
-            <div className="text-[10px] uppercase tracking-wide text-gray-400 font-medium">Account ID</div>
-            <code className="text-sm font-mono font-semibold text-gray-600">PFLP8QMCPA</code>
-          </div>
-        </div>
-      </div>
-
-      {/* Welcome Back Section with Moving Border */}
-      <MovingBorderCard
-        borderRadius="0.75rem"
-        className="p-8"
-      >
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-          {/* Left Content */}
-          <div className="relative z-10 max-w-lg">
-            <span className="text-xs font-semibold tracking-wider text-blue-600 uppercase mb-2 block">
-              Dashboard Overview
-            </span>
-            <h1 className="text-3xl font-bold text-gray-900 mb-1">
-              Welcome back
-            </h1>
-            <h2 className="text-3xl font-bold text-blue-600 mb-3">
-              {user.username}
-            </h2>
-            <p className="text-gray-500 mb-6">
-              Here&apos;s your trading overview and quick actions to manage your challenge.
-            </p>
-            <div className="flex items-center gap-3">
-              <Link
-                href="/new-challenge"
-                className="btn-hover px-5 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2 shadow-md"
-              >
-                <Rocket className="w-4 h-4" />
-                Get Funded
-              </Link>
-              <Link
-                href="/markets"
-                className="btn-hover px-5 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2 shadow-md"
-              >
-                <BarChart3 className="w-4 h-4" />
-                Browse Markets
-              </Link>
-            </div>
-          </div>
-
-          {/* Right Decorative Illustration */}
-          <div className="hidden lg:block relative w-80 h-48">
-            {/* Background gradient circle */}
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-blue-50 via-blue-100 to-sky-50 rounded-full opacity-60" />
-
-            {/* Decorative elements */}
-            <div className="absolute right-8 top-4 w-40 h-28 bg-gradient-to-br from-blue-100 to-sky-100 rounded-lg transform rotate-3 shadow-lg" />
-            <div className="absolute right-12 top-8 w-36 h-24 bg-white rounded-lg shadow-md border border-gray-100 flex items-center justify-center">
-              <svg viewBox="0 0 100 60" className="w-28 h-16">
-                <polyline
-                  points="5,45 20,40 35,30 50,35 65,20 80,25 95,10"
-                  fill="none"
-                  stroke="#22c55e"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <circle cx="35" cy="30" r="4" fill="#22c55e" />
-                <circle cx="65" cy="20" r="4" fill="#ef4444" />
-                <circle cx="95" cy="10" r="4" fill="#22c55e" />
-              </svg>
-            </div>
-
-            {/* Gear icon */}
-            <div className="absolute right-4 top-0">
-              <svg className="w-10 h-10 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/>
-                <path fillRule="evenodd" d="M9.343 2.808a6 6 0 015.314 0l.353.177a6 6 0 012.005 1.541l.248.297a6 6 0 011.184 2.17l.1.376a6 6 0 010 3.262l-.1.376a6 6 0 01-1.184 2.17l-.248.297a6 6 0 01-2.005 1.541l-.353.177a6 6 0 01-5.314 0l-.353-.177a6 6 0 01-2.005-1.541l-.248-.297a6 6 0 01-1.184-2.17l-.1-.376a6 6 0 010-3.262l.1-.376a6 6 0 011.184-2.17l.248-.297a6 6 0 012.005-1.541l.353-.177zM12 10a2 2 0 100 4 2 2 0 000-4z"/>
-              </svg>
-            </div>
-
-            {/* Small decorative dots */}
-            <div className="absolute right-24 bottom-4 w-2 h-2 bg-blue-400 rounded-full" />
-            <div className="absolute right-16 bottom-8 w-1.5 h-1.5 bg-sky-400 rounded-full" />
-            <div className="absolute right-32 top-2 w-1 h-1 bg-blue-300 rounded-full" />
-
-            {/* Leaf decoration */}
-            <div className="absolute right-0 top-12">
-              <svg className="w-12 h-16 text-green-500" viewBox="0 0 24 32" fill="currentColor">
-                <ellipse cx="12" cy="10" rx="8" ry="10" opacity="0.3"/>
-                <ellipse cx="12" cy="10" rx="6" ry="8" opacity="0.5"/>
-                <ellipse cx="12" cy="10" rx="4" ry="6"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </MovingBorderCard>
+        </TextureCardContent>
+      </TextureCard>
 
       {/* Main Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Chart and Stats */}
         <div className="lg:col-span-2 space-y-6">
           {/* Key Metrics Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white rounded-lg border border-gray-200 px-4 py-6 card-hover cursor-default">
-              <div className="text-xs text-green-600 font-medium mb-2">Equity</div>
-              <div className="text-xl font-bold text-gray-900">{formatCurrency(user.accountBalance)}</div>
-            </div>
-            <div className="bg-white rounded-lg border border-gray-200 px-4 py-6 card-hover cursor-default">
-              <div className="text-xs text-green-600 font-medium mb-2">Balance</div>
-              <div className="text-xl font-bold text-gray-900">{formatCurrency(user.accountBalance)}</div>
-            </div>
-            <div className="bg-white rounded-lg border border-gray-200 px-4 py-6 card-hover cursor-default">
-              <div className="text-xs text-blue-600 font-medium mb-2">Min. Trading Days</div>
-              <div className="text-xl font-bold text-gray-900">
-                {user.tradingDaysCompleted}/{user.tradingDaysRequired}
-              </div>
-            </div>
-            <div className="bg-white rounded-lg border border-gray-200 px-4 py-6 card-hover cursor-default">
-              <div className="text-xs text-amber-600 font-medium mb-2">Win Ratio</div>
-              <div className="text-xl font-bold text-gray-900">{formatPercent(user.winRate, 0)}</div>
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <TextureCard>
+              <TextureCardContent className="px-4 py-6">
+                <div className="text-xs text-green-600 font-medium mb-2">Equity</div>
+                <div className="text-xl font-bold text-gray-900">{formatCurrency(user.accountBalance)}</div>
+              </TextureCardContent>
+            </TextureCard>
+            <TextureCard>
+              <TextureCardContent className="px-4 py-6">
+                <div className="text-xs text-green-600 font-medium mb-2">Balance</div>
+                <div className="text-xl font-bold text-gray-900">{formatCurrency(user.accountBalance)}</div>
+              </TextureCardContent>
+            </TextureCard>
+            <TextureCard>
+              <TextureCardContent className="px-4 py-6">
+                <div className="text-xs text-blue-600 font-medium mb-2">Min. Trading Days</div>
+                <div className="text-xl font-bold text-gray-900">
+                  {user.tradingDaysCompleted}/{user.tradingDaysRequired}
+                </div>
+              </TextureCardContent>
+            </TextureCard>
+            <TextureCard>
+              <TextureCardContent className="px-4 py-6">
+                <div className="text-xs text-amber-600 font-medium mb-2">Win Ratio</div>
+                <div className="text-xl font-bold text-gray-900">{formatPercent(user.winRate, 0)}</div>
+              </TextureCardContent>
+            </TextureCard>
           </div>
 
           {/* Account Performance Chart */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <TextureCard interactive={false}>
+          <TextureCardContent>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-gray-900">Account Performance</h3>
               <span className={`px-3 py-1 rounded-full text-sm font-medium ${
@@ -551,29 +533,37 @@ export default function Dashboard() {
                 />
               </AreaChart>
             </ResponsiveContainer>
-          </div>
+          </TextureCardContent>
+          </TextureCard>
 
           {/* P&L Boxes */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-red-50 rounded-lg p-4 border border-red-100">
-              <div className="text-sm text-gray-500 mb-1">Max permitted loss</div>
-              <div className="text-2xl font-bold text-red-600">{formatCurrency(maxPermittedLoss)}</div>
-            </div>
-            <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
-              <div className="text-sm text-gray-500 mb-1">Today&apos;s permitted loss</div>
-              <div className="text-2xl font-bold text-amber-600">{formatCurrency(todaysPermittedLoss)}</div>
-            </div>
-            <div className="bg-green-50 rounded-lg p-4 border border-green-100">
-              <div className="text-sm text-gray-500 mb-1">Today&apos;s profit</div>
-              <div className="text-2xl font-bold text-green-600">
-                {todaysProfit >= 0 ? "+" : ""}
-                {formatCurrency(todaysProfit)}
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <TextureCard>
+              <TextureCardContent className="p-4">
+                <div className="text-sm text-gray-500 mb-1">Max permitted loss</div>
+                <div className="text-2xl font-bold text-red-600">{formatCurrency(maxPermittedLoss)}</div>
+              </TextureCardContent>
+            </TextureCard>
+            <TextureCard>
+              <TextureCardContent className="p-4">
+                <div className="text-sm text-gray-500 mb-1">Today&apos;s permitted loss</div>
+                <div className="text-2xl font-bold text-amber-600">{formatCurrency(todaysPermittedLoss)}</div>
+              </TextureCardContent>
+            </TextureCard>
+            <TextureCard>
+              <TextureCardContent className="p-4">
+                <div className="text-sm text-gray-500 mb-1">Today&apos;s profit</div>
+                <div className="text-2xl font-bold text-green-600">
+                  {todaysProfit >= 0 ? "+" : ""}
+                  {formatCurrency(todaysProfit)}
+                </div>
+              </TextureCardContent>
+            </TextureCard>
           </div>
 
           {/* Objectives */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <TextureCard interactive={false}>
+          <TextureCardContent>
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-900">Objectives</h3>
               <Link href="/rules" className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
@@ -581,7 +571,7 @@ export default function Dashboard() {
                 <ChevronRight className="w-4 h-4" />
               </Link>
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Profit Target */}
               <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border border-green-100">
                 <div className="flex items-center justify-between mb-3">
@@ -696,16 +686,18 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-          </div>
+          </TextureCardContent>
+          </TextureCard>
 
         </div>
 
         {/* Right Column - Account Data */}
         <div className="space-y-6">
           {/* Account Data Card */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Data</h3>
-            <div className="space-y-3">
+          <TextureCard>
+          <TextureCardContent className="p-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Account Data</h3>
+            <div className="space-y-5">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-gray-500">
                   <div className="w-2 h-2 rounded-full bg-green-500"></div>
@@ -740,25 +732,30 @@ export default function Dashboard() {
               </div>
             </div>
 
+           
+            <div className="h-px bg-gray-200 w-full my-6" />
+
             {/* Action Buttons */}
-            <div className="mt-6 space-y-2">
-              <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium">
+            <div className="mt-8 space-y-3">
+              <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium">
                 <Key className="w-4 h-4" />
                 Credentials
               </button>
-              <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium">
+              <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium">
                 <Share2 className="w-4 h-4" />
                 Share Metrics
               </button>
-              <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium">
+              <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium">
                 <DollarSign className="w-4 h-4" />
                 Request Payout
               </button>
             </div>
-          </div>
+          </TextureCardContent>
+          </TextureCard>
 
           {/* Volume Stats */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <TextureCard>
+          <TextureCardContent>
             <div className="flex items-center gap-2 mb-4">
               <TrendingUp className="w-5 h-5 text-gray-500" />
               <h3 className="text-sm font-medium text-gray-500">Volume</h3>
@@ -773,41 +770,27 @@ export default function Dashboard() {
                 <span className="font-bold text-gray-900">{formatCurrency(lowestVolume === Infinity ? 0 : lowestVolume)}</span>
               </div>
             </div>
-          </div>
+          </TextureCardContent>
+          </TextureCard>
 
           {/* Time Since First Trade */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <TextureCard>
+          <TextureCardContent>
             <div className="flex items-center gap-2 mb-4">
               <Clock className="w-5 h-5 text-gray-500" />
               <h3 className="text-sm font-medium text-gray-500">Time since first trade</h3>
             </div>
             <div className="h-px bg-gray-200 w-full mb-4" />
             <TimeSinceCounter startDate={user.challengeStartDate} />
-          </div>
+          </TextureCardContent>
+          </TextureCard>
 
-          {/* Quick Actions */}
-          <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg px-5 py-8 text-white">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <h3 className="font-semibold">Ready to Trade?</h3>
-                <p className="text-sm text-blue-100">
-                  Explore prediction markets and grow your account.
-                </p>
-              </div>
-              <Link
-                href="/markets"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 hover:shadow-lg hover:scale-105 transition-all duration-200 whitespace-nowrap"
-              >
-                <BarChart3 className="w-4 h-4" />
-                Browse Markets
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
 
       {/* Tabs Section - Full Width */}
-      <Tabs.Root defaultValue="calendar" className="bg-white rounded-lg border border-gray-200">
+      <TextureCard interactive={false}>
+      <Tabs.Root defaultValue="calendar">
         <Tabs.List className="flex border-b border-gray-200 px-4">
           <Tabs.Trigger
             value="statistics"
@@ -923,6 +906,7 @@ export default function Dashboard() {
           </div>
         </Tabs.Content>
       </Tabs.Root>
+      </TextureCard>
     </div>
   );
 }

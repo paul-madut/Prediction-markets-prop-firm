@@ -52,9 +52,12 @@ export default function MarketsPage() {
     <>
       <div className="space-y-6">
         {/* Page Header */}
-        <p className="text-gray-500">
-          Browse and trade on {markets.length} prediction markets
-        </p>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Markets</h1>
+          <p className="text-gray-500">
+            Browse and trade on {markets.length} prediction markets
+          </p>
+        </div>
 
         {/* Filters */}
         <MarketFilters
