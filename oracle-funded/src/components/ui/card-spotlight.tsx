@@ -11,6 +11,7 @@ interface CardSpotlightProps {
   spotlightSize?: number;
   borderColor?: string;
   gradientOpacity?: number;
+  variant?: "dark" | "light";
 }
 
 export const CardSpotlight = ({
@@ -20,6 +21,7 @@ export const CardSpotlight = ({
   spotlightSize = 250,
   borderColor = "rgba(96, 165, 250, 0.4)", // blue-400
   gradientOpacity = 0.8,
+  variant = "dark",
 }: CardSpotlightProps) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -65,8 +67,10 @@ export const CardSpotlight = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "group relative rounded-xl border border-gray-700/20 bg-gradient-to-br from-gray-900 to-gray-800 p-6 overflow-hidden transition-all duration-300",
-        "hover:border-gray-600/40 hover:shadow-2xl hover:shadow-blue-500/10",
+        "group relative rounded-xl border p-6 overflow-hidden transition-all duration-300",
+        variant === "dark"
+          ? "border-gray-700/20 bg-gradient-to-br from-gray-900 to-gray-800 hover:border-gray-600/40 hover:shadow-2xl hover:shadow-blue-500/10"
+          : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-xl hover:shadow-gray-200/50",
         className
       )}
     >
@@ -105,10 +109,22 @@ export const CardSpotlight = ({
       <div className="relative z-10">{children}</div>
 
       {/* Corner accents */}
-      <div className="pointer-events-none absolute top-0 left-0 h-px w-20 bg-gradient-to-r from-blue-500/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      <div className="pointer-events-none absolute top-0 left-0 w-px h-20 bg-gradient-to-b from-blue-500/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-px w-20 bg-gradient-to-l from-blue-500/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      <div className="pointer-events-none absolute bottom-0 right-0 w-px h-20 bg-gradient-to-t from-blue-500/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className={cn(
+        "pointer-events-none absolute top-0 left-0 h-px w-20 bg-gradient-to-r to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+        variant === "dark" ? "from-blue-500/50" : "from-blue-500/30"
+      )} />
+      <div className={cn(
+        "pointer-events-none absolute top-0 left-0 w-px h-20 bg-gradient-to-b to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+        variant === "dark" ? "from-blue-500/50" : "from-blue-500/30"
+      )} />
+      <div className={cn(
+        "pointer-events-none absolute bottom-0 right-0 h-px w-20 bg-gradient-to-l to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+        variant === "dark" ? "from-blue-500/50" : "from-blue-500/30"
+      )} />
+      <div className={cn(
+        "pointer-events-none absolute bottom-0 right-0 w-px h-20 bg-gradient-to-t to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+        variant === "dark" ? "from-blue-500/50" : "from-blue-500/30"
+      )} />
     </div>
   );
 };

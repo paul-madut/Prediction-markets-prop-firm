@@ -3,33 +3,30 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Bell, Settings } from "lucide-react";
 import { useApp } from "@/context/AppContext";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 
-const getPageTitle = (pathname: string): string => {
-  const routes: Record<string, string> = {
-    "/": "Dashboard",
-    "/new-challenge": "New Challenge",
-    "/markets": "Markets",
-    "/portfolio": "Portfolio",
-    "/history": "History",
-    "/analytics": "Analytics",
-    "/rules": "Rules",
-    "/help": "Help",
-    "/settings": "Settings",
-  };
-  return routes[pathname] || "Dashboard";
+const pageTitles: Record<string, string> = {
+  "/": "Dashboard",
+  "/new-challenge": "New Challenge",
+  "/markets": "Markets",
+  "/portfolio": "Portfolio",
+  "/history": "Trade History",
+  "/analytics": "Analytics",
+  "/rules": "Rules",
+  "/settings": "Settings",
+  "/help": "Help Center",
 };
 
 export const TopBar = () => {
   const { user } = useApp();
   const pathname = usePathname();
-  const pageTitle = getPageTitle(pathname);
   const [showNotifications, setShowNotifications] = useState(false);
   const [notificationCount] = useState(3);
   const notificationRef = useRef<HTMLDivElement>(null);
+  const pageTitle = pageTitles[pathname] || "";
 
   // Close notifications when clicking outside
   useEffect(() => {
@@ -59,12 +56,10 @@ export const TopBar = () => {
 
   return (
     <div className="h-16 bg-white border-b border-gray-200 px-6 flex items-center justify-between">
-      {/* Left: Page Title */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">{pageTitle}</h1>
-      </div>
+      {/* Page Title */}
+      <h1 className="text-lg font-semibold text-gray-900">{pageTitle}</h1>
 
-      {/* Right: Actions and Profile */}
+      {/* Actions and Profile */}
       <div className="flex items-center gap-3">
         {/* Notification Bell */}
         <div className="relative" ref={notificationRef}>

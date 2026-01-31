@@ -106,24 +106,16 @@ export const Sidebar = () => {
             <Link
               href="/new-challenge"
               className={cn(
-                "flex items-center justify-center gap-2 rounded-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-md hover:shadow-lg",
-                open ? "w-full py-3 px-4" : "h-10 w-10"
+                "flex items-center justify-center rounded-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-md hover:shadow-lg",
+                open ? "w-full py-3 px-4 gap-2" : "h-10 w-10"
               )}
             >
               <Rocket className="h-5 w-5 flex-shrink-0" />
-              <motion.span
-                animate={{
-                  opacity: open ? 1 : 0,
-                  width: open ? "auto" : 0,
-                }}
-                transition={{
-                  duration: 0.3,
-                  ease: [0.4, 0, 0.2, 1],
-                }}
-                className="text-sm whitespace-nowrap overflow-hidden"
-              >
-                Get Funded
-              </motion.span>
+              {open && (
+                <span className="text-sm whitespace-nowrap">
+                  Get Funded
+                </span>
+              )}
             </Link>
           </div>
 
