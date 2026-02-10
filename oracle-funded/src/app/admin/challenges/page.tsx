@@ -10,12 +10,16 @@ import {
   Tag,
 } from "lucide-react";
 import { useAdmin } from "@/context/AdminContext";
+import { AdminChallengeConfig } from "@/types/admin";
 import { formatCurrency } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
+import ChallengeModal from "@/components/admin/challenges/ChallengeModal";
+
+type ModalState = null | 'create' | { mode: 'edit'; config: AdminChallengeConfig };
 
 export default function ChallengesPage() {
-  const { challengeConfigs, toggleChallengeStatus } = useAdmin();
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const { challengeConfigs, toggleChallengeStatus, createChallengeConfig, updateChallengeConfig } = useAdmin();
+  const [modalState, setModalState] = useState<ModalState>(null);
 
   return (
     <div className="space-y-6">
@@ -36,7 +40,10 @@ export default function ChallengesPage() {
             </div>
           </div>
 
-          <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+          <button
+            onClick={() => setModalState('create')}
+            className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+          >
             <Plus className="h-4 w-4" />
             New Challenge
           </button>
@@ -163,7 +170,7 @@ export default function ChallengesPage() {
             {/* Actions */}
             <div className="px-6 py-4 border-t border-gray-100 bg-gray-50">
               <button
-                onClick={() => setEditingId(config.configId)}
+                onClick={() => setModalState({ mode: 'edit', config })}
                 className="flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-700 font-medium"
               >
                 <Edit2 className="h-4 w-4" />
@@ -204,6 +211,21 @@ export default function ChallengesPage() {
           </div>
         </div>
       </div>
+
+      {/* Challenge Modal */}
+      <ChallengeModal
+        isOpen={modalState !== null}
+        onClose={() => setModalState(null)}
+        onSave={(config) => {
+          if (modalState === 'create') {
+            createChallengeConfig(config);
+          } else if (modalState && typeof modalState === 'object' && modalState.mode === 'edit') {
+            updateChallengeConfig(modalState.config.configId, config);
+          }
+        }}
+        editMode={modalState !== null && typeof modalState === 'object' && modalState.mode === 'edit'}
+        existingConfig={modalState && typeof modalState === 'object' && modalState.mode === 'edit' ? modalState.config : undefined}
+      />
     </div>
   );
 }

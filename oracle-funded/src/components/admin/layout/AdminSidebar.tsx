@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useAdmin } from "@/context/AdminContext";
 import { cn } from "@/lib/utils";
+import NotificationBell from "./NotificationBell";
 
 const adminLinks = [
   {
@@ -92,17 +93,23 @@ export const AdminSidebar = () => {
             Admin Panel
           </motion.span>
         </Link>
-        <button
-          onClick={() => setOpen(!open)}
-          className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
-        >
-          <motion.div
-            animate={{ rotate: open ? 0 : 180 }}
-            transition={{ duration: 0.2 }}
+        <div className="flex items-center gap-1">
+          {/* Notification Bell */}
+          <NotificationBell compact />
+
+          {/* Toggle Button */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
           >
-            <ChevronLeft className="h-5 w-5" />
-          </motion.div>
-        </button>
+            <motion.div
+              animate={{ rotate: open ? 0 : 180 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </motion.div>
+          </button>
+        </div>
       </div>
 
       {/* Alert Badge */}

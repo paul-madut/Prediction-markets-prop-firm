@@ -354,6 +354,8 @@ export interface AdminContextType {
   freezeTrader: (traderId: string, reason: string) => void;
   unfreezeTrader: (traderId: string) => void;
   resetTraderAccount: (traderId: string) => void;
+  freezeTraders: (traderIds: string[], reason: string) => void;
+  unfreezeTraders: (traderIds: string[]) => void;
 
   // Challenge configurations
   challengeConfigs: AdminChallengeConfig[];

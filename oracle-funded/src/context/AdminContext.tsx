@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback, ReactNode } from "react";
+import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect } from "react";
 import {
   AdminContextType,
   AdminUser,
@@ -25,6 +25,19 @@ import { mockKYCQueue, mockFraudAlerts } from "@/data/mockKYCQueue";
 import { mockAuditLogs, mockDashboardStats } from "@/data/mockAuditLogs";
 
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
+
+// Notification callback type
+type NotificationCallback = (notification: {
+  type: "info" | "warning" | "success" | "error";
+  message: string;
+  actionUrl?: string;
+}) => void;
+
+let notificationCallback: NotificationCallback | null = null;
+
+export function setNotificationCallback(callback: NotificationCallback) {
+  notificationCallback = callback;
+}
 
 // Mock admin user
 const mockAdminUser: AdminUser = {
@@ -322,6 +335,61 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
     });
   }, [traders, addAuditLog]);
 
+  // Batch trader operations
+  const freezeTraders = useCallback((traderIds: string[], reason: string) => {
+    setTraders((prev) =>
+      prev.map((t) =>
+        traderIds.includes(t.userId)
+          ? {
+              ...t,
+              accountStatus: "frozen" as const,
+              freezeReason: reason,
+              frozenAt: new Date().toISOString(),
+              frozenBy: adminUser?.adminId,
+            }
+          : t
+      )
+    );
+
+    const frozenCount = traderIds.length;
+    setDashboardStats((prev) => ({
+      ...prev,
+      frozenTraders: prev.frozenTraders + frozenCount,
+      activeTraders: Math.max(0, prev.activeTraders - frozenCount),
+    }));
+
+    traderIds.forEach((traderId) => {
+      addAuditLog("trader.freeze", "trader", traderId, { reason, batch: true });
+    });
+  }, [adminUser, addAuditLog]);
+
+  const unfreezeTraders = useCallback((traderIds: string[]) => {
+    setTraders((prev) =>
+      prev.map((t) =>
+        traderIds.includes(t.userId)
+          ? {
+              ...t,
+              accountStatus: "active" as const,
+              freezeReason: undefined,
+              frozenAt: undefined,
+              frozenBy: undefined,
+            }
+          : t
+      )
+    );
+
+    const unfrozenCount = traderIds.length;
+    setDashboardStats((prev) => ({
+      ...prev,
+      frozenTraders: Math.max(0, prev.frozenTraders - unfrozenCount),
+      activeTraders: prev.activeTraders + unfrozenCount,
+    }));
+
+    traderIds.forEach((traderId) => {
+      addAuditLog("trader.unfreeze", "trader", traderId, { batch: true });
+    });
+  }, [addAuditLog]);
+
   // ==================== CHALLENGE CONFIG FUNCTIONS ====================
 
   const createChallengeConfig = useCallback((
@@ -412,6 +480,15 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
       amount: payout?.amount,
       traderId: payout?.traderId,
     });
+
+    // Send notification
+    if (notificationCallback && payout) {
+      notificationCallback({
+        type: "success",
+        message: `Payout approved for ${payout.traderName}`,
+        actionUrl: "/admin/financials/payouts",
+      });
+    }
   }, [adminUser, payoutQueue, addAuditLog]);
 
   const rejectPayout = useCallback((payoutId: string, reason: string) => {
@@ -481,6 +558,15 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
           t.userId === kyc.traderId ? { ...t, kycStatus: "approved" as const } : t
         )
       );
+
+      // Send notification
+      if (notificationCallback) {
+        notificationCallback({
+          type: "success",
+          message: `KYC approved for ${kyc.traderName}`,
+          actionUrl: "/admin/compliance/kyc",
+        });
+      }
     }
 
     setDashboardStats((prev) => ({
@@ -559,6 +645,8 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
     freezeTrader,
     unfreezeTrader,
     resetTraderAccount,
+    freezeTraders,
+    unfreezeTraders,
 
     // Challenge configurations
     challengeConfigs,
