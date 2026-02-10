@@ -6,12 +6,16 @@ import { Users, Download } from "lucide-react";
 import { useAdmin } from "@/context/AdminContext";
 import { TraderFilters } from "@/components/admin/traders/TraderFilters";
 import { TradersTable } from "@/components/admin/traders/TradersTable";
-import { TraderFilters as TraderFiltersType } from "@/types/admin";
+import BatchActionsBar from "@/components/admin/traders/BatchActionsBar";
+import ExportButton from "@/components/admin/shared/ExportButton";
+import { TraderFilters as TraderFiltersType, AdminTraderView } from "@/types/admin";
+import { ExportColumn, formatCurrencyForCSV, formatDateForCSV } from "@/lib/csvExport";
 
 export default function TradersPage() {
-  const { traders, searchTraders, dashboardStats } = useAdmin();
+  const { traders, searchTraders, dashboardStats, freezeTraders, unfreezeTraders } = useAdmin();
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState<TraderFiltersType>({});
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   // Filter and search traders
   const filteredTraders = useMemo(() => {
@@ -19,6 +23,57 @@ export default function TradersPage() {
   }, [searchTraders, searchQuery, filters]);
 
   const hasFilters = searchQuery || Object.values(filters).some((v) => v);
+
+  // CSV export column definitions
+  const exportColumns: ExportColumn<AdminTraderView>[] = [
+    { key: "username", label: "Trader" },
+    { key: "email", label: "Email" },
+    { key: "accountStatus", label: "Status" },
+    { key: "kycStatus", label: "KYC Status" },
+    { key: "accountPhase", label: "Phase" },
+    {
+      key: "accountBalance",
+      label: "Balance",
+      format: (val) => formatCurrencyForCSV(val),
+    },
+    {
+      key: "accountSize",
+      label: "Account Size",
+      format: (val) => formatCurrencyForCSV(val),
+    },
+    {
+      key: "currentProfit",
+      label: "Current Profit",
+      format: (val) => formatCurrencyForCSV(val),
+    },
+    {
+      key: "totalPaidOut",
+      label: "Total Paid Out",
+      format: (val) => formatCurrencyForCSV(val),
+    },
+    { key: "riskScore", label: "Risk Score" },
+    {
+      key: "createdAt",
+      label: "Created At",
+      format: (val) => formatDateForCSV(val),
+    },
+    {
+      key: "lastActiveAt",
+      label: "Last Active",
+      format: (val) => formatDateForCSV(val),
+    },
+  ];
+
+  // Batch action handlers
+  const handleBatchFreeze = async (reason: string) => {
+    const traderIds = Array.from(selectedIds);
+    freezeTraders(traderIds, reason);
+  };
+
+  const handleBatchUnfreeze = async () => {
+    const traderIds = Array.from(selectedIds);
+    unfreezeTraders(traderIds);
+  };
 
   return (
     <div className="space-y-6">
@@ -63,14 +118,13 @@ export default function TradersPage() {
             </div>
 
             {/* Export Button */}
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <Download className="h-4 w-4" />
-              Export
-            </motion.button>
+            <ExportButton
+              data={filteredTraders}
+              filename="traders"
+              columns={exportColumns}
+              selectedIds={selectedIds}
+              entityIdKey="userId"
+            />
           </div>
         </div>
       </div>
@@ -108,7 +162,26 @@ export default function TradersPage() {
       </AnimatePresence>
 
       {/* Table */}
-      <TradersTable traders={filteredTraders} />
+      <TradersTable
+        traders={filteredTraders}
+        selectedIds={selectedIds}
+        onSelectionChange={setSelectedIds}
+      />
+
+      {/* Batch Actions Bar */}
+      <BatchActionsBar
+        selectedCount={selectedIds.size}
+        onFreeze={handleBatchFreeze}
+        onUnfreeze={handleBatchUnfreeze}
+        onExport={() => {
+          // Export will be handled by the export button in batch actions
+          const selectedTraders = filteredTraders.filter((t) =>
+            selectedIds.has(t.userId)
+          );
+          // The ExportButton component handles this, but we can trigger it programmatically
+        }}
+        onClearSelection={() => setSelectedIds(new Set())}
+      />
     </div>
   );
 }

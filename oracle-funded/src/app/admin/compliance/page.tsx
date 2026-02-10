@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   Shield,
@@ -10,10 +10,13 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { useAdmin } from "@/context/AdminContext";
+import { FraudAlert } from "@/types/admin";
 import { cn } from "@/lib/utils";
+import FraudAlertModal from "@/components/admin/compliance/FraudAlertModal";
 
 export default function CompliancePage() {
   const { kycQueue, fraudAlerts, auditLogs, dashboardStats } = useAdmin();
+  const [selectedAlert, setSelectedAlert] = useState<FraudAlert | null>(null);
 
   const pendingKYC = kycQueue.filter(
     (k) => k.status === "pending" || k.status === "under_review"
@@ -147,9 +150,18 @@ export default function CompliancePage() {
           <p className="text-sm text-gray-500 mt-1">
             Investigate suspicious activity
           </p>
-          <button className="flex items-center gap-1 text-indigo-600 text-sm font-medium mt-4 hover:gap-2 transition-all">
-            View alerts <ArrowRight className="h-4 w-4" />
-          </button>
+          <div className="mt-4 space-y-2">
+            {openFraud.slice(0, 3).map((alert) => (
+              <button
+                key={alert.alertId}
+                onClick={() => setSelectedAlert(alert)}
+                className="w-full text-left px-3 py-2 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                <p className="text-sm font-medium text-gray-900">{alert.traderName}</p>
+                <p className="text-xs text-gray-500 capitalize">{alert.alertType.replace(/_/g, " ")}</p>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Audit Logs */}
@@ -234,6 +246,13 @@ export default function CompliancePage() {
           </div>
         </div>
       </div>
+
+      {/* Fraud Alert Modal */}
+      <FraudAlertModal
+        alert={selectedAlert}
+        isOpen={selectedAlert !== null}
+        onClose={() => setSelectedAlert(null)}
+      />
     </div>
   );
 }

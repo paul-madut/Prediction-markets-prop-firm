@@ -22,6 +22,8 @@ import {
 interface TradersTableProps {
   traders: AdminTraderView[];
   isLoading?: boolean;
+  selectedIds?: Set<string>;
+  onSelectionChange?: (selectedIds: Set<string>) => void;
 }
 
 const RiskIndicator = ({ score }: { score: number }) => {
@@ -60,8 +62,36 @@ const formatDate = (dateString: string) => {
   });
 };
 
-export const TradersTable = ({ traders, isLoading = false }: TradersTableProps) => {
+export const TradersTable = ({
+  traders,
+  isLoading = false,
+  selectedIds = new Set(),
+  onSelectionChange,
+}: TradersTableProps) => {
   const [hoveredRow, setHoveredRow] = useState<string | null>(null);
+
+  const toggleSelect = (id: string) => {
+    if (!onSelectionChange) return;
+    const newSelected = new Set(selectedIds);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    onSelectionChange(newSelected);
+  };
+
+  const toggleSelectAll = () => {
+    if (!onSelectionChange) return;
+    if (selectedIds.size === traders.length && traders.length > 0) {
+      onSelectionChange(new Set());
+    } else {
+      onSelectionChange(new Set(traders.map((t) => t.userId)));
+    }
+  };
+
+  const isAllSelected = traders.length > 0 && selectedIds.size === traders.length;
+  const isIndeterminate = selectedIds.size > 0 && selectedIds.size < traders.length;
 
   // Show loading skeleton
   if (isLoading) {
@@ -82,6 +112,22 @@ export const TradersTable = ({ traders, isLoading = false }: TradersTableProps) 
       <table className="w-full">
         <StickyTableHeader>
           <tr className="border-b border-gray-200">
+            {/* Checkbox column */}
+            {onSelectionChange && (
+              <th className="px-6 py-3.5 w-12 bg-gray-50">
+                <input
+                  type="checkbox"
+                  checked={isAllSelected}
+                  ref={(input) => {
+                    if (input) {
+                      input.indeterminate = isIndeterminate;
+                    }
+                  }}
+                  onChange={toggleSelectAll}
+                  className="h-4 w-4 text-indigo-600 rounded border-gray-300 focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+                />
+              </th>
+            )}
             <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50">
               Trader
             </th>
@@ -117,6 +163,7 @@ export const TradersTable = ({ traders, isLoading = false }: TradersTableProps) 
               const pnl = trader.accountBalance - trader.startingBalance;
               const pnlPercent = (pnl / trader.startingBalance) * 100;
               const isHovered = hoveredRow === trader.userId;
+              const isSelected = selectedIds.has(trader.userId);
 
               return (
                 <motion.tr
@@ -129,9 +176,22 @@ export const TradersTable = ({ traders, isLoading = false }: TradersTableProps) 
                   onMouseLeave={() => setHoveredRow(null)}
                   className={cn(
                     "group transition-colors duration-150 ease-in-out",
-                    isHovered ? "bg-indigo-50/50" : "hover:bg-gray-50/80"
+                    isSelected && "bg-indigo-50 border-l-2 border-indigo-600",
+                    !isSelected && (isHovered ? "bg-indigo-50/50" : "hover:bg-gray-50/80")
                   )}
                 >
+                  {/* Checkbox */}
+                  {onSelectionChange && (
+                    <td className="px-6 py-4">
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleSelect(trader.userId)}
+                        className="h-4 w-4 text-indigo-600 rounded border-gray-300 focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+                      />
+                    </td>
+                  )}
+
                   {/* Trader Info */}
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">

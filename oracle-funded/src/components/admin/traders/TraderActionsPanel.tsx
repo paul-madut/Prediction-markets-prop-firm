@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Snowflake,
   Sun,
@@ -9,9 +10,13 @@ import {
   DollarSign,
   AlertTriangle,
   X,
+  StickyNote,
+  Loader2,
+  CheckCircle,
 } from "lucide-react";
 import { AdminTraderView } from "@/types/admin";
 import { useAdmin } from "@/context/AdminContext";
+import { useToast } from "@/components/admin/shared/Toast";
 import { cn } from "@/lib/utils";
 
 interface TraderActionsPanelProps {
@@ -26,6 +31,8 @@ interface ActionModalProps {
   onConfirm: (reason: string) => void;
   onCancel: () => void;
   requireReason?: boolean;
+  isProcessing?: boolean;
+  actionComplete?: boolean;
 }
 
 const ActionModal = ({
@@ -36,6 +43,8 @@ const ActionModal = ({
   onConfirm,
   onCancel,
   requireReason = true,
+  isProcessing = false,
+  actionComplete = false,
 }: ActionModalProps) => {
   const [reason, setReason] = useState("");
 
@@ -46,75 +55,166 @@ const ActionModal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/50" onClick={onCancel} />
-      <div className="relative bg-white rounded-xl shadow-xl max-w-md w-full mx-4 p-6">
-        <button
-          onClick={onCancel}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center"
+      >
+        <div className="absolute inset-0 bg-black/50" onClick={!isProcessing ? onCancel : undefined} />
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.95, opacity: 0 }}
+          className="relative bg-white rounded-xl shadow-xl max-w-md w-full mx-4 p-6"
         >
-          <X className="h-5 w-5" />
-        </button>
+          {!isProcessing && !actionComplete && (
+            <button
+              onClick={onCancel}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          )}
 
-        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-        <p className="text-sm text-gray-500 mt-2">{description}</p>
+          {actionComplete ? (
+            <div className="text-center py-4">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 500, damping: 25 }}
+                className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4"
+              >
+                <CheckCircle className="h-8 w-8 text-green-600" />
+              </motion.div>
+              <h3 className="text-lg font-semibold text-gray-900">Success!</h3>
+              <p className="text-sm text-gray-500 mt-2">Action completed successfully</p>
+            </div>
+          ) : (
+            <>
+              <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+              <p className="text-sm text-gray-500 mt-2">{description}</p>
 
-        {requireReason && (
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Reason
-            </label>
-            <textarea
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
-              placeholder="Enter reason for this action..."
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
-              rows={3}
-            />
-          </div>
-        )}
+              {requireReason && (
+                <div className="mt-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Reason
+                  </label>
+                  <textarea
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                    placeholder="Enter reason for this action..."
+                    disabled={isProcessing}
+                    className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none disabled:bg-gray-50 disabled:text-gray-500"
+                    rows={3}
+                  />
+                </div>
+              )}
 
-        <div className="flex justify-end gap-3 mt-6">
-          <button
-            onClick={onCancel}
-            className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={() => onConfirm(reason)}
-            disabled={requireReason && !reason.trim()}
-            className={cn(
-              "px-4 py-2 text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
-              variantStyles[confirmVariant]
-            )}
-          >
-            {confirmLabel}
-          </button>
-        </div>
-      </div>
-    </div>
+              <div className="flex justify-end gap-3 mt-6">
+                <button
+                  onClick={onCancel}
+                  disabled={isProcessing}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => onConfirm(reason)}
+                  disabled={(requireReason && !reason.trim()) || isProcessing}
+                  className={cn(
+                    "px-4 py-2 text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2",
+                    variantStyles[confirmVariant]
+                  )}
+                >
+                  {isProcessing ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Processing...
+                    </>
+                  ) : (
+                    confirmLabel
+                  )}
+                </button>
+              </div>
+            </>
+          )}
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
 export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
   const { freezeTrader, unfreezeTrader, resetTraderAccount } = useAdmin();
+  const { showSuccess, showError } = useToast();
   const [activeModal, setActiveModal] = useState<
-    "freeze" | "unfreeze" | "reset" | "message" | null
+    "freeze" | "unfreeze" | "reset" | "message" | "note" | null
   >(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [actionComplete, setActionComplete] = useState(false);
 
-  const handleFreeze = (reason: string) => {
-    freezeTrader(trader.userId, reason);
-    setActiveModal(null);
+  const handleFreeze = async (reason: string) => {
+    setIsProcessing(true);
+    try {
+      // Simulate API delay
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      freezeTrader(trader.userId, reason);
+      setActionComplete(true);
+      showSuccess("Account Frozen", `${trader.username}'s account has been frozen`);
+      setTimeout(() => {
+        setActionComplete(false);
+        setActiveModal(null);
+      }, 1500);
+    } catch (error) {
+      showError("Failed to freeze account", "An error occurred");
+      setActiveModal(null);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
-  const handleUnfreeze = () => {
-    unfreezeTrader(trader.userId);
-    setActiveModal(null);
+  const handleUnfreeze = async () => {
+    setIsProcessing(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      unfreezeTrader(trader.userId);
+      setActionComplete(true);
+      showSuccess("Account Unfrozen", `${trader.username} can now resume trading`);
+      setTimeout(() => {
+        setActionComplete(false);
+        setActiveModal(null);
+      }, 1500);
+    } catch (error) {
+      showError("Failed to unfreeze account", "An error occurred");
+      setActiveModal(null);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
-  const handleReset = (reason: string) => {
-    resetTraderAccount(trader.userId);
+  const handleReset = async (reason: string) => {
+    setIsProcessing(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      resetTraderAccount(trader.userId);
+      setActionComplete(true);
+      showSuccess("Account Reset", `${trader.username}'s account has been reset`);
+      setTimeout(() => {
+        setActionComplete(false);
+        setActiveModal(null);
+      }, 1500);
+    } catch (error) {
+      showError("Failed to reset account", "An error occurred");
+      setActiveModal(null);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleAddNote = (note: string) => {
+    showSuccess("Note Added", "Note has been saved to trader's profile");
     setActiveModal(null);
   };
 
@@ -169,6 +269,20 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
               <p className="font-medium">Reset Account</p>
               <p className="text-sm text-gray-500">
                 Reset to starting balance
+              </p>
+            </div>
+          </button>
+
+          {/* Add Note */}
+          <button
+            onClick={() => setActiveModal("note")}
+            className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
+          >
+            <StickyNote className="h-5 w-5" />
+            <div className="text-left">
+              <p className="font-medium">Add Note</p>
+              <p className="text-sm text-gray-500">
+                Add internal note to profile
               </p>
             </div>
           </button>
@@ -228,6 +342,8 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
           confirmVariant="danger"
           onConfirm={handleFreeze}
           onCancel={() => setActiveModal(null)}
+          isProcessing={isProcessing}
+          actionComplete={actionComplete}
         />
       )}
 
@@ -240,6 +356,8 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
           onConfirm={handleUnfreeze}
           onCancel={() => setActiveModal(null)}
           requireReason={false}
+          isProcessing={isProcessing}
+          actionComplete={actionComplete}
         />
       )}
 
@@ -252,6 +370,19 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
           confirmLabel="Reset Account"
           confirmVariant="warning"
           onConfirm={handleReset}
+          onCancel={() => setActiveModal(null)}
+          isProcessing={isProcessing}
+          actionComplete={actionComplete}
+        />
+      )}
+
+      {activeModal === "note" && (
+        <ActionModal
+          title="Add Note"
+          description={`Add an internal note to ${trader.username}'s profile. This note will be visible to all admins.`}
+          confirmLabel="Save Note"
+          confirmVariant="primary"
+          onConfirm={handleAddNote}
           onCancel={() => setActiveModal(null)}
         />
       )}

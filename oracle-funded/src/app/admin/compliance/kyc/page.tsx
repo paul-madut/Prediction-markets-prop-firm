@@ -93,6 +93,10 @@ const FilterTabs = ({
   );
 };
 
+interface VerificationChecks {
+  [key: string]: boolean;
+}
+
 export default function KYCQueuePage() {
   const { kycQueue, approveKYC, rejectKYC } = useAdmin();
   const [filter, setFilter] = useState<KYCSubmission["status"] | "all">("all");
@@ -101,6 +105,61 @@ export default function KYCQueuePage() {
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [hoveredRow, setHoveredRow] = useState<string | null>(null);
   const [isLoading] = useState(false); // Can be connected to actual loading state
+  const [verificationChecks, setVerificationChecks] = useState<VerificationChecks>({});
+
+  // Reset verification checks when selecting a new KYC
+  const handleSelectKYC = (kyc: KYCSubmission) => {
+    setSelectedKYC(kyc);
+    setVerificationChecks({});
+  };
+
+  const toggleCheck = (checkId: string) => {
+    setVerificationChecks((prev) => ({
+      ...prev,
+      [checkId]: !prev[checkId],
+    }));
+  };
+
+  // Checklist items based on document types
+  const getChecklistItems = (kyc: KYCSubmission) => {
+    const items: { id: string; label: string; required: boolean }[] = [];
+
+    kyc.documents.forEach((doc) => {
+      switch (doc.type) {
+        case "id_front":
+        case "id_back":
+        case "passport":
+          items.push(
+            { id: `${doc.documentId}_valid`, label: "ID is valid and not expired", required: true },
+            { id: `${doc.documentId}_clear`, label: "Photo is clear and readable", required: true },
+            { id: `${doc.documentId}_name`, label: "Name matches trader profile", required: true }
+          );
+          break;
+        case "proof_of_address":
+          items.push(
+            { id: `${doc.documentId}_recent`, label: "Document is within 3 months", required: true },
+            { id: `${doc.documentId}_address`, label: "Address is clearly visible", required: true },
+            { id: `${doc.documentId}_name_match`, label: "Name matches ID", required: true }
+          );
+          break;
+        case "selfie":
+          items.push(
+            { id: `${doc.documentId}_face`, label: "Face is clearly visible", required: true },
+            { id: `${doc.documentId}_matches`, label: "Face matches ID photo", required: true },
+            { id: `${doc.documentId}_filters`, label: "No filters or editing detected", required: true }
+          );
+          break;
+      }
+    });
+
+    return items;
+  };
+
+  const allChecksCompleted = (kyc: KYCSubmission) => {
+    const items = getChecklistItems(kyc);
+    const requiredItems = items.filter((item) => item.required);
+    return requiredItems.every((item) => verificationChecks[item.id]);
+  };
 
   const filteredQueue =
     filter === "all" ? kycQueue : kycQueue.filter((k) => k.status === filter);
@@ -233,7 +292,7 @@ export default function KYCQueuePage() {
                       <td className="px-6 py-4">
                         <RowActions alwaysVisible={canAction}>
                           <ActionButton
-                            onClick={() => setSelectedKYC(kyc)}
+                            onClick={() => handleSelectKYC(kyc)}
                             icon={Eye}
                             title="Review"
                             variant="primary"
@@ -248,7 +307,7 @@ export default function KYCQueuePage() {
                               />
                               <ActionButton
                                 onClick={() => {
-                                  setSelectedKYC(kyc);
+                                  handleSelectKYC(kyc);
                                   setShowRejectModal(true);
                                 }}
                                 icon={XCircle}
@@ -366,6 +425,82 @@ export default function KYCQueuePage() {
                   </div>
                 </div>
 
+                {/* Verification Checklist */}
+                {(selectedKYC.status === "pending" || selectedKYC.status === "under_review") && (() => {
+                  const checklistItems = getChecklistItems(selectedKYC);
+                  const completedCount = checklistItems.filter((i) => verificationChecks[i.id]).length;
+                  const totalCount = checklistItems.filter((i) => i.required).length;
+                  const progress = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
+
+                  return (
+                    <div>
+                      <h4 className="text-sm font-semibold text-gray-500 uppercase mb-3">
+                        Verification Checklist
+                      </h4>
+                      <div className="space-y-2">
+                        {checklistItems.map((item) => {
+                          const isChecked = verificationChecks[item.id];
+
+                          return (
+                            <motion.button
+                              key={item.id}
+                              onClick={() => toggleCheck(item.id)}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              className={cn(
+                                "w-full flex items-center gap-3 p-3 rounded-lg border transition-all text-left",
+                                isChecked
+                                  ? "bg-green-50 border-green-200"
+                                  : "bg-white border-gray-200 hover:border-gray-300"
+                              )}
+                            >
+                              <div
+                                className={cn(
+                                  "flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-all",
+                                  isChecked
+                                    ? "bg-green-600 border-green-600"
+                                    : "border-gray-300"
+                                )}
+                              >
+                                {isChecked && <CheckCircle className="h-3.5 w-3.5 text-white" />}
+                              </div>
+                              <span
+                                className={cn(
+                                  "text-sm font-medium transition-colors",
+                                  isChecked ? "text-green-900" : "text-gray-700"
+                                )}
+                              >
+                                {item.label}
+                              </span>
+                            </motion.button>
+                          );
+                        })}
+                      </div>
+
+                      {/* Progress Bar */}
+                      <div className="mt-4">
+                        <div className="flex items-center justify-between text-sm mb-2">
+                          <span className="text-gray-600">Verification Progress</span>
+                          <span className="font-semibold text-gray-900">
+                            {completedCount}/{totalCount} checks completed
+                          </span>
+                        </div>
+                        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${progress}%` }}
+                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                            className={cn(
+                              "h-full rounded-full transition-colors",
+                              progress === 100 ? "bg-green-600" : "bg-indigo-600"
+                            )}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+
                 {/* Rejection Reason (if rejected) */}
                 {selectedKYC.rejectionReason && (
                   <motion.div
@@ -401,7 +536,9 @@ export default function KYCQueuePage() {
                     </button>
                     <button
                       onClick={() => handleApprove(selectedKYC.submissionId)}
-                      className="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg transition-colors"
+                      disabled={!allChecksCompleted(selectedKYC)}
+                      className="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      title={!allChecksCompleted(selectedKYC) ? "Complete all verification checks first" : ""}
                     >
                       Approve
                     </button>
