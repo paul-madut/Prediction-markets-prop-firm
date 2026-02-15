@@ -145,7 +145,7 @@ export default function HelpPage() {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
           <a
-            href="/rules"
+            href="/dashboard/rules"
             className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all"
           >
             <FileText className="h-8 w-8 mx-auto mb-2 text-blue-600" />
@@ -155,7 +155,7 @@ export default function HelpPage() {
             </p>
           </a>
           <a
-            href="/analytics"
+            href="/dashboard/analytics"
             className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all"
           >
             <BookOpen className="h-8 w-8 mx-auto mb-2 text-blue-600" />
@@ -165,7 +165,7 @@ export default function HelpPage() {
             </p>
           </a>
           <a
-            href="/settings"
+            href="/dashboard/settings"
             className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all"
           >
             <HelpCircle className="h-8 w-8 mx-auto mb-2 text-blue-600" />

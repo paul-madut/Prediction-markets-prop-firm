@@ -179,14 +179,14 @@ const PnLCalendar = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">P&L Calendar</h3>
-        <div className="flex items-center gap-4">
+    <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <h3 className="text-base sm:text-lg font-semibold text-gray-900">P&L Calendar</h3>
+        <div className="flex items-center gap-2 sm:gap-4">
           <div className="flex bg-gray-100 rounded-lg p-1">
             <button
               onClick={() => setViewMode("month")}
-              className={`px-3 py-1 text-sm rounded-md transition ${
+              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md transition ${
                 viewMode === "month" ? "bg-white shadow text-gray-900" : "text-gray-500"
               }`}
             >
@@ -194,46 +194,47 @@ const PnLCalendar = () => {
             </button>
             <button
               onClick={() => setViewMode("year")}
-              className={`px-3 py-1 text-sm rounded-md transition ${
+              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md transition ${
                 viewMode === "year" ? "bg-white shadow text-gray-900" : "text-gray-500"
               }`}
             >
               Year
             </button>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             <button
               onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
               className="p-1 hover:bg-gray-100 rounded"
             >
-              <ChevronLeft className="w-5 h-5 text-gray-500" />
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
             </button>
-            <span className="text-sm font-medium text-gray-700 min-w-[100px] text-center">
+            <span className="text-xs sm:text-sm font-medium text-gray-700 min-w-[80px] sm:min-w-[100px] text-center">
               {format(currentMonth, "yyyy-MM")}
             </span>
             <button
               onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
               className="p-1 hover:bg-gray-100 rounded"
             >
-              <ChevronRight className="w-5 h-5 text-gray-500" />
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
             </button>
           </div>
         </div>
       </div>
 
       {/* Day headers */}
-      <div className="grid grid-cols-7 gap-1 mb-1">
-        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-          <div key={day} className="text-center text-sm font-medium text-gray-500 py-2">
-            {day}
+      <div className="grid grid-cols-7 gap-0.5 sm:gap-1 mb-1">
+        {["S", "M", "T", "W", "T", "F", "S"].map((day, i) => (
+          <div key={`${day}-${i}`} className="text-center text-[10px] sm:text-sm font-medium text-gray-500 py-1 sm:py-2">
+            <span className="hidden sm:inline">{["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][i]}</span>
+            <span className="sm:hidden">{day}</span>
           </div>
         ))}
       </div>
 
       {/* Calendar grid */}
-      <div className="grid grid-cols-7 gap-1">
+      <div className="grid grid-cols-7 gap-0.5 sm:gap-1">
         {paddingDays.map((_, index) => (
-          <div key={`padding-${index}`} className="h-20 bg-gray-50/50 rounded-lg" />
+          <div key={`padding-${index}`} className="h-12 sm:h-20 bg-gray-50/50 rounded-md sm:rounded-lg" />
         ))}
         {days.map((day) => {
           const dateKey = format(day, "yyyy-MM-dd");
@@ -244,7 +245,7 @@ const PnLCalendar = () => {
           return (
             <div
               key={dateKey}
-              className={`h-20 rounded-lg border p-1.5 relative ${
+              className={`h-12 sm:h-20 rounded-md sm:rounded-lg border p-1 sm:p-1.5 relative ${
                 isToday ? "border-blue-500 border-2" : "border-gray-100"
               } ${
                 hasData
@@ -254,21 +255,21 @@ const PnLCalendar = () => {
                   : "bg-white"
               }`}
             >
-              <div className="text-xs text-gray-400 mb-0.5">{format(day, "d")}</div>
+              <div className="text-[10px] sm:text-xs text-gray-400 mb-0.5">{format(day, "d")}</div>
               {hasData && (
                 <>
                   <div
-                    className={`text-sm font-bold ${
+                    className={`text-[10px] sm:text-sm font-bold ${
                       dayData.pnl >= 0 ? "text-green-600" : "text-red-600"
                     }`}
                   >
                     {dayData.pnl >= 0 ? "+" : ""}
                     {formatPnL(dayData.pnl)}
                   </div>
-                  <div className="text-xs text-gray-400">
+                  <div className="hidden sm:block text-xs text-gray-400">
                     {dayData.trades} trade{dayData.trades > 1 ? "s" : ""}
                   </div>
-                  <div className="text-xs text-gray-300">${(dayData.volume / 100).toFixed(0)}</div>
+                  <div className="hidden sm:block text-xs text-gray-300">${(dayData.volume / 100).toFixed(0)}</div>
                 </>
               )}
             </div>
@@ -312,37 +313,37 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       {/* Demo Mode Banner */}
-      <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg px-3 sm:px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
           <div className="flex items-center gap-2 px-2.5 py-1 bg-amber-100 rounded-full">
             <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-            <span className="text-xs font-semibold text-amber-700 uppercase tracking-wide">Demo Mode</span>
+            <span className="text-xs font-semibold text-amber-700 uppercase tracking-wide">Demo</span>
           </div>
-          <span className="text-sm text-amber-800">
-            You&apos;re viewing sample data. This dashboard is fully customizable for your brand.
+          <span className="text-xs sm:text-sm text-amber-800">
+            Sample data. Fully customizable for your brand.
           </span>
         </div>
         <Link
-          href="/for-firms"
-          className="text-sm font-medium text-amber-700 hover:text-amber-900 underline underline-offset-2"
+          href="/"
+          className="text-xs sm:text-sm font-medium text-amber-700 hover:text-amber-900 underline underline-offset-2 flex-shrink-0"
         >
-          Learn about whitelabeling
+          Learn more
         </Link>
       </div>
 
       {/* Account Selector Bar */}
       <TextureCard>
-        <TextureCardContent className="py-4 px-6">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-5">
+        <TextureCardContent className="py-3 sm:py-4 px-4 sm:px-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+            <div className="flex items-center gap-3 sm:gap-5">
               {/* Account Size */}
-              <button className="flex items-center gap-3 group">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm">
-                  <DollarSign className="w-5 h-5 text-white" />
+              <button className="flex items-center gap-2 sm:gap-3 group">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm">
+                  <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
                 <div className="text-left">
                   <div className="text-[10px] uppercase tracking-wider text-gray-400 font-medium">Account Size</div>
-                  <div className="text-xl font-bold text-gray-900">
+                  <div className="text-lg sm:text-xl font-bold text-gray-900">
                     <AnimatedNumber
                       value={user.accountSize / 100}
                       format={(v) => `$${v.toLocaleString()}`}
@@ -356,7 +357,7 @@ export default function Dashboard() {
               <div className="h-10 w-px bg-gradient-to-b from-transparent via-gray-200 to-transparent hidden sm:block" />
 
               {/* Inline Status Items */}
-              <div className="flex items-center gap-4 text-sm">
+              <div className="hidden sm:flex items-center gap-4 text-sm">
                 <div className="flex items-center gap-1.5">
                   <Calendar className="w-3.5 h-3.5 text-gray-400" />
                   <span className="text-gray-500">{formatDate(user.challengeStartDate, "MMM dd, yyyy")}</span>
@@ -384,8 +385,26 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Account ID */}
-            <code className="text-xs font-mono text-gray-400 bg-gray-50 px-3 py-1.5 rounded-md border border-gray-100">
+            {/* Mobile status row */}
+            <div className="flex sm:hidden items-center gap-3 text-xs">
+              <div className="flex items-center gap-1.5">
+                <div className={`w-2 h-2 rounded-full ${
+                  user.accountPhase === "funded" ? "bg-green-500" : "bg-blue-500"
+                } animate-pulse`} />
+                <span className={`font-medium ${
+                  user.accountPhase === "funded" ? "text-green-600" : "text-blue-600"
+                }`}>
+                  {user.accountPhase === "evaluation_1" ? "Phase 1" : user.accountPhase === "evaluation_2" ? "Phase 2" : "Funded"}
+                </span>
+              </div>
+              <span className="text-gray-300">|</span>
+              <span className="text-gray-500">90% split</span>
+              <span className="text-gray-300">|</span>
+              <code className="font-mono text-gray-400">PFLP8QMCPA</code>
+            </div>
+
+            {/* Account ID - Desktop */}
+            <code className="hidden sm:block text-xs font-mono text-gray-400 bg-gray-50 px-3 py-1.5 rounded-md border border-gray-100">
               PFLP8QMCPA
             </code>
           </div>
@@ -408,13 +427,13 @@ export default function Dashboard() {
                 </h2>
                 <div className="flex items-center gap-3">
                   <TextureButton variant="primary" size="lg" asChild>
-                    <Link href="/new-challenge">
+                    <Link href="/dashboard/new-challenge">
                       <Rocket className="w-5 h-5" />
                       Get Funded
                     </Link>
                   </TextureButton>
                   <TextureButton variant="secondary" size="lg" asChild>
-                    <Link href="/markets">
+                    <Link href="/dashboard/markets">
                       <BarChart3 className="w-5 h-5" />
                       Browse Markets
                     </Link>
@@ -566,7 +585,7 @@ export default function Dashboard() {
           <TextureCardContent>
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-900">Objectives</h3>
-              <Link href="/rules" className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
+              <Link href="/dashboard/rules" className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
                 View Rules
                 <ChevronRight className="w-4 h-4" />
               </Link>
@@ -791,28 +810,28 @@ export default function Dashboard() {
       {/* Tabs Section - Full Width */}
       <TextureCard interactive={false}>
       <Tabs.Root defaultValue="calendar">
-        <Tabs.List className="flex border-b border-gray-200 px-4">
+        <Tabs.List className="flex border-b border-gray-200 px-2 sm:px-4 overflow-x-auto">
           <Tabs.Trigger
             value="statistics"
-            className="px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600"
+            className="px-2.5 sm:px-4 py-3 text-xs sm:text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600 whitespace-nowrap"
           >
             Statistics
           </Tabs.Trigger>
           <Tabs.Trigger
             value="journal"
-            className="px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600"
+            className="px-2.5 sm:px-4 py-3 text-xs sm:text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600 whitespace-nowrap"
           >
-            Trading Journal
+            Journal
           </Tabs.Trigger>
           <Tabs.Trigger
             value="calendar"
-            className="px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600"
+            className="px-2.5 sm:px-4 py-3 text-xs sm:text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600 whitespace-nowrap"
           >
-            P&L Calendar
+            Calendar
           </Tabs.Trigger>
           <Tabs.Trigger
             value="rules"
-            className="px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600"
+            className="px-2.5 sm:px-4 py-3 text-xs sm:text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600 whitespace-nowrap"
           >
             Rules
           </Tabs.Trigger>
