@@ -32,37 +32,37 @@ export const Sidebar = () => {
   const mainLinks = [
     {
       label: "Dashboard",
-      href: "/",
+      href: "/dashboard",
       icon: <Home />,
     },
     {
       label: "New Challenge",
-      href: "/new-challenge",
+      href: "/dashboard/new-challenge",
       icon: <PlusCircle />,
     },
     {
       label: "Markets",
-      href: "/markets",
+      href: "/dashboard/markets",
       icon: <TrendingUp />,
     },
     {
       label: "Portfolio",
-      href: "/portfolio",
+      href: "/dashboard/portfolio",
       icon: <Briefcase />,
     },
     {
       label: "History",
-      href: "/history",
+      href: "/dashboard/history",
       icon: <History />,
     },
     {
       label: "Analytics",
-      href: "/analytics",
+      href: "/dashboard/analytics",
       icon: <BarChart3 />,
     },
     {
       label: "Rules",
-      href: "/rules",
+      href: "/dashboard/rules",
       icon: <FileText />,
     },
   ];
@@ -70,12 +70,12 @@ export const Sidebar = () => {
   const bottomLinks = [
     {
       label: "Help",
-      href: "/help",
+      href: "/dashboard/help",
       icon: <HelpCircle />,
     },
     {
       label: "Settings",
-      href: "/settings",
+      href: "/dashboard/settings",
       icon: <Settings />,
     },
   ];
@@ -104,7 +104,7 @@ export const Sidebar = () => {
           {/* Get Funded CTA */}
           <div className={cn("px-3", !open && "flex justify-center px-0")}>
             <Link
-              href="/new-challenge"
+              href="/dashboard/new-challenge"
               className={cn(
                 "flex items-center justify-center rounded-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-md hover:shadow-lg",
                 open ? "w-full py-3 px-4 gap-2" : "h-10 w-10"
@@ -165,7 +165,7 @@ export const Sidebar = () => {
 export const Logo = ({ open }: { open: boolean }) => {
   return (
     <Link
-      href="/"
+      href="/dashboard"
       className="font-normal flex space-x-2 items-center text-sm py-1 relative z-20 mb-2"
     >
       <div className="h-6 w-6 bg-gradient-to-br from-blue-600 to-blue-700 rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />

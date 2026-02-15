@@ -9,15 +9,15 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 
 const pageTitles: Record<string, string> = {
-  "/": "Dashboard",
-  "/new-challenge": "New Challenge",
-  "/markets": "Markets",
-  "/portfolio": "Portfolio",
-  "/history": "Trade History",
-  "/analytics": "Analytics",
-  "/rules": "Rules",
-  "/settings": "Settings",
-  "/help": "Help Center",
+  "/dashboard": "Dashboard",
+  "/dashboard/new-challenge": "New Challenge",
+  "/dashboard/markets": "Markets",
+  "/dashboard/portfolio": "Portfolio",
+  "/dashboard/history": "Trade History",
+  "/dashboard/analytics": "Analytics",
+  "/dashboard/rules": "Rules",
+  "/dashboard/settings": "Settings",
+  "/dashboard/help": "Help Center",
 };
 
 export const TopBar = () => {
@@ -119,7 +119,7 @@ export const TopBar = () => {
 
         {/* Settings */}
         <Link
-          href="/settings"
+          href="/dashboard/settings"
           className="p-2 hover:bg-gray-100 hover:scale-110 hover:rotate-45 rounded-lg transition-all duration-300"
         >
           <Settings size={20} className="text-gray-600" />
@@ -128,7 +128,7 @@ export const TopBar = () => {
         {/* Profile Section */}
         <div className="flex items-center gap-3 pl-3 border-l border-gray-200">
           {/* Avatar - Clickable */}
-          <Link href="/settings">
+          <Link href="/dashboard/settings">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-semibold cursor-pointer hover:shadow-lg hover:scale-105 transition-all">
               {user.username.charAt(0).toUpperCase()}
             </div>

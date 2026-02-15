@@ -95,7 +95,7 @@ const marketStats = [
   { value: "24/7", label: "Trading Hours" },
 ];
 
-export default function ForFirmsPage() {
+export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -105,7 +105,7 @@ export default function ForFirmsPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/for-firms" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
               <div className="h-8 w-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">OF</span>
               </div>
@@ -118,10 +118,10 @@ export default function ForFirmsPage() {
               <a href="#customization" className="text-sm text-gray-600 hover:text-gray-900 transition">Customization</a>
               <a href="#process" className="text-sm text-gray-600 hover:text-gray-900 transition">Process</a>
               <Link
-                href="/"
+                href="/login"
                 className="text-sm text-gray-600 hover:text-gray-900 transition"
               >
-                View Demo
+                Sign In
               </Link>
             </nav>
 
@@ -155,7 +155,7 @@ export default function ForFirmsPage() {
             <a href="#features" className="block text-gray-600 hover:text-gray-900">Features</a>
             <a href="#customization" className="block text-gray-600 hover:text-gray-900">Customization</a>
             <a href="#process" className="block text-gray-600 hover:text-gray-900">Process</a>
-            <Link href="/" className="block text-gray-600 hover:text-gray-900">View Demo</Link>
+            <Link href="/login" className="block text-gray-600 hover:text-gray-900">Sign In</Link>
             <Link
               href="mailto:hello@oraclefunded.com"
               className="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-lg font-medium"
@@ -195,7 +195,7 @@ export default function ForFirmsPage() {
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                href="/"
+                href="/register"
                 className="btn-hover px-8 py-3 bg-white text-gray-700 rounded-lg font-semibold hover:bg-gray-50 hover:scale-105 hover:shadow-lg transition-all duration-200 border border-gray-200 flex items-center gap-2"
               >
                 <BarChart3 className="w-4 h-4" />
@@ -384,10 +384,10 @@ export default function ForFirmsPage() {
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                href="/"
+                href="/register"
                 className="btn-hover px-8 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-400 hover:scale-105 transition-all duration-200 border border-blue-400"
               >
-                Explore the Dashboard
+                Get Started Free
               </Link>
             </div>
           </section>
@@ -408,8 +408,8 @@ export default function ForFirmsPage() {
               Whitelabel prediction market prop firm technology
             </p>
             <div className="flex items-center gap-6">
-              <Link href="/" className="text-sm text-gray-600 hover:text-gray-900 transition">
-                Demo Dashboard
+              <Link href="/register" className="text-sm text-gray-600 hover:text-gray-900 transition">
+                Get Started
               </Link>
               <Link href="mailto:hello@oraclefunded.com" className="text-sm text-gray-600 hover:text-gray-900 transition">
                 Contact

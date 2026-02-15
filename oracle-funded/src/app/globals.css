@@ -113,6 +113,7 @@
   --color-warning: var(--color-warning-500);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+  --shadow-input: 0px 2px 3px -1px rgba(0, 0, 0, 0.1), 0px 1px 0px 0px rgba(25, 28, 33, 0.02), 0px 0px 0px 1px rgba(25, 28, 33, 0.08);
 }
 
 /* ============================================
@@ -315,4 +316,36 @@ body {
 ::selection {
   background-color: var(--color-primary-100);
   color: var(--color-primary-900);
+}
+
+/* ============================================
+   MOBILE RESPONSIVENESS
+   ============================================ */
+
+/* Prevent horizontal overflow on mobile */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Better touch targets on mobile */
+@media (max-width: 768px) {
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Smaller text on mobile for dense data */
+  .recharts-text {
+    font-size: 10px !important;
+  }
+
+  /* Better table scrolling */
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Stack horizontal elements */
+  .mobile-stack {
+    flex-direction: column;
+  }
 }
