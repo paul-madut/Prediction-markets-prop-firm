@@ -7,14 +7,6 @@ import { RuleCard } from "@/components/rules/RuleCard";
 export default function HelpPage() {
   return (
     <div className="space-y-10 max-w-7xl mx-auto">
-      {/* Page Header */}
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">Help Center</h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Get the support you need to succeed with OracleFunded
-        </p>
-      </div>
-
       {/* Help Categories */}
       <div className="space-y-6">
         <h2 className="text-2xl font-bold text-gray-900 text-center">

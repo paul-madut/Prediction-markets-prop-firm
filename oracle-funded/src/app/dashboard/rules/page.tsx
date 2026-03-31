@@ -2,7 +2,7 @@
 
 import React from "react";
 import { DollarSign } from "lucide-react";
-import { motion } from "framer-motion";
+
 import { RuleCard } from "@/components/rules/RuleCard";
 import { FAQAccordion } from "@/components/rules/FAQAccordion";
 import { SectionHeader } from "@/components/rules/SectionHeader";
@@ -49,41 +49,6 @@ export default function RulesPage() {
       <SectionNav sections={sections} />
 
       <div className="space-y-16 md:space-y-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        {/* Page Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="text-center pt-4"
-        >
-          {/* Decorative background element */}
-          <div className="absolute inset-x-0 top-0 h-96 overflow-hidden pointer-events-none">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-green-500/10 rounded-full blur-3xl" />
-          </div>
-
-          <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="relative"
-          >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500 bg-clip-text text-transparent mb-4">
-              Challenge Rules
-            </h1>
-            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-              Everything you need to know about our evaluation process
-            </p>
-          </motion.div>
-
-          {/* Decorative divider */}
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: "6rem" }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="mx-auto mt-8 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-full"
-          />
-        </motion.div>
-
         {/* Challenge Phases */}
         <section id="phases" className="space-y-8 scroll-mt-20">
           <SectionHeader
