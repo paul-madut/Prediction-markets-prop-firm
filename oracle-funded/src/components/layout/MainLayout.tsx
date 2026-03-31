@@ -6,7 +6,6 @@ import { TopBar } from "./TopBar";
 import { PageTransition } from "./PageTransition";
 import { LoadingOverlay } from "@/components/ui/loader";
 import { useApp } from "@/context/AppContext";
-import { AnimatePresence } from "framer-motion";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -16,7 +15,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
   const { loadingState } = useApp();
 
   return (
-    <div className="flex h-screen bg-white">
+    <div className="flex flex-col md:flex-row h-screen bg-white">
       {/* Sidebar */}
       <Sidebar />
 
@@ -26,12 +25,10 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
         <TopBar />
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
-          <AnimatePresence mode="wait">
-            <PageTransition>
-              {children}
-            </PageTransition>
-          </AnimatePresence>
+        <main className="flex-1 overflow-y-auto bg-gray-50 p-4 md:p-6">
+          <PageTransition>
+            {children}
+          </PageTransition>
         </main>
       </div>
 

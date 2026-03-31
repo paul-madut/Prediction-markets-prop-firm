@@ -102,14 +102,6 @@ export default function AnalyticsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
-        <p className="text-gray-500">
-          Detailed performance metrics and insights
-        </p>
-      </div>
-
       {/* Primary Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <TextureCard>

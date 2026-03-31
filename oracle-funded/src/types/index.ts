@@ -146,6 +146,7 @@ export interface AppContextType {
 
   // Markets
   markets: Market[];
+  marketsLoading: boolean;
   getMarketByTicker: (ticker: string) => Market | undefined;
 
   // Positions
