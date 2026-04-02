@@ -281,13 +281,10 @@ const PnLCalendar = () => {
 };
 
 export default function Dashboard() {
-  const { user, equityHistory, trades } = useApp();
+  const { user, equityHistory, trades, positions } = useApp();
 
   // Calculate stats
   const todaysProfit = 12690; // Mock for today's profit in cents
-  const maxPermittedLoss = Math.abs(user.maxDrawdownLimit * user.startingBalance);
-  const todaysPermittedLoss = Math.abs(user.dailyDrawdownLimit * user.peakBalance);
-
   // Calculate highest and lowest volume from trades
   const highestVolume = trades.reduce(
     (max, trade) => Math.max(max, trade.shares * trade.entryPrice),
@@ -481,28 +478,28 @@ export default function Dashboard() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <TextureCard>
               <TextureCardContent className="px-4 py-6">
-                <div className="text-xs text-green-600 font-medium mb-2">Equity</div>
+                <div className="text-xs text-green-600 font-medium mb-2">Account Balance</div>
                 <div className="text-xl font-bold text-gray-900">{formatCurrency(user.accountBalance)}</div>
               </TextureCardContent>
             </TextureCard>
             <TextureCard>
               <TextureCardContent className="px-4 py-6">
-                <div className="text-xs text-green-600 font-medium mb-2">Balance</div>
-                <div className="text-xl font-bold text-gray-900">{formatCurrency(user.accountBalance)}</div>
-              </TextureCardContent>
-            </TextureCard>
-            <TextureCard>
-              <TextureCardContent className="px-4 py-6">
-                <div className="text-xs text-blue-600 font-medium mb-2">Min. Trading Days</div>
-                <div className="text-xl font-bold text-gray-900">
-                  {user.tradingDaysCompleted}/{user.tradingDaysRequired}
+                <div className="text-xs text-blue-600 font-medium mb-2">Today&apos;s P&L</div>
+                <div className={`text-xl font-bold ${todaysProfit >= 0 ? "text-green-600" : "text-red-600"}`}>
+                  {todaysProfit >= 0 ? "+" : ""}{formatCurrency(todaysProfit)}
                 </div>
               </TextureCardContent>
             </TextureCard>
             <TextureCard>
               <TextureCardContent className="px-4 py-6">
-                <div className="text-xs text-amber-600 font-medium mb-2">Win Ratio</div>
-                <div className="text-xl font-bold text-gray-900">{formatPercent(user.winRate, 0)}</div>
+                <div className="text-xs text-purple-600 font-medium mb-2">Open Positions</div>
+                <div className="text-xl font-bold text-gray-900">{positions.length}</div>
+              </TextureCardContent>
+            </TextureCard>
+            <TextureCard>
+              <TextureCardContent className="px-4 py-6">
+                <div className="text-xs text-amber-600 font-medium mb-2">Total Trades</div>
+                <div className="text-xl font-bold text-gray-900">{trades.length}</div>
               </TextureCardContent>
             </TextureCard>
           </div>
@@ -554,31 +551,6 @@ export default function Dashboard() {
             </ResponsiveContainer>
           </TextureCardContent>
           </TextureCard>
-
-          {/* P&L Boxes */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <TextureCard>
-              <TextureCardContent className="p-4">
-                <div className="text-sm text-gray-500 mb-1">Max permitted loss</div>
-                <div className="text-2xl font-bold text-red-600">{formatCurrency(maxPermittedLoss)}</div>
-              </TextureCardContent>
-            </TextureCard>
-            <TextureCard>
-              <TextureCardContent className="p-4">
-                <div className="text-sm text-gray-500 mb-1">Today&apos;s permitted loss</div>
-                <div className="text-2xl font-bold text-amber-600">{formatCurrency(todaysPermittedLoss)}</div>
-              </TextureCardContent>
-            </TextureCard>
-            <TextureCard>
-              <TextureCardContent className="p-4">
-                <div className="text-sm text-gray-500 mb-1">Today&apos;s profit</div>
-                <div className="text-2xl font-bold text-green-600">
-                  {todaysProfit >= 0 ? "+" : ""}
-                  {formatCurrency(todaysProfit)}
-                </div>
-              </TextureCardContent>
-            </TextureCard>
-          </div>
 
           {/* Objectives */}
           <TextureCard interactive={false}>
@@ -730,13 +702,6 @@ export default function Dashboard() {
                   Start
                 </div>
                 <div className="font-medium text-gray-900">{formatDate(user.challengeStartDate, "MM/dd/yyyy")}</div>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-gray-500">
-                  <div className="w-2 h-2 rounded-full bg-purple-500"></div>
-                  Account Size
-                </div>
-                <div className="font-medium text-gray-900">{formatCurrency(user.accountSize)}</div>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-gray-500">
