@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -166,9 +167,9 @@ export const Logo = ({ open }: { open: boolean }) => {
   return (
     <Link
       href="/dashboard"
-      className="font-normal flex space-x-2 items-center text-sm py-1 relative z-20 mb-2"
+      className="font-normal flex space-x-2 items-center text-sm py-1 pl-3 relative z-20 mb-2"
     >
-      <div className="h-6 w-6 bg-gradient-to-br from-blue-600 to-blue-700 rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+      <Image src="/logo.png" alt="OracleFunded" width={24} height={24} className="flex-shrink-0" />
       <motion.span
         animate={{
           opacity: open ? 1 : 0,

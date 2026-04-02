@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
@@ -82,9 +83,7 @@ export const AdminSidebar = () => {
       {/* Header */}
       <div className="p-4 flex items-center justify-between border-b border-slate-800">
         <Link href="/admin" className="flex items-center gap-3">
-          <div className="h-8 w-8 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center">
-            <Shield className="h-5 w-5 text-white" />
-          </div>
+          <Image src="/logo.png" alt="OracleFunded" width={32} height={32} />
           <motion.span
             animate={{ opacity: open ? 1 : 0, width: open ? "auto" : 0 }}
             transition={{ duration: 0.2 }}
