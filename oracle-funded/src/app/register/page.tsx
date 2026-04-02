@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -56,9 +57,7 @@ export default function RegisterPage() {
         <div className="relative z-10 flex flex-col justify-between p-12 w-full">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <div className="h-10 w-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/25">
-              <span className="text-white font-bold text-lg">OF</span>
-            </div>
+            <Image src="/logo.png" alt="OracleFunded" width={40} height={40} className="shadow-lg shadow-blue-500/25" />
             <span className="font-bold text-2xl text-white">OracleFunded</span>
           </Link>
 
@@ -126,9 +125,7 @@ export default function RegisterPage() {
         >
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2 mb-8">
-            <div className="h-9 w-9 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">OF</span>
-            </div>
+            <Image src="/logo.png" alt="OracleFunded" width={36} height={36} />
             <span className="font-bold text-xl text-gray-900">OracleFunded</span>
           </div>
 

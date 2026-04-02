@@ -37,15 +37,11 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     message: undefined,
   });
   const [marketsLoaded, setMarketsLoaded] = useState(false);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // Fetch real markets from Polymarket API
-  const fetchMarkets = useCallback(async (showLoader = false) => {
+  const fetchMarkets = useCallback(async () => {
     try {
-      // Only show blocking loader on initial load when we have no real data
-      if (showLoader && isInitialLoad) {
-        setLoadingState({ isLoading: true, message: "Loading markets..." });
-      }
+      // Markets loading is now handled by skeleton loaders on the page
 
       const response = await fetch("/api/markets?limit=100");
       const data = await response.json();
@@ -62,25 +58,21 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       console.error("Failed to fetch markets, using mock data:", error);
       setMarkets(mockMarkets);
     } finally {
-      if (isInitialLoad) {
-        setLoadingState({ isLoading: false });
-        setIsInitialLoad(false);
-      }
       setMarketsLoaded(true);
     }
-  }, [isInitialLoad]);
+  }, []);
 
-  // Fetch markets on mount (with blocking loader)
+  // Fetch markets on mount
   useEffect(() => {
     if (!marketsLoaded) {
-      fetchMarkets(true);
+      fetchMarkets();
     }
   }, [marketsLoaded, fetchMarkets]);
 
   // Background refresh markets periodically (every 5 minutes)
   useEffect(() => {
     const interval = setInterval(() => {
-      fetchMarkets(false); // Silent background refresh
+      fetchMarkets(); // Silent background refresh
     }, 300000); // 5 minutes
 
     return () => clearInterval(interval);
@@ -278,6 +270,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     updateAccountBalance,
     setUser,
     markets,
+    marketsLoading: !marketsLoaded,
     getMarketByTicker,
     positions,
     addPosition,

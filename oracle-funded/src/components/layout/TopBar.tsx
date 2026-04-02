@@ -78,12 +78,12 @@ export const TopBar = () => {
   };
 
   return (
-    <div className="h-16 bg-white border-b border-gray-200 px-6 flex items-center justify-between">
+    <div className="h-14 sm:h-16 bg-white border-b border-gray-200 px-3 sm:px-6 flex items-center justify-between">
       {/* Page Title */}
-      <h1 className="text-lg font-semibold text-gray-900">{pageTitle}</h1>
+      <h1 className="text-base sm:text-lg font-semibold text-gray-900 truncate">{pageTitle}</h1>
 
       {/* Actions and Profile */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3">
         {/* Notification Bell */}
         <div className="relative" ref={notificationRef}>
           <button
@@ -105,7 +105,7 @@ export const TopBar = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
+                className="absolute right-0 mt-2 w-72 sm:w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
               >
                 <div className="p-4 border-b border-gray-200">
                   <h3 className="font-semibold text-gray-900">Notifications</h3>
@@ -143,21 +143,21 @@ export const TopBar = () => {
         {/* Settings */}
         <Link
           href="/dashboard/settings"
-          className="p-2 hover:bg-gray-100 hover:scale-110 hover:rotate-45 rounded-lg transition-all duration-300"
+          className="hidden sm:flex p-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
           <Settings size={20} className="text-gray-600" />
         </Link>
 
         {/* Profile Section */}
-        <div className="relative pl-3 border-l border-gray-200" ref={profileRef}>
+        <div className="relative pl-2 sm:pl-3 border-l border-gray-200" ref={profileRef}>
           <button
             onClick={() => setShowProfileMenu(!showProfileMenu)}
-            className="flex items-center gap-3 hover:bg-gray-50 rounded-lg px-2 py-1.5 transition-colors"
+            className="flex items-center gap-2 sm:gap-3 hover:bg-gray-50 rounded-lg px-1.5 sm:px-2 py-1.5 transition-colors"
           >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-semibold">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-semibold text-sm sm:text-base">
               {user.username.charAt(0).toUpperCase()}
             </div>
-            <div className="flex flex-col text-left">
+            <div className="hidden sm:flex flex-col text-left">
               <span className="text-sm font-semibold text-gray-900">
                 {user.username}
               </span>
@@ -168,7 +168,7 @@ export const TopBar = () => {
             <ChevronDown
               size={16}
               className={cn(
-                "text-gray-400 transition-transform duration-200",
+                "hidden sm:block text-gray-400 transition-transform duration-200",
                 showProfileMenu && "rotate-180"
               )}
             />

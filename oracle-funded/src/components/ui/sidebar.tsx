@@ -119,44 +119,54 @@ export const MobileSidebar = ({
   const { open, setOpen } = useSidebar();
   return (
     <>
+      {/* Mobile top bar with hamburger */}
       <div
         className={cn(
-          "h-10 px-4 py-4 flex flex-row md:hidden items-center justify-between bg-white w-full border-b border-gray-200"
+          "h-12 px-4 flex flex-row md:hidden items-center bg-white w-full border-b border-gray-200"
         )}
         {...props}
       >
-        <div className="flex justify-end z-20 w-full">
-          <Menu
-            className="text-neutral-800"
-            onClick={() => setOpen(!open)}
-          />
-        </div>
-        <AnimatePresence>
-          {open && (
+        <button
+          className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+          onClick={() => setOpen(!open)}
+        >
+          <Menu className="text-neutral-800 w-5 h-5" />
+        </button>
+      </div>
+
+      {/* Overlay + slide-in drawer */}
+      <AnimatePresence>
+        {open && (
+          <>
             <motion.div
-              initial={{ x: "-100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "-100%", opacity: 0 }}
-              transition={{
-                duration: 0.3,
-                ease: "easeInOut",
-              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/40 z-[99] md:hidden"
+              onClick={() => setOpen(false)}
+            />
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
               className={cn(
-                "fixed h-full w-full inset-0 bg-white p-10 z-[100] flex flex-col justify-between",
+                "fixed h-full w-72 inset-y-0 left-0 bg-white p-6 z-[100] flex flex-col justify-between shadow-xl md:hidden",
                 className
               )}
             >
-              <div
-                className="absolute right-10 top-10 z-50 text-neutral-800 cursor-pointer"
-                onClick={() => setOpen(!open)}
+              <button
+                className="absolute right-4 top-4 p-1.5 rounded-lg hover:bg-gray-100 transition-colors text-neutral-800"
+                onClick={() => setOpen(false)}
               >
-                <X />
-              </div>
+                <X className="w-5 h-5" />
+              </button>
               {children}
             </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 };
@@ -170,7 +180,7 @@ export const SidebarLink = ({
   className?: string;
   props?: LinkProps;
 }) => {
-  const { open, animate } = useSidebar();
+  const { open, setOpen, animate } = useSidebar();
   const pathname = usePathname();
 
   // Check if this is the current page
@@ -179,6 +189,12 @@ export const SidebarLink = ({
   return (
     <Link
       href={link.href}
+      onClick={() => {
+        // Only close sidebar on mobile (md breakpoint = 768px)
+        if (window.innerWidth < 768) {
+          setOpen(false);
+        }
+      }}
       className={cn(
         "flex items-center gap-3 group/sidebar py-3 rounded-lg relative",
         "hover:bg-gray-100",

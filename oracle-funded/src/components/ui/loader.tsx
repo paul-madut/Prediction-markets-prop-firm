@@ -69,42 +69,14 @@ export const Loader = ({
   return (
     <div className={cn("flex items-center justify-center", className)}>
       <motion.div
-        className={cn("relative flex items-center justify-center", config.container)}
-      >
-        {[...Array(3)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-full h-full rounded-full border-4 border-blue-600 border-t-transparent"
-            animate={{
-              rotate: 360,
-              scale: [1, 1.05, 1],
-            }}
-            transition={{
-              duration: 1.2,
-              repeat: Infinity,
-              ease: "linear",
-              delay: i * 0.15,
-            }}
-            style={{
-              opacity: 1 - i * 0.25,
-            }}
-          />
-        ))}
-
-        {/* Center dot */}
-        <motion.div
-          className="absolute w-2 h-2 rounded-full bg-blue-600"
-          animate={{
-            scale: [1, 1.5, 1],
-            opacity: [1, 0.5, 1],
-          }}
-          transition={{
-            duration: 1.2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      </motion.div>
+        className={cn("rounded-full border-4 border-blue-600 border-t-transparent", config.container)}
+        animate={{ rotate: 360 }}
+        transition={{
+          duration: 0.8,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
     </div>
   );
 };
