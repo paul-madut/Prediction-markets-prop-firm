@@ -75,14 +75,6 @@ export default function PortfolioPage() {
 
   return (
     <div className="space-y-6">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Portfolio</h1>
-        <p className="text-gray-500">
-          Manage your open positions and track performance
-        </p>
-      </div>
-
       {/* Summary Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <TextureCard>

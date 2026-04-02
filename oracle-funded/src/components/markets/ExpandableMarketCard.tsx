@@ -13,27 +13,22 @@ import { cn } from "@/lib/utils";
 
 interface MarketCardProps {
   market: Market;
-  layoutId: string;
   onClick: () => void;
 }
 
-export const MarketCard = ({ market, layoutId, onClick }: MarketCardProps) => {
+export const MarketCard = ({ market, onClick }: MarketCardProps) => {
   const yesPercentage = market.yes_ask;
 
   return (
-    <motion.div
-      layoutId={layoutId}
+    <div
       onClick={onClick}
-      className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+      className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow cursor-pointer"
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3 sm:gap-4">
         {/* Image and Category Row */}
         <div className="flex items-start gap-3">
           {/* Market Image */}
-          <motion.div
-            layoutId={`image-${market.ticker}-${layoutId}`}
-            className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100"
-          >
+          <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
             {market.image ? (
               <Image
                 src={market.image}
@@ -44,46 +39,34 @@ export const MarketCard = ({ market, layoutId, onClick }: MarketCardProps) => {
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-                <BarChart3 className="w-6 h-6 text-white" />
+                <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             )}
-          </motion.div>
+          </div>
 
           <div className="flex-1 flex items-center justify-between">
-            <motion.span
-              layoutId={`category-${market.ticker}-${layoutId}`}
-              className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800"
-            >
+            <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800">
               {market.category}
-            </motion.span>
+            </span>
             {market.featured && (
-              <motion.span
-                layoutId={`featured-${market.ticker}-${layoutId}`}
-                className="flex items-center gap-1 text-xs text-orange-600"
-              >
+              <span className="flex items-center gap-1 text-xs text-orange-600">
                 <TrendingUp size={14} />
                 Featured
-              </motion.span>
+              </span>
             )}
           </div>
         </div>
 
         {/* Market Title */}
-        <motion.h3
-          layoutId={`title-${market.ticker}-${layoutId}`}
-          className="text-lg font-semibold text-gray-900 line-clamp-2"
-        >
+        <h3 className="text-base sm:text-lg font-semibold text-gray-900 line-clamp-2">
           {market.title}
-        </motion.h3>
+        </h3>
 
         {/* YES Probability */}
         <div>
-          <motion.div
-            layoutId={`probability-${market.ticker}-${layoutId}`}
-            className="text-3xl font-bold text-blue-600 mb-2"
-          >
+          <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2">
             YES: {yesPercentage}%
-          </motion.div>
+          </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
               className="bg-blue-600 h-2 rounded-full transition-all"
@@ -104,17 +87,16 @@ export const MarketCard = ({ market, layoutId, onClick }: MarketCardProps) => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 interface MarketModalProps {
   market: Market;
-  layoutId: string;
   onClose: () => void;
 }
 
-export const MarketModal = ({ market, layoutId, onClose }: MarketModalProps) => {
+export const MarketModal = ({ market, onClose }: MarketModalProps) => {
   const { executeTrade, user } = useApp();
   const [side, setSide] = useState<"yes" | "no">("yes");
   const [stakeAmount, setStakeAmount] = useState<string>("100");
@@ -142,17 +124,16 @@ export const MarketModal = ({ market, layoutId, onClose }: MarketModalProps) => 
 
   return (
     <motion.div
-      layoutId={layoutId}
-      className="w-full max-w-2xl max-h-[90vh] flex flex-col bg-white rounded-3xl overflow-y-auto shadow-2xl"
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.15 }}
+      className="w-full max-w-2xl max-h-[90vh] flex flex-col bg-white rounded-2xl sm:rounded-3xl overflow-y-auto shadow-2xl"
     >
       {/* Header with Image, Category and Featured */}
-      <div className="p-6 border-b border-gray-200">
-        <div className="flex items-start gap-4 mb-4">
+      <div className="p-4 sm:p-6 border-b border-gray-200">
+        <div className="flex items-start gap-3 sm:gap-4 mb-4">
           {/* Market Image */}
-          <motion.div
-            layoutId={`image-${market.ticker}-${layoutId}`}
-            className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100"
-          >
+          <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
             {market.image ? (
               <Image
                 src={market.image}
@@ -163,49 +144,37 @@ export const MarketModal = ({ market, layoutId, onClose }: MarketModalProps) => 
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-                <BarChart3 className="w-8 h-8 text-white" />
+                <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
             )}
-          </motion.div>
+          </div>
 
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between mb-2">
-              <motion.span
-                layoutId={`category-${market.ticker}-${layoutId}`}
-                className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800"
-              >
+              <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800">
                 {market.category}
-              </motion.span>
+              </span>
               {market.featured && (
-                <motion.span
-                  layoutId={`featured-${market.ticker}-${layoutId}`}
-                  className="flex items-center gap-1 text-xs text-orange-600"
-                >
+                <span className="flex items-center gap-1 text-xs text-orange-600">
                   <TrendingUp size={14} />
                   Featured
-                </motion.span>
+                </span>
               )}
             </div>
 
-            <motion.h2
-              layoutId={`title-${market.ticker}-${layoutId}`}
-              className="text-2xl font-bold text-gray-900"
-            >
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
               {market.title}
-            </motion.h2>
+            </h2>
           </div>
         </div>
 
-        <motion.div
-          layoutId={`probability-${market.ticker}-${layoutId}`}
-          className="text-4xl font-bold text-blue-600 mt-4"
-        >
+        <div className="text-3xl sm:text-4xl font-bold text-blue-600 mt-4">
           YES: {market.yes_ask}%
-        </motion.div>
+        </div>
       </div>
 
       {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 sm:space-y-6">
         {/* Current Prices */}
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-green-50 p-4 rounded-lg border border-green-200">

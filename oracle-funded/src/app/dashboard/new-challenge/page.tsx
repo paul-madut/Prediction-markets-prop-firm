@@ -39,15 +39,10 @@ export default function NewChallengePage() {
 
   return (
     <div className="space-y-10 max-w-7xl mx-auto">
-      {/* Page Header */}
-      <div className="text-center space-y-3">
-        <h1 className="text-4xl font-bold text-gray-900">
-          Choose Your Challenge Path
-        </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Select the evaluation style that matches your trading approach. Each challenge type offers different requirements and pricing structures.
-        </p>
-      </div>
+      {/* Subtitle */}
+      <p className="text-center text-gray-600 max-w-2xl mx-auto">
+        Select the evaluation style that matches your trading approach. Each challenge type offers different requirements and pricing structures.
+      </p>
 
       {/* Account Size Selector - Synced across all cards */}
       <div className="flex justify-center">
