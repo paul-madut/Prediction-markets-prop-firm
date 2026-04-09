@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 interface Links {
@@ -42,7 +42,7 @@ export const SidebarProvider = ({
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   animate?: boolean;
 }) => {
-  const [openState, setOpenState] = useState(false);
+  const [openState, setOpenState] = useState(true);
 
   const open = openProp !== undefined ? openProp : openState;
   const setOpen = setOpenProp !== undefined ? setOpenProp : setOpenState;
@@ -90,7 +90,7 @@ export const DesktopSidebar = ({
   return (
     <motion.div
       className={cn(
-        "h-full py-4 hidden md:flex md:flex-col bg-white flex-shrink-0 border-r border-gray-200",
+        "h-full py-4 hidden md:flex md:flex-col bg-white flex-shrink-0 border-r border-gray-200 relative",
         className
       )}
       animate={{
@@ -102,11 +102,19 @@ export const DesktopSidebar = ({
         duration: 0.3,
         ease: [0.4, 0, 0.2, 1],
       }}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
       {...props}
     >
-      {children}
+      <button
+        onClick={() => setOpen(!open)}
+        className="absolute -right-3 top-6 z-50 flex h-6 w-6 items-center justify-center rounded-full border border-gray-200 bg-white shadow-sm hover:bg-gray-100 transition-colors"
+      >
+        {open ? (
+          <PanelLeftClose className="h-3.5 w-3.5 text-gray-600" />
+        ) : (
+          <PanelLeftOpen className="h-3.5 w-3.5 text-gray-600" />
+        )}
+      </button>
+      {children as React.ReactNode}
     </motion.div>
   );
 };
