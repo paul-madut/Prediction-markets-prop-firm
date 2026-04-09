@@ -1,10 +1,28 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { HelpCircle, Mail, MessageCircle, BookOpen, FileText } from "lucide-react";
 import { RuleCard } from "@/components/rules/RuleCard";
+import { CardSkeleton } from "@/components/ui/skeleton";
 
 export default function HelpPage() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (!ready) return (
+    <div className="space-y-6 max-w-7xl mx-auto">
+      <div className="h-8 w-52 mx-auto rounded bg-gray-200 animate-pulse" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <CardSkeleton key={i} lines={2} />
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <div className="space-y-10 max-w-7xl mx-auto">
       {/* Help Categories */}

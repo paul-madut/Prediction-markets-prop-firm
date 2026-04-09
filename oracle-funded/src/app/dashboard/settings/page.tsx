@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
+import { SettingsSkeleton } from "@/components/ui/skeleton";
 import {
   User,
   Bell,
@@ -17,6 +18,13 @@ import {
 export default function SettingsPage() {
   const { user } = useApp();
   const [saved, setSaved] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (!ready) return <SettingsSkeleton />;
 
   const handleSave = () => {
     setSaved(true);

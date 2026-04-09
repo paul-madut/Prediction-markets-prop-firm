@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
+import { NewChallengeSkeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import { ChallengePlan } from "@/types";
 import { ChallengeTypeCard } from "@/components/challenge/ChallengeTypeCard";
@@ -13,11 +14,18 @@ import { ChevronDown } from "lucide-react";
 export default function NewChallengePage() {
   const { plans, challengeTypes, selectPlan } = useApp();
   const router = useRouter();
+  const [ready, setReady] = useState(false);
   const [localSelectedPlan, setLocalSelectedPlan] = useState<ChallengePlan | null>(
     null
   );
   // Global account size state - synced across all cards
   const [selectedAccountSize, setSelectedAccountSize] = useState(5000000);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (!ready) return <NewChallengeSkeleton />;
 
   // Get unique account sizes from all plans
   const accountSizes = [...new Set(plans.map((p) => p.accountSize))].sort(

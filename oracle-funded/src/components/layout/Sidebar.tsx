@@ -10,11 +10,9 @@ import {
   PlusCircle,
   TrendingUp,
   Briefcase,
-  History,
   BarChart3,
   HelpCircle,
   Settings,
-  FileText,
   Rocket,
   Wallet,
 } from "lucide-react";
@@ -53,11 +51,6 @@ export const Sidebar = () => {
       icon: <Briefcase />,
     },
     {
-      label: "History",
-      href: "/dashboard/history",
-      icon: <History />,
-    },
-    {
       label: "Analytics",
       href: "/dashboard/analytics",
       icon: <BarChart3 />,
@@ -66,11 +59,6 @@ export const Sidebar = () => {
       label: "Payouts",
       href: "/dashboard/payouts",
       icon: <Wallet />,
-    },
-    {
-      label: "Rules",
-      href: "/dashboard/rules",
-      icon: <FileText />,
     },
   ];
 

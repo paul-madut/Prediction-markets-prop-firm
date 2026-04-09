@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
+import { PortfolioSkeleton } from "@/components/ui/skeleton";
 import { formatCurrency } from "@/lib/formatters";
 import { calculateUnrealizedPnL } from "@/lib/calculations";
 import { StatefulButton } from "@/components/ui/stateful-button";
@@ -31,6 +32,13 @@ const COLORS = ["#2563eb", "#7c3aed", "#059669", "#d97706", "#dc2626", "#0891b2"
 
 export default function PortfolioPage() {
   const { positions, markets, closePosition, user } = useApp();
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (!ready) return <PortfolioSkeleton />;
 
   const positionsWithData = positions.map((pos) => {
     const market = markets.find((m) => m.ticker === pos.ticker);
