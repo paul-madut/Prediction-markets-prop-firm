@@ -1,12 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
 import { formatCurrency, formatDate } from "@/lib/formatters";
+import { HistorySkeleton } from "@/components/ui/skeleton";
 
 export default function HistoryPage() {
   const { trades } = useApp();
   const [filter, setFilter] = useState<"all" | "won" | "lost" | "sold">("all");
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (!ready) return <HistorySkeleton />;
 
   const filteredTrades = trades.filter((trade) => {
     if (filter === "all") return true;

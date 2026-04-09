@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import Link from "next/link";
 import { useApp } from "@/context/AppContext";
+import { DashboardSkeleton } from "@/components/ui/skeleton";
 import { formatCurrency, formatPercent, formatDate } from "@/lib/formatters";
 import {
   XAxis,
@@ -282,6 +283,13 @@ const PnLCalendar = () => {
 
 export default function Dashboard() {
   const { user, equityHistory, trades, positions } = useApp();
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (!ready) return <DashboardSkeleton />;
 
   // Calculate stats
   const todaysProfit = 12690; // Mock for today's profit in cents

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
+import { PayoutsSkeleton } from "@/components/ui/skeleton";
 import { formatCurrency, formatDate } from "@/lib/formatters";
 import {
   DollarSign,
@@ -124,11 +125,18 @@ const statusConfig: Record<
 
 export default function PayoutsPage() {
   const { user } = useApp();
+  const [ready, setReady] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>("bank_transfer");
   const [requestAmount, setRequestAmount] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [filter, setFilter] = useState<"all" | "pending" | "completed">("all");
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (!ready) return <PayoutsSkeleton />;
 
   const isFunded = user.accountPhase === "funded";
   const profitCents = user.accountBalance - user.startingBalance;

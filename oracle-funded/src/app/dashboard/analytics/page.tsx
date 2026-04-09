@@ -1,7 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useApp } from "@/context/AppContext";
+import { AnalyticsSkeleton } from "@/components/ui/skeleton";
 import { formatCurrency, formatPercent, formatDate } from "@/lib/formatters";
 import { calculateWinRate } from "@/lib/calculations";
 import {
@@ -19,6 +21,7 @@ import {
   ArrowDownRight,
   Activity,
   Zap,
+  ChevronRight,
 } from "lucide-react";
 import {
   AreaChart,
@@ -35,6 +38,13 @@ import {
 
 export default function AnalyticsPage() {
   const { user, trades, equityHistory } = useApp();
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (!ready) return <AnalyticsSkeleton />;
 
   const closedTrades = trades.filter((t) => t.pnl !== 0);
   const winningTrades = closedTrades.filter((t) => t.pnl > 0);
@@ -307,9 +317,15 @@ export default function AnalyticsPage() {
         {/* Trade P&L Distribution */}
         <TextureCard interactive={false}>
           <TextureCardContent className="p-5">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Trade P&L Distribution
-            </h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Trade P&L Distribution
+              </h3>
+              <Link href="/dashboard/history" className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
+                View Trade History
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
             <div className="h-[250px] sm:h-[280px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={tradeDistribution}>

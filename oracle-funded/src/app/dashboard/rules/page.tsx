@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { CardSkeleton } from "@/components/ui/skeleton";
 import { DollarSign } from "lucide-react";
 
 import { RuleCard } from "@/components/rules/RuleCard";
@@ -44,6 +45,20 @@ const faqItems = [
 ];
 
 export default function RulesPage() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (!ready) return (
+    <div className="space-y-6 max-w-4xl mx-auto">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <CardSkeleton key={i} lines={4} />
+      ))}
+    </div>
+  );
+
   return (
     <>
       <SectionNav sections={sections} />
