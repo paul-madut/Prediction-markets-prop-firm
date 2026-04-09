@@ -16,6 +16,7 @@ import {
   Settings,
   FileText,
   Rocket,
+  Wallet,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { cn } from "@/lib/utils";
@@ -60,6 +61,11 @@ export const Sidebar = () => {
       label: "Analytics",
       href: "/dashboard/analytics",
       icon: <BarChart3 />,
+    },
+    {
+      label: "Payouts",
+      href: "/dashboard/payouts",
+      icon: <Wallet />,
     },
     {
       label: "Rules",
