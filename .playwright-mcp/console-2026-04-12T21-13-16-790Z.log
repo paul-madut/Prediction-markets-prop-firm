@@ -1,0 +1,20 @@
+[     178ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[     233ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[     348ms] [WARNING] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[     644ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:3000/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fadmin%2Ffinancials%2Fpayouts:0
+[    1151ms] [LOG] Loaded 2827 markets from Polymarket @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[   78753ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[   78828ms] [LOG] [Fast Refresh] done in 154ms @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[  300726ms] [LOG] Loaded 2828 markets from Polymarket @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[  600777ms] [LOG] Loaded 2852 markets from Polymarket @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[  903557ms] [LOG] Loaded 2839 markets from Polymarket @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[ 1200747ms] [LOG] Loaded 2842 markets from Polymarket @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[ 1337722ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[ 1337779ms] [LOG] [Fast Refresh] done in 158ms @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[ 1338816ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[ 1339139ms] [LOG] [Fast Refresh] done in 424ms @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[ 1500799ms] [LOG] Loaded 2841 markets from Polymarket @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[ 1531429ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[ 1531563ms] [LOG] [Fast Refresh] done in 212ms @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[ 1624659ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297
+[ 1624833ms] [LOG] [Fast Refresh] done in 276ms @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:2297

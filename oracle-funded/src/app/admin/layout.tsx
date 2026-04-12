@@ -23,7 +23,7 @@ export default function AdminLayout({
             <AdminSidebar />
 
             {/* Main Content - offset for sidebar */}
-            <div className="pl-20 lg:pl-[280px] min-h-screen transition-all duration-300">
+            <div className="pl-20 lg:pl-[280px] min-h-screen transition-all duration-300 pb-8">
               <ErrorBoundary>
                 {children}
               </ErrorBoundary>
