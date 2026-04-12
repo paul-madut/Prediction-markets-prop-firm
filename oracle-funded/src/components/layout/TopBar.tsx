@@ -17,6 +17,7 @@ const pageTitles: Record<string, string> = {
   "/dashboard/history": "Trade History",
   "/dashboard/analytics": "Analytics",
   "/dashboard/rules": "Rules",
+  "/dashboard/payouts": "Payouts",
   "/dashboard/settings": "Settings",
   "/dashboard/help": "Help Center",
 };

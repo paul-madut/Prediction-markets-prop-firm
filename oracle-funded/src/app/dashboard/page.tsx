@@ -27,6 +27,14 @@ import {
   BarChart3,
   ChevronLeft,
   ChevronRight,
+  X,
+  Copy,
+  Check,
+  Eye,
+  EyeOff,
+  Server,
+  Globe,
+  Download,
 } from "lucide-react";
 import * as Tabs from "@radix-ui/react-tabs";
 import {
@@ -42,6 +50,334 @@ import {
 import { TextureCard, TextureCardContent, TextureSeparator } from "@/components/ui/texture-card";
 import { TextureButton } from "@/components/ui/texture-button";
 import { AnimatedNumber } from "@/components/ui/animated-number";
+import { AnimatePresence, motion } from "framer-motion";
+
+// Credentials Modal
+const CredentialsModal = ({
+  isOpen,
+  onClose,
+  user,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  user: { userId: string; email: string; accountPhase: string };
+}) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+
+  const credentials = [
+    { label: "Login ID", value: user.userId.toUpperCase(), icon: User2Icon },
+    { label: "Password", value: "••••••••••", secret: "xK9#mP2$vL", icon: Key },
+    { label: "Server", value: "oracle-live-01.webflux.io", icon: Server },
+    { label: "Platform", value: "WebFlux Terminal", icon: Globe },
+  ];
+
+  const copyToClipboard = (field: string, value: string) => {
+    navigator.clipboard.writeText(value);
+    setCopiedField(field);
+    setTimeout(() => setCopiedField(null), 2000);
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center"
+      >
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          onClick={onClose}
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 10 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden"
+        >
+          <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">Account Credentials</h3>
+              <p className="text-sm text-gray-500 mt-0.5">Your trading account access details</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <X className="w-5 h-5 text-gray-400" />
+            </button>
+          </div>
+          <div className="p-6 space-y-4">
+            {credentials.map((cred) => {
+              const isPassword = cred.label === "Password";
+              const displayValue = isPassword
+                ? showPassword
+                  ? cred.secret!
+                  : cred.value
+                : cred.value;
+              const copyValue = isPassword ? cred.secret! : cred.value;
+
+              return (
+                <div key={cred.label} className="bg-gray-50 rounded-xl p-4">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs font-medium text-gray-400 uppercase tracking-wide">
+                      {cred.label}
+                    </span>
+                    <div className="flex items-center gap-1">
+                      {isPassword && (
+                        <button
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="p-1.5 hover:bg-gray-200 rounded-md transition-colors"
+                        >
+                          {showPassword ? (
+                            <EyeOff className="w-3.5 h-3.5 text-gray-400" />
+                          ) : (
+                            <Eye className="w-3.5 h-3.5 text-gray-400" />
+                          )}
+                        </button>
+                      )}
+                      <button
+                        onClick={() => copyToClipboard(cred.label, copyValue)}
+                        className="p-1.5 hover:bg-gray-200 rounded-md transition-colors"
+                      >
+                        {copiedField === cred.label ? (
+                          <Check className="w-3.5 h-3.5 text-green-500" />
+                        ) : (
+                          <Copy className="w-3.5 h-3.5 text-gray-400" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                  <div className="font-mono text-sm font-medium text-gray-900">
+                    {displayValue}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="px-6 pb-6">
+            <button
+              onClick={() => {
+                const allCreds = credentials
+                  .map((c) => `${c.label}: ${c.label === "Password" ? c.secret : c.value}`)
+                  .join("\n");
+                navigator.clipboard.writeText(allCreds);
+                setCopiedField("all");
+                setTimeout(() => setCopiedField(null), 2000);
+              }}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-colors font-medium text-sm"
+            >
+              {copiedField === "all" ? (
+                <>
+                  <Check className="w-4 h-4" />
+                  Copied All Credentials
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4" />
+                  Copy All Credentials
+                </>
+              )}
+            </button>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
+// Placeholder icon for user
+const User2Icon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </svg>
+);
+
+// Share Metrics Modal
+const ShareMetricsModal = ({
+  isOpen,
+  onClose,
+  user,
+  trades,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  user: {
+    username: string;
+    accountBalance: number;
+    startingBalance: number;
+    winRate: number;
+    tradingDaysCompleted: number;
+    currentProfit: number;
+    accountPhase: string;
+  };
+  trades: { pnl: number }[];
+}) => {
+  const [copied, setCopied] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+
+  const totalPnL = trades.reduce((sum, t) => sum + t.pnl, 0);
+  const profitPercent = ((user.accountBalance - user.startingBalance) / user.startingBalance * 100).toFixed(2);
+
+  const shareText = [
+    `${user.username}'s Trading Performance`,
+    ``,
+    `Account Balance: ${formatCurrency(user.accountBalance)}`,
+    `Total P&L: ${totalPnL >= 0 ? "+" : ""}${formatCurrency(totalPnL)}`,
+    `ROI: ${Number(profitPercent) >= 0 ? "+" : ""}${profitPercent}%`,
+    `Win Rate: ${formatPercent(user.winRate, 0)}`,
+    `Trading Days: ${user.tradingDaysCompleted}`,
+    `Status: ${user.accountPhase === "evaluation_1" ? "Phase 1" : user.accountPhase === "evaluation_2" ? "Phase 2" : "Funded"}`,
+    ``,
+    `Powered by OracleFunded`,
+  ].join("\n");
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(shareText);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleDownload = () => {
+    setDownloading(true);
+    const blob = new Blob([shareText], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `trading-metrics-${new Date().toISOString().split("T")[0]}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    setTimeout(() => setDownloading(false), 1000);
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center"
+      >
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          onClick={onClose}
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 10 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden"
+        >
+          <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">Share Metrics</h3>
+              <p className="text-sm text-gray-500 mt-0.5">Share your trading performance</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <X className="w-5 h-5 text-gray-400" />
+            </button>
+          </div>
+
+          {/* Preview Card */}
+          <div className="p-6">
+            <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-xl p-6 text-white">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg">
+                  {user.username.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <div className="font-semibold">{user.username}</div>
+                  <div className="text-xs text-gray-400">
+                    {user.accountPhase === "evaluation_1" ? "Phase 1" : user.accountPhase === "evaluation_2" ? "Phase 2" : "Funded Trader"}
+                  </div>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <div className="text-xs text-gray-400 mb-1">Balance</div>
+                  <div className="text-lg font-bold">{formatCurrency(user.accountBalance)}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-400 mb-1">Total P&L</div>
+                  <div className={`text-lg font-bold ${totalPnL >= 0 ? "text-green-400" : "text-red-400"}`}>
+                    {totalPnL >= 0 ? "+" : ""}{formatCurrency(totalPnL)}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-400 mb-1">Win Rate</div>
+                  <div className="text-lg font-bold">{formatPercent(user.winRate, 0)}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-400 mb-1">ROI</div>
+                  <div className={`text-lg font-bold ${Number(profitPercent) >= 0 ? "text-green-400" : "text-red-400"}`}>
+                    {Number(profitPercent) >= 0 ? "+" : ""}{profitPercent}%
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-700 flex items-center justify-between text-xs text-gray-500">
+                <span>OracleFunded</span>
+                <span>{user.tradingDaysCompleted} trading days</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="px-6 pb-6 flex gap-3">
+            <button
+              onClick={handleCopy}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-colors font-medium text-sm"
+            >
+              {copied ? (
+                <>
+                  <Check className="w-4 h-4" />
+                  Copied!
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4" />
+                  Copy Text
+                </>
+              )}
+            </button>
+            <button
+              onClick={handleDownload}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium text-sm"
+            >
+              {downloading ? (
+                <>
+                  <Check className="w-4 h-4" />
+                  Downloaded!
+                </>
+              ) : (
+                <>
+                  <Download className="w-4 h-4" />
+                  Download
+                </>
+              )}
+            </button>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
 
 // Mock P&L calendar data
 const mockPnLCalendarData: Record<string, { pnl: number; trades: number; volume: number }> = {
@@ -284,6 +620,8 @@ const PnLCalendar = () => {
 export default function Dashboard() {
   const { user, equityHistory, trades, positions } = useApp();
   const [ready, setReady] = useState(false);
+  const [showCredentials, setShowCredentials] = useState(false);
+  const [showShareMetrics, setShowShareMetrics] = useState(false);
 
   useEffect(() => {
     setReady(true);
@@ -483,15 +821,15 @@ export default function Dashboard() {
         {/* Left Column - Chart and Stats */}
         <div className="lg:col-span-2 space-y-6">
           {/* Key Metrics Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <TextureCard>
-              <TextureCardContent className="px-4 py-6">
+              <TextureCardContent className="px-4 py-5">
                 <div className="text-xs text-green-600 font-medium mb-2">Account Balance</div>
                 <div className="text-xl font-bold text-gray-900">{formatCurrency(user.accountBalance)}</div>
               </TextureCardContent>
             </TextureCard>
             <TextureCard>
-              <TextureCardContent className="px-4 py-6">
+              <TextureCardContent className="px-4 py-5">
                 <div className="text-xs text-blue-600 font-medium mb-2">Today&apos;s P&L</div>
                 <div className={`text-xl font-bold ${todaysProfit >= 0 ? "text-green-600" : "text-red-600"}`}>
                   {todaysProfit >= 0 ? "+" : ""}{formatCurrency(todaysProfit)}
@@ -499,13 +837,13 @@ export default function Dashboard() {
               </TextureCardContent>
             </TextureCard>
             <TextureCard>
-              <TextureCardContent className="px-4 py-6">
+              <TextureCardContent className="px-4 py-5">
                 <div className="text-xs text-purple-600 font-medium mb-2">Open Positions</div>
                 <div className="text-xl font-bold text-gray-900">{positions.length}</div>
               </TextureCardContent>
             </TextureCard>
             <TextureCard>
-              <TextureCardContent className="px-4 py-6">
+              <TextureCardContent className="px-4 py-5">
                 <div className="text-xs text-amber-600 font-medium mb-2">Total Trades</div>
                 <div className="text-xl font-bold text-gray-900">{trades.length}</div>
               </TextureCardContent>
@@ -694,9 +1032,9 @@ export default function Dashboard() {
         <div className="space-y-6">
           {/* Account Data Card */}
           <TextureCard>
-          <TextureCardContent className="p-8">
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Account Data</h3>
-            <div className="space-y-5">
+          <TextureCardContent className="p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Data</h3>
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-gray-500">
                   <div className="w-2 h-2 rounded-full bg-green-500"></div>
@@ -724,31 +1062,39 @@ export default function Dashboard() {
               </div>
             </div>
 
-           
-            <div className="h-px bg-gray-200 w-full my-6" />
+            <div className="h-px bg-gray-200 w-full my-5" />
 
             {/* Action Buttons */}
-            <div className="mt-8 space-y-3">
-              <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium">
+            <div className="space-y-2.5">
+              <button
+                onClick={() => setShowCredentials(true)}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium"
+              >
                 <Key className="w-4 h-4" />
                 Credentials
               </button>
-              <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium">
+              <button
+                onClick={() => setShowShareMetrics(true)}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium"
+              >
                 <Share2 className="w-4 h-4" />
                 Share Metrics
               </button>
-              <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium">
+              <Link
+                href="/dashboard/payouts"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium"
+              >
                 <DollarSign className="w-4 h-4" />
                 Request Payout
-              </button>
+              </Link>
             </div>
           </TextureCardContent>
           </TextureCard>
 
           {/* Volume Stats */}
           <TextureCard>
-          <TextureCardContent>
-            <div className="flex items-center gap-2 mb-4">
+          <TextureCardContent className="p-6">
+            <div className="flex items-center gap-2 mb-3">
               <TrendingUp className="w-5 h-5 text-gray-500" />
               <h3 className="text-sm font-medium text-gray-500">Volume</h3>
             </div>
@@ -767,12 +1113,12 @@ export default function Dashboard() {
 
           {/* Time Since First Trade */}
           <TextureCard>
-          <TextureCardContent>
-            <div className="flex items-center gap-2 mb-4">
+          <TextureCardContent className="p-6">
+            <div className="flex items-center gap-2 mb-3">
               <Clock className="w-5 h-5 text-gray-500" />
               <h3 className="text-sm font-medium text-gray-500">Time since first trade</h3>
             </div>
-            <div className="h-px bg-gray-200 w-full mb-4" />
+            <div className="h-px bg-gray-200 w-full mb-3" />
             <TimeSinceCounter startDate={user.challengeStartDate} />
           </TextureCardContent>
           </TextureCard>
@@ -899,6 +1245,19 @@ export default function Dashboard() {
         </Tabs.Content>
       </Tabs.Root>
       </TextureCard>
+
+      {/* Modals */}
+      <CredentialsModal
+        isOpen={showCredentials}
+        onClose={() => setShowCredentials(false)}
+        user={user}
+      />
+      <ShareMetricsModal
+        isOpen={showShareMetrics}
+        onClose={() => setShowShareMetrics(false)}
+        user={user}
+        trades={trades}
+      />
     </div>
   );
 }
