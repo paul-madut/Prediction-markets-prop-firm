@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import { cn } from "@/lib/utils";
 
 interface FAQItem {
@@ -59,7 +59,7 @@ export const FAQAccordion = ({ items }: FAQAccordionProps) => {
                     : "bg-gray-100 text-gray-500"
                 )}
               >
-                <ChevronDown className="w-5 h-5" />
+                <ChevronDownIcon className="w-5 h-5" />
               </motion.div>
             </button>
 

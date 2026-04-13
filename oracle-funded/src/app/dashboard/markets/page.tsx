@@ -8,7 +8,7 @@ import { MarketFilters } from "@/components/markets/MarketFilters";
 import { MarketCard, MarketModal } from "@/components/markets/ExpandableMarketCard";
 import { MarketCardSkeleton } from "@/components/markets/MarketCardSkeleton";
 import { useOutsideClick } from "@/hooks/use-outside-click";
-import { X } from "lucide-react";
+import { XMarkIcon } from "@heroicons/react/16/solid";
 
 export default function MarketsPage() {
   const { markets, marketsLoading } = useApp();
@@ -107,7 +107,7 @@ export default function MarketsPage() {
                 className="flex absolute top-3 right-3 sm:top-4 sm:right-4 items-center justify-center bg-white rounded-full h-10 w-10 shadow-lg z-[110] hover:bg-gray-100 transition-colors"
                 onClick={() => setActiveMarket(null)}
               >
-                <X className="h-5 w-5 text-gray-700" />
+                <XMarkIcon className="h-5 w-5 text-gray-700" />
               </button>
 
               <div ref={ref} className="w-full max-w-2xl">

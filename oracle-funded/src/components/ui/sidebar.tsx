@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { Bars3Icon, XMarkIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from "@heroicons/react/16/solid";
 import { usePathname } from "next/navigation";
 
 interface Links {
@@ -109,9 +109,9 @@ export const DesktopSidebar = ({
         className="absolute -right-3 top-6 z-50 flex h-6 w-6 items-center justify-center rounded-full border border-gray-200 bg-white shadow-sm hover:bg-gray-100 transition-colors"
       >
         {open ? (
-          <PanelLeftClose className="h-3.5 w-3.5 text-gray-600" />
+          <ChevronDoubleLeftIcon className="h-3.5 w-3.5 text-gray-600" />
         ) : (
-          <PanelLeftOpen className="h-3.5 w-3.5 text-gray-600" />
+          <ChevronDoubleRightIcon className="h-3.5 w-3.5 text-gray-600" />
         )}
       </button>
       {children as React.ReactNode}
@@ -138,7 +138,7 @@ export const MobileSidebar = ({
           className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
           onClick={() => setOpen(!open)}
         >
-          <Menu className="text-neutral-800 w-5 h-5" />
+          <Bars3Icon className="text-neutral-800 w-5 h-5" />
         </button>
       </div>
 
@@ -168,7 +168,7 @@ export const MobileSidebar = ({
                 className="absolute right-4 top-4 p-1.5 rounded-lg hover:bg-gray-100 transition-colors text-neutral-800"
                 onClick={() => setOpen(false)}
               >
-                <X className="w-5 h-5" />
+                <XMarkIcon className="w-5 h-5" />
               </button>
               {children}
             </motion.div>

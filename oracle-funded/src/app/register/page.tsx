@@ -8,15 +8,7 @@ import { motion } from "framer-motion";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import {
-  Eye,
-  EyeOff,
-  Wallet,
-  Check,
-  TrendingUp,
-  Shield,
-  Zap,
-} from "lucide-react";
+import { EyeIcon, EyeSlashIcon, WalletIcon, CheckIcon, ArrowTrendingUpIcon, ShieldCheckIcon, BoltIcon } from "@heroicons/react/16/solid";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -77,17 +69,17 @@ export default function RegisterPage() {
             <div className="space-y-4">
               {[
                 {
-                  icon: TrendingUp,
+                  icon: ArrowTrendingUpIcon,
                   title: "Trade with Our Capital",
                   description: "Accounts up to $250K. Keep up to 90% of your profits.",
                 },
                 {
-                  icon: Shield,
+                  icon: ShieldCheckIcon,
                   title: "No Risk to Your Money",
                   description: "Only risk your challenge fee. We take the market risk.",
                 },
                 {
-                  icon: Zap,
+                  icon: BoltIcon,
                   title: "Fast Payouts",
                   description: "Withdraw your profits anytime. No minimum holding periods.",
                 },
@@ -171,9 +163,9 @@ export default function RegisterPage() {
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition z-10"
                 >
                   {showPassword ? (
-                    <EyeOff className="w-4 h-4" />
+                    <EyeSlashIcon className="w-4 h-4" />
                   ) : (
-                    <Eye className="w-4 h-4" />
+                    <EyeIcon className="w-4 h-4" />
                   )}
                 </button>
               </div>
@@ -197,7 +189,7 @@ export default function RegisterPage() {
                             : "bg-gray-100 text-gray-400"
                         )}
                       >
-                        <Check className="w-2.5 h-2.5" />
+                        <CheckIcon className="w-2.5 h-2.5" />
                       </div>
                       <span
                         className={cn(
@@ -283,7 +275,7 @@ export default function RegisterPage() {
                 className="group/btn relative flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-300 hover:shadow-md transition-all duration-200"
                 type="button"
               >
-                <Wallet className="h-4 w-4 text-blue-500" />
+                <WalletIcon className="h-4 w-4 text-blue-500" />
                 <span className="text-sm">Wallet</span>
                 <BottomGradient />
               </button>

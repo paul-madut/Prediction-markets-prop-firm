@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Keyboard, Command } from "lucide-react";
+import { XMarkIcon, CommandLineIcon } from "@heroicons/react/16/solid";
 import { cn } from "@/lib/utils";
 
 interface Shortcut {
@@ -96,7 +96,7 @@ export default function KeyboardShortcutsHelp() {
         className="fixed bottom-6 right-6 z-40 p-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-lg transition-colors"
         title="Keyboard shortcuts (?)"
       >
-        <Keyboard className="h-5 w-5" />
+        <CommandLineIcon className="h-5 w-5" />
       </motion.button>
 
       {/* Modal */}
@@ -130,11 +130,11 @@ export default function KeyboardShortcutsHelp() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-indigo-100 rounded-lg">
-                      <Command className="h-5 w-5 text-indigo-600" />
+                      <CommandLineIcon className="h-5 w-5 text-indigo-600" />
                     </div>
                     <div>
                       <h2 className="text-xl font-semibold text-gray-900">
-                        Keyboard Shortcuts
+                        CommandLineIcon Shortcuts
                       </h2>
                       <p className="text-sm text-gray-500">
                         Quick reference for keyboard navigation
@@ -145,7 +145,7 @@ export default function KeyboardShortcutsHelp() {
                     onClick={() => setIsOpen(false)}
                     className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                   >
-                    <X className="h-5 w-5" />
+                    <XMarkIcon className="h-5 w-5" />
                   </button>
                 </div>
               </div>

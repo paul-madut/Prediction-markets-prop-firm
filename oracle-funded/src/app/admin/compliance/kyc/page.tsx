@@ -3,16 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import {
-  UserCheck,
-  CheckCircle,
-  XCircle,
-  Eye,
-  ArrowLeft,
-  FileText,
-  Calendar,
-  MapPin,
-} from "lucide-react";
+import { UserIcon, CheckCircleIcon, XCircleIcon, EyeIcon, ArrowLeftIcon, DocumentTextIcon, CalendarIcon, MapPinIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
 import { cn } from "@/lib/utils";
 import { KYCSubmission } from "@/types/admin";
@@ -46,7 +37,7 @@ const DocumentVerifiedBadge = ({ verified }: { verified: boolean }) => (
   >
     {verified ? (
       <>
-        <CheckCircle className="h-3 w-3" />
+        <CheckCircleIcon className="h-3 w-3" />
         Verified
       </>
     ) : (
@@ -187,11 +178,11 @@ export default function KYCQueuePage() {
             href="/admin/compliance"
             className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeftIcon className="h-5 w-5" />
           </Link>
           <div className="flex items-center gap-4">
             <div className="p-3 bg-amber-100 rounded-xl">
-              <UserCheck className="h-6 w-6 text-amber-600" />
+              <UserIcon className="h-6 w-6 text-amber-600" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
@@ -279,7 +270,7 @@ export default function KYCQueuePage() {
                       <td className="px-6 py-4 text-gray-900">{kyc.country}</td>
                       <td className="px-6 py-4">
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">
-                          <FileText className="h-3.5 w-3.5" />
+                          <DocumentTextIcon className="h-3.5 w-3.5" />
                           {kyc.documents.length} docs
                         </span>
                       </td>
@@ -293,7 +284,7 @@ export default function KYCQueuePage() {
                         <RowActions alwaysVisible={canAction}>
                           <ActionButton
                             onClick={() => handleSelectKYC(kyc)}
-                            icon={Eye}
+                            icon={EyeIcon}
                             title="Review"
                             variant="primary"
                           />
@@ -301,7 +292,7 @@ export default function KYCQueuePage() {
                             <>
                               <ActionButton
                                 onClick={() => handleApprove(kyc.submissionId)}
-                                icon={CheckCircle}
+                                icon={CheckCircleIcon}
                                 title="Approve"
                                 variant="success"
                               />
@@ -310,7 +301,7 @@ export default function KYCQueuePage() {
                                   handleSelectKYC(kyc);
                                   setShowRejectModal(true);
                                 }}
-                                icon={XCircle}
+                                icon={XCircleIcon}
                                 title="Reject"
                                 variant="danger"
                               />
@@ -375,7 +366,7 @@ export default function KYCQueuePage() {
                     <div>
                       <p className="text-sm text-gray-500">Date of Birth</p>
                       <p className="font-medium text-gray-900 flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-gray-400" />
+                        <CalendarIcon className="h-4 w-4 text-gray-400" />
                         {selectedKYC.dateOfBirth}
                       </p>
                     </div>
@@ -388,7 +379,7 @@ export default function KYCQueuePage() {
                     <div>
                       <p className="text-sm text-gray-500">Address</p>
                       <p className="font-medium text-gray-900 flex items-center gap-2">
-                        <MapPin className="h-4 w-4 text-gray-400" />
+                        <MapPinIcon className="h-4 w-4 text-gray-400" />
                         {selectedKYC.address}
                       </p>
                     </div>
@@ -410,7 +401,7 @@ export default function KYCQueuePage() {
                       >
                         <div className="flex items-center gap-3">
                           <div className="p-2 bg-white rounded-lg shadow-sm">
-                            <FileText className="h-5 w-5 text-gray-500" />
+                            <DocumentTextIcon className="h-5 w-5 text-gray-500" />
                           </div>
                           <div>
                             <p className="font-medium text-gray-900 capitalize">
@@ -462,7 +453,7 @@ export default function KYCQueuePage() {
                                     : "border-gray-300"
                                 )}
                               >
-                                {isChecked && <CheckCircle className="h-3.5 w-3.5 text-white" />}
+                                {isChecked && <CheckCircleIcon className="h-3.5 w-3.5 text-white" />}
                               </div>
                               <span
                                 className={cn(

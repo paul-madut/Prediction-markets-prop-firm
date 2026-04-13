@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { FileText, ArrowLeft, Search, Filter } from "lucide-react";
+import { DocumentTextIcon, ArrowLeftIcon, MagnifyingGlassIcon, FunnelIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
 import { cn } from "@/lib/utils";
 
@@ -38,7 +38,7 @@ export default function AuditLogsPage() {
   // Get unique resources for filter
   const resources = Array.from(new Set(auditLogs.map((log) => log.resource)));
 
-  // Filter logs
+  // FunnelIcon logs
   const filteredLogs = auditLogs.filter((log) => {
     const matchesSearch =
       !searchQuery ||
@@ -61,11 +61,11 @@ export default function AuditLogsPage() {
             href="/admin/compliance"
             className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeftIcon className="h-5 w-5" />
           </Link>
           <div className="flex items-center gap-4">
             <div className="p-3 bg-blue-100 rounded-xl">
-              <FileText className="h-6 w-6 text-blue-600" />
+              <DocumentTextIcon className="h-6 w-6 text-blue-600" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Audit Logs</h1>
@@ -79,9 +79,9 @@ export default function AuditLogsPage() {
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4">
-        {/* Search */}
+        {/* MagnifyingGlassIcon */}
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
           <input
             type="text"
             placeholder="Search by actor, action, or resource ID..."
@@ -91,7 +91,7 @@ export default function AuditLogsPage() {
           />
         </div>
 
-        {/* Resource Filter */}
+        {/* Resource FunnelIcon */}
         <select
           value={resourceFilter}
           onChange={(e) => setResourceFilter(e.target.value)}

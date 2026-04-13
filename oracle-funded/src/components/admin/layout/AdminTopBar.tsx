@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Bell, Search, RefreshCw } from "lucide-react";
+import { BellIcon, MagnifyingGlassIcon, ArrowPathIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
 import { formatCurrency } from "@/lib/formatters";
 
@@ -38,19 +38,19 @@ export const AdminTopBar = ({ title, subtitle }: AdminTopBarProps) => {
           </div>
         </div>
 
-        {/* Search */}
+        {/* MagnifyingGlassIcon */}
         <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-          <Search className="h-5 w-5" />
+          <MagnifyingGlassIcon className="h-5 w-5" />
         </button>
 
         {/* Refresh */}
         <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-          <RefreshCw className="h-5 w-5" />
+          <ArrowPathIcon className="h-5 w-5" />
         </button>
 
         {/* Notifications */}
         <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors relative">
-          <Bell className="h-5 w-5" />
+          <BellIcon className="h-5 w-5" />
           {(dashboardStats.activeAlerts > 0 || dashboardStats.pendingKYC > 0) && (
             <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full" />
           )}

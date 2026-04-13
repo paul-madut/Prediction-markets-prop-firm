@@ -3,13 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import {
-  DollarSign,
-  CheckCircle,
-  XCircle,
-  Eye,
-  ArrowLeft,
-} from "lucide-react";
+import { CurrencyDollarIcon, CheckCircleIcon, XCircleIcon, EyeIcon, ArrowLeftIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
 import { formatCurrency } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
@@ -107,11 +101,11 @@ export default function PayoutsPage() {
             href="/admin/financials"
             className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeftIcon className="h-5 w-5" />
           </Link>
           <div className="flex items-center gap-4">
             <div className="p-3 bg-green-100 rounded-xl">
-              <DollarSign className="h-6 w-6 text-green-600" />
+              <CurrencyDollarIcon className="h-6 w-6 text-green-600" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Payout Queue</h1>
@@ -228,19 +222,19 @@ export default function PayoutsPage() {
                           <RowActions alwaysVisible>
                             <ActionButton
                               onClick={() => approvePayout(payout.payoutId)}
-                              icon={CheckCircle}
+                              icon={CheckCircleIcon}
                               title="Approve"
                               variant="success"
                             />
                             <ActionButton
                               onClick={() => setRejectingId(payout.payoutId)}
-                              icon={XCircle}
+                              icon={XCircleIcon}
                               title="Reject"
                               variant="danger"
                             />
                             <ActionButton
                               href={`/admin/traders/${payout.traderId}`}
-                              icon={Eye}
+                              icon={EyeIcon}
                               title="View Trader"
                               variant="default"
                             />
@@ -249,7 +243,7 @@ export default function PayoutsPage() {
                           <RowActions>
                             <ActionButton
                               href={`/admin/traders/${payout.traderId}`}
-                              icon={Eye}
+                              icon={EyeIcon}
                               title="View Trader"
                               variant="default"
                             />

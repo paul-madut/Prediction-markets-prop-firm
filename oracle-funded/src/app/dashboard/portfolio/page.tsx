@@ -10,16 +10,7 @@ import {
   TextureCard,
   TextureCardContent,
 } from "@/components/ui/texture-card";
-import {
-  TrendingUp,
-  TrendingDown,
-  Briefcase,
-  DollarSign,
-  BarChart3,
-  PieChart,
-  ArrowUpRight,
-  ArrowDownRight,
-} from "lucide-react";
+import { ArrowTrendingUpIcon, ArrowTrendingDownIcon, BriefcaseIcon, CurrencyDollarIcon, ChartBarIcon, ChartPieIcon, ArrowUpRightIcon, ArrowDownRightIcon } from "@heroicons/react/16/solid";
 import {
   PieChart as RechartsPie,
   Pie,
@@ -89,7 +80,7 @@ export default function PortfolioPage() {
           <TextureCardContent className="p-4 sm:p-5">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                <Briefcase className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                <BriefcaseIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
               </div>
               <span className="text-xs sm:text-sm text-gray-500">Positions</span>
             </div>
@@ -108,7 +99,7 @@ export default function PortfolioPage() {
           <TextureCardContent className="p-4 sm:p-5">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-purple-50 flex items-center justify-center">
-                <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
+                <CurrencyDollarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
               </div>
               <span className="text-xs sm:text-sm text-gray-500">Exposure</span>
             </div>
@@ -130,9 +121,9 @@ export default function PortfolioPage() {
                 className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg ${totalUnrealizedPnL >= 0 ? "bg-green-50" : "bg-red-50"} flex items-center justify-center`}
               >
                 {totalUnrealizedPnL >= 0 ? (
-                  <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
+                  <ArrowTrendingUpIcon className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
                 ) : (
-                  <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />
+                  <ArrowTrendingDownIcon className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />
                 )}
               </div>
               <span className="text-xs sm:text-sm text-gray-500">Unrealized P&L</span>
@@ -147,9 +138,9 @@ export default function PortfolioPage() {
               className={`flex items-center gap-1 text-xs mt-1 ${totalPnLPercent >= 0 ? "text-green-600" : "text-red-600"}`}
             >
               {totalPnLPercent >= 0 ? (
-                <ArrowUpRight className="w-3 h-3" />
+                <ArrowUpRightIcon className="w-3 h-3" />
               ) : (
-                <ArrowDownRight className="w-3 h-3" />
+                <ArrowDownRightIcon className="w-3 h-3" />
               )}
               {totalPnLPercent >= 0 ? "+" : ""}
               {totalPnLPercent.toFixed(2)}%
@@ -161,7 +152,7 @@ export default function PortfolioPage() {
           <TextureCardContent className="p-4 sm:p-5">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-amber-50 flex items-center justify-center">
-                <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600" />
+                <ChartBarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600" />
               </div>
               <span className="text-xs sm:text-sm text-gray-500">Balance</span>
             </div>
@@ -183,7 +174,7 @@ export default function PortfolioPage() {
             <TextureCard interactive={false}>
               <TextureCardContent className="p-12 text-center">
                 <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
-                  <Briefcase className="w-8 h-8 text-gray-400" />
+                  <BriefcaseIcon className="w-8 h-8 text-gray-400" />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
                   No Open Positions
@@ -195,7 +186,7 @@ export default function PortfolioPage() {
                   href="/dashboard/markets"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition"
                 >
-                  <TrendingUp className="w-4 h-4" />
+                  <ArrowTrendingUpIcon className="w-4 h-4" />
                   Browse Markets
                 </a>
               </TextureCardContent>
@@ -418,7 +409,7 @@ export default function PortfolioPage() {
             <TextureCard interactive={false}>
               <TextureCardContent className="p-5">
                 <div className="flex items-center gap-2 mb-4">
-                  <PieChart className="w-5 h-5 text-gray-500" />
+                  <ChartPieIcon className="w-5 h-5 text-gray-500" />
                   <h3 className="text-sm font-semibold text-gray-900">
                     Allocation
                   </h3>

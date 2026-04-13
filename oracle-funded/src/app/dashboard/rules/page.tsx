@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { CardSkeleton } from "@/components/ui/skeleton";
-import { DollarSign } from "lucide-react";
+import { CurrencyDollarIcon } from "@heroicons/react/16/solid";
 
 import { RuleCard } from "@/components/rules/RuleCard";
 import { FAQAccordion } from "@/components/rules/FAQAccordion";
@@ -153,7 +153,7 @@ export default function RulesPage() {
             <RuleCard
               title="Payment Details"
               description="How and when you get paid"
-              icon={DollarSign}
+              icon={CurrencyDollarIcon}
               accentColor="green"
               index={0}
               items={[

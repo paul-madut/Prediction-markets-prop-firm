@@ -1,17 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  Mail,
-  Calendar,
-  Target,
-  TrendingUp,
-  TrendingDown,
-  AlertTriangle,
-  CheckCircle,
-  Clock,
-  XCircle,
-} from "lucide-react";
+import { EnvelopeIcon, CalendarIcon, ViewfinderCircleIcon, ArrowTrendingUpIcon, ArrowTrendingDownIcon, ExclamationTriangleIcon, CheckCircleIcon, ClockIcon, XCircleIcon } from "@heroicons/react/16/solid";
 import { AdminTraderView } from "@/types/admin";
 import { formatCurrency } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
@@ -22,10 +12,10 @@ interface TraderDetailCardProps {
 
 const StatusBadge = ({ status }: { status: AdminTraderView["accountStatus"] }) => {
   const config = {
-    active: { icon: CheckCircle, color: "text-green-600", bg: "bg-green-100" },
-    frozen: { icon: Clock, color: "text-blue-600", bg: "bg-blue-100" },
-    suspended: { icon: AlertTriangle, color: "text-amber-600", bg: "bg-amber-100" },
-    closed: { icon: XCircle, color: "text-gray-600", bg: "bg-gray-100" },
+    active: { icon: CheckCircleIcon, color: "text-green-600", bg: "bg-green-100" },
+    frozen: { icon: ClockIcon, color: "text-blue-600", bg: "bg-blue-100" },
+    suspended: { icon: ExclamationTriangleIcon, color: "text-amber-600", bg: "bg-amber-100" },
+    closed: { icon: XCircleIcon, color: "text-gray-600", bg: "bg-gray-100" },
   };
 
   const { icon: Icon, color, bg } = config[status];
@@ -96,7 +86,7 @@ export const TraderDetailCard = ({ trader }: TraderDetailCardProps) => {
                 {trader.username}
               </h2>
               <div className="flex items-center gap-2 text-gray-500 mt-1">
-                <Mail className="h-4 w-4" />
+                <EnvelopeIcon className="h-4 w-4" />
                 <span className="text-sm">{trader.email}</span>
               </div>
               <p className="text-xs text-gray-400 font-mono mt-1">
@@ -143,9 +133,9 @@ export const TraderDetailCard = ({ trader }: TraderDetailCardProps) => {
             )}
           >
             {pnl >= 0 ? (
-              <TrendingUp className="h-3 w-3" />
+              <ArrowTrendingUpIcon className="h-3 w-3" />
             ) : (
-              <TrendingDown className="h-3 w-3" />
+              <ArrowTrendingDownIcon className="h-3 w-3" />
             )}
             {pnl >= 0 ? "+" : ""}
             {pnlPercent.toFixed(2)}%
@@ -193,7 +183,7 @@ export const TraderDetailCard = ({ trader }: TraderDetailCardProps) => {
           Challenge Progress
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Profit Target */}
+          {/* Profit ViewfinderCircleIcon */}
           <div>
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-gray-600">Profit Target</span>
@@ -279,14 +269,14 @@ export const TraderDetailCard = ({ trader }: TraderDetailCardProps) => {
           <div>
             <p className="text-gray-500">Created</p>
             <div className="flex items-center gap-1.5 mt-1 text-gray-900">
-              <Calendar className="h-4 w-4 text-gray-400" />
+              <CalendarIcon className="h-4 w-4 text-gray-400" />
               {formatDate(trader.createdAt)}
             </div>
           </div>
           <div>
             <p className="text-gray-500">Last Active</p>
             <div className="flex items-center gap-1.5 mt-1 text-gray-900">
-              <Clock className="h-4 w-4 text-gray-400" />
+              <ClockIcon className="h-4 w-4 text-gray-400" />
               {formatDate(trader.lastActiveAt)}
             </div>
           </div>

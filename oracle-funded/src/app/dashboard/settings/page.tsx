@@ -3,17 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
 import { SettingsSkeleton } from "@/components/ui/skeleton";
-import {
-  User,
-  Bell,
-  Sliders,
-  Shield,
-  Mail,
-  Smartphone,
-  Globe,
-  DollarSign,
-  Save,
-} from "lucide-react";
+import { UserIcon, BellIcon, AdjustmentsHorizontalIcon, ShieldCheckIcon, EnvelopeIcon, DevicePhoneMobileIcon, GlobeAltIcon, CurrencyDollarIcon, ArrowDownTrayIcon } from "@heroicons/react/16/solid";
 
 export default function SettingsPage() {
   const { user } = useApp();
@@ -39,7 +29,7 @@ export default function SettingsPage() {
           onClick={handleSave}
           className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
         >
-          <Save className="w-4 h-4" />
+          <ArrowDownTrayIcon className="w-4 h-4" />
           {saved ? "Saved!" : "Save Changes"}
         </button>
       </div>
@@ -47,7 +37,7 @@ export default function SettingsPage() {
       {/* Profile Settings */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 flex items-center gap-3">
-          <User className="w-5 h-5 text-gray-500" />
+          <UserIcon className="w-5 h-5 text-gray-500" />
           <h2 className="text-lg font-semibold text-gray-900">Profile</h2>
         </div>
         <div className="p-6 space-y-4">
@@ -93,13 +83,13 @@ export default function SettingsPage() {
       {/* Notification Settings */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 flex items-center gap-3">
-          <Bell className="w-5 h-5 text-gray-500" />
+          <BellIcon className="w-5 h-5 text-gray-500" />
           <h2 className="text-lg font-semibold text-gray-900">Notifications</h2>
         </div>
         <div className="p-6 space-y-4">
           <div className="flex items-center justify-between py-2">
             <div className="flex items-center gap-3">
-              <Mail className="w-5 h-5 text-gray-400" />
+              <EnvelopeIcon className="w-5 h-5 text-gray-400" />
               <div>
                 <div className="font-medium text-gray-900">Email Notifications</div>
                 <div className="text-sm text-gray-500">Receive trade confirmations and daily summaries</div>
@@ -112,7 +102,7 @@ export default function SettingsPage() {
           </div>
           <div className="flex items-center justify-between py-2 border-t border-gray-100">
             <div className="flex items-center gap-3">
-              <Smartphone className="w-5 h-5 text-gray-400" />
+              <DevicePhoneMobileIcon className="w-5 h-5 text-gray-400" />
               <div>
                 <div className="font-medium text-gray-900">Push Notifications</div>
                 <div className="text-sm text-gray-500">Get alerts for market movements and trade executions</div>
@@ -125,7 +115,7 @@ export default function SettingsPage() {
           </div>
           <div className="flex items-center justify-between py-2 border-t border-gray-100">
             <div className="flex items-center gap-3">
-              <Shield className="w-5 h-5 text-gray-400" />
+              <ShieldCheckIcon className="w-5 h-5 text-gray-400" />
               <div>
                 <div className="font-medium text-gray-900">Risk Alerts</div>
                 <div className="text-sm text-gray-500">Warn when approaching drawdown limits</div>
@@ -142,7 +132,7 @@ export default function SettingsPage() {
       {/* Trading Preferences */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 flex items-center gap-3">
-          <Sliders className="w-5 h-5 text-gray-500" />
+          <AdjustmentsHorizontalIcon className="w-5 h-5 text-gray-500" />
           <h2 className="text-lg font-semibold text-gray-900">Trading Preferences</h2>
         </div>
         <div className="p-6 space-y-4">
@@ -152,7 +142,7 @@ export default function SettingsPage() {
                 Default Position Size
               </label>
               <div className="relative">
-                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <CurrencyDollarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
                   type="number"
                   defaultValue="100"
@@ -196,7 +186,7 @@ export default function SettingsPage() {
       {/* Data & Privacy */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 flex items-center gap-3">
-          <Globe className="w-5 h-5 text-gray-500" />
+          <GlobeAltIcon className="w-5 h-5 text-gray-500" />
           <h2 className="text-lg font-semibold text-gray-900">Data & Privacy</h2>
         </div>
         <div className="p-6 space-y-4">

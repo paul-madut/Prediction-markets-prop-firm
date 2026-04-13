@@ -3,7 +3,7 @@
 import React from "react";
 import { Market } from "@/types";
 import { formatVolume, formatDate } from "@/lib/formatters";
-import { TrendingUp } from "lucide-react";
+import { ArrowTrendingUpIcon } from "@heroicons/react/16/solid";
 
 interface MarketCardProps {
   market: Market;
@@ -26,7 +26,7 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
         </span>
         {market.featured && (
           <span className="flex items-center gap-1 text-xs text-orange-600">
-            <TrendingUp size={14} />
+            <ArrowTrendingUpIcon className="w-3.5 h-3.5" />
             Featured
           </span>
         )}

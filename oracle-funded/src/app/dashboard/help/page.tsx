@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { HelpCircle, Mail, MessageCircle, BookOpen, FileText } from "lucide-react";
+import { QuestionMarkCircleIcon, EnvelopeIcon, ChatBubbleLeftIcon, BookOpenIcon, DocumentTextIcon } from "@heroicons/react/16/solid";
 import { RuleCard } from "@/components/rules/RuleCard";
 import { CardSkeleton } from "@/components/ui/skeleton";
 
@@ -35,7 +35,7 @@ export default function HelpPage() {
           <RuleCard
             title="Getting Started"
             description="New to OracleFunded? Start here"
-            icon={BookOpen}
+            icon={BookOpenIcon}
             accentColor="blue"
             items={[
               "How to create your first challenge",
@@ -48,7 +48,7 @@ export default function HelpPage() {
           <RuleCard
             title="Trading Help"
             description="Learn how to trade effectively"
-            icon={FileText}
+            icon={DocumentTextIcon}
             accentColor="purple"
             items={[
               "How to place a trade",
@@ -61,7 +61,7 @@ export default function HelpPage() {
           <RuleCard
             title="Account & Billing"
             description="Manage your account settings"
-            icon={HelpCircle}
+            icon={QuestionMarkCircleIcon}
             accentColor="blue"
             items={[
               "Upgrading your challenge",
@@ -83,7 +83,7 @@ export default function HelpPage() {
           <RuleCard
             title="Email Support"
             description="Get help via email"
-            icon={Mail}
+            icon={EnvelopeIcon}
             accentColor="green"
             items={[
               "Email: support@oraclefunded.com",
@@ -95,7 +95,7 @@ export default function HelpPage() {
           <RuleCard
             title="Live Chat"
             description="Chat with our team"
-            icon={MessageCircle}
+            icon={ChatBubbleLeftIcon}
             accentColor="green"
             items={[
               "Available Monday-Friday",
@@ -158,7 +158,7 @@ export default function HelpPage() {
             href="/dashboard/rules"
             className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all"
           >
-            <FileText className="h-8 w-8 mx-auto mb-2 text-blue-600" />
+            <DocumentTextIcon className="h-8 w-8 mx-auto mb-2 text-blue-600" />
             <div className="font-semibold text-gray-900">Trading Rules</div>
             <p className="text-sm text-gray-600 mt-1">
               Review all challenge rules
@@ -168,7 +168,7 @@ export default function HelpPage() {
             href="/dashboard/analytics"
             className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all"
           >
-            <BookOpen className="h-8 w-8 mx-auto mb-2 text-blue-600" />
+            <BookOpenIcon className="h-8 w-8 mx-auto mb-2 text-blue-600" />
             <div className="font-semibold text-gray-900">Trading Guide</div>
             <p className="text-sm text-gray-600 mt-1">
               Learn trading strategies
@@ -178,7 +178,7 @@ export default function HelpPage() {
             href="/dashboard/settings"
             className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all"
           >
-            <HelpCircle className="h-8 w-8 mx-auto mb-2 text-blue-600" />
+            <QuestionMarkCircleIcon className="h-8 w-8 mx-auto mb-2 text-blue-600" />
             <div className="font-semibold text-gray-900">Account Settings</div>
             <p className="text-sm text-gray-600 mt-1">
               Manage your preferences

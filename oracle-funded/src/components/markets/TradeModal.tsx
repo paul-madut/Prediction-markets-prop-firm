@@ -5,7 +5,7 @@ import { Market } from "@/types";
 import { useApp } from "@/context/AppContext";
 import { formatCurrency } from "@/lib/formatters";
 import { calculateShares, calculateTotalCost } from "@/lib/calculations";
-import { X } from "lucide-react";
+import { XMarkIcon } from "@heroicons/react/16/solid";
 
 interface TradeModalProps {
   market: Market;
@@ -49,7 +49,7 @@ export const TradeModal = ({ market, isOpen, onClose }: TradeModalProps) => {
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            <X size={20} />
+            <XMarkIcon className="w-5 h-5" />
           </button>
         </div>
 

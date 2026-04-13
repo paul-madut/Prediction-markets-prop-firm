@@ -2,17 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  X,
-  ZoomIn,
-  ZoomOut,
-  RotateCw,
-  Download,
-  ChevronLeft,
-  ChevronRight,
-  Maximize,
-  Image as ImageIcon,
-} from "lucide-react";
+import { XMarkIcon, PlusIcon, MinusIcon, ArrowPathIcon, ArrowDownTrayIcon, ChevronLeftIcon, ChevronRightIcon, ArrowsPointingOutIcon, PhotoIcon } from "@heroicons/react/16/solid";
 import { KYCDocument } from "@/types/admin";
 import { cn } from "@/lib/utils";
 
@@ -189,7 +179,7 @@ export default function DocumentViewer({
                     onClick={onClose}
                     className="p-2 hover:bg-white/10 rounded-lg transition-colors text-white"
                   >
-                    <X className="h-6 w-6" />
+                    <XMarkIcon className="h-6 w-6" />
                   </button>
                   <div className="h-8 w-px bg-white/20" />
                   <div>
@@ -207,7 +197,7 @@ export default function DocumentViewer({
                     disabled={zoom <= 0.5}
                     className="p-2 hover:bg-white/10 rounded-lg transition-colors text-white disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <ZoomOut className="h-5 w-5" />
+                    <MinusIcon className="h-5 w-5" />
                   </button>
                   <span className="text-white text-sm font-medium min-w-[60px] text-center">
                     {Math.round(zoom * 100)}%
@@ -217,7 +207,7 @@ export default function DocumentViewer({
                     disabled={zoom >= 3}
                     className="p-2 hover:bg-white/10 rounded-lg transition-colors text-white disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <ZoomIn className="h-5 w-5" />
+                    <PlusIcon className="h-5 w-5" />
                   </button>
 
                   <div className="h-8 w-px bg-white/20 mx-2" />
@@ -228,7 +218,7 @@ export default function DocumentViewer({
                     className="p-2 hover:bg-white/10 rounded-lg transition-colors text-white"
                     title="Rotate 90°"
                   >
-                    <RotateCw className="h-5 w-5" />
+                    <ArrowPathIcon className="h-5 w-5" />
                   </button>
 
                   {/* Fit to Screen */}
@@ -237,7 +227,7 @@ export default function DocumentViewer({
                     className="p-2 hover:bg-white/10 rounded-lg transition-colors text-white"
                     title="Fit to screen (F)"
                   >
-                    <Maximize className="h-5 w-5" />
+                    <ArrowsPointingOutIcon className="h-5 w-5" />
                   </button>
 
                   <div className="h-8 w-px bg-white/20 mx-2" />
@@ -247,8 +237,8 @@ export default function DocumentViewer({
                     onClick={handleDownload}
                     className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white"
                   >
-                    <Download className="h-5 w-5" />
-                    Download
+                    <ArrowDownTrayIcon className="h-5 w-5" />
+                    ArrowDownTrayIcon
                   </button>
                 </div>
               </div>
@@ -264,14 +254,14 @@ export default function DocumentViewer({
                     disabled={currentIndex === 0}
                     className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 hover:bg-black/70 rounded-full transition-colors text-white disabled:opacity-30 disabled:cursor-not-allowed z-10"
                   >
-                    <ChevronLeft className="h-6 w-6" />
+                    <ChevronLeftIcon className="h-6 w-6" />
                   </button>
                   <button
                     onClick={handleNext}
                     disabled={currentIndex === documents.length - 1}
                     className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 hover:bg-black/70 rounded-full transition-colors text-white disabled:opacity-30 disabled:cursor-not-allowed z-10"
                   >
-                    <ChevronRight className="h-6 w-6" />
+                    <ChevronRightIcon className="h-6 w-6" />
                   </button>
                 </>
               )}
@@ -303,7 +293,7 @@ export default function DocumentViewer({
                   <div className="bg-white rounded-lg shadow-2xl overflow-hidden">
                     <div className="aspect-[3/4] w-[600px] bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                       <div className="text-center">
-                        <ImageIcon className="h-24 w-24 text-gray-400 mx-auto mb-4" />
+                        <PhotoIcon className="h-24 w-24 text-gray-400 mx-auto mb-4" />
                         <p className="text-gray-600 font-medium">
                           {getDocumentTypeLabel(currentDoc.type)}
                         </p>

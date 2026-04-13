@@ -5,17 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import {
-  LayoutDashboard,
-  Users,
-  Target,
-  AlertTriangle,
-  DollarSign,
-  Shield,
-  Settings,
-  LogOut,
-  ChevronLeft,
-} from "lucide-react";
+import { Squares2X2Icon, UserGroupIcon, ViewfinderCircleIcon, ExclamationTriangleIcon, CurrencyDollarIcon, ShieldCheckIcon, Cog6ToothIcon, ArrowRightStartOnRectangleIcon, ChevronLeftIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
 import { cn } from "@/lib/utils";
 import NotificationBell from "./NotificationBell";
@@ -24,32 +14,32 @@ const adminLinks = [
   {
     label: "Overview",
     href: "/admin",
-    icon: <LayoutDashboard className="h-5 w-5" />,
+    icon: <Squares2X2Icon className="h-5 w-5" />,
   },
   {
     label: "Traders",
     href: "/admin/traders",
-    icon: <Users className="h-5 w-5" />,
+    icon: <UserGroupIcon className="h-5 w-5" />,
   },
   {
     label: "Challenges",
     href: "/admin/challenges",
-    icon: <Target className="h-5 w-5" />,
+    icon: <ViewfinderCircleIcon className="h-5 w-5" />,
   },
   {
     label: "Risk",
     href: "/admin/risk",
-    icon: <AlertTriangle className="h-5 w-5" />,
+    icon: <ExclamationTriangleIcon className="h-5 w-5" />,
   },
   {
     label: "Financials",
     href: "/admin/financials",
-    icon: <DollarSign className="h-5 w-5" />,
+    icon: <CurrencyDollarIcon className="h-5 w-5" />,
   },
   {
     label: "Compliance",
     href: "/admin/compliance",
-    icon: <Shield className="h-5 w-5" />,
+    icon: <ShieldCheckIcon className="h-5 w-5" />,
   },
 ];
 
@@ -57,7 +47,7 @@ const bottomLinks = [
   {
     label: "Settings",
     href: "/admin/settings",
-    icon: <Settings className="h-5 w-5" />,
+    icon: <Cog6ToothIcon className="h-5 w-5" />,
   },
 ];
 
@@ -105,7 +95,7 @@ export const AdminSidebar = () => {
               animate={{ rotate: open ? 0 : 180 }}
               transition={{ duration: 0.2 }}
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeftIcon className="h-5 w-5" />
             </motion.div>
           </button>
         </div>
@@ -115,7 +105,7 @@ export const AdminSidebar = () => {
       {open && dashboardStats.activeAlerts > 0 && (
         <div className="mx-4 mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
           <div className="flex items-center gap-2 text-red-400">
-            <AlertTriangle className="h-4 w-4" />
+            <ExclamationTriangleIcon className="h-4 w-4" />
             <span className="text-sm font-medium">
               {dashboardStats.activeAlerts} active alerts
             </span>
@@ -223,7 +213,7 @@ export const AdminSidebar = () => {
           href="/"
           className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200"
         >
-          <LogOut className="h-5 w-5 flex-shrink-0" />
+          <ArrowRightStartOnRectangleIcon className="h-5 w-5 flex-shrink-0" />
           <motion.span
             animate={{ opacity: open ? 1 : 0, width: open ? "auto" : 0 }}
             transition={{ duration: 0.2 }}

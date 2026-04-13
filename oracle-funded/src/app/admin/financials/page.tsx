@@ -2,14 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import {
-  DollarSign,
-  TrendingUp,
-  TrendingDown,
-  CreditCard,
-  ArrowRight,
-  Clock,
-} from "lucide-react";
+import { CurrencyDollarIcon, ArrowTrendingUpIcon, ArrowTrendingDownIcon, CreditCardIcon, ArrowRightIcon, ClockIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
 import { formatCurrency } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
@@ -42,7 +35,7 @@ export default function FinancialsPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-green-100 rounded-xl">
-              <DollarSign className="h-6 w-6 text-green-600" />
+              <CurrencyDollarIcon className="h-6 w-6 text-green-600" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
@@ -72,9 +65,9 @@ export default function FinancialsPage() {
             )}
           >
             {(todayRevenue?.netRevenue || 0) >= 0 ? (
-              <TrendingUp className="h-4 w-4" />
+              <ArrowTrendingUpIcon className="h-4 w-4" />
             ) : (
-              <TrendingDown className="h-4 w-4" />
+              <ArrowTrendingDownIcon className="h-4 w-4" />
             )}
             vs yesterday
           </div>
@@ -114,7 +107,7 @@ export default function FinancialsPage() {
         >
           <div className="flex items-start justify-between">
             <div className="p-3 bg-amber-100 rounded-xl">
-              <Clock className="h-6 w-6 text-amber-600" />
+              <ClockIcon className="h-6 w-6 text-amber-600" />
             </div>
             {pendingPayouts.length > 0 && (
               <span className="px-3 py-1 bg-amber-100 text-amber-700 text-sm font-semibold rounded-full">
@@ -130,7 +123,7 @@ export default function FinancialsPage() {
             approval
           </p>
           <div className="flex items-center gap-1 text-indigo-600 text-sm font-medium mt-4 group-hover:gap-2 transition-all">
-            Review payouts <ArrowRight className="h-4 w-4" />
+            Review payouts <ArrowRightIcon className="h-4 w-4" />
           </div>
         </Link>
 
@@ -138,7 +131,7 @@ export default function FinancialsPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-start justify-between">
             <div className="p-3 bg-red-100 rounded-xl">
-              <CreditCard className="h-6 w-6 text-red-600" />
+              <CreditCardIcon className="h-6 w-6 text-red-600" />
             </div>
             {pendingRefunds.length > 0 && (
               <span className="px-3 py-1 bg-red-100 text-red-700 text-sm font-semibold rounded-full">
@@ -156,7 +149,7 @@ export default function FinancialsPage() {
             requested
           </p>
           <button className="flex items-center gap-1 text-indigo-600 text-sm font-medium mt-4 hover:gap-2 transition-all">
-            Process refunds <ArrowRight className="h-4 w-4" />
+            Process refunds <ArrowRightIcon className="h-4 w-4" />
           </button>
         </div>
       </div>

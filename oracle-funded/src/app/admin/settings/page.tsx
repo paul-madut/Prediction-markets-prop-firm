@@ -2,18 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import {
-  Settings,
-  Globe,
-  Bell,
-  Shield,
-  Users,
-  Save,
-  RotateCcw,
-  Check,
-  Mail,
-  Slack,
-} from "lucide-react";
+import { Cog6ToothIcon, GlobeAltIcon, BellIcon, ShieldCheckIcon, UserGroupIcon, ArrowDownTrayIcon, ArrowPathIcon, CheckIcon, EnvelopeIcon, ChatBubbleLeftIcon } from "@heroicons/react/16/solid";
 import { useToast } from "@/components/admin/shared/Toast";
 import { cn } from "@/lib/utils";
 
@@ -232,10 +221,10 @@ export default function SettingsPage() {
   };
 
   const tabs = [
-    { id: "general" as TabType, label: "General", icon: Globe },
-    { id: "notifications" as TabType, label: "Notifications", icon: Bell },
-    { id: "risk" as TabType, label: "Risk", icon: Shield },
-    { id: "users" as TabType, label: "Users", icon: Users },
+    { id: "general" as TabType, label: "General", icon: GlobeAltIcon },
+    { id: "notifications" as TabType, label: "Notifications", icon: BellIcon },
+    { id: "risk" as TabType, label: "Risk", icon: ShieldCheckIcon },
+    { id: "users" as TabType, label: "Users", icon: UserGroupIcon },
   ];
 
   return (
@@ -245,7 +234,7 @@ export default function SettingsPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-indigo-100 rounded-xl">
-              <Settings className="h-6 w-6 text-indigo-600" />
+              <Cog6ToothIcon className="h-6 w-6 text-indigo-600" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
@@ -264,13 +253,13 @@ export default function SettingsPage() {
                     animate={{ rotate: 360 }}
                     transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                   >
-                    <Save className="h-4 w-4 text-indigo-600" />
+                    <ArrowDownTrayIcon className="h-4 w-4 text-indigo-600" />
                   </motion.div>
                   <span className="text-indigo-600 font-medium">Saving...</span>
                 </>
               ) : (
                 <>
-                  <Check className="h-4 w-4 text-green-600" />
+                  <CheckIcon className="h-4 w-4 text-green-600" />
                   <span className="text-green-600 font-medium">Auto-saved</span>
                 </>
               )}
@@ -320,7 +309,7 @@ export default function SettingsPage() {
                   onClick={() => handleReset("general")}
                   className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
                 >
-                  <RotateCcw className="h-4 w-4" />
+                  <ArrowPathIcon className="h-4 w-4" />
                   Reset to Defaults
                 </button>
               </div>
@@ -428,7 +417,7 @@ export default function SettingsPage() {
                   onClick={() => handleReset("notifications")}
                   className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
                 >
-                  <RotateCcw className="h-4 w-4" />
+                  <ArrowPathIcon className="h-4 w-4" />
                   Reset to Defaults
                 </button>
               </div>
@@ -436,7 +425,7 @@ export default function SettingsPage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                   <div className="flex items-center gap-3">
-                    <Mail className="h-5 w-5 text-gray-600" />
+                    <EnvelopeIcon className="h-5 w-5 text-gray-600" />
                     <div>
                       <p className="font-medium text-gray-900">Email Notifications</p>
                       <p className="text-sm text-gray-500">Receive notifications via email</p>
@@ -520,8 +509,8 @@ export default function SettingsPage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    <Slack className="h-4 w-4 inline mr-2" />
-                    Slack Webhook URL (Optional)
+                    <ChatBubbleLeftIcon className="h-4 w-4 inline mr-2" />
+                    ChatBubbleLeftIcon Webhook URL (Optional)
                   </label>
                   <input
                     type="url"
@@ -550,7 +539,7 @@ export default function SettingsPage() {
                   onClick={() => handleReset("risk")}
                   className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
                 >
-                  <RotateCcw className="h-4 w-4" />
+                  <ArrowPathIcon className="h-4 w-4" />
                   Reset to Defaults
                 </button>
               </div>
@@ -660,7 +649,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-gray-900">Admin Users</h3>
                 <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
-                  <Users className="h-4 w-4" />
+                  <UserGroupIcon className="h-4 w-4" />
                   Add Admin
                 </button>
               </div>

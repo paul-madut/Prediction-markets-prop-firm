@@ -13,29 +13,7 @@ import {
   Area,
   AreaChart,
 } from "recharts";
-import {
-  ChevronDown,
-  Calendar,
-  Key,
-  Share2,
-  DollarSign,
-  CheckCircle2,
-  XCircle,
-  Clock,
-  TrendingUp,
-  Rocket,
-  BarChart3,
-  ChevronLeft,
-  ChevronRight,
-  X,
-  Copy,
-  Check,
-  Eye,
-  EyeOff,
-  Server,
-  Globe,
-  Download,
-} from "lucide-react";
+import { ChevronDownIcon, CalendarIcon, KeyIcon, ShareIcon, CurrencyDollarIcon, CheckCircleIcon, XCircleIcon, ClockIcon, ArrowTrendingUpIcon, RocketLaunchIcon, ChartBarIcon, ChevronLeftIcon, ChevronRightIcon, XMarkIcon, DocumentDuplicateIcon, CheckIcon, EyeIcon, EyeSlashIcon, ServerIcon, GlobeAltIcon, ArrowDownTrayIcon } from "@heroicons/react/16/solid";
 import * as Tabs from "@radix-ui/react-tabs";
 import {
   format,
@@ -67,9 +45,9 @@ const CredentialsModal = ({
 
   const credentials = [
     { label: "Login ID", value: user.userId.toUpperCase(), icon: User2Icon },
-    { label: "Password", value: "••••••••••", secret: "xK9#mP2$vL", icon: Key },
-    { label: "Server", value: "oracle-live-01.webflux.io", icon: Server },
-    { label: "Platform", value: "WebFlux Terminal", icon: Globe },
+    { label: "Password", value: "••••••••••", secret: "xK9#mP2$vL", icon: KeyIcon },
+    { label: "Server", value: "oracle-live-01.webflux.io", icon: ServerIcon },
+    { label: "Platform", value: "WebFlux Terminal", icon: GlobeAltIcon },
   ];
 
   const copyToClipboard = (field: string, value: string) => {
@@ -111,7 +89,7 @@ const CredentialsModal = ({
               onClick={onClose}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <X className="w-5 h-5 text-gray-400" />
+              <XMarkIcon className="w-5 h-5 text-gray-400" />
             </button>
           </div>
           <div className="p-6 space-y-4">
@@ -137,9 +115,9 @@ const CredentialsModal = ({
                           className="p-1.5 hover:bg-gray-200 rounded-md transition-colors"
                         >
                           {showPassword ? (
-                            <EyeOff className="w-3.5 h-3.5 text-gray-400" />
+                            <EyeSlashIcon className="w-3.5 h-3.5 text-gray-400" />
                           ) : (
-                            <Eye className="w-3.5 h-3.5 text-gray-400" />
+                            <EyeIcon className="w-3.5 h-3.5 text-gray-400" />
                           )}
                         </button>
                       )}
@@ -148,9 +126,9 @@ const CredentialsModal = ({
                         className="p-1.5 hover:bg-gray-200 rounded-md transition-colors"
                       >
                         {copiedField === cred.label ? (
-                          <Check className="w-3.5 h-3.5 text-green-500" />
+                          <CheckIcon className="w-3.5 h-3.5 text-green-500" />
                         ) : (
-                          <Copy className="w-3.5 h-3.5 text-gray-400" />
+                          <DocumentDuplicateIcon className="w-3.5 h-3.5 text-gray-400" />
                         )}
                       </button>
                     </div>
@@ -176,12 +154,12 @@ const CredentialsModal = ({
             >
               {copiedField === "all" ? (
                 <>
-                  <Check className="w-4 h-4" />
+                  <CheckIcon className="w-4 h-4" />
                   Copied All Credentials
                 </>
               ) : (
                 <>
-                  <Copy className="w-4 h-4" />
+                  <DocumentDuplicateIcon className="w-4 h-4" />
                   Copy All Credentials
                 </>
               )}
@@ -291,7 +269,7 @@ const ShareMetricsModal = ({
               onClick={onClose}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <X className="w-5 h-5 text-gray-400" />
+              <XMarkIcon className="w-5 h-5 text-gray-400" />
             </button>
           </div>
 
@@ -346,12 +324,12 @@ const ShareMetricsModal = ({
             >
               {copied ? (
                 <>
-                  <Check className="w-4 h-4" />
+                  <CheckIcon className="w-4 h-4" />
                   Copied!
                 </>
               ) : (
                 <>
-                  <Copy className="w-4 h-4" />
+                  <DocumentDuplicateIcon className="w-4 h-4" />
                   Copy Text
                 </>
               )}
@@ -362,12 +340,12 @@ const ShareMetricsModal = ({
             >
               {downloading ? (
                 <>
-                  <Check className="w-4 h-4" />
+                  <CheckIcon className="w-4 h-4" />
                   Downloaded!
                 </>
               ) : (
                 <>
-                  <Download className="w-4 h-4" />
+                  <ArrowDownTrayIcon className="w-4 h-4" />
                   Download
                 </>
               )}
@@ -494,7 +472,7 @@ const TimeSinceCounter = ({ startDate }: { startDate: string }) => {
   );
 };
 
-// P&L Calendar Component
+// P&L CalendarIcon Component
 const PnLCalendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date(2025, 0, 1)); // January 2025
   const [viewMode, setViewMode] = useState<"month" | "year">("month");
@@ -543,7 +521,7 @@ const PnLCalendar = () => {
               onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
               className="p-1 hover:bg-gray-100 rounded"
             >
-              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
+              <ChevronLeftIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
             </button>
             <span className="text-xs sm:text-sm font-medium text-gray-700 min-w-[80px] sm:min-w-[100px] text-center">
               {format(currentMonth, "yyyy-MM")}
@@ -552,7 +530,7 @@ const PnLCalendar = () => {
               onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
               className="p-1 hover:bg-gray-100 rounded"
             >
-              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
+              <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
             </button>
           </div>
         </div>
@@ -568,7 +546,7 @@ const PnLCalendar = () => {
         ))}
       </div>
 
-      {/* Calendar grid */}
+      {/* CalendarIcon grid */}
       <div className="grid grid-cols-7 gap-0.5 sm:gap-1">
         {paddingDays.map((_, index) => (
           <div key={`padding-${index}`} className="h-12 sm:h-20 bg-gray-50/50 rounded-md sm:rounded-lg" />
@@ -682,7 +660,7 @@ export default function Dashboard() {
               {/* Account Size */}
               <button className="flex items-center gap-2 sm:gap-3 group">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm">
-                  <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                  <CurrencyDollarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
                 <div className="text-left">
                   <div className="text-[10px] uppercase tracking-wider text-gray-400 font-medium">Account Size</div>
@@ -693,7 +671,7 @@ export default function Dashboard() {
                     />
                   </div>
                 </div>
-                <ChevronDown className="w-4 h-4 text-gray-300 group-hover:text-blue-500 transition-colors" />
+                <ChevronDownIcon className="w-4 h-4 text-gray-300 group-hover:text-blue-500 transition-colors" />
               </button>
 
               {/* Vertical Separator */}
@@ -702,14 +680,14 @@ export default function Dashboard() {
               {/* Inline Status Items */}
               <div className="hidden sm:flex items-center gap-4 text-sm">
                 <div className="flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-gray-400" />
+                  <CalendarIcon className="w-3.5 h-3.5 text-gray-400" />
                   <span className="text-gray-500">{formatDate(user.challengeStartDate, "MMM dd, yyyy")}</span>
                 </div>
 
                 <div className="h-4 w-px bg-gray-200" />
 
                 <div className="flex items-center gap-1.5">
-                  <TrendingUp className="w-3.5 h-3.5 text-purple-400" />
+                  <ArrowTrendingUpIcon className="w-3.5 h-3.5 text-purple-400" />
                   <span className="text-gray-500">90% split</span>
                 </div>
 
@@ -771,13 +749,13 @@ export default function Dashboard() {
                 <div className="flex items-center gap-3">
                   <TextureButton variant="primary" size="lg" asChild>
                     <Link href="/dashboard/new-challenge">
-                      <Rocket className="w-5 h-5" />
+                      <RocketLaunchIcon className="w-5 h-5" />
                       Get Funded
                     </Link>
                   </TextureButton>
                   <TextureButton variant="secondary" size="lg" asChild>
                     <Link href="/dashboard/markets">
-                      <BarChart3 className="w-5 h-5" />
+                      <ChartBarIcon className="w-5 h-5" />
                       Browse Markets
                     </Link>
                   </TextureButton>
@@ -820,7 +798,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Chart and Stats */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Key Metrics Row */}
+          {/* KeyIcon Metrics Row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <TextureCard>
               <TextureCardContent className="px-4 py-5">
@@ -905,7 +883,7 @@ export default function Dashboard() {
               <h3 className="text-lg font-semibold text-gray-900">Objectives</h3>
               <Link href="/dashboard/rules" className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
                 View Rules
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRightIcon className="w-4 h-4" />
               </Link>
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -913,7 +891,7 @@ export default function Dashboard() {
               <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border border-green-100">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-semibold text-green-700 uppercase tracking-wide">Profit Target</span>
-                  <CheckCircle2 className="w-4 h-4 text-green-500" />
+                  <CheckCircleIcon className="w-4 h-4 text-green-500" />
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="relative flex-shrink-0">
@@ -938,9 +916,9 @@ export default function Dashboard() {
                 <div className="flex items-center justify-between mb-3">
                   <span className={`text-xs font-semibold uppercase tracking-wide ${dailyDDProgress > 80 ? "text-red-700" : "text-green-700"}`}>Daily Drawdown</span>
                   {dailyDDProgress > 80 ? (
-                    <XCircle className="w-4 h-4 text-red-500" />
+                    <XCircleIcon className="w-4 h-4 text-red-500" />
                   ) : (
-                    <CheckCircle2 className="w-4 h-4 text-green-500" />
+                    <CheckCircleIcon className="w-4 h-4 text-green-500" />
                   )}
                 </div>
                 <div className="flex items-center gap-4">
@@ -971,9 +949,9 @@ export default function Dashboard() {
                 <div className="flex items-center justify-between mb-3">
                   <span className={`text-xs font-semibold uppercase tracking-wide ${maxDDProgress > 80 ? "text-red-700" : "text-green-700"}`}>Max Drawdown</span>
                   {maxDDProgress > 80 ? (
-                    <XCircle className="w-4 h-4 text-red-500" />
+                    <XCircleIcon className="w-4 h-4 text-red-500" />
                   ) : (
-                    <CheckCircle2 className="w-4 h-4 text-green-500" />
+                    <CheckCircleIcon className="w-4 h-4 text-green-500" />
                   )}
                 </div>
                 <div className="flex items-center gap-4">
@@ -1003,7 +981,7 @@ export default function Dashboard() {
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-semibold text-blue-700 uppercase tracking-wide">Trading Days</span>
-                  <CheckCircle2 className="w-4 h-4 text-blue-500" />
+                  <CheckCircleIcon className="w-4 h-4 text-blue-500" />
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="relative flex-shrink-0">
@@ -1070,21 +1048,21 @@ export default function Dashboard() {
                 onClick={() => setShowCredentials(true)}
                 className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium"
               >
-                <Key className="w-4 h-4" />
+                <KeyIcon className="w-4 h-4" />
                 Credentials
               </button>
               <button
                 onClick={() => setShowShareMetrics(true)}
                 className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium"
               >
-                <Share2 className="w-4 h-4" />
+                <ShareIcon className="w-4 h-4" />
                 Share Metrics
               </button>
               <Link
                 href="/dashboard/payouts"
                 className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium"
               >
-                <DollarSign className="w-4 h-4" />
+                <CurrencyDollarIcon className="w-4 h-4" />
                 Request Payout
               </Link>
             </div>
@@ -1095,7 +1073,7 @@ export default function Dashboard() {
           <TextureCard>
           <TextureCardContent className="p-6">
             <div className="flex items-center gap-2 mb-3">
-              <TrendingUp className="w-5 h-5 text-gray-500" />
+              <ArrowTrendingUpIcon className="w-5 h-5 text-gray-500" />
               <h3 className="text-sm font-medium text-gray-500">Volume</h3>
             </div>
             <div className="space-y-3">
@@ -1115,7 +1093,7 @@ export default function Dashboard() {
           <TextureCard>
           <TextureCardContent className="p-6">
             <div className="flex items-center gap-2 mb-3">
-              <Clock className="w-5 h-5 text-gray-500" />
+              <ClockIcon className="w-5 h-5 text-gray-500" />
               <h3 className="text-sm font-medium text-gray-500">Time since first trade</h3>
             </div>
             <div className="h-px bg-gray-200 w-full mb-3" />
@@ -1146,7 +1124,7 @@ export default function Dashboard() {
             value="calendar"
             className="px-2.5 sm:px-4 py-3 text-xs sm:text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600 whitespace-nowrap"
           >
-            Calendar
+            CalendarIcon
           </Tabs.Trigger>
           <Tabs.Trigger
             value="rules"
@@ -1214,28 +1192,28 @@ export default function Dashboard() {
         <Tabs.Content value="rules" className="p-6">
           <div className="space-y-4">
             <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-              <CheckCircle2 className="w-5 h-5 text-green-500" />
+              <CheckCircleIcon className="w-5 h-5 text-green-500" />
               <div>
                 <div className="font-medium text-gray-900">Profit Target: {formatPercent(user.profitTarget, 0)}</div>
                 <div className="text-sm text-gray-500">Reach {formatCurrency(user.profitTarget * user.startingBalance)} in profit</div>
               </div>
             </div>
             <div className="flex items-center gap-3 p-3 bg-amber-50 rounded-lg">
-              <Clock className="w-5 h-5 text-amber-500" />
+              <ClockIcon className="w-5 h-5 text-amber-500" />
               <div>
                 <div className="font-medium text-gray-900">Min. Trading Days: {user.tradingDaysRequired}</div>
                 <div className="text-sm text-gray-500">Trade on at least {user.tradingDaysRequired} different days</div>
               </div>
             </div>
             <div className="flex items-center gap-3 p-3 bg-red-50 rounded-lg">
-              <XCircle className="w-5 h-5 text-red-500" />
+              <XCircleIcon className="w-5 h-5 text-red-500" />
               <div>
                 <div className="font-medium text-gray-900">Daily Loss Limit: {formatPercent(user.dailyDrawdownLimit, 0)}</div>
                 <div className="text-sm text-gray-500">Do not lose more than {formatCurrency(user.dailyDrawdownLimit * user.peakBalance)} in a day</div>
               </div>
             </div>
             <div className="flex items-center gap-3 p-3 bg-red-50 rounded-lg">
-              <XCircle className="w-5 h-5 text-red-500" />
+              <XCircleIcon className="w-5 h-5 text-red-500" />
               <div>
                 <div className="font-medium text-gray-900">Max Drawdown: {formatPercent(user.maxDrawdownLimit, 0)}</div>
                 <div className="text-sm text-gray-500">Do not draw down more than {formatCurrency(user.maxDrawdownLimit * user.startingBalance)} total</div>

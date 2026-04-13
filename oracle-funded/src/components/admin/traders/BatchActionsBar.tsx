@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Snowflake, Power, Download, X } from "lucide-react";
+import { NoSymbolIcon, PowerIcon, ArrowDownTrayIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import ConfirmationModal from "@/components/admin/shared/ConfirmationModal";
 import { useToast } from "@/components/admin/shared/Toast";
 import { cn } from "@/lib/utils";
@@ -109,7 +109,7 @@ export default function BatchActionsBar({
                   disabled={isProcessing}
                   className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
                 >
-                  <Snowflake className="h-4 w-4" />
+                  <NoSymbolIcon className="h-4 w-4" />
                   <span className="text-sm font-medium">Freeze</span>
                 </button>
 
@@ -118,7 +118,7 @@ export default function BatchActionsBar({
                   disabled={isProcessing}
                   className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
                 >
-                  <Power className="h-4 w-4" />
+                  <PowerIcon className="h-4 w-4" />
                   <span className="text-sm font-medium">Unfreeze</span>
                 </button>
 
@@ -127,7 +127,7 @@ export default function BatchActionsBar({
                   disabled={isProcessing}
                   className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
                 >
-                  <Download className="h-4 w-4" />
+                  <ArrowDownTrayIcon className="h-4 w-4" />
                   <span className="text-sm font-medium">Export</span>
                 </button>
               </div>
@@ -139,7 +139,7 @@ export default function BatchActionsBar({
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 ml-2"
                 title="Clear selection"
               >
-                <X className="h-5 w-5 text-gray-500" />
+                <XMarkIcon className="h-5 w-5 text-gray-500" />
               </button>
             </div>
           </motion.div>

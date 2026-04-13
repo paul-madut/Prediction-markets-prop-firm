@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, ChevronDown } from "lucide-react";
+import { MagnifyingGlassIcon, XMarkIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 import { TraderFilters as TraderFiltersType } from "@/types/admin";
 import { cn } from "@/lib/utils";
 
@@ -78,7 +78,7 @@ const AnimatedSelect = ({
           </option>
         ))}
       </motion.select>
-      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+      <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
     </div>
   );
 };
@@ -110,9 +110,9 @@ export const TraderFilters = ({
       className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm"
     >
       <div className="flex flex-col lg:flex-row gap-4">
-        {/* Search */}
+        {/* MagnifyingGlassIcon */}
         <div className="flex-1 relative group">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 transition-colors group-focus-within:text-indigo-500" />
+          <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 transition-colors group-focus-within:text-indigo-500" />
           <input
             type="text"
             placeholder="Search by name, email, or ID..."
@@ -130,7 +130,7 @@ export const TraderFilters = ({
                 onClick={() => onSearchChange("")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full"
               >
-                <X className="h-4 w-4" />
+                <XMarkIcon className="h-4 w-4" />
               </motion.button>
             )}
           </AnimatePresence>
@@ -201,7 +201,7 @@ export const TraderFilters = ({
                 onClick={clearFilters}
                 className="px-4 py-2.5 text-sm text-gray-600 hover:text-gray-900 border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center gap-2 transition-colors"
               >
-                <X className="h-4 w-4" />
+                <XMarkIcon className="h-4 w-4" />
                 Clear
                 {activeFilterCount > 0 && (
                   <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-gray-200 text-gray-700 rounded-full">

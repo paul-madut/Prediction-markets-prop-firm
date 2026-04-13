@@ -3,17 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Users,
-  DollarSign,
-  AlertTriangle,
-  ShieldCheck,
-  ArrowRight,
-  TrendingUp,
-  TrendingDown,
-  Inbox,
-  CheckCircle2,
-} from "lucide-react";
+import { UserGroupIcon, CurrencyDollarIcon, ExclamationTriangleIcon, ShieldCheckIcon, ArrowRightIcon, ArrowTrendingUpIcon, ArrowTrendingDownIcon, InboxArrowDownIcon, CheckCircleIcon } from "@heroicons/react/16/solid";
 import { AdminStatsGrid } from "@/components/admin/dashboard/AdminStatsGrid";
 import { RecentActivityFeed } from "@/components/admin/dashboard/RecentActivityFeed";
 import { useAdmin } from "@/context/AdminContext";
@@ -113,7 +103,7 @@ const QuickActionCard = ({
               initial={{ x: 0 }}
               whileHover={{ x: 0 }}
             >
-              <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
+              <ArrowRightIcon className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
             </motion.div>
           </div>
         </motion.div>
@@ -144,7 +134,7 @@ const RiskAlertPreview = () => {
             transition={{ duration: 0.3, delay: 0.1 }}
             className="p-4 bg-green-100 rounded-full mb-4"
           >
-            <CheckCircle2 className="h-8 w-8 text-green-600" />
+            <CheckCircleIcon className="h-8 w-8 text-green-600" />
           </motion.div>
           <p className="font-semibold text-green-800 text-lg">All Clear</p>
           <p className="text-sm text-green-600 mt-1">
@@ -155,7 +145,7 @@ const RiskAlertPreview = () => {
             className="text-sm font-medium text-green-700 hover:text-green-800 mt-4 inline-flex items-center gap-1 group"
           >
             View risk dashboard
-            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+            <ArrowRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
       </motion.div>
@@ -182,7 +172,7 @@ const RiskAlertPreview = () => {
               ease: "easeInOut",
             }}
           >
-            <AlertTriangle className="h-5 w-5 text-red-600" />
+            <ExclamationTriangleIcon className="h-5 w-5 text-red-600" />
           </motion.div>
           <h3 className="font-semibold text-red-800">
             {criticalAlerts.length} Critical Alert{criticalAlerts.length > 1 ? "s" : ""}
@@ -227,7 +217,7 @@ const RiskAlertPreview = () => {
           className="text-sm font-medium text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1 group"
         >
           View all alerts
-          <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+          <ArrowRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
         </Link>
       </div>
     </motion.div>
@@ -279,7 +269,7 @@ const PendingPayoutsPreview = ({ isLoading = false }: { isLoading?: boolean }) =
         ) : pendingPayouts.length === 0 ? (
           <div className="px-6 py-10 flex flex-col items-center text-center">
             <div className="p-4 bg-gray-100 rounded-full mb-4">
-              <Inbox className="h-8 w-8 text-gray-400" />
+              <InboxArrowDownIcon className="h-8 w-8 text-gray-400" />
             </div>
             <p className="text-gray-500 font-medium">No pending payouts</p>
             <p className="text-sm text-gray-400 mt-1">
@@ -318,7 +308,7 @@ const PendingPayoutsPreview = ({ isLoading = false }: { isLoading?: boolean }) =
           className="text-sm font-medium text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1 group"
         >
           View all payouts
-          <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+          <ArrowRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
         </Link>
       </div>
     </motion.div>
@@ -400,9 +390,9 @@ export default function AdminDashboardPage() {
                   )}
                 >
                   {revenueTrend > 0 ? (
-                    <TrendingUp className="h-4 w-4 mr-1" />
+                    <ArrowTrendingUpIcon className="h-4 w-4 mr-1" />
                   ) : (
-                    <TrendingDown className="h-4 w-4 mr-1" />
+                    <ArrowTrendingDownIcon className="h-4 w-4 mr-1" />
                   )}
                   {Math.abs(revenueTrend).toFixed(1)}%
                 </motion.span>
@@ -427,7 +417,7 @@ export default function AdminDashboardPage() {
             title="Manage Traders"
             description="View, search, and manage trader accounts"
             href="/admin/traders"
-            icon={<Users className="h-6 w-6 text-blue-600" />}
+            icon={<UserGroupIcon className="h-6 w-6 text-blue-600" />}
             iconBg="bg-blue-100"
             count={dashboardStats.frozenTraders}
             countColor="bg-red-100 text-red-700"
@@ -439,7 +429,7 @@ export default function AdminDashboardPage() {
             title="Payout Queue"
             description="Review and approve pending payouts"
             href="/admin/financials/payouts"
-            icon={<DollarSign className="h-6 w-6 text-green-600" />}
+            icon={<CurrencyDollarIcon className="h-6 w-6 text-green-600" />}
             iconBg="bg-green-100"
             count={dashboardStats.pendingPayouts}
             countColor="bg-amber-100 text-amber-700"
@@ -451,7 +441,7 @@ export default function AdminDashboardPage() {
             title="Risk Dashboard"
             description="Monitor at-risk accounts and alerts"
             href="/admin/risk"
-            icon={<AlertTriangle className="h-6 w-6 text-red-600" />}
+            icon={<ExclamationTriangleIcon className="h-6 w-6 text-red-600" />}
             iconBg="bg-red-100"
             count={dashboardStats.activeAlerts}
             countColor="bg-red-100 text-red-700"
@@ -463,7 +453,7 @@ export default function AdminDashboardPage() {
             title="KYC Verification"
             description="Review pending identity verifications"
             href="/admin/compliance/kyc"
-            icon={<ShieldCheck className="h-6 w-6 text-indigo-600" />}
+            icon={<ShieldCheckIcon className="h-6 w-6 text-indigo-600" />}
             iconBg="bg-indigo-100"
             count={dashboardStats.pendingKYC}
             countColor="bg-amber-100 text-amber-700"

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Target, Shield, TrendingUp, ChevronRight } from "lucide-react";
+import { ViewfinderCircleIcon, ShieldCheckIcon, ArrowTrendingUpIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
 import { cn } from "@/lib/utils";
 
@@ -18,7 +18,7 @@ const phases: PhaseData[] = [
   {
     title: "Phase 1: Evaluation",
     description: "Demonstrate your trading skills",
-    icon: Target,
+    icon: ViewfinderCircleIcon,
     accentColor: "blue",
     items: [
       "Profit Target: 8% of account size",
@@ -31,7 +31,7 @@ const phases: PhaseData[] = [
   {
     title: "Phase 2: Verification",
     description: "Prove consistency in your approach",
-    icon: Shield,
+    icon: ShieldCheckIcon,
     accentColor: "purple",
     items: [
       "Same rules as Phase 1",
@@ -43,7 +43,7 @@ const phases: PhaseData[] = [
   {
     title: "Funded Trader",
     description: "Start earning real profits",
-    icon: TrendingUp,
+    icon: ArrowTrendingUpIcon,
     accentColor: "green",
     items: [
       "80/20 profit split (you keep 80%)",
@@ -253,7 +253,7 @@ export const PhaseTimeline = () => {
                     transition={{ duration: 0.4, delay: index * 0.15 + 0.5 }}
                     className="bg-white border border-gray-200 rounded-full p-1 shadow-sm"
                   >
-                    <ChevronRight className="w-4 h-4 text-gray-400" />
+                    <ChevronRightIcon className="w-4 h-4 text-gray-400" />
                   </motion.div>
                 </div>
               )}

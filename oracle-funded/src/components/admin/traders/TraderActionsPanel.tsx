@@ -2,18 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Snowflake,
-  Sun,
-  RotateCcw,
-  Mail,
-  DollarSign,
-  AlertTriangle,
-  X,
-  StickyNote,
-  Loader2,
-  CheckCircle,
-} from "lucide-react";
+import { NoSymbolIcon, SunIcon, ArrowPathIcon, EnvelopeIcon, CurrencyDollarIcon, ExclamationTriangleIcon, XMarkIcon, DocumentTextIcon, CheckCircleIcon } from "@heroicons/react/16/solid";
 import { AdminTraderView } from "@/types/admin";
 import { useAdmin } from "@/context/AdminContext";
 import { useToast } from "@/components/admin/shared/Toast";
@@ -74,7 +63,7 @@ const ActionModal = ({
               onClick={onCancel}
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
             >
-              <X className="h-5 w-5" />
+              <XMarkIcon className="h-5 w-5" />
             </button>
           )}
 
@@ -86,7 +75,7 @@ const ActionModal = ({
                 transition={{ type: "spring", stiffness: 500, damping: 25 }}
                 className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4"
               >
-                <CheckCircle className="h-8 w-8 text-green-600" />
+                <CheckCircleIcon className="h-8 w-8 text-green-600" />
               </motion.div>
               <h3 className="text-lg font-semibold text-gray-900">Success!</h3>
               <p className="text-sm text-gray-500 mt-2">Action completed successfully</p>
@@ -130,7 +119,7 @@ const ActionModal = ({
                 >
                   {isProcessing ? (
                     <>
-                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <ArrowPathIcon className="h-4 w-4 animate-spin" />
                       Processing...
                     </>
                   ) : (
@@ -234,7 +223,7 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
               disabled={isClosed}
               className="w-full flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Sun className="h-5 w-5" />
+              <SunIcon className="h-5 w-5" />
               <div className="text-left">
                 <p className="font-medium">Unfreeze Account</p>
                 <p className="text-sm text-blue-600">
@@ -248,7 +237,7 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
               disabled={isClosed}
               className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Snowflake className="h-5 w-5" />
+              <NoSymbolIcon className="h-5 w-5" />
               <div className="text-left">
                 <p className="font-medium">Freeze Account</p>
                 <p className="text-sm text-gray-500">
@@ -264,7 +253,7 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
             disabled={isClosed}
             className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <RotateCcw className="h-5 w-5" />
+            <ArrowPathIcon className="h-5 w-5" />
             <div className="text-left">
               <p className="font-medium">Reset Account</p>
               <p className="text-sm text-gray-500">
@@ -278,7 +267,7 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
             onClick={() => setActiveModal("note")}
             className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
           >
-            <StickyNote className="h-5 w-5" />
+            <DocumentTextIcon className="h-5 w-5" />
             <div className="text-left">
               <p className="font-medium">Add Note</p>
               <p className="text-sm text-gray-500">
@@ -292,7 +281,7 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
             onClick={() => setActiveModal("message")}
             className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
           >
-            <Mail className="h-5 w-5" />
+            <EnvelopeIcon className="h-5 w-5" />
             <div className="text-left">
               <p className="font-medium">Send Message</p>
               <p className="text-sm text-gray-500">
@@ -304,7 +293,7 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
           {/* Process Payout (for funded accounts) */}
           {trader.accountPhase === "funded" && (
             <button className="w-full flex items-center gap-3 px-4 py-3 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors">
-              <DollarSign className="h-5 w-5" />
+              <CurrencyDollarIcon className="h-5 w-5" />
               <div className="text-left">
                 <p className="font-medium">Process Payout</p>
                 <p className="text-sm text-green-600">
@@ -319,7 +308,7 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
         {isFrozen && trader.freezeReason && (
           <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+              <ExclamationTriangleIcon className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm font-medium text-blue-800">
                   Account Frozen

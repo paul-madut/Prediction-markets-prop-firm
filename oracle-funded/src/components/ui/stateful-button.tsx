@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, X, Loader2 } from "lucide-react";
+import { CheckIcon, XMarkIcon, ArrowPathIcon } from "@heroicons/react/16/solid";
 import { cn } from "@/lib/utils";
 
 type ButtonState = "idle" | "loading" | "success" | "error";
@@ -105,7 +105,7 @@ export const StatefulButton = ({
             exit={{ opacity: 0, scale: 0.8 }}
             className="flex items-center justify-center gap-2"
           >
-            <Loader2 className="animate-spin" size={20} />
+            <ArrowPathIcon className="animate-spin" />
             <span>Processing...</span>
           </motion.span>
         )}
@@ -118,7 +118,7 @@ export const StatefulButton = ({
             exit={{ opacity: 0, scale: 0.8 }}
             className="flex items-center justify-center gap-2"
           >
-            <Check size={20} />
+            <CheckIcon className="w-5 h-5" />
             <span>Success!</span>
           </motion.span>
         )}
@@ -131,7 +131,7 @@ export const StatefulButton = ({
             exit={{ opacity: 0, scale: 0.8 }}
             className="flex items-center justify-center gap-2"
           >
-            <X size={20} />
+            <XMarkIcon className="w-5 h-5" />
             <span>{errorMessage || "Error"}</span>
           </motion.span>
         )}
