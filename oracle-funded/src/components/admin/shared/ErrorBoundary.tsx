@@ -2,7 +2,7 @@
 
 import React, { Component, ErrorInfo, ReactNode } from "react";
 import { motion } from "framer-motion";
-import { AlertTriangle, RefreshCw, Bug } from "lucide-react";
+import { ExclamationTriangleIcon, ArrowPathIcon, BugAntIcon } from "@heroicons/react/16/solid";
 
 interface Props {
   children: ReactNode;
@@ -85,7 +85,7 @@ export class ErrorBoundary extends Component<Props, State> {
               <div className="bg-gradient-to-r from-red-50 to-red-100 px-6 py-8 border-b border-red-200">
                 <div className="flex items-center justify-center mb-4">
                   <div className="p-3 bg-red-600 rounded-full">
-                    <AlertTriangle className="h-8 w-8 text-white" />
+                    <ExclamationTriangleIcon className="h-8 w-8 text-white" />
                   </div>
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 text-center">
@@ -121,14 +121,14 @@ export class ErrorBoundary extends Component<Props, State> {
                   onClick={this.handleReset}
                   className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors"
                 >
-                  <RefreshCw className="h-4 w-4" />
+                  <ArrowPathIcon className="h-4 w-4" />
                   Try Again
                 </button>
                 <button
                   onClick={this.handleReportIssue}
                   className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors"
                 >
-                  <Bug className="h-4 w-4" />
+                  <BugAntIcon className="h-4 w-4" />
                   Report Issue
                 </button>
               </div>

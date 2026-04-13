@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Bell, Settings, LogOut, User, ChevronDown } from "lucide-react";
+import { BellIcon, Cog6ToothIcon, ArrowRightStartOnRectangleIcon, UserIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 import { useApp } from "@/context/AppContext";
 import { useClerk } from "@clerk/nextjs";
 import Link from "next/link";
@@ -91,7 +91,7 @@ export const TopBar = () => {
             onClick={() => setShowNotifications(!showNotifications)}
             className="p-2 hover:bg-gray-100 hover:scale-110 rounded-lg transition-all duration-200 relative"
           >
-            <Bell size={20} className="text-gray-600" />
+            <BellIcon className="text-gray-600" />
             {notificationCount > 0 && (
               <span className="absolute top-1 right-1 h-4 w-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center font-semibold">
                 {notificationCount}
@@ -146,7 +146,7 @@ export const TopBar = () => {
           href="/dashboard/settings"
           className="hidden sm:flex p-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
-          <Settings size={20} className="text-gray-600" />
+          <Cog6ToothIcon className="text-gray-600" />
         </Link>
 
         {/* Profile Section */}
@@ -166,13 +166,7 @@ export const TopBar = () => {
                 {accountPhaseLabels[user.accountPhase]}
               </span>
             </div>
-            <ChevronDown
-              size={16}
-              className={cn(
-                "hidden sm:block text-gray-400 transition-transform duration-200",
-                showProfileMenu && "rotate-180"
-              )}
-            />
+            <ChevronDownIcon className={cn( "hidden sm:block text-gray-400 transition-transform duration-200", showProfileMenu && "rotate-180" )} />
           </button>
 
           <AnimatePresence>
@@ -188,7 +182,7 @@ export const TopBar = () => {
                   onClick={() => setShowProfileMenu(false)}
                   className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                 >
-                  <User size={16} />
+                  <UserIcon className="w-4 h-4" />
                   Profile & Settings
                 </Link>
                 <div className="border-t border-gray-200 my-1" />
@@ -196,7 +190,7 @@ export const TopBar = () => {
                   onClick={() => signOut({ redirectUrl: "/sign-in" })}
                   className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors w-full"
                 >
-                  <LogOut size={16} />
+                  <ArrowRightStartOnRectangleIcon className="w-4 h-4" />
                   Sign Out
                 </button>
               </motion.div>

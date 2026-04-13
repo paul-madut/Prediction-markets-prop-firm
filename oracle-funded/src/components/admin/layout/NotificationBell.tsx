@@ -3,17 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Bell,
-  Check,
-  CheckCheck,
-  Trash2,
-  ExternalLink,
-  AlertCircle,
-  Info,
-  CheckCircle,
-  AlertTriangle,
-} from "lucide-react";
+import { BellIcon, CheckIcon, TrashIcon, ArrowTopRightOnSquareIcon, ExclamationCircleIcon, InformationCircleIcon, CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/16/solid";
 import { useNotifications } from "@/context/NotificationContext";
 import { cn } from "@/lib/utils";
 
@@ -45,13 +35,13 @@ export default function NotificationBell({ compact = false }: NotificationBellPr
   const getIcon = (type: string) => {
     switch (type) {
       case "success":
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
+        return <CheckCircleIcon className="h-4 w-4 text-green-500" />;
       case "error":
-        return <AlertCircle className="h-4 w-4 text-red-500" />;
+        return <ExclamationCircleIcon className="h-4 w-4 text-red-500" />;
       case "warning":
-        return <AlertTriangle className="h-4 w-4 text-amber-500" />;
+        return <ExclamationTriangleIcon className="h-4 w-4 text-amber-500" />;
       default:
-        return <Info className="h-4 w-4 text-blue-500" />;
+        return <InformationCircleIcon className="h-4 w-4 text-blue-500" />;
     }
   };
 
@@ -82,7 +72,7 @@ export default function NotificationBell({ compact = false }: NotificationBellPr
             : "hover:bg-gray-100 text-gray-600 hover:text-gray-900"
         )}
       >
-        <Bell className="h-5 w-5" />
+        <BellIcon className="h-5 w-5" />
 
         {/* Unread Badge */}
         {unreadCount > 0 && (
@@ -140,7 +130,7 @@ export default function NotificationBell({ compact = false }: NotificationBellPr
                     className="p-1.5 hover:bg-gray-200 rounded-lg transition-colors"
                     title="Mark all as read"
                   >
-                    <CheckCheck className="h-4 w-4 text-gray-600" />
+                    <CheckIcon className="h-4 w-4 text-gray-600" />
                   </button>
                 )}
                 {notifications.length > 0 && (
@@ -149,7 +139,7 @@ export default function NotificationBell({ compact = false }: NotificationBellPr
                     className="p-1.5 hover:bg-gray-200 rounded-lg transition-colors"
                     title="Clear all"
                   >
-                    <Trash2 className="h-4 w-4 text-gray-600" />
+                    <TrashIcon className="h-4 w-4 text-gray-600" />
                   </button>
                 )}
               </div>
@@ -159,7 +149,7 @@ export default function NotificationBell({ compact = false }: NotificationBellPr
             <div className="max-h-[400px] overflow-y-auto">
               {recentNotifications.length === 0 ? (
                 <div className="p-8 text-center">
-                  <Bell className="h-12 w-12 text-gray-300 mx-auto mb-3" />
+                  <BellIcon className="h-12 w-12 text-gray-300 mx-auto mb-3" />
                   <p className="text-sm text-gray-500">No notifications yet</p>
                 </div>
               ) : (
@@ -201,7 +191,7 @@ export default function NotificationBell({ compact = false }: NotificationBellPr
                               {formatTimestamp(notification.timestamp)}
                             </p>
                             {notification.actionUrl && (
-                              <ExternalLink className="h-3 w-3 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <ArrowTopRightOnSquareIcon className="h-3 w-3 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                             )}
                           </div>
                         </div>

@@ -4,7 +4,7 @@ import React from "react";
 import { ChallengeType, ChallengePlan } from "@/types";
 import { formatCurrency } from "@/lib/formatters";
 import { CometCard } from "@/components/ui/comet-card";
-import { Check, Zap, Target, Shield } from "lucide-react";
+import { CheckIcon, BoltIcon, ViewfinderCircleIcon, ShieldCheckIcon } from "@heroicons/react/16/solid";
 import { cn } from "@/lib/utils";
 
 interface ChallengeTypeCardProps {
@@ -67,10 +67,10 @@ export const ChallengeTypeCard = ({
 
   const PhaseIcon =
     challengeType.phases === 1
-      ? Zap
+      ? BoltIcon
       : challengeType.phases === 2
-      ? Target
-      : Shield;
+      ? ViewfinderCircleIcon
+      : ShieldCheckIcon;
 
   return (
     <CometCard
@@ -93,7 +93,7 @@ export const ChallengeTypeCard = ({
               colors.text
             )}
           >
-            <PhaseIcon size={16} />
+            <PhaseIcon className="w-4 h-4" />
             <span>
               {challengeType.phases} {challengeType.phases === 1 ? "Phase" : "Phases"}
             </span>
@@ -140,7 +140,7 @@ export const ChallengeTypeCard = ({
                 "w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5",
                 isSelected ? colors.bg : "bg-gray-100"
               )}>
-                <Check size={12} className={cn(isSelected ? colors.text : "text-gray-500")} />
+                <CheckIcon className={cn(isSelected ? colors.text : "text-gray-500")} />
               </div>
               <span className="text-sm text-gray-700">{feature}</span>
             </div>

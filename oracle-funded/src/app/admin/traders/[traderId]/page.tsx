@@ -3,7 +3,7 @@
 import React from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, FileText, Clock, Tag } from "lucide-react";
+import { ArrowLeftIcon, DocumentTextIcon, ClockIcon, TagIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
 import { TraderDetailCard } from "@/components/admin/traders/TraderDetailCard";
 import { TraderActionsPanel } from "@/components/admin/traders/TraderActionsPanel";
@@ -55,7 +55,7 @@ export default function TraderDetailPage() {
             href="/admin/traders"
             className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeftIcon className="h-5 w-5" />
           </Link>
           <div>
             <h1 className="text-xl font-bold text-gray-900">{trader.username}</h1>
@@ -75,7 +75,7 @@ export default function TraderDetailPage() {
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                  <FileText className="h-5 w-5 text-gray-400" />
+                  <DocumentTextIcon className="h-5 w-5 text-gray-400" />
                   Admin Notes
                 </h3>
               </div>
@@ -114,7 +114,7 @@ export default function TraderDetailPage() {
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                <Clock className="h-5 w-5 text-gray-400" />
+                <ClockIcon className="h-5 w-5 text-gray-400" />
                 Activity Log
               </h3>
             </div>
@@ -154,7 +154,7 @@ export default function TraderDetailPage() {
           {trader.tags && trader.tags.length > 0 && (
             <div className="bg-white rounded-xl border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
-                <Tag className="h-5 w-5 text-gray-400" />
+                <TagIcon className="h-5 w-5 text-gray-400" />
                 Tags
               </h3>
               <div className="flex flex-wrap gap-2">

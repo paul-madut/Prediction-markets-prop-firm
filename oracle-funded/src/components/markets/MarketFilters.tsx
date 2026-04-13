@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Search } from "lucide-react";
+import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 
 interface MarketFiltersProps {
   selectedCategory: string;
@@ -20,9 +20,9 @@ export const MarketFilters = ({
 }: MarketFiltersProps) => {
   return (
     <div className="space-y-3 sm:space-y-4">
-      {/* Search Bar */}
+      {/* MagnifyingGlassIcon Bar */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+        <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         <input
           type="text"
           placeholder="Search markets..."

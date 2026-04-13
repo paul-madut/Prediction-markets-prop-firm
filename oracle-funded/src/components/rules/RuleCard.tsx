@@ -2,7 +2,7 @@
 
 import React from "react";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
-import { LucideIcon } from "lucide-react";
+type HeroIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
@@ -10,7 +10,7 @@ interface RuleCardProps {
   title: string;
   description?: string;
   items: string[];
-  icon?: LucideIcon;
+  icon?: HeroIcon;
   accentColor?: "blue" | "green" | "purple";
   className?: string;
   index?: number;

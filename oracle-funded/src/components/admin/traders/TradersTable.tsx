@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, MoreHorizontal } from "lucide-react";
+import { ArrowTopRightOnSquareIcon, EllipsisHorizontalIcon } from "@heroicons/react/16/solid";
 import { AdminTraderView } from "@/types/admin";
 import { formatCurrency } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
@@ -272,12 +272,12 @@ export const TradersTable = ({
                     <RowActions>
                       <ActionButton
                         href={`/admin/traders/${trader.userId}`}
-                        icon={ExternalLink}
+                        icon={ArrowTopRightOnSquareIcon}
                         title="View Details"
                         variant="primary"
                       />
                       <ActionButton
-                        icon={MoreHorizontal}
+                        icon={EllipsisHorizontalIcon}
                         title="More Actions"
                         variant="default"
                       />

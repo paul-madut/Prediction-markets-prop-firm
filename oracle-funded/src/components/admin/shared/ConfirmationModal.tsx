@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, AlertTriangle, AlertCircle, Info } from "lucide-react";
+import { XMarkIcon, ExclamationTriangleIcon, ExclamationCircleIcon, InformationCircleIcon } from "@heroicons/react/16/solid";
 import { cn } from "@/lib/utils";
 
 export interface ConfirmationModalProps {
@@ -65,11 +65,11 @@ export default function ConfirmationModal({
   const getIcon = () => {
     switch (confirmVariant) {
       case "danger":
-        return <AlertTriangle className="h-6 w-6 text-red-600" />;
+        return <ExclamationTriangleIcon className="h-6 w-6 text-red-600" />;
       case "warning":
-        return <AlertCircle className="h-6 w-6 text-amber-600" />;
+        return <ExclamationCircleIcon className="h-6 w-6 text-amber-600" />;
       default:
-        return <Info className="h-6 w-6 text-indigo-600" />;
+        return <InformationCircleIcon className="h-6 w-6 text-indigo-600" />;
     }
   };
 
@@ -131,7 +131,7 @@ export default function ConfirmationModal({
                   disabled={isProcessing}
                   className="p-1 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
                 >
-                  <X className="h-5 w-5 text-gray-500" />
+                  <XMarkIcon className="h-5 w-5 text-gray-500" />
                 </button>
               </div>
 

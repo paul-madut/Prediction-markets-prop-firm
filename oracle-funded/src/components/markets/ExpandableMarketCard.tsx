@@ -7,7 +7,7 @@ import { Market } from "@/types";
 import { useApp } from "@/context/AppContext";
 import { formatVolume, formatDate, formatCurrency } from "@/lib/formatters";
 import { calculateShares, calculateTotalCost } from "@/lib/calculations";
-import { TrendingUp, BarChart3 } from "lucide-react";
+import { ArrowTrendingUpIcon, ChartBarIcon } from "@heroicons/react/16/solid";
 import { StatefulButton } from "@/components/ui/stateful-button";
 import { cn } from "@/lib/utils";
 
@@ -39,7 +39,7 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-                <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             )}
           </div>
@@ -50,7 +50,7 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
             </span>
             {market.featured && (
               <span className="flex items-center gap-1 text-xs text-orange-600">
-                <TrendingUp size={14} />
+                <ArrowTrendingUpIcon className="w-3.5 h-3.5" />
                 Featured
               </span>
             )}
@@ -144,7 +144,7 @@ export const MarketModal = ({ market, onClose }: MarketModalProps) => {
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-                <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                <ChartBarIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
             )}
           </div>
@@ -156,7 +156,7 @@ export const MarketModal = ({ market, onClose }: MarketModalProps) => {
               </span>
               {market.featured && (
                 <span className="flex items-center gap-1 text-xs text-orange-600">
-                  <TrendingUp size={14} />
+                  <ArrowTrendingUpIcon className="w-3.5 h-3.5" />
                   Featured
                 </span>
               )}

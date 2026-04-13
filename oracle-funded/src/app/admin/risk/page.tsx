@@ -2,14 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import {
-  AlertTriangle,
-  CheckCircle,
-  Clock,
-  TrendingUp,
-  Users,
-  Eye,
-} from "lucide-react";
+import { ExclamationTriangleIcon, CheckCircleIcon, ClockIcon, ArrowTrendingUpIcon, UserGroupIcon, EyeIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
 import { formatCurrency } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
@@ -72,7 +65,7 @@ export default function RiskDashboardPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-red-100 rounded-xl">
-              <AlertTriangle className="h-6 w-6 text-red-600" />
+              <ExclamationTriangleIcon className="h-6 w-6 text-red-600" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Risk Dashboard</h1>
@@ -111,7 +104,7 @@ export default function RiskDashboardPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-blue-100 rounded-lg">
-              <Users className="h-5 w-5 text-blue-600" />
+              <UserGroupIcon className="h-5 w-5 text-blue-600" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Active Accounts</p>
@@ -125,7 +118,7 @@ export default function RiskDashboardPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-green-100 rounded-lg">
-              <TrendingUp className="h-5 w-5 text-green-600" />
+              <ArrowTrendingUpIcon className="h-5 w-5 text-green-600" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Total Exposure</p>
@@ -139,7 +132,7 @@ export default function RiskDashboardPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-amber-100 rounded-lg">
-              <Clock className="h-5 w-5 text-amber-600" />
+              <ClockIcon className="h-5 w-5 text-amber-600" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Pending Review</p>
@@ -153,7 +146,7 @@ export default function RiskDashboardPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-red-100 rounded-lg">
-              <AlertTriangle className="h-5 w-5 text-red-600" />
+              <ExclamationTriangleIcon className="h-5 w-5 text-red-600" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Breaches (30d)</p>
@@ -174,7 +167,7 @@ export default function RiskDashboardPage() {
           <div className="divide-y divide-gray-100 max-h-[500px] overflow-y-auto">
             {activeAlerts.length === 0 ? (
               <div className="px-6 py-12 text-center">
-                <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
+                <CheckCircleIcon className="h-12 w-12 text-green-500 mx-auto mb-4" />
                 <p className="text-gray-500">No active alerts</p>
               </div>
             ) : (
@@ -235,7 +228,7 @@ export default function RiskDashboardPage() {
                         href={`/admin/traders/${alert.traderId}`}
                         className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                       >
-                        <Eye className="h-4 w-4" />
+                        <EyeIcon className="h-4 w-4" />
                       </Link>
                     </div>
                   </div>

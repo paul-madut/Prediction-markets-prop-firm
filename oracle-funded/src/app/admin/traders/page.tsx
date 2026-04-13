@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, Download } from "lucide-react";
+import { UserGroupIcon, ArrowDownTrayIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
 import { TraderFilters } from "@/components/admin/traders/TraderFilters";
 import { TradersTable } from "@/components/admin/traders/TradersTable";
@@ -82,7 +82,7 @@ export default function TradersPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-blue-100 rounded-xl">
-              <Users className="h-6 w-6 text-blue-600" />
+              <UserGroupIcon className="h-6 w-6 text-blue-600" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">

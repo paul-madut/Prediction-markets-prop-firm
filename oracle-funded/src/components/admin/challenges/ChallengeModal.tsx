@@ -2,16 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  X,
-  Save,
-  DollarSign,
-  Target,
-  TrendingDown,
-  Calendar,
-  Tag,
-  AlertCircle,
-} from "lucide-react";
+import { XMarkIcon, ArrowDownTrayIcon, CurrencyDollarIcon, ViewfinderCircleIcon, ArrowTrendingDownIcon, CalendarIcon, TagIcon, ExclamationCircleIcon } from "@heroicons/react/16/solid";
 import { AdminChallengeConfig } from "@/types/admin";
 import { formatCurrency } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
@@ -235,7 +226,7 @@ export default function ChallengeModal({
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                   disabled={isSaving}
                 >
-                  <X className="h-6 w-6 text-gray-500" />
+                  <XMarkIcon className="h-6 w-6 text-gray-500" />
                 </button>
               </div>
 
@@ -248,7 +239,7 @@ export default function ChallengeModal({
                       {/* Basic Info Section */}
                       <div className="space-y-6">
                         <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                          <Target className="h-5 w-5 text-indigo-600" />
+                          <ViewfinderCircleIcon className="h-5 w-5 text-indigo-600" />
                           Basic Information
                         </h3>
 
@@ -271,7 +262,7 @@ export default function ChallengeModal({
                             />
                             {errors.name && (
                               <p className="text-sm text-red-600 mt-1 flex items-center gap-1">
-                                <AlertCircle className="h-4 w-4" />
+                                <ExclamationCircleIcon className="h-4 w-4" />
                                 {errors.name}
                               </p>
                             )}
@@ -296,7 +287,7 @@ export default function ChallengeModal({
                             <div className="flex items-center justify-between mt-1">
                               {errors.description ? (
                                 <p className="text-sm text-red-600 flex items-center gap-1">
-                                  <AlertCircle className="h-4 w-4" />
+                                  <ExclamationCircleIcon className="h-4 w-4" />
                                   {errors.description}
                                 </p>
                               ) : (
@@ -328,7 +319,7 @@ export default function ChallengeModal({
                       {/* Pricing Section */}
                       <div className="space-y-6 mt-8">
                         <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                          <DollarSign className="h-5 w-5 text-indigo-600" />
+                          <CurrencyDollarIcon className="h-5 w-5 text-indigo-600" />
                           Pricing
                         </h3>
 
@@ -386,7 +377,7 @@ export default function ChallengeModal({
                           />
                           <div className="flex-1">
                             <label className="font-medium text-gray-900 flex items-center gap-2">
-                              <Tag className="h-4 w-4 text-amber-600" />
+                              <TagIcon className="h-4 w-4 text-amber-600" />
                               This is a promotional offer
                             </label>
                             <p className="text-sm text-gray-600 mt-0.5">
@@ -436,15 +427,15 @@ export default function ChallengeModal({
                       {/* Rules Section */}
                       <div className="space-y-6 mt-8">
                         <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                          <TrendingDown className="h-5 w-5 text-indigo-600" />
+                          <ArrowTrendingDownIcon className="h-5 w-5 text-indigo-600" />
                           Trading Rules
                         </h3>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          {/* Profit Target */}
+                          {/* Profit ViewfinderCircleIcon */}
                           <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                              Profit Target * (%)
+                              Profit ViewfinderCircleIcon * (%)
                             </label>
                             <input
                               type="number"
@@ -531,7 +522,7 @@ export default function ChallengeModal({
                       {/* Advanced Section */}
                       <div className="space-y-6 mt-8">
                         <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                          <Calendar className="h-5 w-5 text-indigo-600" />
+                          <CalendarIcon className="h-5 w-5 text-indigo-600" />
                           Requirements
                         </h3>
 
@@ -606,7 +597,7 @@ export default function ChallengeModal({
 
                         <div className="h-px bg-indigo-200" />
 
-                        {/* Profit Target */}
+                        {/* Profit ViewfinderCircleIcon */}
                         <div>
                           <p className="text-sm text-gray-600">Profit Target</p>
                           <p className="text-lg font-semibold text-green-600">
@@ -716,13 +707,13 @@ export default function ChallengeModal({
                           animate={{ rotate: 360 }}
                           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                         >
-                          <Save className="h-5 w-5" />
+                          <ArrowDownTrayIcon className="h-5 w-5" />
                         </motion.div>
                         Saving...
                       </>
                     ) : (
                       <>
-                        <Save className="h-5 w-5" />
+                        <ArrowDownTrayIcon className="h-5 w-5" />
                         {editMode ? "Update Challenge" : "Create Challenge"}
                       </>
                     )}

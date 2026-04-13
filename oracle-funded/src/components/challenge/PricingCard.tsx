@@ -3,7 +3,7 @@
 import React from "react";
 import { ChallengePlan } from "@/types";
 import { formatCurrency } from "@/lib/formatters";
-import { Check } from "lucide-react";
+import { CheckIcon } from "@heroicons/react/16/solid";
 
 interface PricingCardProps {
   plan: ChallengePlan;
@@ -30,43 +30,43 @@ export const PricingCard = ({ plan, isSelected, onSelect }: PricingCardProps) =>
 
       <div className="space-y-3 mb-6">
         <div className="flex items-start gap-2">
-          <Check size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
+          <CheckIcon className="text-green-600 flex-shrink-0 mt-0.5" />
           <span className="text-gray-700">
             Profit Target: {formatCurrency(plan.profitTarget)}
           </span>
         </div>
         <div className="flex items-start gap-2">
-          <Check size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
+          <CheckIcon className="text-green-600 flex-shrink-0 mt-0.5" />
           <span className="text-gray-700">
             Max Positions: {plan.maxPositions}
           </span>
         </div>
         <div className="flex items-start gap-2">
-          <Check size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
+          <CheckIcon className="text-green-600 flex-shrink-0 mt-0.5" />
           <span className="text-gray-700">
             Daily Loss Limit: {formatCurrency(plan.dailyLossLimit)}
           </span>
         </div>
         <div className="flex items-start gap-2">
-          <Check size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
+          <CheckIcon className="text-green-600 flex-shrink-0 mt-0.5" />
           <span className="text-gray-700">
             Max Drawdown: {formatCurrency(plan.maxDrawdown)}
           </span>
         </div>
         <div className="flex items-start gap-2">
-          <Check size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
+          <CheckIcon className="text-green-600 flex-shrink-0 mt-0.5" />
           <span className="text-gray-700">
             Drawdown Mode: {plan.drawdownMode}
           </span>
         </div>
         <div className="flex items-start gap-2">
-          <Check size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
+          <CheckIcon className="text-green-600 flex-shrink-0 mt-0.5" />
           <span className="text-gray-700">
             Reset Fee: {formatCurrency(plan.resetFee)}
           </span>
         </div>
         <div className="flex items-start gap-2">
-          <Check size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
+          <CheckIcon className="text-green-600 flex-shrink-0 mt-0.5" />
           <span className="text-gray-700">
             Activation Fee: {plan.activationFee ? "Yes" : "No"}
           </span>

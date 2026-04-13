@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Download, FileDown, Check } from "lucide-react";
+import { ArrowDownTrayIcon, DocumentArrowDownIcon, CheckIcon } from "@heroicons/react/16/solid";
 import { ExportColumn, exportToCSV } from "@/lib/csvExport";
 import { cn } from "@/lib/utils";
 
@@ -105,18 +105,18 @@ export default function ExportButton<T extends Record<string, any>>({
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             >
-              <Download className="h-4 w-4 text-gray-600" />
+              <ArrowDownTrayIcon className="h-4 w-4 text-gray-600" />
             </motion.div>
             <span className="text-sm font-medium text-gray-700">Exporting...</span>
           </>
         ) : exportComplete ? (
           <>
-            <Check className="h-4 w-4 text-green-600" />
+            <CheckIcon className="h-4 w-4 text-green-600" />
             <span className="text-sm font-medium text-green-600">Exported!</span>
           </>
         ) : (
           <>
-            <Download className="h-4 w-4 text-gray-600" />
+            <ArrowDownTrayIcon className="h-4 w-4 text-gray-600" />
             <span className="text-sm font-medium text-gray-700">{label}</span>
           </>
         )}
@@ -137,7 +137,7 @@ export default function ExportButton<T extends Record<string, any>>({
               onClick={() => handleExport("visible")}
               className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3"
             >
-              <FileDown className="h-4 w-4 text-gray-500" />
+              <DocumentArrowDownIcon className="h-4 w-4 text-gray-500" />
               <div>
                 <div className="font-medium">Export Visible Rows</div>
                 <div className="text-xs text-gray-500">{data.length} rows</div>
@@ -152,7 +152,7 @@ export default function ExportButton<T extends Record<string, any>>({
                   onClick={() => handleExport("selected")}
                   className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3"
                 >
-                  <FileDown className="h-4 w-4 text-indigo-600" />
+                  <DocumentArrowDownIcon className="h-4 w-4 text-indigo-600" />
                   <div>
                     <div className="font-medium">Export Selected</div>
                     <div className="text-xs text-gray-500">{selectedIds.size} rows</div>
@@ -167,7 +167,7 @@ export default function ExportButton<T extends Record<string, any>>({
               onClick={() => handleExport("all")}
               className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3"
             >
-              <FileDown className="h-4 w-4 text-gray-500" />
+              <DocumentArrowDownIcon className="h-4 w-4 text-gray-500" />
               <div>
                 <div className="font-medium">Export All</div>
                 <div className="text-xs text-gray-500">Full dataset</div>

@@ -5,17 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Home,
-  PlusCircle,
-  TrendingUp,
-  Briefcase,
-  BarChart3,
-  HelpCircle,
-  Settings,
-  Rocket,
-  Wallet,
-} from "lucide-react";
+import { HomeIcon, PlusCircleIcon, ArrowTrendingUpIcon, BriefcaseIcon, ChartBarIcon, QuestionMarkCircleIcon, Cog6ToothIcon, RocketLaunchIcon, WalletIcon } from "@heroicons/react/16/solid";
 import { useApp } from "@/context/AppContext";
 import { cn } from "@/lib/utils";
 import {
@@ -33,32 +23,32 @@ export const Sidebar = () => {
     {
       label: "Dashboard",
       href: "/dashboard",
-      icon: <Home />,
+      icon: <HomeIcon />,
     },
     {
       label: "New Challenge",
       href: "/dashboard/new-challenge",
-      icon: <PlusCircle />,
+      icon: <PlusCircleIcon />,
     },
     {
       label: "Markets",
       href: "/dashboard/markets",
-      icon: <TrendingUp />,
+      icon: <ArrowTrendingUpIcon />,
     },
     {
       label: "Portfolio",
       href: "/dashboard/portfolio",
-      icon: <Briefcase />,
+      icon: <BriefcaseIcon />,
     },
     {
       label: "Analytics",
       href: "/dashboard/analytics",
-      icon: <BarChart3 />,
+      icon: <ChartBarIcon />,
     },
     {
       label: "Payouts",
       href: "/dashboard/payouts",
-      icon: <Wallet />,
+      icon: <WalletIcon />,
     },
   ];
 
@@ -66,12 +56,12 @@ export const Sidebar = () => {
     {
       label: "Help",
       href: "/dashboard/help",
-      icon: <HelpCircle />,
+      icon: <QuestionMarkCircleIcon />,
     },
     {
       label: "Settings",
       href: "/dashboard/settings",
-      icon: <Settings />,
+      icon: <Cog6ToothIcon />,
     },
   ];
 
@@ -105,7 +95,7 @@ export const Sidebar = () => {
                 open ? "w-full py-3 px-4 gap-2" : "h-10 w-10"
               )}
             >
-              <Rocket className="h-5 w-5 flex-shrink-0" />
+              <RocketLaunchIcon className="h-5 w-5 flex-shrink-0" />
               {open && (
                 <span className="text-sm whitespace-nowrap">
                   Get Funded

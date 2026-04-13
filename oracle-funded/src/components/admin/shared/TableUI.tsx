@@ -2,19 +2,8 @@
 
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  CheckCircle2,
-  XCircle,
-  Clock,
-  AlertTriangle,
-  Ban,
-  Loader2,
-  FileX,
-  Users,
-  DollarSign,
-  UserCheck,
-  type LucideIcon,
-} from "lucide-react";
+import { CheckCircleIcon, XCircleIcon, ClockIcon, ExclamationTriangleIcon, NoSymbolIcon, ArrowPathIcon, DocumentTextIcon, UserGroupIcon, CurrencyDollarIcon, UserIcon } from "@heroicons/react/16/solid";
+type HeroIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 import { cn } from "@/lib/utils";
 
 // ============================================================================
@@ -22,14 +11,14 @@ import { cn } from "@/lib/utils";
 // ============================================================================
 
 interface EmptyStateProps {
-  icon?: LucideIcon;
+  icon?: HeroIcon;
   title: string;
   description?: string;
   action?: React.ReactNode;
 }
 
 export const EmptyState = ({
-  icon: Icon = FileX,
+  icon: Icon = DocumentTextIcon,
   title,
   description,
   action,
@@ -58,7 +47,7 @@ export const EmptyState = ({
 // Predefined empty states for common use cases
 export const TradersEmptyState = () => (
   <EmptyState
-    icon={Users}
+    icon={UserGroupIcon}
     title="No traders found"
     description="No traders match your current search criteria. Try adjusting your filters or search terms."
   />
@@ -66,7 +55,7 @@ export const TradersEmptyState = () => (
 
 export const PayoutsEmptyState = () => (
   <EmptyState
-    icon={DollarSign}
+    icon={CurrencyDollarIcon}
     title="No payouts found"
     description="There are no payout requests matching your current filter. All caught up!"
   />
@@ -74,7 +63,7 @@ export const PayoutsEmptyState = () => (
 
 export const KYCEmptyState = () => (
   <EmptyState
-    icon={UserCheck}
+    icon={UserIcon}
     title="No KYC submissions found"
     description="There are no KYC submissions matching your current filter."
   />
@@ -169,7 +158,7 @@ type StatusType =
 
 interface StatusBadgeConfig {
   type: StatusType;
-  icon?: LucideIcon;
+  icon?: HeroIcon;
 }
 
 const statusTypeStyles: Record<StatusType, string> = {
@@ -181,48 +170,48 @@ const statusTypeStyles: Record<StatusType, string> = {
   primary: "bg-indigo-50 text-indigo-700 border-indigo-200 ring-indigo-600/20",
 };
 
-const statusIcons: Record<StatusType, LucideIcon> = {
-  success: CheckCircle2,
-  error: XCircle,
-  warning: AlertTriangle,
-  info: Clock,
-  neutral: Ban,
-  primary: Loader2,
+const statusIcons: Record<StatusType, HeroIcon> = {
+  success: CheckCircleIcon,
+  error: XCircleIcon,
+  warning: ExclamationTriangleIcon,
+  info: ClockIcon,
+  neutral: NoSymbolIcon,
+  primary: ArrowPathIcon,
 };
 
 // Payout status mapping
 const payoutStatusMap: Record<string, StatusBadgeConfig> = {
-  pending: { type: "warning", icon: Clock },
-  approved: { type: "info", icon: CheckCircle2 },
-  processing: { type: "primary", icon: Loader2 },
-  completed: { type: "success", icon: CheckCircle2 },
-  rejected: { type: "error", icon: XCircle },
-  failed: { type: "neutral", icon: Ban },
+  pending: { type: "warning", icon: ClockIcon },
+  approved: { type: "info", icon: CheckCircleIcon },
+  processing: { type: "primary", icon: ArrowPathIcon },
+  completed: { type: "success", icon: CheckCircleIcon },
+  rejected: { type: "error", icon: XCircleIcon },
+  failed: { type: "neutral", icon: NoSymbolIcon },
 };
 
 // KYC status mapping
 const kycStatusMap: Record<string, StatusBadgeConfig> = {
-  pending: { type: "warning", icon: Clock },
-  under_review: { type: "info", icon: Clock },
-  approved: { type: "success", icon: CheckCircle2 },
-  rejected: { type: "error", icon: XCircle },
-  expired: { type: "neutral", icon: Ban },
+  pending: { type: "warning", icon: ClockIcon },
+  under_review: { type: "info", icon: ClockIcon },
+  approved: { type: "success", icon: CheckCircleIcon },
+  rejected: { type: "error", icon: XCircleIcon },
+  expired: { type: "neutral", icon: NoSymbolIcon },
 };
 
 // Trader account status mapping
 const traderStatusMap: Record<string, StatusBadgeConfig> = {
-  active: { type: "success", icon: CheckCircle2 },
-  frozen: { type: "info", icon: Clock },
-  suspended: { type: "warning", icon: AlertTriangle },
-  closed: { type: "neutral", icon: Ban },
+  active: { type: "success", icon: CheckCircleIcon },
+  frozen: { type: "info", icon: ClockIcon },
+  suspended: { type: "warning", icon: ExclamationTriangleIcon },
+  closed: { type: "neutral", icon: NoSymbolIcon },
 };
 
 // Trader KYC status mapping
 const traderKycStatusMap: Record<string, StatusBadgeConfig> = {
-  pending: { type: "warning", icon: Clock },
-  approved: { type: "success", icon: CheckCircle2 },
-  rejected: { type: "error", icon: XCircle },
-  expired: { type: "neutral", icon: Ban },
+  pending: { type: "warning", icon: ClockIcon },
+  approved: { type: "success", icon: CheckCircleIcon },
+  rejected: { type: "error", icon: XCircleIcon },
+  expired: { type: "neutral", icon: NoSymbolIcon },
 };
 
 // Trader phase mapping
@@ -270,7 +259,7 @@ export const EnhancedStatusBadge = ({
           className={cn(
             "flex-shrink-0",
             size === "sm" ? "h-3 w-3" : "h-4 w-4",
-            config.icon === Loader2 && "animate-spin"
+            config.icon === ArrowPathIcon && "animate-spin"
           )}
         />
       )}
@@ -375,7 +364,7 @@ export const RowActions = ({ children, alwaysVisible = false }: RowActionsProps)
 };
 
 interface ActionButtonProps {
-  icon: LucideIcon;
+  icon: HeroIcon;
   onClick?: () => void;
   href?: string;
   title: string;

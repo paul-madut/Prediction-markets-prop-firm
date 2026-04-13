@@ -3,37 +3,26 @@
 import React from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  User,
-  DollarSign,
-  AlertTriangle,
-  ShieldCheck,
-  Settings,
-  LogIn,
-  XCircle,
-  CheckCircle,
-  ArrowRight,
-  Activity,
-} from "lucide-react";
+import { UserIcon, CurrencyDollarIcon, ExclamationTriangleIcon, ShieldCheckIcon, Cog6ToothIcon, ArrowRightEndOnRectangleIcon, XCircleIcon, CheckCircleIcon, ArrowRightIcon, SignalIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
 import { cn } from "@/lib/utils";
 
 const getActionIcon = (action: string) => {
-  if (action.includes("login")) return <LogIn className="h-4 w-4" />;
+  if (action.includes("login")) return <ArrowRightEndOnRectangleIcon className="h-4 w-4" />;
   if (action.includes("freeze") || action.includes("reject"))
-    return <XCircle className="h-4 w-4" />;
+    return <XCircleIcon className="h-4 w-4" />;
   if (action.includes("approve") || action.includes("unfreeze"))
-    return <CheckCircle className="h-4 w-4" />;
-  if (action.includes("trader")) return <User className="h-4 w-4" />;
+    return <CheckCircleIcon className="h-4 w-4" />;
+  if (action.includes("trader")) return <UserIcon className="h-4 w-4" />;
   if (action.includes("payout") || action.includes("refund"))
-    return <DollarSign className="h-4 w-4" />;
+    return <CurrencyDollarIcon className="h-4 w-4" />;
   if (action.includes("risk") || action.includes("breach"))
-    return <AlertTriangle className="h-4 w-4" />;
+    return <ExclamationTriangleIcon className="h-4 w-4" />;
   if (action.includes("kyc") || action.includes("fraud"))
-    return <ShieldCheck className="h-4 w-4" />;
+    return <ShieldCheckIcon className="h-4 w-4" />;
   if (action.includes("challenge") || action.includes("config"))
-    return <Settings className="h-4 w-4" />;
-  return <Settings className="h-4 w-4" />;
+    return <Cog6ToothIcon className="h-4 w-4" />;
+  return <Cog6ToothIcon className="h-4 w-4" />;
 };
 
 const getActionColor = (action: string) => {
@@ -111,7 +100,7 @@ export const RecentActivityFeed = () => {
     >
       <div className="px-6 py-4 border-b border-gray-200">
         <div className="flex items-center gap-2">
-          <Activity className="h-5 w-5 text-gray-400" />
+          <SignalIcon className="h-5 w-5 text-gray-400" />
           <div>
             <h3 className="text-lg font-semibold text-gray-900">Recent Activity</h3>
             <p className="text-sm text-gray-500">Latest admin actions and system events</p>
@@ -190,7 +179,7 @@ export const RecentActivityFeed = () => {
           className="text-sm font-medium text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1 group"
         >
           View all activity
-          <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+          <ArrowRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
         </Link>
       </div>
     </motion.div>

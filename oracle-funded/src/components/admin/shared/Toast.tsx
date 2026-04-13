@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle, XCircle, AlertCircle, Info, X } from "lucide-react";
+import { CheckCircleIcon, XCircleIcon, ExclamationCircleIcon, InformationCircleIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { cn } from "@/lib/utils";
 
 export type ToastType = "info" | "success" | "warning" | "error";
@@ -41,13 +41,13 @@ function SingleToast({ id, type, title, message, duration = 5000, onDismiss }: T
   const getIcon = () => {
     switch (type) {
       case "success":
-        return <CheckCircle className="h-5 w-5 text-green-600" />;
+        return <CheckCircleIcon className="h-5 w-5 text-green-600" />;
       case "error":
-        return <XCircle className="h-5 w-5 text-red-600" />;
+        return <XCircleIcon className="h-5 w-5 text-red-600" />;
       case "warning":
-        return <AlertCircle className="h-5 w-5 text-amber-600" />;
+        return <ExclamationCircleIcon className="h-5 w-5 text-amber-600" />;
       default:
-        return <Info className="h-5 w-5 text-indigo-600" />;
+        return <InformationCircleIcon className="h-5 w-5 text-indigo-600" />;
     }
   };
 
@@ -102,7 +102,7 @@ function SingleToast({ id, type, title, message, duration = 5000, onDismiss }: T
           }}
           className="flex-shrink-0 p-1 hover:bg-gray-100 rounded transition-colors"
         >
-          <X className="h-4 w-4 text-gray-400" />
+          <XMarkIcon className="h-4 w-4 text-gray-400" />
         </button>
       </div>
 

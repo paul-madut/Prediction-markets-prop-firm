@@ -4,20 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
 import { PayoutsSkeleton } from "@/components/ui/skeleton";
 import { formatCurrency, formatDate } from "@/lib/formatters";
-import {
-  DollarSign,
-  Wallet,
-  ArrowUpRight,
-  Clock,
-  CheckCircle2,
-  XCircle,
-  Landmark,
-  Bitcoin,
-  CreditCard,
-  AlertCircle,
-  TrendingUp,
-  ChevronRight,
-} from "lucide-react";
+import { CurrencyDollarIcon, WalletIcon, ArrowUpRightIcon, ClockIcon, CheckCircleIcon, XCircleIcon, BuildingLibraryIcon, CreditCardIcon, ExclamationCircleIcon, ArrowTrendingUpIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
 
 type PaymentMethod = "bank_transfer" | "crypto" | "paypal";
 
@@ -70,7 +57,7 @@ const paymentMethods: {
     id: "bank_transfer",
     label: "Bank Transfer",
     description: "Direct deposit to your bank account",
-    icon: <Landmark className="w-5 h-5" />,
+    icon: <BuildingLibraryIcon className="w-5 h-5" />,
     fee: "Free",
     time: "2-3 business days",
   },
@@ -78,7 +65,7 @@ const paymentMethods: {
     id: "crypto",
     label: "Cryptocurrency",
     description: "USDC or USDT to your wallet",
-    icon: <Bitcoin className="w-5 h-5" />,
+    icon: <CurrencyDollarIcon className="w-5 h-5" />,
     fee: "Free",
     time: "Within 24 hours",
   },
@@ -86,7 +73,7 @@ const paymentMethods: {
     id: "paypal",
     label: "PayPal",
     description: "Instant transfer to PayPal",
-    icon: <CreditCard className="w-5 h-5" />,
+    icon: <CreditCardIcon className="w-5 h-5" />,
     fee: "2.9%",
     time: "Instant",
   },
@@ -99,27 +86,27 @@ const statusConfig: Record<
   pending: {
     label: "Pending",
     color: "bg-amber-100 text-amber-800",
-    icon: <Clock className="w-3.5 h-3.5" />,
+    icon: <ClockIcon className="w-3.5 h-3.5" />,
   },
   approved: {
     label: "Approved",
     color: "bg-blue-100 text-blue-800",
-    icon: <CheckCircle2 className="w-3.5 h-3.5" />,
+    icon: <CheckCircleIcon className="w-3.5 h-3.5" />,
   },
   processing: {
     label: "Processing",
     color: "bg-blue-100 text-blue-800",
-    icon: <Clock className="w-3.5 h-3.5" />,
+    icon: <ClockIcon className="w-3.5 h-3.5" />,
   },
   completed: {
     label: "Completed",
     color: "bg-green-100 text-green-800",
-    icon: <CheckCircle2 className="w-3.5 h-3.5" />,
+    icon: <CheckCircleIcon className="w-3.5 h-3.5" />,
   },
   rejected: {
     label: "Rejected",
     color: "bg-red-100 text-red-800",
-    icon: <XCircle className="w-3.5 h-3.5" />,
+    icon: <XCircleIcon className="w-3.5 h-3.5" />,
   },
 };
 
@@ -182,7 +169,7 @@ export default function PayoutsPage() {
       {/* Not Funded Banner */}
       {!isFunded && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <ExclamationCircleIcon className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div>
             <p className="font-medium text-amber-900">Account Not Yet Funded</p>
             <p className="text-sm text-amber-700 mt-0.5">
@@ -203,7 +190,7 @@ export default function PayoutsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 text-sm mb-1">
-            <Wallet className="w-4 h-4" />
+            <WalletIcon className="w-4 h-4" />
             Account Balance
           </div>
           <p className="text-xl font-bold text-gray-900">
@@ -212,7 +199,7 @@ export default function PayoutsPage() {
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 text-sm mb-1">
-            <TrendingUp className="w-4 h-4" />
+            <ArrowTrendingUpIcon className="w-4 h-4" />
             Total Profit
           </div>
           <p
@@ -226,7 +213,7 @@ export default function PayoutsPage() {
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 text-sm mb-1">
-            <DollarSign className="w-4 h-4" />
+            <CurrencyDollarIcon className="w-4 h-4" />
             Available to Withdraw
           </div>
           <p className="text-xl font-bold text-green-600">
@@ -235,7 +222,7 @@ export default function PayoutsPage() {
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 text-sm mb-1">
-            <ArrowUpRight className="w-4 h-4" />
+            <ArrowUpRightIcon className="w-4 h-4" />
             Total Paid Out
           </div>
           <p className="text-xl font-bold text-gray-900">
@@ -315,7 +302,7 @@ export default function PayoutsPage() {
                   </div>
                   {selectedMethod === method.id && (
                     <div className="absolute top-2 right-2">
-                      <CheckCircle2 className="w-4 h-4 text-blue-600" />
+                      <CheckCircleIcon className="w-4 h-4 text-blue-600" />
                     </div>
                   )}
                 </button>
@@ -329,7 +316,7 @@ export default function PayoutsPage() {
               Amount (USD)
             </label>
             <div className="relative max-w-xs">
-              <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <CurrencyDollarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="number"
                 value={requestAmount}
@@ -369,12 +356,12 @@ export default function PayoutsPage() {
                 </>
               ) : submitted ? (
                 <>
-                  <CheckCircle2 className="w-4 h-4" />
+                  <CheckCircleIcon className="w-4 h-4" />
                   Request Submitted!
                 </>
               ) : (
                 <>
-                  <ArrowUpRight className="w-4 h-4" />
+                  <ArrowUpRightIcon className="w-4 h-4" />
                   Request Payout
                 </>
               )}
@@ -413,7 +400,7 @@ export default function PayoutsPage() {
         <div className="block md:hidden p-4 space-y-3">
           {filteredPayouts.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
-              <DollarSign className="w-10 h-10 mx-auto mb-2 text-gray-300" />
+              <CurrencyDollarIcon className="w-10 h-10 mx-auto mb-2 text-gray-300" />
               <p className="font-medium">No payouts yet</p>
               <p className="text-sm">Your payout history will appear here.</p>
             </div>
@@ -460,7 +447,7 @@ export default function PayoutsPage() {
         <div className="hidden md:block">
           {filteredPayouts.length === 0 ? (
             <div className="text-center py-12 text-gray-500">
-              <DollarSign className="w-10 h-10 mx-auto mb-2 text-gray-300" />
+              <CurrencyDollarIcon className="w-10 h-10 mx-auto mb-2 text-gray-300" />
               <p className="font-medium">No payouts yet</p>
               <p className="text-sm">Your payout history will appear here.</p>
             </div>

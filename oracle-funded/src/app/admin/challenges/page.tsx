@@ -1,14 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Target,
-  Plus,
-  Edit2,
-  ToggleLeft,
-  ToggleRight,
-  Tag,
-} from "lucide-react";
+import { ViewfinderCircleIcon, PlusIcon, PencilIcon, StopIcon, PlayIcon, TagIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
 import { AdminChallengeConfig } from "@/types/admin";
 import { formatCurrency } from "@/lib/formatters";
@@ -28,7 +21,7 @@ export default function ChallengesPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-purple-100 rounded-xl">
-              <Target className="h-6 w-6 text-purple-600" />
+              <ViewfinderCircleIcon className="h-6 w-6 text-purple-600" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
@@ -44,7 +37,7 @@ export default function ChallengesPage() {
             onClick={() => setModalState('create')}
             className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
           >
-            <Plus className="h-4 w-4" />
+            <PlusIcon className="h-4 w-4" />
             New Challenge
           </button>
         </div>
@@ -87,9 +80,9 @@ export default function ChallengesPage() {
                   className="text-gray-400 hover:text-gray-600"
                 >
                   {config.isEnabled ? (
-                    <ToggleRight className="h-6 w-6 text-green-500" />
+                    <PlayIcon className="h-6 w-6 text-green-500" />
                   ) : (
-                    <ToggleLeft className="h-6 w-6" />
+                    <StopIcon className="h-6 w-6" />
                   )}
                 </button>
               </div>
@@ -126,7 +119,7 @@ export default function ChallengesPage() {
                 </span>
               </div>
 
-              {/* Profit Target */}
+              {/* Profit ViewfinderCircleIcon */}
               <div className="flex items-center justify-between">
                 <span className="text-gray-500">Profit Target</span>
                 <span className="font-medium text-green-600">
@@ -173,7 +166,7 @@ export default function ChallengesPage() {
                 onClick={() => setModalState({ mode: 'edit', config })}
                 className="flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-700 font-medium"
               >
-                <Edit2 className="h-4 w-4" />
+                <PencilIcon className="h-4 w-4" />
                 Edit Configuration
               </button>
             </div>

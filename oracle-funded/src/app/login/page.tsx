@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Eye, EyeOff, Wallet, TrendingUp } from "lucide-react";
+import { EyeIcon, EyeSlashIcon, WalletIcon, ArrowTrendingUpIcon } from "@heroicons/react/16/solid";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -135,9 +135,9 @@ export default function LoginPage() {
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition z-10"
                 >
                   {showPassword ? (
-                    <EyeOff className="w-4 h-4" />
+                    <EyeSlashIcon className="w-4 h-4" />
                   ) : (
-                    <Eye className="w-4 h-4" />
+                    <EyeIcon className="w-4 h-4" />
                   )}
                 </button>
               </div>
@@ -199,7 +199,7 @@ export default function LoginPage() {
                 className="group/btn relative flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-300 hover:shadow-md transition-all duration-200"
                 type="button"
               >
-                <Wallet className="h-4 w-4 text-blue-500" />
+                <WalletIcon className="h-4 w-4 text-blue-500" />
                 <span className="text-sm">Wallet</span>
                 <BottomGradient />
               </button>

@@ -2,13 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import {
-  Shield,
-  UserCheck,
-  AlertOctagon,
-  FileText,
-  ArrowRight,
-} from "lucide-react";
+import { ShieldCheckIcon, UserIcon, ExclamationTriangleIcon, DocumentTextIcon, ArrowRightIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
 import { FraudAlert } from "@/types/admin";
 import { cn } from "@/lib/utils";
@@ -32,7 +26,7 @@ export default function CompliancePage() {
       <div className="bg-white border-b border-gray-200 -mx-6 -mt-6 px-6 py-6 mb-6">
         <div className="flex items-center gap-4">
           <div className="p-3 bg-indigo-100 rounded-xl">
-            <Shield className="h-6 w-6 text-indigo-600" />
+            <ShieldCheckIcon className="h-6 w-6 text-indigo-600" />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">
@@ -50,7 +44,7 @@ export default function CompliancePage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-amber-100 rounded-lg">
-              <UserCheck className="h-5 w-5 text-amber-600" />
+              <UserIcon className="h-5 w-5 text-amber-600" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Pending KYC</p>
@@ -64,7 +58,7 @@ export default function CompliancePage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-red-100 rounded-lg">
-              <AlertOctagon className="h-5 w-5 text-red-600" />
+              <ExclamationTriangleIcon className="h-5 w-5 text-red-600" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Open Fraud Alerts</p>
@@ -78,7 +72,7 @@ export default function CompliancePage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-green-100 rounded-lg">
-              <UserCheck className="h-5 w-5 text-green-600" />
+              <UserIcon className="h-5 w-5 text-green-600" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Approved KYC</p>
@@ -92,7 +86,7 @@ export default function CompliancePage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-blue-100 rounded-lg">
-              <FileText className="h-5 w-5 text-blue-600" />
+              <DocumentTextIcon className="h-5 w-5 text-blue-600" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Audit Entries</p>
@@ -113,7 +107,7 @@ export default function CompliancePage() {
         >
           <div className="flex items-start justify-between">
             <div className="p-3 bg-amber-100 rounded-xl">
-              <UserCheck className="h-6 w-6 text-amber-600" />
+              <UserIcon className="h-6 w-6 text-amber-600" />
             </div>
             {pendingKYC.length > 0 && (
               <span className="px-3 py-1 bg-amber-100 text-amber-700 text-sm font-semibold rounded-full">
@@ -128,7 +122,7 @@ export default function CompliancePage() {
             Review identity verification documents
           </p>
           <div className="flex items-center gap-1 text-indigo-600 text-sm font-medium mt-4 group-hover:gap-2 transition-all">
-            Review queue <ArrowRight className="h-4 w-4" />
+            Review queue <ArrowRightIcon className="h-4 w-4" />
           </div>
         </Link>
 
@@ -136,7 +130,7 @@ export default function CompliancePage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-start justify-between">
             <div className="p-3 bg-red-100 rounded-xl">
-              <AlertOctagon className="h-6 w-6 text-red-600" />
+              <ExclamationTriangleIcon className="h-6 w-6 text-red-600" />
             </div>
             {openFraud.length > 0 && (
               <span className="px-3 py-1 bg-red-100 text-red-700 text-sm font-semibold rounded-full">
@@ -170,7 +164,7 @@ export default function CompliancePage() {
           className="block bg-white rounded-xl border border-gray-200 p-6 hover:border-indigo-300 hover:shadow-md transition-all group"
         >
           <div className="p-3 bg-blue-100 rounded-xl w-fit">
-            <FileText className="h-6 w-6 text-blue-600" />
+            <DocumentTextIcon className="h-6 w-6 text-blue-600" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900 mt-4 group-hover:text-indigo-600 transition-colors">
             Audit Logs
@@ -179,7 +173,7 @@ export default function CompliancePage() {
             View all administrative actions
           </p>
           <div className="flex items-center gap-1 text-indigo-600 text-sm font-medium mt-4 group-hover:gap-2 transition-all">
-            View logs <ArrowRight className="h-4 w-4" />
+            View logs <ArrowRightIcon className="h-4 w-4" />
           </div>
         </Link>
       </div>

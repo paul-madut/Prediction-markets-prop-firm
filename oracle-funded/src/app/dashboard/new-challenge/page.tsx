@@ -9,7 +9,7 @@ import { ChallengeTypeCard } from "@/components/challenge/ChallengeTypeCard";
 import { StatefulButton } from "@/components/ui/stateful-button";
 import { NoiseBackground } from "@/components/ui/noise-background";
 import { formatCurrency } from "@/lib/formatters";
-import { ChevronDown } from "lucide-react";
+import { ChevronDownIcon } from "@heroicons/react/16/solid";
 
 export default function NewChallengePage() {
   const { plans, challengeTypes, selectPlan } = useApp();
@@ -73,7 +73,7 @@ export default function NewChallengePage() {
                 </option>
               ))}
             </select>
-            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+            <ChevronDownIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
           </div>
         </div>
       </div>

@@ -2,19 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  X,
-  AlertTriangle,
-  CheckCircle,
-  Clock,
-  User,
-  Mail,
-  MapPin,
-  Monitor,
-  TrendingUp,
-  FileText,
-  Link as LinkIcon,
-} from "lucide-react";
+import { XMarkIcon, ExclamationTriangleIcon, CheckCircleIcon, ClockIcon, UserIcon, EnvelopeIcon, ComputerDesktopIcon, ArrowTrendingUpIcon, DocumentTextIcon, LinkIcon, MapPinIcon } from "@heroicons/react/16/solid";
 import { FraudAlert } from "@/types/admin";
 import { useAdmin } from "@/context/AdminContext";
 import { useToast } from "@/components/admin/shared/Toast";
@@ -88,10 +76,10 @@ export default function FraudAlertModal({ alert, isOpen, onClose }: FraudAlertMo
   };
 
   const tabs = [
-    { id: "overview" as TabType, label: "Overview", icon: FileText },
-    { id: "evidence" as TabType, label: "Evidence", icon: AlertTriangle },
+    { id: "overview" as TabType, label: "Overview", icon: DocumentTextIcon },
+    { id: "evidence" as TabType, label: "Evidence", icon: ExclamationTriangleIcon },
     { id: "related" as TabType, label: "Related Accounts", icon: LinkIcon },
-    { id: "activity" as TabType, label: "Activity Log", icon: Clock },
+    { id: "activity" as TabType, label: "Activity Log", icon: ClockIcon },
   ];
 
   // Mock related accounts
@@ -159,7 +147,7 @@ export default function FraudAlertModal({ alert, isOpen, onClose }: FraudAlertMo
                       getSeverityColor(alert.severity)
                     )}
                   >
-                    <AlertTriangle className="h-6 w-6" />
+                    <ExclamationTriangleIcon className="h-6 w-6" />
                   </div>
                   <div>
                     <div className="flex items-center gap-3">
@@ -192,7 +180,7 @@ export default function FraudAlertModal({ alert, isOpen, onClose }: FraudAlertMo
                   onClick={onClose}
                   className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
                 >
-                  <X className="h-6 w-6 text-gray-500" />
+                  <XMarkIcon className="h-6 w-6 text-gray-500" />
                 </button>
               </div>
 
@@ -244,14 +232,14 @@ export default function FraudAlertModal({ alert, isOpen, onClose }: FraudAlertMo
                           </h3>
                           <div className="grid grid-cols-2 gap-4">
                             <div className="flex items-center gap-3">
-                              <User className="h-5 w-5 text-gray-400" />
+                              <UserIcon className="h-5 w-5 text-gray-400" />
                               <div>
                                 <p className="text-sm text-gray-500">Trader</p>
                                 <p className="font-medium text-gray-900">{alert.traderName}</p>
                               </div>
                             </div>
                             <div className="flex items-center gap-3">
-                              <Mail className="h-5 w-5 text-gray-400" />
+                              <EnvelopeIcon className="h-5 w-5 text-gray-400" />
                               <div>
                                 <p className="text-sm text-gray-500">Email</p>
                                 <p className="font-medium text-gray-900">{alert.traderEmail}</p>
@@ -285,7 +273,7 @@ export default function FraudAlertModal({ alert, isOpen, onClose }: FraudAlertMo
                           <div className="space-y-4">
                             <div className="flex items-start gap-3">
                               <div className="flex-shrink-0 w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
-                                <Clock className="h-4 w-4 text-indigo-600" />
+                                <ClockIcon className="h-4 w-4 text-indigo-600" />
                               </div>
                               <div>
                                 <p className="font-medium text-gray-900">Alert Created</p>
@@ -297,7 +285,7 @@ export default function FraudAlertModal({ alert, isOpen, onClose }: FraudAlertMo
                             {status === "investigating" && (
                               <div className="flex items-start gap-3">
                                 <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                                  <TrendingUp className="h-4 w-4 text-blue-600" />
+                                  <ArrowTrendingUpIcon className="h-4 w-4 text-blue-600" />
                                 </div>
                                 <div>
                                   <p className="font-medium text-gray-900">Investigation Started</p>
@@ -308,7 +296,7 @@ export default function FraudAlertModal({ alert, isOpen, onClose }: FraudAlertMo
                             {status === "resolved" && (
                               <div className="flex items-start gap-3">
                                 <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                                  <CheckCircle className="h-4 w-4 text-green-600" />
+                                  <CheckCircleIcon className="h-4 w-4 text-green-600" />
                                 </div>
                                 <div>
                                   <p className="font-medium text-gray-900">Alert Resolved</p>
@@ -341,7 +329,7 @@ export default function FraudAlertModal({ alert, isOpen, onClose }: FraudAlertMo
                                 className="p-4 bg-gray-50 rounded-lg border border-gray-200"
                               >
                                 <div className="flex items-start gap-3">
-                                  <Monitor className="h-5 w-5 text-gray-400 flex-shrink-0 mt-0.5" />
+                                  <ComputerDesktopIcon className="h-5 w-5 text-gray-400 flex-shrink-0 mt-0.5" />
                                   <div className="flex-1">
                                     <p className="text-sm text-gray-900">{item}</p>
                                   </div>
@@ -385,7 +373,7 @@ export default function FraudAlertModal({ alert, isOpen, onClose }: FraudAlertMo
                             </h3>
                             <div className="space-y-3">
                               <div className="flex items-center gap-3">
-                                <MapPin className="h-5 w-5 text-gray-400" />
+                                <MapPinIcon className="h-5 w-5 text-gray-400" />
                                 <div>
                                   <p className="text-sm text-gray-500">Location</p>
                                   <p className="font-medium text-gray-900">Multiple countries</p>
@@ -458,7 +446,7 @@ export default function FraudAlertModal({ alert, isOpen, onClose }: FraudAlertMo
                           {activityLog.map((log, index) => (
                             <div key={index} className="flex items-start gap-3 pb-4 border-b last:border-0">
                               <div className="flex-shrink-0 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-                                <Clock className="h-4 w-4 text-gray-600" />
+                                <ClockIcon className="h-4 w-4 text-gray-600" />
                               </div>
                               <div className="flex-1">
                                 <p className="font-medium text-gray-900">{log.action}</p>
