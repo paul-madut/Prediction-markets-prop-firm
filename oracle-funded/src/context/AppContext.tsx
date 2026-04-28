@@ -1,10 +1,19 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  ReactNode,
+} from "react";
 import {
   AppContextType,
   UserAccount,
   Market,
+  Event,
   Position,
   Trade,
   ChallengePlan,
@@ -12,8 +21,8 @@ import {
   ChallengeType,
   LoadingState,
 } from "@/types";
-import { mockUser } from "@/data/mockUser";
-import { mockMarkets } from "@/data/mockMarkets";
+import { mockAccounts, ACCOUNT_IDS } from "@/data/mockAccounts";
+import { mockEvents, mockMarketsFromEvents } from "@/data/mockEvents";
 import { mockPositions } from "@/data/mockPositions";
 import { mockTrades } from "@/data/mockTrades";
 import { mockPlans } from "@/data/mockPlans";
@@ -23,12 +32,71 @@ import { calculateUnrealizedPnL, calculateNewAveragePrice } from "@/lib/calculat
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
+const ACTIVE_ACCOUNT_KEY = "oracle_active_account_id";
+
+// Group flat markets by event_ticker into Events. Used when the API
+// does not yet return an explicit events envelope.
+function groupMarketsToEvents(markets: Market[]): Event[] {
+  const byEvent = new Map<string, Market[]>();
+  for (const m of markets) {
+    const key = m.event_ticker || `EVT-${m.ticker}`;
+    const arr = byEvent.get(key) || [];
+    arr.push(m);
+    byEvent.set(key, arr);
+  }
+  return Array.from(byEvent.entries()).map(([eventTicker, outcomes]) => {
+    const first = outcomes[0];
+    return {
+      eventTicker,
+      title: outcomes.length === 1 ? first.title : first.title.split(" — ")[0] || first.title,
+      subtitle: first.subtitle,
+      category: first.category,
+      image: first.image,
+      volume_total: outcomes.reduce((s, o) => s + o.volume, 0),
+      volume_24h_total: outcomes.reduce((s, o) => s + o.volume_24h, 0),
+      open_time: first.open_time,
+      close_time: first.close_time,
+      expiration_time: first.expiration_time,
+      featured: first.featured,
+      outcomes,
+      resolution_criteria: first.subtitle,
+    };
+  });
+}
+
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<UserAccount>(mockUser);
-  const [markets, setMarkets] = useState<Market[]>(mockMarkets);
-  const [positions, setPositions] = useState<Position[]>(mockPositions);
-  const [trades, setTrades] = useState<Trade[]>(mockTrades);
-  const [equityHistory, setEquityHistory] = useState<EquityPoint[]>(mockEquityHistory);
+  // Multi-account state
+  const [accounts, setAccounts] = useState<UserAccount[]>(mockAccounts);
+  const [activeAccountId, setActiveAccountIdState] = useState<string>(ACCOUNT_IDS.PHASE1);
+
+  // Restore last selected account from localStorage on mount.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const saved = window.localStorage.getItem(ACTIVE_ACCOUNT_KEY);
+    if (saved && mockAccounts.some((a) => a.accountId === saved)) {
+      setActiveAccountIdState(saved);
+    }
+  }, []);
+
+  const setActiveAccount = useCallback((id: string) => {
+    setActiveAccountIdState(id);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(ACTIVE_ACCOUNT_KEY, id);
+    }
+  }, []);
+
+  // Active account is a derived selector
+  const user = useMemo(
+    () => accounts.find((a) => a.accountId === activeAccountId) || accounts[0],
+    [accounts, activeAccountId],
+  );
+
+  // Canonical (cross-account) data — context filters per active account before exposing.
+  const [allMarkets, setAllMarkets] = useState<Market[]>(mockMarketsFromEvents);
+  const [allEvents, setAllEvents] = useState<Event[]>(mockEvents);
+  const [allPositions, setAllPositions] = useState<Position[]>(mockPositions);
+  const [allTrades, setAllTrades] = useState<Trade[]>(mockTrades);
+  const [allEquity, setAllEquity] = useState<EquityPoint[]>(mockEquityHistory);
   const [plans] = useState<ChallengePlan[]>(mockPlans);
   const [selectedPlan, setSelectedPlan] = useState<ChallengePlan | null>(null);
   const [selectedChallengeType, setSelectedChallengeType] = useState<ChallengeType | null>(null);
@@ -38,92 +106,123 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   });
   const [marketsLoaded, setMarketsLoaded] = useState(false);
 
+  // Per-active-account selectors
+  const positions = useMemo(
+    () => allPositions.filter((p) => p.accountId === activeAccountId),
+    [allPositions, activeAccountId],
+  );
+  const trades = useMemo(
+    () => allTrades.filter((t) => t.accountId === activeAccountId),
+    [allTrades, activeAccountId],
+  );
+  const equityHistory = useMemo(
+    () => allEquity.filter((e) => e.accountId === activeAccountId),
+    [allEquity, activeAccountId],
+  );
+
+  // Markets / events are not per-account.
+  const markets = allMarkets;
+  const events = allEvents;
+
   // Fetch real markets from Polymarket API
   const fetchMarkets = useCallback(async () => {
     try {
-      // Markets loading is now handled by skeleton loaders on the page
-
       const response = await fetch("/api/markets?limit=100");
       const data = await response.json();
 
       if (data.markets && data.markets.length > 0) {
-        setMarkets(data.markets);
+        setAllMarkets(data.markets);
+        if (data.events && data.events.length > 0) {
+          setAllEvents(data.events);
+        } else {
+          setAllEvents(groupMarketsToEvents(data.markets));
+        }
         console.log(`Loaded ${data.markets.length} markets from Polymarket`);
       } else {
-        // Fallback to mock data if API returns empty
         console.log("Using mock markets (API returned empty)");
-        setMarkets(mockMarkets);
+        setAllMarkets(mockMarketsFromEvents);
+        setAllEvents(mockEvents);
       }
     } catch (error) {
       console.error("Failed to fetch markets, using mock data:", error);
-      setMarkets(mockMarkets);
+      setAllMarkets(mockMarketsFromEvents);
+      setAllEvents(mockEvents);
     } finally {
       setMarketsLoaded(true);
     }
   }, []);
 
-  // Fetch markets on mount
   useEffect(() => {
     if (!marketsLoaded) {
       fetchMarkets();
     }
   }, [marketsLoaded, fetchMarkets]);
 
-  // Background refresh markets periodically (every 5 minutes)
   useEffect(() => {
     const interval = setInterval(() => {
-      fetchMarkets(); // Silent background refresh
-    }, 300000); // 5 minutes
-
+      fetchMarkets();
+    }, 300000);
     return () => clearInterval(interval);
   }, [fetchMarkets]);
 
-  // Update account balance
+  // Update active account's balance.
   const updateAccountBalance = (newBalance: number) => {
-    setUser((prev) => ({ ...prev, accountBalance: newBalance }));
-  };
-
-  // Get market by ticker
-  const getMarketByTicker = (ticker: string): Market | undefined => {
-    return markets.find((m) => m.ticker === ticker);
-  };
-
-  // Add new position
-  const addPosition = (position: Position) => {
-    setPositions((prev) => [...prev, position]);
-  };
-
-  // Update existing position
-  const updatePosition = (
-    ticker: string,
-    side: "yes" | "no",
-    updates: Partial<Position>
-  ) => {
-    setPositions((prev) =>
-      prev.map((pos) =>
-        pos.ticker === ticker && pos.side === side ? { ...pos, ...updates } : pos
-      )
+    setAccounts((prev) =>
+      prev.map((a) =>
+        a.accountId === activeAccountId
+          ? { ...a, accountBalance: newBalance, peakBalance: Math.max(a.peakBalance, newBalance) }
+          : a,
+      ),
     );
   };
 
-  // Close position
+  // setUser keeps the legacy API: update the active account record.
+  const setUser = (next: UserAccount) => {
+    setAccounts((prev) => prev.map((a) => (a.accountId === activeAccountId ? next : a)));
+  };
+
+  const getMarketByTicker = (ticker: string): Market | undefined =>
+    allMarkets.find((m) => m.ticker === ticker);
+
+  const getEventByTicker = (eventTicker: string): Event | undefined =>
+    allEvents.find((e) => e.eventTicker === eventTicker);
+
+  const addPosition = (position: Position) => {
+    setAllPositions((prev) => [...prev, { ...position, accountId: position.accountId || activeAccountId }]);
+  };
+
+  const updatePosition = (
+    ticker: string,
+    side: "yes" | "no",
+    updates: Partial<Position>,
+  ) => {
+    setAllPositions((prev) =>
+      prev.map((pos) =>
+        pos.accountId === activeAccountId && pos.ticker === ticker && pos.side === side
+          ? { ...pos, ...updates }
+          : pos,
+      ),
+    );
+  };
+
   const closePosition = (ticker: string, side: "yes" | "no", exitPrice: number) => {
-    const position = positions.find((p) => p.ticker === ticker && p.side === side);
+    const position = allPositions.find(
+      (p) => p.accountId === activeAccountId && p.ticker === ticker && p.side === side,
+    );
     if (!position) return;
 
     const pnl = calculateUnrealizedPnL(position, exitPrice);
     const newBalance = user.accountBalance + pnl + position.market_exposure;
 
-    // Update balance
     updateAccountBalance(newBalance);
 
-    // Remove position
-    setPositions((prev) => prev.filter((p) => !(p.ticker === ticker && p.side === side)));
+    setAllPositions((prev) =>
+      prev.filter((p) => !(p.accountId === activeAccountId && p.ticker === ticker && p.side === side)),
+    );
 
-    // Update the corresponding trade
-    setTrades((prev) =>
+    setAllTrades((prev) =>
       prev.map((t) =>
-        t.ticker === ticker && t.side === side && !t.exitDate
+        t.accountId === activeAccountId && t.ticker === ticker && t.side === side && !t.exitDate
           ? {
               ...t,
               exitDate: new Date().toISOString(),
@@ -133,74 +232,56 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
               result: pnl > 0 ? "won" : "lost",
               exitType: "manual_sell" as const,
             }
-          : t
-      )
+          : t,
+      ),
     );
   };
 
-  // Add trade
   const addTrade = (trade: Trade) => {
-    setTrades((prev) => [trade, ...prev]);
+    setAllTrades((prev) => [{ ...trade, accountId: trade.accountId || activeAccountId }, ...prev]);
   };
 
-  // Update equity history
   const updateEquity = (date: string, equity: number, balance: number) => {
-    setEquityHistory((prev) => [...prev, { date, equity, balance }]);
+    setAllEquity((prev) => [...prev, { accountId: activeAccountId, date, equity, balance }]);
   };
 
-  // Select challenge plan
   const selectPlan = (planId: string) => {
     const plan = plans.find((p) => p.planId === planId);
-    if (plan) {
-      setSelectedPlan(plan);
-    }
+    if (plan) setSelectedPlan(plan);
   };
 
-  // Select challenge type
-  const selectChallengeType = (typeId: 'blitz' | '2step' | '3step') => {
+  const selectChallengeType = (typeId: "blitz" | "2step" | "3step") => {
     const type = challengeTypes.find((t) => t.id === typeId);
-    if (type) {
-      setSelectedChallengeType(type);
-    }
+    if (type) setSelectedChallengeType(type);
   };
 
-  // Execute trade (main trading logic)
-  const executeTrade = (
-    ticker: string,
-    side: "yes" | "no",
-    shares: number
-  ): boolean => {
+  const executeTrade = (ticker: string, side: "yes" | "no", shares: number): boolean => {
     const market = getMarketByTicker(ticker);
     if (!market) return false;
 
-    // 1. Calculate trade cost
     const price = side === "yes" ? market.yes_ask : market.no_ask;
-    const cost = shares * price; // in cents
-    const fee = Math.floor(cost * 0.02); // 2% fee
+    const cost = shares * price;
+    const fee = Math.floor(cost * 0.02);
     const totalCost = cost + fee;
 
-    // 2. Check if user has enough balance
     if (user.accountBalance < totalCost) {
       alert("Insufficient balance");
       return false;
     }
 
-    // 3. Update balance
     const newBalance = user.accountBalance - totalCost;
     updateAccountBalance(newBalance);
 
-    // 4. Create or update position
-    const existingPosition = positions.find(
-      (p) => p.ticker === ticker && p.side === side
+    const existingPosition = allPositions.find(
+      (p) => p.accountId === activeAccountId && p.ticker === ticker && p.side === side,
     );
 
     if (existingPosition) {
-      // Add to existing position
       const newAvgPrice = calculateNewAveragePrice(
         existingPosition.avg_entry_price || 0,
         existingPosition.position,
         price,
-        shares
+        shares,
       );
 
       updatePosition(ticker, side, {
@@ -212,8 +293,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         current_price: price,
       });
     } else {
-      // New position
       addPosition({
+        accountId: activeAccountId,
         ticker,
         market_title: market.title,
         side,
@@ -228,8 +309,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       });
     }
 
-    // 5. Record trade
     addTrade({
+      accountId: activeAccountId,
       tradeId: `trade_${Date.now()}`,
       ticket: `TKT-${Math.floor(Math.random() * 99999)}`,
       ticker,
@@ -241,26 +322,24 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       pnl: 0,
       pnlPercent: 0,
       fees: fee,
-      result: "sold", // Will update on exit
+      result: "sold",
       exitType: "manual_sell",
     });
 
-    // 6. Update equity (simplified - just using new balance)
     updateEquity(new Date().toISOString(), newBalance, newBalance);
 
-    // 7. Update user stats
-    setUser((prev) => {
-      const newProfit = (newBalance - prev.startingBalance) / prev.startingBalance;
-      const newDrawdown =
-        (newBalance - prev.peakBalance) / (prev.peakBalance || 1);
-
-      return {
-        ...prev,
-        currentProfit: newProfit,
-        currentDrawdown: newDrawdown,
-        peakBalance: Math.max(prev.peakBalance, newBalance),
-      };
-    });
+    // Update active account stats
+    setAccounts((prev) =>
+      prev.map((a) => {
+        if (a.accountId !== activeAccountId) return a;
+        const newProfit = (newBalance - a.startingBalance) / a.startingBalance;
+        return {
+          ...a,
+          currentProfit: newProfit,
+          peakBalance: Math.max(a.peakBalance, newBalance),
+        };
+      }),
+    );
 
     return true;
   };
@@ -269,9 +348,14 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     user,
     updateAccountBalance,
     setUser,
+    accounts,
+    activeAccountId,
+    setActiveAccount,
     markets,
     marketsLoading: !marketsLoaded,
     getMarketByTicker,
+    events,
+    getEventByTicker,
     positions,
     addPosition,
     updatePosition,

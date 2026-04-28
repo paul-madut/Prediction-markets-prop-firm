@@ -21,15 +21,23 @@ import {
 
 const COLORS = ["#2563eb", "#7c3aed", "#059669", "#d97706", "#dc2626", "#0891b2"];
 
+type Tab = "open" | "closed" | "history";
+
 export default function PortfolioPage() {
-  const { positions, markets, closePosition, user } = useApp();
+  const { positions, markets, closePosition, user, trades } = useApp();
   const [ready, setReady] = useState(false);
+  const [tab, setTab] = useState<Tab>("open");
 
   useEffect(() => {
     setReady(true);
   }, []);
 
   if (!ready) return <PortfolioSkeleton />;
+
+  const closedTrades = trades.filter((t) => t.exitDate && t.exitType === "manual_sell");
+  const historyTrades = [...trades]
+    .filter((t) => t.exitDate)
+    .sort((a, b) => (b.exitDate || "").localeCompare(a.exitDate || ""));
 
   const positionsWithData = positions.map((pos) => {
     const market = markets.find((m) => m.ticker === pos.ticker);
@@ -166,7 +174,19 @@ export default function PortfolioPage() {
         </TextureCard>
       </div>
 
+      {/* Tabs */}
+      <div className="bg-white border border-gray-200 rounded-lg p-1 inline-flex gap-1">
+        <TabButton label={`Open (${positions.length})`} active={tab === "open"} onClick={() => setTab("open")} />
+        <TabButton label={`Closed (${closedTrades.length})`} active={tab === "closed"} onClick={() => setTab("closed")} />
+        <TabButton label={`History (${historyTrades.length})`} active={tab === "history"} onClick={() => setTab("history")} />
+      </div>
+
+      {tab !== "open" && (
+        <TexturedTradesTable trades={tab === "closed" ? closedTrades : historyTrades} emptyLabel={tab === "closed" ? "No closed trades yet" : "No trade history yet"} />
+      )}
+
       {/* Main Content */}
+      {tab === "open" && (
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Positions */}
         <div className={positions.length > 0 ? "lg:col-span-2" : "lg:col-span-3"}>
@@ -514,6 +534,80 @@ export default function PortfolioPage() {
           </div>
         )}
       </div>
+      )}
     </div>
+  );
+}
+
+function TabButton({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className={
+        "px-4 py-1.5 text-sm font-semibold rounded-md transition-colors " +
+        (active ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-100")
+      }
+    >
+      {label}
+    </button>
+  );
+}
+
+function TexturedTradesTable({ trades, emptyLabel }: { trades: ReturnType<typeof useApp>["trades"]; emptyLabel: string }) {
+  if (trades.length === 0) {
+    return (
+      <TextureCard interactive={false}>
+        <TextureCardContent className="p-12 text-center">
+          <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
+            <BriefcaseIcon className="w-8 h-8 text-gray-400" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">{emptyLabel}</h3>
+          <p className="text-gray-500 max-w-sm mx-auto">
+            Trades that resolve or are sold manually will show up here.
+          </p>
+        </TextureCardContent>
+      </TextureCard>
+    );
+  }
+  return (
+    <TextureCard interactive={false}>
+      <TextureCardContent className="p-0">
+        <table className="w-full text-sm">
+          <thead className="bg-gray-50 text-gray-600">
+            <tr>
+              <th className="text-left p-3 font-medium">Market</th>
+              <th className="text-left p-3 font-medium">Side</th>
+              <th className="text-right p-3 font-medium">Shares</th>
+              <th className="text-right p-3 font-medium">Entry / Exit</th>
+              <th className="text-right p-3 font-medium">P&L</th>
+              <th className="text-right p-3 font-medium">Closed</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {trades.map((t) => (
+              <tr key={t.tradeId}>
+                <td className="p-3 max-w-xs truncate text-gray-900 font-medium">{t.market_title}</td>
+                <td className="p-3">
+                  <span className={
+                    "px-2 py-0.5 rounded text-xs font-semibold uppercase " +
+                    (t.side === "yes" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800")
+                  }>
+                    {t.side}
+                  </span>
+                </td>
+                <td className="p-3 text-right tabular-nums">{t.shares}</td>
+                <td className="p-3 text-right tabular-nums text-gray-700">
+                  {t.entryPrice}¢ → {t.exitPrice ?? "—"}¢
+                </td>
+                <td className={"p-3 text-right tabular-nums font-semibold " + (t.pnl >= 0 ? "text-green-600" : "text-red-600")}>
+                  {t.pnl >= 0 ? "+" : ""}{formatCurrency(t.pnl)}
+                </td>
+                <td className="p-3 text-right text-gray-500">{t.exitDate ? new Date(t.exitDate).toLocaleDateString() : "—"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </TextureCardContent>
+    </TextureCard>
   );
 }
