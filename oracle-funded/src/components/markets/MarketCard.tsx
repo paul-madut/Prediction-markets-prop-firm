@@ -3,7 +3,7 @@
 import React from "react";
 import { Market } from "@/types";
 import { formatVolume, formatDate } from "@/lib/formatters";
-import { ArrowTrendingUpIcon } from "@heroicons/react/16/solid";
+import { ArrowTrendingUpIcon } from "@heroicons/react/24/outline";
 
 interface MarketCardProps {
   market: Market;

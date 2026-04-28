@@ -1,17 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { HomeIcon, PlusCircleIcon, ArrowTrendingUpIcon, BriefcaseIcon, ChartBarIcon, QuestionMarkCircleIcon, Cog6ToothIcon, RocketLaunchIcon, WalletIcon } from "@heroicons/react/16/solid";
+import { HomeIcon, PlusCircleIcon, ArrowTrendingUpIcon, BriefcaseIcon, ChartBarIcon, QuestionMarkCircleIcon, Cog6ToothIcon, RocketLaunchIcon, WalletIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { useApp } from "@/context/AppContext";
 import { cn } from "@/lib/utils";
 import {
   Sidebar as AceternitySidebar,
   SidebarBody,
   SidebarLink,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 export const Sidebar = () => {
@@ -69,9 +69,9 @@ export const Sidebar = () => {
     <AceternitySidebar open={open} setOpen={setOpen}>
       <SidebarBody className="justify-between gap-10">
         <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-          <Logo open={open} />
+          <SidebarHeader />
 
-          {/* Divider below logo */}
+          {/* Divider below header */}
           <div className="h-px bg-gray-200 w-full mb-6" />
 
           <div className="flex flex-col gap-1">
@@ -147,13 +147,17 @@ export const Sidebar = () => {
   );
 };
 
-export const Logo = ({ open }: { open: boolean }) => {
+const SidebarHeader = () => {
+  const { open, setOpen } = useSidebar();
   return (
-    <Link
-      href="/dashboard"
-      className="font-normal flex space-x-2 items-center text-sm py-1 pl-3 relative z-20 mb-2"
-    >
-      <Image src="/logo.png" alt="OracleFunded" width={24} height={24} className="flex-shrink-0" />
+    <div className="flex items-center gap-2 py-1 pl-1 relative z-20 mb-2">
+      <button
+        onClick={() => setOpen(!open)}
+        aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
+        className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors flex-shrink-0 text-neutral-700"
+      >
+        <Bars3Icon className="h-5 w-5" />
+      </button>
       <motion.span
         animate={{
           opacity: open ? 1 : 0,
@@ -167,6 +171,6 @@ export const Logo = ({ open }: { open: boolean }) => {
       >
         OracleFunded
       </motion.span>
-    </Link>
+    </div>
   );
 };

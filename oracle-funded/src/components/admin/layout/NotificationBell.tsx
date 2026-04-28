@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { BellIcon, CheckIcon, TrashIcon, ArrowTopRightOnSquareIcon, ExclamationCircleIcon, InformationCircleIcon, CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/16/solid";
+import { BellIcon, CheckIcon, TrashIcon, ArrowTopRightOnSquareIcon, ExclamationCircleIcon, InformationCircleIcon, CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useNotifications } from "@/context/NotificationContext";
 import { cn } from "@/lib/utils";
 

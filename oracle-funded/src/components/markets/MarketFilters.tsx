@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 interface MarketFiltersProps {
   selectedCategory: string;

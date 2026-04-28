@@ -8,7 +8,7 @@ import { MarketFilters } from "@/components/markets/MarketFilters";
 import { MarketCard, MarketModal } from "@/components/markets/ExpandableMarketCard";
 import { MarketCardSkeleton } from "@/components/markets/MarketCardSkeleton";
 import { useOutsideClick } from "@/hooks/use-outside-click";
-import { XMarkIcon } from "@heroicons/react/16/solid";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function MarketsPage() {
   const { markets, marketsLoading } = useApp();

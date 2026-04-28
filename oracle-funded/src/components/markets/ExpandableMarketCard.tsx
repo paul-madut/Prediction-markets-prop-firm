@@ -7,7 +7,7 @@ import { Market } from "@/types";
 import { useApp } from "@/context/AppContext";
 import { formatVolume, formatDate, formatCurrency } from "@/lib/formatters";
 import { calculateShares, calculateTotalCost } from "@/lib/calculations";
-import { ArrowTrendingUpIcon, ChartBarIcon } from "@heroicons/react/16/solid";
+import { ArrowTrendingUpIcon, ChartBarIcon } from "@heroicons/react/24/outline";
 import { StatefulButton } from "@/components/ui/stateful-button";
 import { cn } from "@/lib/utils";
 

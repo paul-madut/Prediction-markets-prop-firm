@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { Squares2X2Icon, UserGroupIcon, ViewfinderCircleIcon, ExclamationTriangleIcon, CurrencyDollarIcon, ShieldCheckIcon, Cog6ToothIcon, ArrowRightStartOnRectangleIcon, ChevronLeftIcon } from "@heroicons/react/16/solid";
+import { Squares2X2Icon, UserGroupIcon, ViewfinderCircleIcon, ExclamationTriangleIcon, CurrencyDollarIcon, ShieldCheckIcon, Cog6ToothIcon, ArrowRightStartOnRectangleIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { useAdmin } from "@/context/AdminContext";
 import { cn } from "@/lib/utils";
 import NotificationBell from "./NotificationBell";
@@ -72,8 +71,14 @@ export const AdminSidebar = () => {
     >
       {/* Header */}
       <div className="p-4 flex items-center justify-between border-b border-slate-800">
-        <Link href="/admin" className="flex items-center gap-3">
-          <Image src="/logo.png" alt="OracleFunded" width={32} height={32} />
+        <div className="flex items-center gap-3 min-w-0">
+          <button
+            onClick={() => setOpen(!open)}
+            aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
+            className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors flex-shrink-0"
+          >
+            <Bars3Icon className="h-5 w-5" />
+          </button>
           <motion.span
             animate={{ opacity: open ? 1 : 0, width: open ? "auto" : 0 }}
             transition={{ duration: 0.2 }}
@@ -81,24 +86,8 @@ export const AdminSidebar = () => {
           >
             Admin Panel
           </motion.span>
-        </Link>
-        <div className="flex items-center gap-1">
-          {/* Notification Bell */}
-          <NotificationBell compact />
-
-          {/* Toggle Button */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
-          >
-            <motion.div
-              animate={{ rotate: open ? 0 : 180 }}
-              transition={{ duration: 0.2 }}
-            >
-              <ChevronLeftIcon className="h-5 w-5" />
-            </motion.div>
-          </button>
         </div>
+        {open && <NotificationBell compact />}
       </div>
 
       {/* Alert Badge */}
