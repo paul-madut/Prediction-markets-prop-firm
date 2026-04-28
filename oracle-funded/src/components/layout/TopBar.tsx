@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { BellIcon, Cog6ToothIcon, ArrowRightStartOnRectangleIcon, UserIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
+import { BellIcon, Cog6ToothIcon, ArrowRightStartOnRectangleIcon, UserIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useApp } from "@/context/AppContext";
 import { useClerk } from "@clerk/nextjs";
 import Link from "next/link";
@@ -91,7 +91,7 @@ export const TopBar = () => {
             onClick={() => setShowNotifications(!showNotifications)}
             className="p-2 hover:bg-gray-100 hover:scale-110 rounded-lg transition-all duration-200 relative"
           >
-            <BellIcon className="text-gray-600" />
+            <BellIcon className="h-5 w-5 text-gray-600" />
             {notificationCount > 0 && (
               <span className="absolute top-1 right-1 h-4 w-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center font-semibold">
                 {notificationCount}
@@ -146,7 +146,7 @@ export const TopBar = () => {
           href="/dashboard/settings"
           className="hidden sm:flex p-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
-          <Cog6ToothIcon className="text-gray-600" />
+          <Cog6ToothIcon className="h-5 w-5 text-gray-600" />
         </Link>
 
         {/* Profile Section */}
@@ -166,7 +166,7 @@ export const TopBar = () => {
                 {accountPhaseLabels[user.accountPhase]}
               </span>
             </div>
-            <ChevronDownIcon className={cn( "hidden sm:block text-gray-400 transition-transform duration-200", showProfileMenu && "rotate-180" )} />
+            <ChevronDownIcon className={cn( "h-4 w-4 hidden sm:block text-gray-400 transition-transform duration-200", showProfileMenu && "rotate-180" )} />
           </button>
 
           <AnimatePresence>

@@ -5,7 +5,7 @@ import { Market } from "@/types";
 import { useApp } from "@/context/AppContext";
 import { formatCurrency } from "@/lib/formatters";
 import { calculateShares, calculateTotalCost } from "@/lib/calculations";
-import { XMarkIcon } from "@heroicons/react/16/solid";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 interface TradeModalProps {
   market: Market;

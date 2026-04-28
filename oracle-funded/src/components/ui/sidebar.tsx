@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Bars3Icon, XMarkIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from "@heroicons/react/16/solid";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 
 interface Links {
@@ -86,7 +86,7 @@ export const DesktopSidebar = ({
   children,
   ...props
 }: React.ComponentProps<typeof motion.div>) => {
-  const { open, setOpen, animate } = useSidebar();
+  const { open, animate } = useSidebar();
   return (
     <motion.div
       className={cn(
@@ -104,16 +104,6 @@ export const DesktopSidebar = ({
       }}
       {...props}
     >
-      <button
-        onClick={() => setOpen(!open)}
-        className="absolute -right-3 top-6 z-50 flex h-6 w-6 items-center justify-center rounded-full border border-gray-200 bg-white shadow-sm hover:bg-gray-100 transition-colors"
-      >
-        {open ? (
-          <ChevronDoubleLeftIcon className="h-3.5 w-3.5 text-gray-600" />
-        ) : (
-          <ChevronDoubleRightIcon className="h-3.5 w-3.5 text-gray-600" />
-        )}
-      </button>
       {children as React.ReactNode}
     </motion.div>
   );
