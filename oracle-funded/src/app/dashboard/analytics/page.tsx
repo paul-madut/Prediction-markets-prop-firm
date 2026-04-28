@@ -7,6 +7,12 @@ import { AnalyticsSkeleton } from "@/components/ui/skeleton";
 import { formatCurrency, formatPercent, formatDate } from "@/lib/formatters";
 import { calculateWinRate } from "@/lib/calculations";
 import {
+  calculateSharpe,
+  calculateAvgHoldingTime,
+  calculateLongShortRatio,
+} from "@/lib/analytics";
+import { RecentTradesTable } from "@/components/analytics/RecentTradesTable";
+import {
   TextureCard,
   TextureCardContent,
 } from "@/components/ui/texture-card";
@@ -115,6 +121,9 @@ export default function AnalyticsPage() {
   const expectancy =
     closedTrades.length > 0 ? totalPnL / closedTrades.length : 0;
   const riskRewardRatio = avgLoss !== 0 ? Math.abs(avgWin / avgLoss) : 0;
+  const sharpe = calculateSharpe(closedTrades);
+  const holding = calculateAvgHoldingTime(closedTrades);
+  const longShort = calculateLongShortRatio(trades);
 
   /* Streaks */
   let currentStreak = 0;
@@ -307,6 +316,40 @@ export default function AnalyticsPage() {
           </TextureCardContent>
         </TextureCard>
       </div>
+
+      {/* ── New metrics row: Sharpe / Holding / Long-Short ────── */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <TextureCard>
+          <TextureCardContent className="p-5">
+            <div className="text-xs text-gray-500 uppercase tracking-wide mb-2">Sharpe ratio</div>
+            <div className={`text-2xl font-bold ${sharpe >= 0 ? "text-green-600" : "text-red-600"}`}>
+              {sharpe.toFixed(2)}
+            </div>
+            <div className="text-xs text-gray-400 mt-1.5">Risk-adjusted return per trade</div>
+          </TextureCardContent>
+        </TextureCard>
+
+        <TextureCard>
+          <TextureCardContent className="p-5">
+            <div className="text-xs text-gray-500 uppercase tracking-wide mb-2">Avg holding time</div>
+            <div className="text-2xl font-bold text-gray-900">{holding.label}</div>
+            <div className="text-xs text-gray-400 mt-1.5">Across closed positions</div>
+          </TextureCardContent>
+        </TextureCard>
+
+        <TextureCard>
+          <TextureCardContent className="p-5">
+            <div className="text-xs text-gray-500 uppercase tracking-wide mb-2">Long / Short</div>
+            <div className="text-2xl font-bold text-gray-900 tabular-nums">{longShort.label}</div>
+            <div className="text-xs text-gray-400 mt-1.5">
+              {longShort.long} yes · {longShort.short} no
+            </div>
+          </TextureCardContent>
+        </TextureCard>
+      </div>
+
+      {/* Recent trades */}
+      <RecentTradesTable trades={trades} limit={20} />
 
       {/* ── 2. Equity Curve -- Hero Chart ─────────────────────── */}
       <TextureCard interactive={false}>

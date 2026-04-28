@@ -194,14 +194,15 @@ export const SidebarLink = ({
         }
       }}
       className={cn(
-        "flex items-center gap-3 group/sidebar py-3 rounded-lg relative",
+        "flex items-center group/sidebar rounded-lg relative",
         "hover:bg-gray-100",
-        // When open, show full padding and border
-        open && "justify-start px-3",
+        // Open: full-width row with gap, padding, optional active border
+        open && "gap-3 justify-start px-3 py-3 w-full",
         open && isActive && "bg-blue-50 border-l-4 border-blue-600",
         open && !isActive && "border-l-4 border-transparent",
-        // When closed, center icon with no border
-        !open && "justify-center px-2",
+        // Closed: fixed square so hover/active highlight is centered
+        !open && "h-10 w-10 mx-auto justify-center",
+        !open && isActive && "bg-blue-50",
         className
       )}
       {...props}

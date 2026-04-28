@@ -1,8 +1,10 @@
 import { Trade } from "@/types";
+import { ACCOUNT_IDS } from "./mockAccounts";
 
 export const mockTrades: Trade[] = [
-  // Won trades
+  // Funded — historical wins
   {
+    accountId: ACCOUNT_IDS.FUNDED,
     tradeId: "trade_001",
     ticket: "TKT-45231",
     ticker: "TIKTOK-BAN-2025",
@@ -11,15 +13,16 @@ export const mockTrades: Trade[] = [
     shares: 200,
     entryPrice: 65,
     exitPrice: 100,
-    entryDate: "2025-01-05T09:32:00Z",
-    exitDate: "2025-01-18T16:00:00Z",
-    pnl: 7000,              // Profit in cents
-    pnlPercent: 0.538,      // 53.8% return
+    entryDate: "2026-02-05T09:32:00Z",
+    exitDate: "2026-02-18T16:00:00Z",
+    pnl: 7000,
+    pnlPercent: 0.538,
     fees: 260,
     result: "won",
     exitType: "manual_sell",
   },
   {
+    accountId: ACCOUNT_IDS.FUNDED,
     tradeId: "trade_002",
     ticket: "TKT-45232",
     ticker: "INFLATION-2.5-Q2-2025",
@@ -28,8 +31,8 @@ export const mockTrades: Trade[] = [
     shares: 150,
     entryPrice: 52,
     exitPrice: 100,
-    entryDate: "2025-01-08T14:15:00Z",
-    exitDate: "2025-01-19T10:30:00Z",
+    entryDate: "2026-02-08T14:15:00Z",
+    exitDate: "2026-02-19T10:30:00Z",
     pnl: 7200,
     pnlPercent: 0.923,
     fees: 156,
@@ -37,8 +40,9 @@ export const mockTrades: Trade[] = [
     exitType: "manual_sell",
   },
 
-  // Lost trades
+  // Funded — historical losses
   {
+    accountId: ACCOUNT_IDS.FUNDED,
     tradeId: "trade_003",
     ticket: "TKT-45233",
     ticker: "DOGE-1USD-2025",
@@ -47,8 +51,8 @@ export const mockTrades: Trade[] = [
     shares: 300,
     entryPrice: 12,
     exitPrice: 0,
-    entryDate: "2025-01-09T11:20:00Z",
-    exitDate: "2025-01-20T15:45:00Z",
+    entryDate: "2026-02-09T11:20:00Z",
+    exitDate: "2026-02-20T15:45:00Z",
     pnl: -3600,
     pnlPercent: -1.0,
     fees: 72,
@@ -56,6 +60,7 @@ export const mockTrades: Trade[] = [
     exitType: "resolution",
   },
   {
+    accountId: ACCOUNT_IDS.FUNDED,
     tradeId: "trade_004",
     ticket: "TKT-45234",
     ticker: "APPLE-AR-2025",
@@ -64,8 +69,8 @@ export const mockTrades: Trade[] = [
     shares: 200,
     entryPrice: 32,
     exitPrice: 0,
-    entryDate: "2025-01-11T13:50:00Z",
-    exitDate: "2025-01-21T12:00:00Z",
+    entryDate: "2026-02-11T13:50:00Z",
+    exitDate: "2026-02-21T12:00:00Z",
     pnl: -6400,
     pnlPercent: -1.0,
     fees: 128,
@@ -73,8 +78,9 @@ export const mockTrades: Trade[] = [
     exitType: "resolution",
   },
 
-  // Sold early (mixed results)
+  // Phase1 — sold-early trades
   {
+    accountId: ACCOUNT_IDS.PHASE1,
     tradeId: "trade_005",
     ticket: "TKT-45235",
     ticker: "SOL-ETF-2025",
@@ -83,8 +89,8 @@ export const mockTrades: Trade[] = [
     shares: 100,
     entryPrice: 42,
     exitPrice: 45,
-    entryDate: "2025-01-13T10:00:00Z",
-    exitDate: "2025-01-17T14:30:00Z",
+    entryDate: "2026-04-13T10:00:00Z",
+    exitDate: "2026-04-17T14:30:00Z",
     pnl: 300,
     pnlPercent: 0.071,
     fees: 84,
@@ -92,6 +98,7 @@ export const mockTrades: Trade[] = [
     exitType: "manual_sell",
   },
   {
+    accountId: ACCOUNT_IDS.PHASE1,
     tradeId: "trade_006",
     ticket: "TKT-45236",
     ticker: "MANCITY-EPL-2425",
@@ -100,8 +107,8 @@ export const mockTrades: Trade[] = [
     shares: 150,
     entryPrice: 64,
     exitPrice: 63,
-    entryDate: "2025-01-14T15:20:00Z",
-    exitDate: "2025-01-19T09:15:00Z",
+    entryDate: "2026-04-14T15:20:00Z",
+    exitDate: "2026-04-19T09:15:00Z",
     pnl: 150,
     pnlPercent: 0.016,
     fees: 192,
@@ -109,8 +116,9 @@ export const mockTrades: Trade[] = [
     exitType: "manual_sell",
   },
 
-  // Current open positions (entered but not exited yet)
+  // Phase1 — open-position entries (no exit yet)
   {
+    accountId: ACCOUNT_IDS.PHASE1,
     tradeId: "trade_007",
     ticket: "TKT-45237",
     ticker: "BTC-150K-JUN25",
@@ -118,7 +126,7 @@ export const mockTrades: Trade[] = [
     side: "yes",
     shares: 150,
     entryPrice: 34,
-    entryDate: "2025-01-10T14:23:00Z",
+    entryDate: "2026-04-10T14:23:00Z",
     pnl: 0,
     pnlPercent: 0,
     fees: 102,
@@ -126,6 +134,7 @@ export const mockTrades: Trade[] = [
     exitType: "manual_sell",
   },
   {
+    accountId: ACCOUNT_IDS.PHASE1,
     tradeId: "trade_008",
     ticket: "TKT-45238",
     ticker: "GPT5-2025",
@@ -133,14 +142,16 @@ export const mockTrades: Trade[] = [
     side: "yes",
     shares: 80,
     entryPrice: 71,
-    entryDate: "2025-01-12T09:15:00Z",
+    entryDate: "2026-04-12T09:15:00Z",
     pnl: 0,
     pnlPercent: 0,
     fees: 114,
     result: "sold",
     exitType: "manual_sell",
   },
+  // Funded — open position
   {
+    accountId: ACCOUNT_IDS.FUNDED,
     tradeId: "trade_009",
     ticket: "TKT-45239",
     ticker: "FED-CUTS-3-2025",
@@ -148,7 +159,7 @@ export const mockTrades: Trade[] = [
     side: "no",
     shares: 100,
     entryPrice: 39,
-    entryDate: "2025-01-15T11:45:00Z",
+    entryDate: "2026-04-15T11:45:00Z",
     pnl: 0,
     pnlPercent: 0,
     fees: 78,
