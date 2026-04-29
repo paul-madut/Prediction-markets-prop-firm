@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { HomeIcon, PlusCircleIcon, ArrowTrendingUpIcon, BriefcaseIcon, ChartBarIcon, QuestionMarkCircleIcon, Cog6ToothIcon, RocketLaunchIcon, WalletIcon, Bars3Icon } from "@heroicons/react/24/outline";
+import { HomeIcon, ArrowTrendingUpIcon, BriefcaseIcon, ChartBarIcon, QuestionMarkCircleIcon, Cog6ToothIcon, RocketLaunchIcon, WalletIcon, Bars3Icon, BoltIcon, TrophyIcon } from "@heroicons/react/24/outline";
+import { AccountSwitcher } from "@/components/account/AccountSwitcher";
 import { useApp } from "@/context/AppContext";
 import { cn } from "@/lib/utils";
 import {
@@ -26,14 +27,19 @@ export const Sidebar = () => {
       icon: <HomeIcon />,
     },
     {
-      label: "New Challenge",
-      href: "/dashboard/new-challenge",
-      icon: <PlusCircleIcon />,
+      label: "Challenge",
+      href: "/dashboard/challenge",
+      icon: <TrophyIcon />,
     },
     {
       label: "Markets",
       href: "/dashboard/markets",
       icon: <ArrowTrendingUpIcon />,
+    },
+    {
+      label: "Crypto",
+      href: "/dashboard/crypto",
+      icon: <BoltIcon />,
     },
     {
       label: "Portfolio",
@@ -74,7 +80,7 @@ export const Sidebar = () => {
           {/* Divider below header */}
           <div className="h-px bg-gray-200 w-full mb-6" />
 
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-2">
             {mainLinks.map((link, idx) => (
               <SidebarLink key={idx} link={link} />
             ))}
@@ -104,8 +110,15 @@ export const Sidebar = () => {
             </Link>
           </div>
 
+          {/* Account switcher */}
+          {open && (
+            <div className="px-1">
+              <AccountSwitcher />
+            </div>
+          )}
+
           {/* Help and Settings Links */}
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-2">
             {bottomLinks.map((link, idx) => (
               <SidebarLink key={idx} link={link} />
             ))}

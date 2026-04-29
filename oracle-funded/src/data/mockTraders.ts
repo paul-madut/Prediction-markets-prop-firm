@@ -2,6 +2,7 @@ import { AdminTraderView } from '@/types/admin';
 
 export const mockTraders: AdminTraderView[] = [
   {
+    accountId: 'trader_001',
     userId: 'trader_001',
     username: 'Alex Thompson',
     email: 'alex.thompson@email.com',
@@ -37,6 +38,7 @@ export const mockTraders: AdminTraderView[] = [
     tags: ['high-performer', 'funded'],
   },
   {
+    accountId: 'trader_002',
     userId: 'trader_002',
     username: 'Sarah Mitchell',
     email: 'sarah.m@email.com',
@@ -72,6 +74,7 @@ export const mockTraders: AdminTraderView[] = [
     tags: ['promising'],
   },
   {
+    accountId: 'trader_003',
     userId: 'trader_003',
     username: 'Michael Chen',
     email: 'mchen@email.com',
@@ -116,6 +119,7 @@ export const mockTraders: AdminTraderView[] = [
     tags: ['at-risk', 'repeat-purchaser'],
   },
   {
+    accountId: 'trader_004',
     userId: 'trader_004',
     username: 'Emma Davis',
     email: 'emma.davis@email.com',
@@ -151,6 +155,7 @@ export const mockTraders: AdminTraderView[] = [
     tags: ['funded', 'consistent'],
   },
   {
+    accountId: 'trader_005',
     userId: 'trader_005',
     username: 'James Wilson',
     email: 'jwilson@email.com',
@@ -186,6 +191,7 @@ export const mockTraders: AdminTraderView[] = [
     tags: ['new'],
   },
   {
+    accountId: 'trader_006',
     userId: 'trader_006',
     username: 'Lisa Anderson',
     email: 'lisa.a@email.com',
@@ -230,6 +236,7 @@ export const mockTraders: AdminTraderView[] = [
     tags: ['failed', 'breach'],
   },
   {
+    accountId: 'trader_007',
     userId: 'trader_007',
     username: 'Robert Brown',
     email: 'rbrown@email.com',
@@ -265,6 +272,7 @@ export const mockTraders: AdminTraderView[] = [
     tags: ['vip', 'funded', 'high-performer'],
   },
   {
+    accountId: 'trader_008',
     userId: 'trader_008',
     username: 'Jennifer Martinez',
     email: 'jmartinez@email.com',
@@ -300,6 +308,7 @@ export const mockTraders: AdminTraderView[] = [
     tags: ['new', 'promising'],
   },
   {
+    accountId: 'trader_009',
     userId: 'trader_009',
     username: 'David Lee',
     email: 'dlee@email.com',
@@ -335,6 +344,7 @@ export const mockTraders: AdminTraderView[] = [
     tags: ['phase-2'],
   },
   {
+    accountId: 'trader_010',
     userId: 'trader_010',
     username: 'Amanda Taylor',
     email: 'ataylor@email.com',
@@ -382,6 +392,7 @@ export const mockTraders: AdminTraderView[] = [
     tags: ['frozen', 'under-review'],
   },
   {
+    accountId: 'trader_011',
     userId: 'trader_011',
     username: 'Christopher Garcia',
     email: 'cgarcia@email.com',
@@ -417,6 +428,7 @@ export const mockTraders: AdminTraderView[] = [
     tags: ['promising', 'close-to-pass'],
   },
   {
+    accountId: 'trader_012',
     userId: 'trader_012',
     username: 'Nicole White',
     email: 'nwhite@email.com',

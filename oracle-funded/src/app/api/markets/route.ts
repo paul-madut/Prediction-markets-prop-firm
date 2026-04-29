@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { PolymarketEvent } from "@/types/polymarket";
-import { Market } from "@/types";
+import { Market, Event } from "@/types";
 
 const POLYMARKET_API = "https://gamma-api.polymarket.com";
 
@@ -114,22 +114,51 @@ export async function GET(request: Request) {
       throw new Error(`Polymarket API error: ${response.status}`);
     }
 
-    const events: PolymarketEvent[] = await response.json();
+    const polyEvents: PolymarketEvent[] = await response.json();
 
-    // Transform all events to markets
-    let markets: Market[] = events.flatMap(transformToMarket);
+    // Build paired markets + events arrays from the same source.
+    const eventEnvelopes: Event[] = [];
+    const allMarkets: Market[] = [];
+
+    for (const pe of polyEvents) {
+      const outcomes = transformToMarket(pe);
+      if (outcomes.length === 0) continue;
+      const cat = mapTagToCategory(pe.tags || []);
+      const evt: Event = {
+        eventTicker: pe.ticker || pe.slug || `EVT-${pe.id}`,
+        title: pe.title,
+        subtitle: pe.description?.slice(0, 200),
+        category: cat,
+        image: pe.image || pe.icon,
+        volume_total: outcomes.reduce((s, o) => s + o.volume, 0),
+        volume_24h_total: outcomes.reduce((s, o) => s + o.volume_24h, 0),
+        open_time: pe.startDate || pe.createdAt,
+        close_time: pe.endDate || "",
+        expiration_time: pe.endDate || "",
+        featured: pe.featured || false,
+        outcomes,
+        resolution_criteria: pe.description,
+      };
+      eventEnvelopes.push(evt);
+      allMarkets.push(...outcomes);
+    }
 
     // Filter by category if specified
+    let filteredMarkets = allMarkets;
+    let filteredEvents = eventEnvelopes;
     if (category && category !== "All") {
-      markets = markets.filter((m) => m.category === category);
+      filteredMarkets = filteredMarkets.filter((m) => m.category === category);
+      filteredEvents = filteredEvents.filter((e) => e.category === category);
     }
 
     // Sort by 24h volume
-    markets.sort((a, b) => b.volume_24h - a.volume_24h);
+    filteredMarkets.sort((a, b) => b.volume_24h - a.volume_24h);
+    filteredEvents.sort((a, b) => b.volume_24h_total - a.volume_24h_total);
 
     return NextResponse.json({
-      markets,
-      count: markets.length,
+      markets: filteredMarkets,
+      events: filteredEvents,
+      count: filteredMarkets.length,
       source: "polymarket",
     });
   } catch (error) {
@@ -139,6 +168,7 @@ export async function GET(request: Request) {
     return NextResponse.json(
       {
         markets: [],
+        events: [],
         count: 0,
         error: error instanceof Error ? error.message : "Failed to fetch markets",
         source: "polymarket",

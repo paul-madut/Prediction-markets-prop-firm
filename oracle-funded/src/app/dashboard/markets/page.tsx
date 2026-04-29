@@ -1,125 +1,138 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import React, { useState, useCallback } from "react";
+import Link from "next/link";
 import { useApp } from "@/context/AppContext";
 import { Market } from "@/types";
 import { MarketFilters } from "@/components/markets/MarketFilters";
-import { MarketCard, MarketModal } from "@/components/markets/ExpandableMarketCard";
+import { MarketCard } from "@/components/markets/ExpandableMarketCard";
 import { MarketCardSkeleton } from "@/components/markets/MarketCardSkeleton";
-import { useOutsideClick } from "@/hooks/use-outside-click";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { SortDropdown, SortOption } from "@/components/markets/SortDropdown";
+import { useTickEvery } from "@/hooks/useTickEvery";
+import { walkCents, seedFromString } from "@/lib/priceWalk";
+
+type MarketSort = "trending" | "newest" | "volume" | "closing";
+const MARKET_SORT_OPTIONS: SortOption<MarketSort>[] = [
+  { value: "trending", label: "Trending" },
+  { value: "newest", label: "Newest" },
+  { value: "volume", label: "Highest volume" },
+  { value: "closing", label: "Closing soon" },
+];
 
 export default function MarketsPage() {
-  const { markets, marketsLoading } = useApp();
+  const { events, marketsLoading } = useApp();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeMarket, setActiveMarket] = useState<Market | null>(null);
-  const ref = useRef<HTMLDivElement>(null);
+  const [sortKey, setSortKey] = useState<MarketSort>("trending");
+  const [drift, setDrift] = useState<Record<string, number>>({});
 
-  // Filter markets
-  const filteredMarkets = markets.filter((market) => {
-    const matchesCategory =
-      selectedCategory === "All" || market.category === selectedCategory;
-    const matchesSearch =
-      searchQuery === "" ||
-      market.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      market.subtitle?.toLowerCase().includes(searchQuery.toLowerCase());
+  // Trim outcomes to those priced between 10% and 90% (in either direction)
+  // and drop events left with zero outcomes after the trim.
+  const inRangeEvents = events
+    .map((event) => ({
+      ...event,
+      outcomes: event.outcomes.filter((o) => o.yes_ask >= 10 && o.yes_ask <= 90),
+    }))
+    .filter((event) => event.outcomes.length > 0);
 
-    return matchesCategory && matchesSearch;
-  });
-
-  useEffect(() => {
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setActiveMarket(null);
+  const filteredEvents = inRangeEvents
+    .filter((event) => {
+      const matchesCategory =
+        selectedCategory === "All" || event.category === selectedCategory;
+      const matchesSearch =
+        searchQuery === "" ||
+        event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        event.subtitle?.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    })
+    .sort((a, b) => {
+      switch (sortKey) {
+        case "newest":
+          return new Date(b.open_time).getTime() - new Date(a.open_time).getTime();
+        case "volume":
+          return b.volume_total - a.volume_total;
+        case "closing":
+          return new Date(a.close_time).getTime() - new Date(b.close_time).getTime();
+        case "trending":
+        default:
+          return b.volume_24h_total - a.volume_24h_total;
       }
-    }
+    });
 
-    if (activeMarket) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+  const tick = useCallback(() => {
+    const seedBase = (Date.now() / 2000) | 0;
+    setDrift((prev) => {
+      const next: Record<string, number> = {};
+      for (const event of events) {
+        for (const outcome of event.outcomes) {
+          const cur = prev[outcome.ticker] ?? outcome.yes_ask;
+          const seed = seedFromString(outcome.ticker) + seedBase;
+          next[outcome.ticker] = walkCents(cur, seed, 1);
+        }
+      }
+      return next;
+    });
+  }, [events]);
+  useTickEvery(2000, tick);
 
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [activeMarket]);
-
-  useOutsideClick(ref, () => setActiveMarket(null));
+  const eventsWithDrift = filteredEvents.map((e) => ({
+    ...e,
+    outcomes: e.outcomes.map((o) =>
+      drift[o.ticker] !== undefined
+        ? {
+            ...o,
+            yes_ask: drift[o.ticker],
+            yes_bid: Math.max(1, drift[o.ticker] - 1),
+            no_bid: Math.max(1, 100 - drift[o.ticker] - 1),
+            no_ask: Math.min(99, 100 - drift[o.ticker]),
+          }
+        : o,
+    ),
+  }));
 
   return (
-    <>
-      <div className="space-y-6">
-        {/* Filters */}
-        <MarketFilters
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-        />
-
-        {/* Markets Grid */}
-        {marketsLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Array.from({ length: 9 }).map((_, i) => (
-              <MarketCardSkeleton key={i} />
-            ))}
-          </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredMarkets.map((market) => (
-                <MarketCard
-                  key={market.ticker}
-                  market={market}
-                  onClick={() => setActiveMarket(market)}
-                />
-              ))}
-            </div>
-
-            {/* Empty State */}
-            {filteredMarkets.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-gray-500">
-                  No markets found matching your criteria
-                </p>
-              </div>
-            )}
-          </>
-        )}
+    <div className="space-y-6">
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div className="flex-1">
+          <MarketFilters
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+          />
+        </div>
+        <SortDropdown options={MARKET_SORT_OPTIONS} value={sortKey} onChange={setSortKey} />
       </div>
 
-      {/* Modal */}
-      <AnimatePresence>
-        {activeMarket && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
-              onClick={() => setActiveMarket(null)}
-            />
-            <div className="fixed inset-0 grid place-items-center z-[100] p-2 sm:p-4">
-              <button
-                className="flex absolute top-3 right-3 sm:top-4 sm:right-4 items-center justify-center bg-white rounded-full h-10 w-10 shadow-lg z-[110] hover:bg-gray-100 transition-colors"
-                onClick={() => setActiveMarket(null)}
+      {marketsLoading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array.from({ length: 9 }).map((_, i) => (
+            <MarketCardSkeleton key={i} />
+          ))}
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {eventsWithDrift.map((event) => (
+              <Link
+                key={event.eventTicker}
+                href={`/dashboard/markets/${event.eventTicker}`}
+                className="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg"
               >
-                <XMarkIcon className="h-5 w-5 text-gray-700" />
-              </button>
+                <MarketCard event={event} onClick={() => {}} />
+              </Link>
+            ))}
+          </div>
 
-              <div ref={ref} className="w-full max-w-2xl">
-                <MarketModal
-                  market={activeMarket}
-                  onClose={() => setActiveMarket(null)}
-                />
-              </div>
+          {filteredEvents.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-gray-500">No markets found matching your criteria</p>
             </div>
-          </>
-        )}
-      </AnimatePresence>
-    </>
+          )}
+        </>
+      )}
+    </div>
   );
 }
+
+export type { Market };
