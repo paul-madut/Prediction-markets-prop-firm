@@ -11,8 +11,10 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const pageTitles: Record<string, string> = {
   "/dashboard": "Dashboard",
+  "/dashboard/challenge": "Challenge",
   "/dashboard/new-challenge": "New Challenge",
   "/dashboard/markets": "Markets",
+  "/dashboard/crypto": "Crypto",
   "/dashboard/portfolio": "Portfolio",
   "/dashboard/history": "Trade History",
   "/dashboard/analytics": "Analytics",

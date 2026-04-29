@@ -24,10 +24,32 @@ export interface Market {
   settlement_value?: number;         // Kalshi: settlement_value
   featured?: boolean;                // Custom field for UI
   image?: string;                    // Market image URL (Polymarket)
+  outcome_label?: string;            // For multi-outcome events: this outcome's name (e.g. "France")
+  outcome_image?: string;            // For multi-outcome events: this outcome's logo
+}
+
+// Event — groups one or more binary Markets as outcomes of a single question.
+// A binary market is an Event with outcomes.length === 1.
+// A multi-outcome event (e.g. "World Cup winner") has one Market per outcome.
+export interface Event {
+  eventTicker: string;
+  title: string;
+  subtitle?: string;
+  category: string;
+  image?: string;
+  volume_total: number;              // sum of outcomes' volume in cents
+  volume_24h_total: number;
+  open_time: string;
+  close_time: string;
+  expiration_time: string;
+  featured?: boolean;
+  outcomes: Market[];                // one Market per outcome; binary = length 1
+  resolution_criteria?: string;
 }
 
 // Position (matches Kalshi schema)
 export interface Position {
+  accountId: string;                 // Position belongs to which challenge account
   ticker: string;                    // Kalshi: ticker
   market_title: string;              // Derived from market
   side: 'yes' | 'no';                // Custom (Kalshi uses position +/-)
@@ -44,6 +66,7 @@ export interface Position {
 
 // User Account
 export interface UserAccount {
+  accountId: string;                 // unique per challenge account (a user owns N accounts)
   userId: string;
   username: string;
   email: string;
@@ -77,6 +100,7 @@ export interface UserAccount {
 
 // Trade (historical)
 export interface Trade {
+  accountId: string;                 // Trade belongs to which challenge account
   tradeId: string;
   ticket: string;
   ticker: string;
@@ -126,6 +150,7 @@ export interface ChallengePlan {
 
 // Equity point for chart
 export interface EquityPoint {
+  accountId: string;                 // Equity history is per-account
   date: string;
   equity: number;                    // in cents
   balance: number;                   // in cents
@@ -140,14 +165,21 @@ export interface LoadingState {
 // App Context Type
 export interface AppContextType {
   // User & Account
-  user: UserAccount;
+  user: UserAccount;                            // active account (derived selector)
   updateAccountBalance: (newBalance: number) => void;
   setUser: (user: UserAccount) => void;
+  accounts: UserAccount[];                      // all challenge accounts owned
+  activeAccountId: string;
+  setActiveAccount: (accountId: string) => void;
 
   // Markets
   markets: Market[];
   marketsLoading: boolean;
   getMarketByTicker: (ticker: string) => Market | undefined;
+
+  // Events (groups of outcomes; binary = single-outcome event)
+  events: Event[];
+  getEventByTicker: (eventTicker: string) => Event | undefined;
 
   // Positions
   positions: Position[];

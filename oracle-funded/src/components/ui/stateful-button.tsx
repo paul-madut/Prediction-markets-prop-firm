@@ -105,7 +105,7 @@ export const StatefulButton = ({
             exit={{ opacity: 0, scale: 0.8 }}
             className="flex items-center justify-center gap-2"
           >
-            <ArrowPathIcon className="animate-spin" />
+            <ArrowPathIcon className="w-5 h-5 animate-spin" />
             <span>Processing...</span>
           </motion.span>
         )}

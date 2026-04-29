@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Market } from "@/types";
+import { Event, Market } from "@/types";
 import { useApp } from "@/context/AppContext";
 import { formatVolume, formatDate, formatCurrency } from "@/lib/formatters";
 import { calculateShares, calculateTotalCost } from "@/lib/calculations";
@@ -12,31 +12,30 @@ import { StatefulButton } from "@/components/ui/stateful-button";
 import { cn } from "@/lib/utils";
 
 interface MarketCardProps {
-  market: Market;
+  event: Event;
   onClick: () => void;
 }
 
-export const MarketCard = ({ market, onClick }: MarketCardProps) => {
-  const yesPercentage = market.yes_ask;
+export const MarketCard = ({ event, onClick }: MarketCardProps) => {
+  const isMulti = event.outcomes.length > 1;
+  const primary = event.outcomes[0];
+  const topOutcomes = useMemo(
+    () => [...event.outcomes].sort((a, b) => b.yes_ask - a.yes_ask).slice(0, 3),
+    [event.outcomes],
+  );
+  const remaining = event.outcomes.length - topOutcomes.length;
 
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow cursor-pointer"
+      className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow cursor-pointer h-full flex flex-col"
     >
-      <div className="flex flex-col gap-3 sm:gap-4">
-        {/* Image and Category Row */}
+      <div className="flex flex-col gap-3 sm:gap-4 flex-1">
+        {/* Header: image + category + featured */}
         <div className="flex items-start gap-3">
-          {/* Market Image */}
           <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
-            {market.image ? (
-              <Image
-                src={market.image}
-                alt={market.title}
-                fill
-                className="object-cover"
-                unoptimized
-              />
+            {event.image ? (
+              <Image src={event.image} alt={event.title} fill className="object-cover" unoptimized />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
                 <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -46,9 +45,9 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
 
           <div className="flex-1 flex items-center justify-between">
             <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800">
-              {market.category}
+              {event.category}
             </span>
-            {market.featured && (
+            {event.featured && (
               <span className="flex items-center gap-1 text-xs text-orange-600">
                 <ArrowTrendingUpIcon className="w-3.5 h-3.5" />
                 Featured
@@ -57,33 +56,61 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
           </div>
         </div>
 
-        {/* Market Title */}
-        <h3 className="text-base sm:text-lg font-semibold text-gray-900 line-clamp-2">
-          {market.title}
+        {/* Title — fixed 2-line height so cards align even when titles are short */}
+        <h3 className="text-base sm:text-lg font-semibold text-gray-900 line-clamp-2 min-h-[3rem] sm:min-h-[3.5rem]">
+          {event.title}
         </h3>
 
-        {/* YES Probability */}
-        <div>
-          <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2">
-            YES: {yesPercentage}%
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div
-              className="bg-blue-600 h-2 rounded-full transition-all"
-              style={{ width: `${yesPercentage}%` }}
-            />
-          </div>
+        {/* Body: binary YES% or multi-outcome list — fixed slot keeps card heights uniform */}
+        <div className="min-h-[7.5rem] flex flex-col justify-center">
+          {isMulti ? (
+            <div className="space-y-2">
+              {topOutcomes.map((o) => (
+                <div key={o.ticker} className="flex items-center gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="font-medium text-gray-900 truncate pr-2">
+                        {o.outcome_label || o.title}
+                      </span>
+                      <span className="font-bold text-blue-600 tabular-nums">{o.yes_ask}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
+                      <div
+                        className="bg-blue-600 h-1.5 rounded-full transition-all"
+                        style={{ width: `${o.yes_ask}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {remaining > 0 && (
+                <div className="text-xs text-gray-500 pt-1">+ {remaining} more outcomes</div>
+              )}
+            </div>
+          ) : (
+            <div>
+              <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2">
+                YES: {primary.yes_ask}%
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  className="bg-blue-600 h-2 rounded-full transition-all"
+                  style={{ width: `${primary.yes_ask}%` }}
+                />
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Market Info */}
-        <div className="space-y-1 text-sm text-gray-600">
+        {/* Footer — pushed to bottom by flex-1 on body wrapper */}
+        <div className="mt-auto space-y-1 text-sm text-gray-600">
           <div className="flex justify-between">
             <span>Volume:</span>
-            <span className="font-semibold">{formatVolume(market.volume)}</span>
+            <span className="font-semibold">{formatVolume(event.volume_total)}</span>
           </div>
           <div className="flex justify-between">
             <span>Closes:</span>
-            <span className="font-semibold">{formatDate(market.close_time)}</span>
+            <span className="font-semibold">{formatDate(event.close_time)}</span>
           </div>
         </div>
       </div>
@@ -92,14 +119,19 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
 };
 
 interface MarketModalProps {
-  market: Market;
+  event: Event;
   onClose: () => void;
 }
 
-export const MarketModal = ({ market, onClose }: MarketModalProps) => {
+export const MarketModal = ({ event, onClose }: MarketModalProps) => {
   const { executeTrade, user } = useApp();
+  const [selectedTicker, setSelectedTicker] = useState<string>(event.outcomes[0].ticker);
   const [side, setSide] = useState<"yes" | "no">("yes");
   const [stakeAmount, setStakeAmount] = useState<string>("100");
+
+  const market: Market =
+    event.outcomes.find((o) => o.ticker === selectedTicker) || event.outcomes[0];
+  const isMulti = event.outcomes.length > 1;
 
   const price = side === "yes" ? market.yes_ask : market.no_ask;
   const stakeCents = parseFloat(stakeAmount || "0") * 100;
@@ -114,9 +146,7 @@ export const MarketModal = ({ market, onClose }: MarketModalProps) => {
     if (success) {
       setStakeAmount("100");
       setSide("yes");
-      setTimeout(() => {
-        onClose();
-      }, 1000);
+      setTimeout(() => onClose(), 1000);
     } else {
       throw new Error("Insufficient balance");
     }
@@ -129,19 +159,12 @@ export const MarketModal = ({ market, onClose }: MarketModalProps) => {
       transition={{ duration: 0.15 }}
       className="w-full max-w-2xl max-h-[90vh] flex flex-col bg-white rounded-2xl sm:rounded-3xl overflow-y-auto shadow-2xl"
     >
-      {/* Header with Image, Category and Featured */}
+      {/* Header */}
       <div className="p-4 sm:p-6 border-b border-gray-200">
         <div className="flex items-start gap-3 sm:gap-4 mb-4">
-          {/* Market Image */}
           <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
-            {market.image ? (
-              <Image
-                src={market.image}
-                alt={market.title}
-                fill
-                className="object-cover"
-                unoptimized
-              />
+            {event.image ? (
+              <Image src={event.image} alt={event.title} fill className="object-cover" unoptimized />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
                 <ChartBarIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
@@ -152,9 +175,9 @@ export const MarketModal = ({ market, onClose }: MarketModalProps) => {
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between mb-2">
               <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800">
-                {market.category}
+                {event.category}
               </span>
-              {market.featured && (
+              {event.featured && (
                 <span className="flex items-center gap-1 text-xs text-orange-600">
                   <ArrowTrendingUpIcon className="w-3.5 h-3.5" />
                   Featured
@@ -162,48 +185,78 @@ export const MarketModal = ({ market, onClose }: MarketModalProps) => {
               )}
             </div>
 
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
-              {market.title}
-            </h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">{event.title}</h2>
+            {isMulti && (
+              <p className="text-sm text-gray-500 mt-1">
+                {event.outcomes.length} outcomes · pick one to trade
+              </p>
+            )}
           </div>
         </div>
 
-        <div className="text-3xl sm:text-4xl font-bold text-blue-600 mt-4">
-          YES: {market.yes_ask}%
-        </div>
+        {!isMulti && (
+          <div className="text-3xl sm:text-4xl font-bold text-blue-600 mt-4">
+            YES: {market.yes_ask}%
+          </div>
+        )}
       </div>
 
-      {/* Scrollable Content */}
+      {/* Body */}
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 sm:space-y-6">
-        {/* Current Prices */}
+        {isMulti && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Outcome</label>
+            <div className="space-y-2 max-h-64 overflow-y-auto">
+              {event.outcomes.map((o) => {
+                const active = o.ticker === selectedTicker;
+                return (
+                  <button
+                    key={o.ticker}
+                    onClick={() => setSelectedTicker(o.ticker)}
+                    className={cn(
+                      "w-full text-left p-3 rounded-lg border transition-colors",
+                      active
+                        ? "border-blue-600 bg-blue-50"
+                        : "border-gray-200 hover:bg-gray-50",
+                    )}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium text-gray-900">
+                        {o.outcome_label || o.title}
+                      </span>
+                      <div className="flex items-center gap-3 tabular-nums">
+                        <span className="text-xs text-gray-500">{o.yes_ask}¢</span>
+                        <span className="font-bold text-blue-600">{o.yes_ask}%</span>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Yes/No prices */}
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-green-50 p-4 rounded-lg border border-green-200">
             <div className="text-sm text-green-700 mb-1">YES</div>
-            <div className="text-2xl font-bold text-green-900">
-              {market.yes_ask}%
-            </div>
+            <div className="text-2xl font-bold text-green-900">{market.yes_ask}%</div>
           </div>
           <div className="bg-red-50 p-4 rounded-lg border border-red-200">
             <div className="text-sm text-red-700 mb-1">NO</div>
-            <div className="text-2xl font-bold text-red-900">
-              {market.no_ask}%
-            </div>
+            <div className="text-2xl font-bold text-red-900">{market.no_ask}%</div>
           </div>
         </div>
 
-        {/* Side Selection */}
+        {/* Side */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Select Side
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Select Side</label>
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => setSide("yes")}
               className={cn(
                 "p-4 rounded-lg font-semibold transition-colors",
-                side === "yes"
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                side === "yes" ? "bg-green-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200",
               )}
             >
               BUY YES
@@ -212,9 +265,7 @@ export const MarketModal = ({ market, onClose }: MarketModalProps) => {
               onClick={() => setSide("no")}
               className={cn(
                 "p-4 rounded-lg font-semibold transition-colors",
-                side === "no"
-                  ? "bg-red-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                side === "no" ? "bg-red-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200",
               )}
             >
               BUY NO
@@ -222,15 +273,11 @@ export const MarketModal = ({ market, onClose }: MarketModalProps) => {
           </div>
         </div>
 
-        {/* Stake Input */}
+        {/* Stake */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Stake Amount
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Stake Amount</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-              $
-            </span>
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
             <input
               type="number"
               value={stakeAmount}
@@ -254,7 +301,7 @@ export const MarketModal = ({ market, onClose }: MarketModalProps) => {
           </div>
         </div>
 
-        {/* Trade Summary */}
+        {/* Summary */}
         <div className="bg-gray-50 rounded-lg p-4 space-y-2">
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Shares</span>
@@ -262,33 +309,24 @@ export const MarketModal = ({ market, onClose }: MarketModalProps) => {
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Price per share</span>
-            <span className="font-semibold text-gray-900">
-              {formatCurrency(price)}
-            </span>
+            <span className="font-semibold text-gray-900">{formatCurrency(price)}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Total cost (incl. fees)</span>
-            <span className="font-semibold text-gray-900">
-              {formatCurrency(totalCost)}
-            </span>
+            <span className="font-semibold text-gray-900">{formatCurrency(totalCost)}</span>
           </div>
           <div className="border-t border-gray-200 pt-2 mt-2">
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Potential profit</span>
-              <span className="font-semibold text-green-600">
-                +{formatCurrency(potentialProfit)}
-              </span>
+              <span className="font-semibold text-green-600">+{formatCurrency(potentialProfit)}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Potential loss</span>
-              <span className="font-semibold text-red-600">
-                {formatCurrency(potentialLoss)}
-              </span>
+              <span className="font-semibold text-red-600">{formatCurrency(potentialLoss)}</span>
             </div>
           </div>
         </div>
 
-        {/* Place Trade Button */}
         <StatefulButton
           onClick={handleTrade}
           disabled={shares === 0 || totalCost > user.accountBalance}
@@ -299,22 +337,19 @@ export const MarketModal = ({ market, onClose }: MarketModalProps) => {
             : `Place Trade - ${formatCurrency(totalCost)}`}
         </StatefulButton>
 
-        {/* Market Details */}
         <div className="pt-4 border-t border-gray-200">
           <h3 className="font-semibold text-gray-900 mb-2">Market Details</h3>
           <p className="text-sm text-gray-600">
-            {market.subtitle || market.title}
+            {event.resolution_criteria || event.subtitle || event.title}
           </p>
           <div className="mt-3 grid grid-cols-2 gap-4 text-sm">
             <div>
               <span className="text-gray-500">Volume:</span>
-              <span className="ml-2 font-semibold">{formatVolume(market.volume)}</span>
+              <span className="ml-2 font-semibold">{formatVolume(event.volume_total)}</span>
             </div>
             <div>
               <span className="text-gray-500">Status:</span>
-              <span className="ml-2 font-semibold capitalize">
-                {market.status}
-              </span>
+              <span className="ml-2 font-semibold capitalize">{market.status}</span>
             </div>
           </div>
         </div>
