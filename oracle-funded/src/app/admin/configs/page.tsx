@@ -1,45 +1,41 @@
 "use client";
 
-import React, { useState } from "react";
-import { ViewfinderCircleIcon, PlusIcon, PencilIcon, StopIcon, PlayIcon, TagIcon } from "@heroicons/react/16/solid";
+import React from "react";
+import Link from "next/link";
+import { ViewfinderCircleIcon, PlusIcon, PencilIcon, StopIcon, PlayIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
-import { AdminChallengeConfig } from "@/types/admin";
 import { formatCurrency } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
-import ChallengeModal from "@/components/admin/challenges/ChallengeModal";
-
-type ModalState = null | 'create' | { mode: 'edit'; config: AdminChallengeConfig };
 
 export default function ChallengesPage() {
-  const { challengeConfigs, toggleChallengeStatus, createChallengeConfig, updateChallengeConfig } = useAdmin();
-  const [modalState, setModalState] = useState<ModalState>(null);
+  const { challengeConfigs, toggleChallengeStatus } = useAdmin();
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 -mx-6 -mt-6 px-6 py-6 mb-6">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 -mx-6 -mt-6 px-6 py-6 mb-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-purple-100 rounded-xl">
               <ViewfinderCircleIcon className="h-6 w-6 text-purple-600" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 Challenge Configuration
               </h1>
-              <p className="text-gray-500 mt-1">
+              <p className="text-gray-500 dark:text-gray-400 mt-1">
                 Create and manage evaluation programs
               </p>
             </div>
           </div>
 
-          <button
-            onClick={() => setModalState('create')}
+          <Link
+            href="/admin/configs/new"
             className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
           >
             <PlusIcon className="h-4 w-4" />
             New Challenge
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -49,18 +45,18 @@ export default function ChallengesPage() {
           <div
             key={config.configId}
             className={cn(
-              "bg-white rounded-xl border overflow-hidden transition-all",
+              "bg-white dark:bg-slate-900 rounded-xl border overflow-hidden transition-all",
               config.isEnabled
-                ? "border-gray-200"
-                : "border-gray-200 opacity-60"
+                ? "border-gray-200 dark:border-slate-800"
+                : "border-gray-200 dark:border-slate-800 opacity-60"
             )}
           >
             {/* Header */}
-            <div className="p-6 border-b border-gray-100">
+            <div className="p-6 border-b border-gray-100 dark:border-slate-800">
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                       {config.name}
                     </h3>
                     {config.isPromotion && (
@@ -69,7 +65,7 @@ export default function ChallengesPage() {
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                     {config.description}
                   </p>
                 </div>
@@ -77,7 +73,7 @@ export default function ChallengesPage() {
                   onClick={() =>
                     toggleChallengeStatus(config.configId, !config.isEnabled)
                   }
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 dark:text-gray-500 hover:text-gray-600"
                 >
                   {config.isEnabled ? (
                     <PlayIcon className="h-6 w-6 text-green-500" />
@@ -92,19 +88,19 @@ export default function ChallengesPage() {
             <div className="p-6 space-y-4">
               {/* Pricing */}
               <div className="flex items-center justify-between">
-                <span className="text-gray-500">Price</span>
+                <span className="text-gray-500 dark:text-gray-400">Price</span>
                 <div className="text-right">
                   {config.discountedPrice ? (
                     <>
-                      <span className="text-lg font-bold text-gray-900">
+                      <span className="text-lg font-bold text-gray-900 dark:text-gray-100">
                         {formatCurrency(config.discountedPrice)}
                       </span>
-                      <span className="text-sm text-gray-400 line-through ml-2">
+                      <span className="text-sm text-gray-400 dark:text-gray-500 line-through ml-2">
                         {formatCurrency(config.basePrice)}
                       </span>
                     </>
                   ) : (
-                    <span className="text-lg font-bold text-gray-900">
+                    <span className="text-lg font-bold text-gray-900 dark:text-gray-100">
                       {formatCurrency(config.basePrice)}
                     </span>
                   )}
@@ -113,15 +109,15 @@ export default function ChallengesPage() {
 
               {/* Account Size */}
               <div className="flex items-center justify-between">
-                <span className="text-gray-500">Account Size</span>
-                <span className="font-medium text-gray-900">
+                <span className="text-gray-500 dark:text-gray-400">Account Size</span>
+                <span className="font-medium text-gray-900 dark:text-gray-100">
                   {formatCurrency(config.accountSize)}
                 </span>
               </div>
 
               {/* Profit ViewfinderCircleIcon */}
               <div className="flex items-center justify-between">
-                <span className="text-gray-500">Profit Target</span>
+                <span className="text-gray-500 dark:text-gray-400">Profit Target</span>
                 <span className="font-medium text-green-600">
                   {config.profitTargetPercent}%
                 </span>
@@ -129,7 +125,7 @@ export default function ChallengesPage() {
 
               {/* Daily Loss Limit */}
               <div className="flex items-center justify-between">
-                <span className="text-gray-500">Daily Loss Limit</span>
+                <span className="text-gray-500 dark:text-gray-400">Daily Loss Limit</span>
                 <span className="font-medium text-red-600">
                   {config.dailyLossLimitPercent}%
                 </span>
@@ -137,7 +133,7 @@ export default function ChallengesPage() {
 
               {/* Max Drawdown */}
               <div className="flex items-center justify-between">
-                <span className="text-gray-500">Max Drawdown</span>
+                <span className="text-gray-500 dark:text-gray-400">Max Drawdown</span>
                 <span className="font-medium text-red-600">
                   {config.maxDrawdownPercent}%
                 </span>
@@ -145,59 +141,59 @@ export default function ChallengesPage() {
 
               {/* Min Trading Days */}
               <div className="flex items-center justify-between">
-                <span className="text-gray-500">Min Trading Days</span>
-                <span className="font-medium text-gray-900">
+                <span className="text-gray-500 dark:text-gray-400">Min Trading Days</span>
+                <span className="font-medium text-gray-900 dark:text-gray-100">
                   {config.minTradingDays} days
                 </span>
               </div>
 
               {/* Drawdown Type */}
               <div className="flex items-center justify-between">
-                <span className="text-gray-500">Drawdown Type</span>
-                <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded uppercase">
+                <span className="text-gray-500 dark:text-gray-400">Drawdown Type</span>
+                <span className="px-2 py-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 text-xs font-medium rounded uppercase">
                   {config.drawdownType}
                 </span>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="px-6 py-4 border-t border-gray-100 bg-gray-50">
-              <button
-                onClick={() => setModalState({ mode: 'edit', config })}
+            <div className="px-6 py-4 border-t border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950">
+              <Link
+                href={`/admin/configs/${config.configId}/edit`}
                 className="flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-700 font-medium"
               >
                 <PencilIcon className="h-4 w-4" />
                 Edit Configuration
-              </button>
+              </Link>
             </div>
           </div>
         ))}
       </div>
 
       {/* Stats Summary */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Summary</h3>
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Summary</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div>
-            <p className="text-sm text-gray-500">Total Configurations</p>
-            <p className="text-2xl font-bold text-gray-900">
+            <p className="text-sm text-gray-500 dark:text-gray-400">Total Configurations</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {challengeConfigs.length}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Active</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Active</p>
             <p className="text-2xl font-bold text-green-600">
               {challengeConfigs.filter((c) => c.isEnabled).length}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Disabled</p>
-            <p className="text-2xl font-bold text-gray-400">
+            <p className="text-sm text-gray-500 dark:text-gray-400">Disabled</p>
+            <p className="text-2xl font-bold text-gray-400 dark:text-gray-500">
               {challengeConfigs.filter((c) => !c.isEnabled).length}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Promotions</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Promotions</p>
             <p className="text-2xl font-bold text-amber-600">
               {challengeConfigs.filter((c) => c.isPromotion).length}
             </p>
@@ -205,20 +201,6 @@ export default function ChallengesPage() {
         </div>
       </div>
 
-      {/* Challenge Modal */}
-      <ChallengeModal
-        isOpen={modalState !== null}
-        onClose={() => setModalState(null)}
-        onSave={(config) => {
-          if (modalState === 'create') {
-            createChallengeConfig(config);
-          } else if (modalState && typeof modalState === 'object' && modalState.mode === 'edit') {
-            updateChallengeConfig(modalState.config.configId, config);
-          }
-        }}
-        editMode={modalState !== null && typeof modalState === 'object' && modalState.mode === 'edit'}
-        existingConfig={modalState && typeof modalState === 'object' && modalState.mode === 'edit' ? modalState.config : undefined}
-      />
     </div>
   );
 }

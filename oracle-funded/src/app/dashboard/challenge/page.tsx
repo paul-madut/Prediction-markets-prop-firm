@@ -42,8 +42,8 @@ export default function ChallengePage() {
     <div className="max-w-5xl mx-auto py-6 space-y-6">
       <div className="flex items-start justify-between gap-6 flex-wrap">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Challenge Progress</h1>
-          <p className="text-sm text-gray-600 mt-1">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Challenge Progress</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
             Track requirements to pass and advance.
           </p>
         </div>
@@ -53,23 +53,23 @@ export default function ChallengePage() {
       </div>
 
       {/* Big challenge card */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div>
-            <div className="text-xs text-gray-500 uppercase tracking-wide">Phase</div>
-            <div className="font-bold text-gray-900 mt-1">{PHASE_LABEL[user.accountPhase]}</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Phase</div>
+            <div className="font-bold text-gray-900 dark:text-gray-100 mt-1">{PHASE_LABEL[user.accountPhase]}</div>
           </div>
           <div>
-            <div className="text-xs text-gray-500 uppercase tracking-wide">Account size</div>
-            <div className="font-bold text-gray-900 mt-1 tabular-nums">{formatCurrency(user.accountSize)}</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Account size</div>
+            <div className="font-bold text-gray-900 dark:text-gray-100 mt-1 tabular-nums">{formatCurrency(user.accountSize)}</div>
           </div>
           <div>
-            <div className="text-xs text-gray-500 uppercase tracking-wide">Started</div>
-            <div className="font-bold text-gray-900 mt-1">{formatDate(user.challengeStartDate)}</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Started</div>
+            <div className="font-bold text-gray-900 dark:text-gray-100 mt-1">{formatDate(user.challengeStartDate)}</div>
           </div>
           <div>
-            <div className="text-xs text-gray-500 uppercase tracking-wide">Current equity</div>
-            <div className="font-bold text-gray-900 mt-1 tabular-nums">{formatCurrency(user.accountBalance)}</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Current equity</div>
+            <div className="font-bold text-gray-900 dark:text-gray-100 mt-1 tabular-nums">{formatCurrency(user.accountBalance)}</div>
           </div>
         </div>
       </div>
@@ -100,14 +100,14 @@ export default function ChallengePage() {
 
       {/* Progress bars */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
+        <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-6">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-semibold text-gray-900">Profit target</h3>
-            <span className="text-xs text-gray-500">
+            <h3 className="font-semibold text-gray-900 dark:text-gray-100">Profit target</h3>
+            <span className="text-xs text-gray-500 dark:text-gray-400">
               Goal: {(user.profitTarget * 100).toFixed(0)}%
             </span>
           </div>
-          <div className="text-3xl font-bold text-gray-900 tabular-nums mb-2">
+          <div className="text-3xl font-bold text-gray-900 dark:text-gray-100 tabular-nums mb-2">
             {(user.currentProfit * 100).toFixed(2)}%
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3">
@@ -119,19 +119,19 @@ export default function ChallengePage() {
               style={{ width: `${Math.min(100, profitProgress * 100)}%` }}
             />
           </div>
-          <div className="text-xs text-gray-500 mt-2">
+          <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
             {Math.round(profitProgress * 100)}% of target reached
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
+        <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-6">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-semibold text-gray-900">Max drawdown</h3>
-            <span className="text-xs text-gray-500">
+            <h3 className="font-semibold text-gray-900 dark:text-gray-100">Max drawdown</h3>
+            <span className="text-xs text-gray-500 dark:text-gray-400">
               Limit: {(user.maxDrawdownLimit * 100).toFixed(0)}%
             </span>
           </div>
-          <div className="text-3xl font-bold text-gray-900 tabular-nums mb-2">
+          <div className="text-3xl font-bold text-gray-900 dark:text-gray-100 tabular-nums mb-2">
             {(Math.abs(user.currentMaxDrawdown) * 100).toFixed(2)}%
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3">
@@ -143,7 +143,7 @@ export default function ChallengePage() {
               style={{ width: `${Math.min(100, drawdownProgress * 100)}%` }}
             />
           </div>
-          <div className="text-xs text-gray-500 mt-2">
+          <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
             {Math.round(drawdownProgress * 100)}% of limit
             {drawdownProgress >= 1 && <span className="text-red-600 font-semibold"> — BREACHED</span>}
           </div>
@@ -151,19 +151,19 @@ export default function ChallengePage() {
       </div>
 
       {/* Daily DD with countdown */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-6">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-gray-900">Daily drawdown</h3>
-          <div className="flex items-center gap-1 text-xs text-gray-500">
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100">Daily drawdown</h3>
+          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
             <ClockIcon className="w-3.5 h-3.5" />
             Resets in {dailyResetCountdown()}
           </div>
         </div>
         <div className="flex items-baseline gap-3 mb-2">
-          <div className="text-2xl font-bold text-gray-900 tabular-nums">
+          <div className="text-2xl font-bold text-gray-900 dark:text-gray-100 tabular-nums">
             {(Math.abs(user.currentDailyDrawdown) * 100).toFixed(2)}%
           </div>
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-500 dark:text-gray-400">
             of {(user.dailyDrawdownLimit * 100).toFixed(0)}% daily limit
           </div>
         </div>
@@ -184,8 +184,8 @@ export default function ChallengePage() {
       </div>
 
       {/* Requirements checklist */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h3 className="font-semibold text-gray-900 mb-4">Requirements to pass</h3>
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-6">
+        <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Requirements to pass</h3>
         <div className="space-y-3">
           <Requirement
             met={meetProfitTarget}
@@ -211,18 +211,18 @@ export default function ChallengePage() {
       </div>
 
       {/* Collapsible rules */}
-      <div className="bg-white rounded-xl border border-gray-200">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800">
         <button
           onClick={() => setRulesExpanded((v) => !v)}
-          className="w-full p-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+          className="w-full p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
         >
-          <h3 className="font-semibold text-gray-900">Challenge rules</h3>
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100">Challenge rules</h3>
           <ChevronDownIcon
-            className={cn("w-5 h-5 text-gray-400 transition-transform", rulesExpanded && "rotate-180")}
+            className={cn("w-5 h-5 text-gray-400 dark:text-gray-500 transition-transform", rulesExpanded && "rotate-180")}
           />
         </button>
         {rulesExpanded && (
-          <div className="px-4 pb-4 text-sm text-gray-600 space-y-2 border-t border-gray-100 pt-4">
+          <div className="px-4 pb-4 text-sm text-gray-600 dark:text-gray-300 space-y-2 border-t border-gray-100 dark:border-slate-800 pt-4">
             <p><strong>Profit target:</strong> Reach {(user.profitTarget * 100).toFixed(0)}% on the starting balance to advance.</p>
             <p><strong>Daily drawdown:</strong> No single calendar day can lose more than {(user.dailyDrawdownLimit * 100).toFixed(0)}% of starting balance. Resets at 00:00 UTC.</p>
             <p><strong>Max drawdown:</strong> Total drawdown from peak balance cannot exceed {(user.maxDrawdownLimit * 100).toFixed(0)}%. Trailing.</p>
@@ -251,11 +251,11 @@ function Requirement({ met, label, detail }: { met: boolean; label: string; deta
       {met ? (
         <CheckCircleIcon className="w-5 h-5 text-green-500 flex-shrink-0" />
       ) : (
-        <XCircleIcon className="w-5 h-5 text-gray-300 flex-shrink-0" />
+        <XCircleIcon className="w-5 h-5 text-gray-300 dark:text-gray-600 flex-shrink-0" />
       )}
       <div className="flex-1">
-        <div className={cn("font-medium", met ? "text-gray-900" : "text-gray-700")}>{label}</div>
-        <div className="text-xs text-gray-500">{detail}</div>
+        <div className={cn("font-medium", met ? "text-gray-900 dark:text-gray-100" : "text-gray-700 dark:text-gray-300")}>{label}</div>
+        <div className="text-xs text-gray-500 dark:text-gray-400">{detail}</div>
       </div>
     </div>
   );

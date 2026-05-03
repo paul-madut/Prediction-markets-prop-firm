@@ -8,9 +8,9 @@ export const EquityDisplay = () => {
   const { user } = useApp();
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-      <div className="text-sm text-gray-500 mb-2">Current Equity</div>
-      <div className="text-4xl font-bold text-gray-900">
+    <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-slate-800">
+      <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">Current Equity</div>
+      <div className="text-4xl font-bold text-gray-900 dark:text-gray-100">
         {formatCurrency(user.accountBalance)}
       </div>
       <div className={`text-sm mt-2 ${user.currentProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}>

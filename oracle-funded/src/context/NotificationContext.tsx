@@ -57,7 +57,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
           message: "3 traders approaching drawdown limit",
           timestamp: new Date(Date.now() - 300000).toISOString(),
           isRead: false,
-          actionUrl: "/admin/risk",
+          actionUrl: "/admin/signals",
         },
       ];
       setNotifications(initialNotifications);

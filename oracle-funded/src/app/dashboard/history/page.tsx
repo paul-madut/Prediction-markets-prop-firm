@@ -37,7 +37,7 @@ export default function HistoryPage() {
             className={`px-3 sm:px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors text-sm sm:text-base ${
               filter === tab.key
                 ? "bg-blue-600 text-white"
-                : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                : "bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 border border-gray-200 dark:border-slate-800"
             }`}
           >
             {tab.label}
@@ -50,11 +50,11 @@ export default function HistoryPage() {
         {filteredTrades.map((trade) => (
           <div
             key={trade.tradeId}
-            className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 space-y-3"
+            className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-4 space-y-3"
           >
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate">
+                <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
                   {trade.market_title}
                 </p>
                 <div className="flex items-center gap-2 mt-1">
@@ -73,7 +73,7 @@ export default function HistoryPage() {
                         ? "bg-green-100 text-green-800"
                         : trade.result === "lost"
                         ? "bg-red-100 text-red-800"
-                        : "bg-gray-100 text-gray-800"
+                        : "bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-100"
                     }`}
                   >
                     {trade.result}
@@ -87,7 +87,7 @@ export default function HistoryPage() {
                       ? "text-green-600"
                       : trade.pnl < 0
                       ? "text-red-600"
-                      : "text-gray-400"
+                      : "text-gray-400 dark:text-gray-500"
                   }`}
                 >
                   {trade.pnl > 0 ? "+" : ""}
@@ -95,7 +95,7 @@ export default function HistoryPage() {
                 </span>
               </div>
             </div>
-            <div className="flex items-center justify-between text-xs text-gray-500">
+            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
               <span>Entry: {formatCurrency(trade.entryPrice)}</span>
               <span>Exit: {trade.exitPrice ? formatCurrency(trade.exitPrice) : "-"}</span>
               <span>{formatDate(trade.entryDate)}</span>
@@ -105,44 +105,44 @@ export default function HistoryPage() {
       </div>
 
       {/* Desktop Table */}
-      <div className="hidden md:block bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div className="hidden md:block bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50">
+            <thead className="bg-gray-50 dark:bg-slate-950">
               <tr>
-                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Ticket
                 </th>
-                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Market
                 </th>
-                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Side
                 </th>
-                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Entry
                 </th>
-                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Exit
                 </th>
-                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   P&L
                 </th>
-                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Result
                 </th>
-                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Date
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-gray-200 dark:divide-slate-800">
               {filteredTrades.map((trade) => (
-                <tr key={trade.tradeId} className="hover:bg-gray-50">
-                  <td className="px-4 lg:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <tr key={trade.tradeId} className="hover:bg-gray-50 dark:hover:bg-slate-800/50">
+                  <td className="px-4 lg:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
                     {trade.ticket}
                   </td>
-                  <td className="px-4 lg:px-6 py-4 text-sm text-gray-900 max-w-xs truncate">
+                  <td className="px-4 lg:px-6 py-4 text-sm text-gray-900 dark:text-gray-100 max-w-xs truncate">
                     {trade.market_title}
                   </td>
                   <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
@@ -156,10 +156,10 @@ export default function HistoryPage() {
                       {trade.side.toUpperCase()}
                     </span>
                   </td>
-                  <td className="px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                     {formatCurrency(trade.entryPrice)}
                   </td>
-                  <td className="px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                     {trade.exitPrice ? formatCurrency(trade.exitPrice) : "-"}
                   </td>
                   <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
@@ -169,7 +169,7 @@ export default function HistoryPage() {
                           ? "text-green-600"
                           : trade.pnl < 0
                           ? "text-red-600"
-                          : "text-gray-400"
+                          : "text-gray-400 dark:text-gray-500"
                       }`}
                     >
                       {trade.pnl > 0 ? "+" : ""}
@@ -183,13 +183,13 @@ export default function HistoryPage() {
                           ? "bg-green-100 text-green-800"
                           : trade.result === "lost"
                           ? "bg-red-100 text-red-800"
-                          : "bg-gray-100 text-gray-800"
+                          : "bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-100"
                       }`}
                     >
                       {trade.result}
                     </span>
                   </td>
-                  <td className="px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                     {formatDate(trade.entryDate)}
                   </td>
                 </tr>

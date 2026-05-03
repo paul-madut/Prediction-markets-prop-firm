@@ -41,13 +41,13 @@ export const TradeModal = ({ market, isOpen, onClose }: TradeModalProps) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-slate-900 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-bold text-gray-900">{market.title}</h2>
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-800">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">{market.title}</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
           >
             <XMarkIcon className="w-5 h-5" />
           </button>
@@ -69,7 +69,7 @@ export const TradeModal = ({ market, isOpen, onClose }: TradeModalProps) => {
 
           {/* Side Selection */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Select Side
             </label>
             <div className="grid grid-cols-2 gap-4">
@@ -78,7 +78,7 @@ export const TradeModal = ({ market, isOpen, onClose }: TradeModalProps) => {
                 className={`p-4 rounded-lg font-semibold transition-colors ${
                   side === "yes"
                     ? "bg-green-600 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    : "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200"
                 }`}
               >
                 BUY YES
@@ -88,7 +88,7 @@ export const TradeModal = ({ market, isOpen, onClose }: TradeModalProps) => {
                 className={`p-4 rounded-lg font-semibold transition-colors ${
                   side === "no"
                     ? "bg-red-600 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    : "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200"
                 }`}
               >
                 BUY NO
@@ -98,18 +98,18 @@ export const TradeModal = ({ market, isOpen, onClose }: TradeModalProps) => {
 
           {/* Stake Input */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Stake Amount
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
                 $
               </span>
               <input
                 type="number"
                 value={stakeAmount}
                 onChange={(e) => setStakeAmount(e.target.value)}
-                className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-8 pr-4 py-3 border border-gray-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="100"
                 min="1"
                 max={user.accountBalance / 100}
@@ -120,7 +120,7 @@ export const TradeModal = ({ market, isOpen, onClose }: TradeModalProps) => {
                 <button
                   key={amount}
                   onClick={() => setStakeAmount(amount.toString())}
-                  className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors"
+                  className="px-3 py-1 text-sm bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 rounded transition-colors"
                 >
                   ${amount}
                 </button>
@@ -129,28 +129,28 @@ export const TradeModal = ({ market, isOpen, onClose }: TradeModalProps) => {
           </div>
 
           {/* Trade Summary */}
-          <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+          <div className="bg-gray-50 dark:bg-slate-950 rounded-lg p-4 space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Shares</span>
-              <span className="font-semibold text-gray-900">{shares}</span>
+              <span className="text-gray-600 dark:text-gray-300">Shares</span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{shares}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Price per share</span>
-              <span className="font-semibold text-gray-900">{formatCurrency(price)}</span>
+              <span className="text-gray-600 dark:text-gray-300">Price per share</span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(price)}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Total cost (incl. fees)</span>
-              <span className="font-semibold text-gray-900">{formatCurrency(totalCost)}</span>
+              <span className="text-gray-600 dark:text-gray-300">Total cost (incl. fees)</span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(totalCost)}</span>
             </div>
-            <div className="border-t border-gray-200 pt-2 mt-2">
+            <div className="border-t border-gray-200 dark:border-slate-800 pt-2 mt-2">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Potential profit</span>
+                <span className="text-gray-600 dark:text-gray-300">Potential profit</span>
                 <span className="font-semibold text-green-600">
                   +{formatCurrency(potentialProfit)}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Potential loss</span>
+                <span className="text-gray-600 dark:text-gray-300">Potential loss</span>
                 <span className="font-semibold text-red-600">
                   {formatCurrency(potentialLoss)}
                 </span>
@@ -170,16 +170,16 @@ export const TradeModal = ({ market, isOpen, onClose }: TradeModalProps) => {
           </button>
 
           {/* Market Details */}
-          <div className="pt-4 border-t border-gray-200">
-            <h3 className="font-semibold text-gray-900 mb-2">Market Details</h3>
-            <p className="text-sm text-gray-600">{market.subtitle || market.title}</p>
+          <div className="pt-4 border-t border-gray-200 dark:border-slate-800">
+            <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Market Details</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">{market.subtitle || market.title}</p>
             <div className="mt-3 grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-gray-500">Category:</span>
+                <span className="text-gray-500 dark:text-gray-400">Category:</span>
                 <span className="ml-2 font-semibold">{market.category}</span>
               </div>
               <div>
-                <span className="text-gray-500">Status:</span>
+                <span className="text-gray-500 dark:text-gray-400">Status:</span>
                 <span className="ml-2 font-semibold capitalize">{market.status}</span>
               </div>
             </div>

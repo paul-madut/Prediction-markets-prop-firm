@@ -15,7 +15,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
   const { loadingState } = useApp();
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-white">
+    <div className="flex flex-col md:flex-row h-screen bg-white dark:bg-slate-900">
       {/* Sidebar */}
       <Sidebar />
 
@@ -25,7 +25,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
         <TopBar />
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto bg-gray-50 p-4 pb-8 md:p-6 md:pb-8">
+        <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-slate-950 p-4 pb-8 md:p-6 md:pb-8">
           <PageTransition>
             {children}
           </PageTransition>

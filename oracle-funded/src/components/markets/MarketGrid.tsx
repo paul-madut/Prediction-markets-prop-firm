@@ -13,7 +13,7 @@ export const MarketGrid = ({ markets, onMarketClick }: MarketGridProps) => {
   if (markets.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500">No markets found matching your criteria.</p>
+        <p className="text-gray-500 dark:text-gray-400">No markets found matching your criteria.</p>
       </div>
     );
   }

@@ -40,20 +40,20 @@ const FilterTabs = ({
 
   return (
     <LayoutGroup>
-      <div className="flex gap-2 p-1 bg-gray-100 rounded-lg w-fit">
+      <div className="flex gap-2 p-1 bg-gray-100 dark:bg-slate-800 rounded-lg w-fit">
         {tabs.map((status) => (
           <button
             key={status}
             onClick={() => setFilter(status)}
             className={cn(
               "relative px-4 py-2 text-sm font-medium rounded-md transition-colors capitalize",
-              filter === status ? "text-indigo-700" : "text-gray-600 hover:text-gray-900"
+              filter === status ? "text-indigo-700" : "text-gray-600 dark:text-gray-300 hover:text-gray-900"
             )}
           >
             {filter === status && (
               <motion.div
                 layoutId="activePayoutFilter"
-                className="absolute inset-0 bg-white shadow-sm rounded-md"
+                className="absolute inset-0 bg-white dark:bg-slate-900 shadow-sm rounded-md"
                 initial={false}
                 transition={{ type: "spring", stiffness: 500, damping: 35 }}
               />
@@ -95,11 +95,11 @@ export default function PayoutsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 -mx-6 -mt-6 px-6 py-6 mb-6">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 -mx-6 -mt-6 px-6 py-6 mb-6">
         <div className="flex items-center gap-4 mb-4">
           <Link
-            href="/admin/financials"
-            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            href="/admin"
+            className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
           >
             <ArrowLeftIcon className="h-5 w-5" />
           </Link>
@@ -108,8 +108,8 @@ export default function PayoutsPage() {
               <CurrencyDollarIcon className="h-6 w-6 text-green-600" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Payout Queue</h1>
-              <p className="text-gray-500 mt-1">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Payout Queue</h1>
+              <p className="text-gray-500 dark:text-gray-400 mt-1">
                 Review and process payout requests
               </p>
             </div>
@@ -119,14 +119,14 @@ export default function PayoutsPage() {
         {/* Summary Stats */}
         <div className="flex items-center gap-8 text-sm">
           <div>
-            <span className="text-gray-500">Pending:</span>
+            <span className="text-gray-500 dark:text-gray-400">Pending:</span>
             <span className="ml-2 font-semibold text-amber-600">
               {pendingCount} ({formatCurrency(pendingAmount)})
             </span>
           </div>
           <div>
-            <span className="text-gray-500">Total in Queue:</span>
-            <span className="ml-2 font-semibold text-gray-900">
+            <span className="text-gray-500 dark:text-gray-400">Total in Queue:</span>
+            <span className="ml-2 font-semibold text-gray-900 dark:text-gray-100">
               {payoutQueue.length}
             </span>
           </div>
@@ -141,7 +141,7 @@ export default function PayoutsPage() {
         <TableSkeleton rows={6} columns={6} />
       ) : filteredPayouts.length === 0 ? (
         /* Empty State */
-        <div className="bg-white rounded-xl border border-gray-200">
+        <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800">
           <PayoutsEmptyState />
         </div>
       ) : (
@@ -149,28 +149,28 @@ export default function PayoutsPage() {
         <TableContainer maxHeight="calc(100vh - 380px)">
           <table className="w-full">
             <StickyTableHeader>
-              <tr className="border-b border-gray-200">
-                <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase bg-gray-50">
+              <tr className="border-b border-gray-200 dark:border-slate-800">
+                <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-slate-950">
                   Trader
                 </th>
-                <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase bg-gray-50">
+                <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-slate-950">
                   Amount
                 </th>
-                <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase bg-gray-50">
+                <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-slate-950">
                   Method
                 </th>
-                <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase bg-gray-50">
+                <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-slate-950">
                   Status
                 </th>
-                <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase bg-gray-50">
+                <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-slate-950">
                   Requested
                 </th>
-                <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase bg-gray-50">
+                <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-slate-950">
                   Actions
                 </th>
               </tr>
             </StickyTableHeader>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-gray-200 dark:divide-slate-800">
               <AnimatePresence mode="popLayout">
                 {filteredPayouts.map((payout, index) => {
                   const isHovered = hoveredRow === payout.payoutId;
@@ -192,29 +192,29 @@ export default function PayoutsPage() {
                       <td className="px-6 py-4">
                         <Link
                           href={`/admin/traders/${payout.traderId}`}
-                          className="font-medium text-gray-900 hover:text-indigo-600 transition-colors"
+                          className="font-medium text-gray-900 dark:text-gray-100 hover:text-indigo-600 transition-colors"
                         >
                           {payout.traderName}
                         </Link>
-                        <p className="text-sm text-gray-500">{payout.traderEmail}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{payout.traderEmail}</p>
                       </td>
                       <td className="px-6 py-4">
-                        <p className="font-semibold text-gray-900">
+                        <p className="font-semibold text-gray-900 dark:text-gray-100">
                           {formatCurrency(payout.amount)}
                         </p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
                           Gross: {formatCurrency(payout.grossProfit)}
                         </p>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="capitalize text-gray-900">
+                        <span className="capitalize text-gray-900 dark:text-gray-100">
                           {payout.paymentMethod.replace("_", " ")}
                         </span>
                       </td>
                       <td className="px-6 py-4">
                         <PayoutStatusBadge status={payout.status} />
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-500">
+                      <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                         {formatDate(payout.requestedAt)}
                       </td>
                       <td className="px-6 py-4">
@@ -280,17 +280,17 @@ export default function PayoutsPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="relative bg-white rounded-xl shadow-xl max-w-md w-full mx-4 p-6"
+              className="relative bg-white dark:bg-slate-900 rounded-xl shadow-xl max-w-md w-full mx-4 p-6"
             >
-              <h3 className="text-lg font-semibold text-gray-900">Reject Payout</h3>
-              <p className="text-sm text-gray-500 mt-2">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Reject Payout</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
                 Please provide a reason for rejecting this payout request.
               </p>
               <textarea
                 value={rejectReason}
                 onChange={(e) => setRejectReason(e.target.value)}
                 placeholder="Rejection reason..."
-                className="w-full mt-4 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none transition-shadow"
+                className="w-full mt-4 px-3 py-2 border border-gray-200 dark:border-slate-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none transition-shadow"
                 rows={3}
                 autoFocus
               />
@@ -300,7 +300,7 @@ export default function PayoutsPage() {
                     setRejectingId(null);
                     setRejectReason("");
                   }}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
                 >
                   Cancel
                 </button>

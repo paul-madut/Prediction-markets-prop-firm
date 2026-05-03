@@ -49,10 +49,10 @@ export default function NewChallengePage() {
     <div className="space-y-10 max-w-7xl mx-auto">
       {/* Page Header */}
       <div className="text-center space-y-3">
-        <h1 className="text-4xl font-bold text-gray-900">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
           Choose Your Trading Challenge
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           Select the evaluation style that matches your trading approach. Each challenge type offers different requirements and pricing structures.
         </p>
       </div>
@@ -60,12 +60,12 @@ export default function NewChallengePage() {
       {/* Account Size Selector - Synced across all cards */}
       <div className="flex justify-center">
         <div className="inline-flex flex-col items-center gap-2">
-          <label className="text-sm font-medium text-gray-600">Select Account Size</label>
+          <label className="text-sm font-medium text-gray-600 dark:text-gray-300">Select Account Size</label>
           <div className="relative">
             <select
               value={selectedAccountSize}
               onChange={(e) => setSelectedAccountSize(Number(e.target.value))}
-              className="appearance-none bg-white border-2 border-gray-200 rounded-xl px-6 py-3 pr-12 text-lg font-semibold text-gray-900 cursor-pointer hover:border-blue-300 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all shadow-sm"
+              className="appearance-none bg-white dark:bg-slate-900 border-2 border-gray-200 dark:border-slate-800 rounded-xl px-6 py-3 pr-12 text-lg font-semibold text-gray-900 dark:text-gray-100 cursor-pointer hover:border-blue-300 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all shadow-sm"
             >
               {accountSizes.map((size) => (
                 <option key={size} value={size}>
@@ -73,7 +73,7 @@ export default function NewChallengePage() {
                 </option>
               ))}
             </select>
-            <ChevronDownIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+            <ChevronDownIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500 pointer-events-none" />
           </div>
         </div>
       </div>
@@ -121,31 +121,31 @@ export default function NewChallengePage() {
       )}
 
       {/* Challenge Comparison Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-6">
-        <h2 className="text-2xl font-bold text-gray-900 text-center">
+      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6 space-y-6">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center">
           Challenge Comparison
         </h2>
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-200">
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+              <tr className="border-b border-gray-200 dark:border-slate-800">
+                <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">
                   Feature
                 </th>
                 {challengeTypes.map((type) => (
                   <th
                     key={type.id}
-                    className="text-center py-3 px-4 font-semibold text-gray-700"
+                    className="text-center py-3 px-4 font-semibold text-gray-700 dark:text-gray-300"
                   >
                     {type.name}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
               <tr>
-                <td className="py-3 px-4 text-gray-600">Evaluation Phases</td>
+                <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Evaluation Phases</td>
                 {challengeTypes.map((type) => (
                   <td key={type.id} className="text-center py-3 px-4 font-semibold">
                     {type.phases}
@@ -153,7 +153,7 @@ export default function NewChallengePage() {
                 ))}
               </tr>
               <tr>
-                <td className="py-3 px-4 text-gray-600">Profit Target</td>
+                <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Profit Target</td>
                 {challengeTypes.map((type) => (
                   <td key={type.id} className="text-center py-3 px-4 font-semibold">
                     {type.profitTargetPercent}%
@@ -161,7 +161,7 @@ export default function NewChallengePage() {
                 ))}
               </tr>
               <tr>
-                <td className="py-3 px-4 text-gray-600">Daily Loss Limit</td>
+                <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Daily Loss Limit</td>
                 {challengeTypes.map((type) => (
                   <td key={type.id} className="text-center py-3 px-4 font-semibold">
                     {type.dailyLossLimitPercent}%
@@ -169,7 +169,7 @@ export default function NewChallengePage() {
                 ))}
               </tr>
               <tr>
-                <td className="py-3 px-4 text-gray-600">Max Drawdown</td>
+                <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Max Drawdown</td>
                 {challengeTypes.map((type) => (
                   <td key={type.id} className="text-center py-3 px-4 font-semibold">
                     {type.maxDrawdownPercent}%
@@ -177,7 +177,7 @@ export default function NewChallengePage() {
                 ))}
               </tr>
               <tr>
-                <td className="py-3 px-4 text-gray-600">Min Trading Days</td>
+                <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Min Trading Days</td>
                 {challengeTypes.map((type) => (
                   <td key={type.id} className="text-center py-3 px-4 font-semibold">
                     {type.minTradingDays}
@@ -185,7 +185,7 @@ export default function NewChallengePage() {
                 ))}
               </tr>
               <tr>
-                <td className="py-3 px-4 text-gray-600">Price Multiplier</td>
+                <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Price Multiplier</td>
                 {challengeTypes.map((type) => (
                   <td key={type.id} className="text-center py-3 px-4 font-semibold">
                     {type.pricingMultiplier}x
@@ -198,8 +198,8 @@ export default function NewChallengePage() {
       </div>
 
       {/* What's Included Section */}
-      <div className="bg-gray-50 rounded-xl p-6 space-y-4">
-        <h3 className="text-xl font-bold text-gray-900 text-center">
+      <div className="bg-gray-50 dark:bg-slate-950 rounded-xl p-6 space-y-4">
+        <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 text-center">
           What's Included in All Challenges
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -216,7 +216,7 @@ export default function NewChallengePage() {
           ].map((item, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-2 text-gray-700"
+              className="flex items-center gap-2 text-gray-700 dark:text-gray-300"
             >
               <div className="w-2 h-2 rounded-full bg-blue-600" />
               <span className="text-sm">{item}</span>

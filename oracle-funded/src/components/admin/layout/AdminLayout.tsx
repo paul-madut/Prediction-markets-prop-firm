@@ -13,7 +13,7 @@ interface AdminLayoutProps {
 
 const AdminLayoutContent = ({ children, title, subtitle }: AdminLayoutProps) => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
       {/* Sidebar */}
       <AdminSidebar />
 

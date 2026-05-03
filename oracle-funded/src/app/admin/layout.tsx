@@ -18,15 +18,17 @@ export default function AdminLayout({
       <NotificationProvider>
         <ToastProvider>
           <AdminNotificationBridge />
-          <div className="min-h-screen bg-gray-50">
+          <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
             {/* Sidebar */}
             <AdminSidebar />
 
             {/* Main Content - offset for sidebar */}
             <div className="pl-20 lg:pl-[280px] min-h-screen transition-all duration-300 pb-8">
-              <ErrorBoundary>
-                {children}
-              </ErrorBoundary>
+              <main className="p-6">
+                <ErrorBoundary>
+                  {children}
+                </ErrorBoundary>
+              </main>
             </div>
 
             {/* Keyboard Shortcuts Help */}

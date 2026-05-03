@@ -181,7 +181,7 @@ export function MovingBorderCard({
 
       <div
         className={cn(
-          "relative bg-white border border-blue-200 backdrop-blur-xl w-full h-full antialiased",
+          "relative bg-white dark:bg-slate-900 border border-blue-200 backdrop-blur-xl w-full h-full antialiased",
           className
         )}
         style={{

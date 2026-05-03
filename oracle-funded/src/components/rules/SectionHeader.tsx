@@ -98,7 +98,7 @@ export const SectionHeader = ({
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-2 text-gray-600 text-sm md:text-base"
+          className="mt-2 text-gray-600 dark:text-gray-300 text-sm md:text-base"
         >
           {subtitle}
         </motion.p>

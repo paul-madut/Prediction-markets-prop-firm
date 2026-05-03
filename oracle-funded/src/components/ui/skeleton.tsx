@@ -16,13 +16,13 @@ export const Skeleton = ({
 export const StatsGridSkeleton = ({ count = 4 }: { count?: number }) => (
   <div className={cn("grid gap-4", count === 4 ? "grid-cols-2 lg:grid-cols-4" : `grid-cols-1 sm:grid-cols-2 lg:grid-cols-${count}`)}>
     {Array.from({ length: count }).map((_, i) => (
-      <div key={i} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-5 animate-pulse">
+      <div key={i} className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-4 sm:p-5 animate-pulse">
         <div className="flex items-center gap-3 mb-3">
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gray-200" />
           <div className="h-4 w-20 rounded bg-gray-200" />
         </div>
         <div className="h-7 w-28 rounded bg-gray-200 mb-1" />
-        <div className="h-3 w-16 rounded bg-gray-100 mt-2" />
+        <div className="h-3 w-16 rounded bg-gray-100 dark:bg-slate-800 mt-2" />
       </div>
     ))}
   </div>
@@ -30,40 +30,40 @@ export const StatsGridSkeleton = ({ count = 4 }: { count?: number }) => (
 
 /** Chart area skeleton */
 export const ChartSkeleton = ({ height = "h-[280px]" }: { height?: string }) => (
-  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 animate-pulse">
+  <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-5 animate-pulse">
     <div className="flex items-center justify-between mb-4">
       <div className="h-5 w-36 rounded bg-gray-200" />
-      <div className="h-4 w-24 rounded bg-gray-100" />
+      <div className="h-4 w-24 rounded bg-gray-100 dark:bg-slate-800" />
     </div>
-    <div className={cn(height, "bg-gray-100 rounded-lg")} />
+    <div className={cn(height, "bg-gray-100 dark:bg-slate-800 rounded-lg")} />
   </div>
 );
 
 /** Table skeleton with header and rows */
 export const TableSkeleton = ({ rows = 5 }: { rows?: number }) => (
-  <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden animate-pulse">
-    <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+  <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden animate-pulse">
+    <div className="px-6 py-4 border-b border-gray-200 dark:border-slate-800 flex items-center justify-between">
       <div className="h-5 w-32 rounded bg-gray-200" />
       <div className="flex gap-1">
-        <div className="h-6 w-14 rounded-md bg-gray-100" />
-        <div className="h-6 w-14 rounded-md bg-gray-100" />
-        <div className="h-6 w-14 rounded-md bg-gray-100" />
+        <div className="h-6 w-14 rounded-md bg-gray-100 dark:bg-slate-800" />
+        <div className="h-6 w-14 rounded-md bg-gray-100 dark:bg-slate-800" />
+        <div className="h-6 w-14 rounded-md bg-gray-100 dark:bg-slate-800" />
       </div>
     </div>
     {/* Header row */}
-    <div className="hidden md:flex px-6 py-3 bg-gray-50 gap-6">
+    <div className="hidden md:flex px-6 py-3 bg-gray-50 dark:bg-slate-950 gap-6">
       {Array.from({ length: 5 }).map((_, i) => (
         <div key={i} className="h-3 rounded bg-gray-200" style={{ width: `${i === 0 ? 60 : 80 + i * 10}px` }} />
       ))}
     </div>
     {/* Rows */}
     {Array.from({ length: rows }).map((_, i) => (
-      <div key={i} className="px-6 py-4 border-b border-gray-100 flex items-center gap-6">
+      <div key={i} className="px-6 py-4 border-b border-gray-100 dark:border-slate-800 flex items-center gap-6">
         <div className="h-4 w-16 rounded bg-gray-200" />
         <div className="h-4 w-20 rounded bg-gray-200" />
         <div className="h-4 w-24 rounded bg-gray-200" />
-        <div className="h-5 w-16 rounded-full bg-gray-100" />
-        <div className="h-4 w-20 rounded bg-gray-100" />
+        <div className="h-5 w-16 rounded-full bg-gray-100 dark:bg-slate-800" />
+        <div className="h-4 w-20 rounded bg-gray-100 dark:bg-slate-800" />
       </div>
     ))}
   </div>
@@ -71,13 +71,13 @@ export const TableSkeleton = ({ rows = 5 }: { rows?: number }) => (
 
 /** Card section skeleton (e.g. form section, settings block) */
 export const CardSkeleton = ({ lines = 3 }: { lines?: number }) => (
-  <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden animate-pulse">
-    <div className="px-6 py-4 border-b border-gray-200">
+  <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden animate-pulse">
+    <div className="px-6 py-4 border-b border-gray-200 dark:border-slate-800">
       <div className="h-5 w-40 rounded bg-gray-200" />
     </div>
     <div className="p-6 space-y-4">
       {Array.from({ length: lines }).map((_, i) => (
-        <div key={i} className="h-4 rounded bg-gray-100" style={{ width: `${85 - i * 15}%` }} />
+        <div key={i} className="h-4 rounded bg-gray-100 dark:bg-slate-800" style={{ width: `${85 - i * 15}%` }} />
       ))}
     </div>
   </div>
@@ -87,7 +87,7 @@ export const CardSkeleton = ({ lines = 3 }: { lines?: number }) => (
 export const DashboardSkeleton = () => (
   <div className="space-y-6">
     {/* Account bar */}
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 animate-pulse">
+    <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-4 animate-pulse">
       <div className="flex items-center gap-4">
         <div className="w-10 h-10 rounded-lg bg-gray-200" />
         <div className="space-y-2">
@@ -97,21 +97,21 @@ export const DashboardSkeleton = () => (
       </div>
     </div>
     {/* Welcome card */}
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 animate-pulse">
+    <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-8 animate-pulse">
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex-1 space-y-4">
           <div className="h-4 w-28 rounded bg-gray-200" />
           <div className="h-8 w-44 rounded bg-gray-200" />
           <div className="flex gap-3">
             <div className="h-10 w-32 rounded-lg bg-gray-200" />
-            <div className="h-10 w-36 rounded-lg bg-gray-100" />
+            <div className="h-10 w-36 rounded-lg bg-gray-100 dark:bg-slate-800" />
           </div>
         </div>
         <div className="flex-1 grid grid-cols-3 gap-6">
           {Array.from({ length: 3 }).map((_, i) => (
             <div key={i} className="text-center space-y-2">
               <div className="h-7 w-16 mx-auto rounded bg-gray-200" />
-              <div className="h-3 w-14 mx-auto rounded bg-gray-100" />
+              <div className="h-3 w-14 mx-auto rounded bg-gray-100 dark:bg-slate-800" />
             </div>
           ))}
         </div>
@@ -149,11 +149,11 @@ export const PayoutsSkeleton = () => (
   <div className="space-y-6 max-w-5xl mx-auto">
     <div className="animate-pulse space-y-1">
       <div className="h-7 w-28 rounded bg-gray-200" />
-      <div className="h-4 w-64 rounded bg-gray-100" />
+      <div className="h-4 w-64 rounded bg-gray-100 dark:bg-slate-800" />
     </div>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {Array.from({ length: 4 }).map((_, i) => (
-        <div key={i} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 animate-pulse">
+        <div key={i} className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-4 animate-pulse">
           <div className="flex items-center gap-2 mb-2">
             <div className="w-4 h-4 rounded bg-gray-200" />
             <div className="h-3 w-24 rounded bg-gray-200" />
@@ -210,17 +210,17 @@ export const NewChallengeSkeleton = () => (
   <div className="space-y-10 max-w-7xl mx-auto">
     <div className="text-center animate-pulse space-y-3">
       <div className="h-9 w-80 mx-auto rounded bg-gray-200" />
-      <div className="h-4 w-96 mx-auto rounded bg-gray-100" />
+      <div className="h-4 w-96 mx-auto rounded bg-gray-100 dark:bg-slate-800" />
     </div>
     <div className="flex justify-center animate-pulse">
       <div className="h-12 w-48 rounded-xl bg-gray-200" />
     </div>
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 animate-pulse space-y-4">
+        <div key={i} className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-6 animate-pulse space-y-4">
           <div className="h-5 w-24 rounded bg-gray-200" />
-          <div className="h-4 w-full rounded bg-gray-100" />
-          <div className="h-4 w-3/4 rounded bg-gray-100" />
+          <div className="h-4 w-full rounded bg-gray-100 dark:bg-slate-800" />
+          <div className="h-4 w-3/4 rounded bg-gray-100 dark:bg-slate-800" />
           <div className="h-10 w-full rounded-lg bg-gray-200 mt-4" />
         </div>
       ))}

@@ -95,7 +95,7 @@ export default function ExportButton<T extends Record<string, any>>({
         onClick={() => setIsOpen(!isOpen)}
         disabled={isExporting || data.length === 0}
         className={cn(
-          "flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
+          "flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
           className
         )}
       >
@@ -105,9 +105,9 @@ export default function ExportButton<T extends Record<string, any>>({
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             >
-              <ArrowDownTrayIcon className="h-4 w-4 text-gray-600" />
+              <ArrowDownTrayIcon className="h-4 w-4 text-gray-600 dark:text-gray-300" />
             </motion.div>
-            <span className="text-sm font-medium text-gray-700">Exporting...</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Exporting...</span>
           </>
         ) : exportComplete ? (
           <>
@@ -116,8 +116,8 @@ export default function ExportButton<T extends Record<string, any>>({
           </>
         ) : (
           <>
-            <ArrowDownTrayIcon className="h-4 w-4 text-gray-600" />
-            <span className="text-sm font-medium text-gray-700">{label}</span>
+            <ArrowDownTrayIcon className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</span>
           </>
         )}
       </button>
@@ -130,17 +130,17 @@ export default function ExportButton<T extends Record<string, any>>({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-10"
+            className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-gray-200 dark:border-slate-800 py-1 z-10"
           >
             {/* Export Visible Rows */}
             <button
               onClick={() => handleExport("visible")}
-              className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3"
+              className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800/50 flex items-center gap-3"
             >
-              <DocumentArrowDownIcon className="h-4 w-4 text-gray-500" />
+              <DocumentArrowDownIcon className="h-4 w-4 text-gray-500 dark:text-gray-400" />
               <div>
                 <div className="font-medium">Export Visible Rows</div>
-                <div className="text-xs text-gray-500">{data.length} rows</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">{data.length} rows</div>
               </div>
             </button>
 
@@ -150,12 +150,12 @@ export default function ExportButton<T extends Record<string, any>>({
                 <div className="h-px bg-gray-200 my-1" />
                 <button
                   onClick={() => handleExport("selected")}
-                  className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3"
+                  className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800/50 flex items-center gap-3"
                 >
                   <DocumentArrowDownIcon className="h-4 w-4 text-indigo-600" />
                   <div>
                     <div className="font-medium">Export Selected</div>
-                    <div className="text-xs text-gray-500">{selectedIds.size} rows</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">{selectedIds.size} rows</div>
                   </div>
                 </button>
               </>
@@ -165,12 +165,12 @@ export default function ExportButton<T extends Record<string, any>>({
             <div className="h-px bg-gray-200 my-1" />
             <button
               onClick={() => handleExport("all")}
-              className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3"
+              className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800/50 flex items-center gap-3"
             >
-              <DocumentArrowDownIcon className="h-4 w-4 text-gray-500" />
+              <DocumentArrowDownIcon className="h-4 w-4 text-gray-500 dark:text-gray-400" />
               <div>
                 <div className="font-medium">Export All</div>
-                <div className="text-xs text-gray-500">Full dataset</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Full dataset</div>
               </div>
             </button>
           </motion.div>

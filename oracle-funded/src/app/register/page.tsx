@@ -60,7 +60,7 @@ export default function RegisterPage() {
                 Start Your<br />
                 <span className="text-blue-400">Trading Journey.</span>
               </h1>
-              <p className="text-gray-400 text-lg max-w-md">
+              <p className="text-gray-400 dark:text-gray-500 text-lg max-w-md">
                 Choose a challenge, prove your skills, and trade prediction markets with funded capital.
               </p>
             </div>
@@ -93,7 +93,7 @@ export default function RegisterPage() {
                   </div>
                   <div>
                     <div className="text-white font-medium">{benefit.title}</div>
-                    <div className="text-gray-400 text-sm">{benefit.description}</div>
+                    <div className="text-gray-400 dark:text-gray-500 text-sm">{benefit.description}</div>
                   </div>
                 </div>
               ))}
@@ -101,14 +101,14 @@ export default function RegisterPage() {
           </div>
 
           {/* Bottom */}
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-500 dark:text-gray-400">
             Trusted by 2,000+ prediction market traders worldwide.
           </div>
         </div>
       </div>
 
       {/* Right side - Registration form */}
-      <div className="flex-1 flex items-center justify-center p-6 sm:p-8 bg-white">
+      <div className="flex-1 flex items-center justify-center p-6 sm:p-8 bg-white dark:bg-slate-900">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -118,14 +118,14 @@ export default function RegisterPage() {
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2 mb-8">
             <Image src="/logo.png" alt="OracleFunded" width={36} height={36} />
-            <span className="font-bold text-xl text-gray-900">OracleFunded</span>
+            <span className="font-bold text-xl text-gray-900 dark:text-gray-100">OracleFunded</span>
           </div>
 
           <div className="space-y-2 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               Create your account
             </h2>
-            <p className="text-gray-500">
+            <p className="text-gray-500 dark:text-gray-400">
               Sign up and start your funded trading challenge today.
             </p>
           </div>
@@ -160,7 +160,7 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition z-10"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 transition z-10"
                 >
                   {showPassword ? (
                     <EyeSlashIcon className="w-4 h-4" />
@@ -186,7 +186,7 @@ export default function RegisterPage() {
                           "w-3.5 h-3.5 rounded-full flex items-center justify-center transition-colors",
                           check.met
                             ? "bg-green-100 text-green-600"
-                            : "bg-gray-100 text-gray-400"
+                            : "bg-gray-100 dark:bg-slate-800 text-gray-400 dark:text-gray-500"
                         )}
                       >
                         <CheckIcon className="w-2.5 h-2.5" />
@@ -194,7 +194,7 @@ export default function RegisterPage() {
                       <span
                         className={cn(
                           "transition-colors",
-                          check.met ? "text-green-600" : "text-gray-400"
+                          check.met ? "text-green-600" : "text-gray-400 dark:text-gray-500"
                         )}
                       >
                         {check.label}
@@ -218,9 +218,9 @@ export default function RegisterPage() {
               <input
                 type="checkbox"
                 id="terms"
-                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-0.5"
+                className="w-4 h-4 rounded border-gray-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 mt-0.5"
               />
-              <label htmlFor="terms" className="text-sm text-gray-500 cursor-pointer">
+              <label htmlFor="terms" className="text-sm text-gray-500 dark:text-gray-400 cursor-pointer">
                 I agree to the{" "}
                 <button type="button" className="text-blue-600 hover:text-blue-700 font-medium">
                   Terms of Service
@@ -255,13 +255,13 @@ export default function RegisterPage() {
                 <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
               </div>
               <div className="relative flex justify-center">
-                <span className="bg-white px-4 text-sm text-gray-400">or sign up with</span>
+                <span className="bg-white dark:bg-slate-900 px-4 text-sm text-gray-400 dark:text-gray-500">or sign up with</span>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <button
-                className="group/btn relative flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-300 hover:shadow-md transition-all duration-200"
+                className="group/btn relative flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 font-medium text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 dark:hover:bg-slate-800/50 hover:border-gray-300 hover:shadow-md transition-all duration-200"
                 type="button"
               >
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
@@ -272,7 +272,7 @@ export default function RegisterPage() {
                 <BottomGradient />
               </button>
               <button
-                className="group/btn relative flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-300 hover:shadow-md transition-all duration-200"
+                className="group/btn relative flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 font-medium text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 dark:hover:bg-slate-800/50 hover:border-gray-300 hover:shadow-md transition-all duration-200"
                 type="button"
               >
                 <WalletIcon className="h-4 w-4 text-blue-500" />
@@ -282,7 +282,7 @@ export default function RegisterPage() {
             </div>
           </form>
 
-          <p className="mt-8 text-center text-sm text-gray-500">
+          <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
             Already have an account?{" "}
             <Link
               href="/login"

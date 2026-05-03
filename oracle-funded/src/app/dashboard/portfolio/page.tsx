@@ -90,14 +90,14 @@ export default function PortfolioPage() {
               <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-blue-50 flex items-center justify-center">
                 <BriefcaseIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
               </div>
-              <span className="text-xs sm:text-sm text-gray-500">Positions</span>
+              <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Positions</span>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-gray-900">
+            <div className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100">
               {positions.length}
             </div>
             <div className="flex items-center gap-2 mt-1 text-xs">
               <span className="text-green-600">{winningPositions} win</span>
-              <span className="text-gray-300">|</span>
+              <span className="text-gray-300 dark:text-gray-600">|</span>
               <span className="text-red-600">{losingPositions} loss</span>
             </div>
           </TextureCardContent>
@@ -109,12 +109,12 @@ export default function PortfolioPage() {
               <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-purple-50 flex items-center justify-center">
                 <CurrencyDollarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
               </div>
-              <span className="text-xs sm:text-sm text-gray-500">Exposure</span>
+              <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Exposure</span>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-gray-900">
+            <div className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100">
               {formatCurrency(totalExposure)}
             </div>
-            <div className="text-xs text-gray-400 mt-1">
+            <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
               {totalExposure > 0
                 ? `${((totalExposure / user.accountBalance) * 100).toFixed(1)}% of balance`
                 : "No exposure"}
@@ -134,7 +134,7 @@ export default function PortfolioPage() {
                   <ArrowTrendingDownIcon className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />
                 )}
               </div>
-              <span className="text-xs sm:text-sm text-gray-500">Unrealized P&L</span>
+              <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Unrealized P&L</span>
             </div>
             <div
               className={`text-xl sm:text-2xl font-bold ${totalUnrealizedPnL >= 0 ? "text-green-600" : "text-red-600"}`}
@@ -162,12 +162,12 @@ export default function PortfolioPage() {
               <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-amber-50 flex items-center justify-center">
                 <ChartBarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600" />
               </div>
-              <span className="text-xs sm:text-sm text-gray-500">Balance</span>
+              <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Balance</span>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-gray-900">
+            <div className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100">
               {formatCurrency(user.accountBalance)}
             </div>
-            <div className="text-xs text-gray-400 mt-1">
+            <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
               Start: {formatCurrency(user.startingBalance)}
             </div>
           </TextureCardContent>
@@ -175,7 +175,7 @@ export default function PortfolioPage() {
       </div>
 
       {/* Tabs */}
-      <div className="bg-white border border-gray-200 rounded-lg p-1 inline-flex gap-1">
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-lg p-1 inline-flex gap-1">
         <TabButton label={`Open (${positions.length})`} active={tab === "open"} onClick={() => setTab("open")} />
         <TabButton label={`Closed (${closedTrades.length})`} active={tab === "closed"} onClick={() => setTab("closed")} />
         <TabButton label={`History (${historyTrades.length})`} active={tab === "history"} onClick={() => setTab("history")} />
@@ -193,13 +193,13 @@ export default function PortfolioPage() {
           {positions.length === 0 ? (
             <TextureCard interactive={false}>
               <TextureCardContent className="p-12 text-center">
-                <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
-                  <BriefcaseIcon className="w-8 h-8 text-gray-400" />
+                <div className="w-16 h-16 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center mx-auto mb-4">
+                  <BriefcaseIcon className="w-8 h-8 text-gray-400 dark:text-gray-500" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                   No Open Positions
                 </h3>
-                <p className="text-gray-500 mb-4 max-w-sm mx-auto">
+                <p className="text-gray-500 dark:text-gray-400 mb-4 max-w-sm mx-auto">
                   Start trading on the Markets page to build your portfolio.
                 </p>
                 <a
@@ -214,14 +214,14 @@ export default function PortfolioPage() {
           ) : (
             <TextureCard interactive={false}>
               <TextureCardContent className="p-0">
-                <div className="p-5 border-b border-gray-100">
-                  <h3 className="text-lg font-semibold text-gray-900">
+                <div className="p-5 border-b border-gray-100 dark:border-slate-800">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                     Open Positions
                   </h3>
                 </div>
 
                 {/* Mobile card layout */}
-                <div className="block lg:hidden divide-y divide-gray-100">
+                <div className="block lg:hidden divide-y divide-gray-100 dark:divide-slate-800">
                   {positionsWithData.map((position) => (
                     <div
                       key={`m-${position.ticker}-${position.side}`}
@@ -229,7 +229,7 @@ export default function PortfolioPage() {
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">
+                          <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
                             {position.market_title}
                           </p>
                           <div className="flex items-center gap-2 mt-1">
@@ -242,7 +242,7 @@ export default function PortfolioPage() {
                             >
                               {position.side.toUpperCase()}
                             </span>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-500 dark:text-gray-400">
                               {position.position} shares
                             </span>
                           </div>
@@ -270,7 +270,7 @@ export default function PortfolioPage() {
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between text-xs text-gray-500">
+                      <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                         <span>
                           Entry: {formatCurrency(position.avg_entry_price || 0)}
                         </span>
@@ -311,36 +311,36 @@ export default function PortfolioPage() {
                   <table className="w-full">
                     <thead className="bg-gray-50/80">
                       <tr>
-                        <th className="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-5 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                           Market
                         </th>
-                        <th className="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-5 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                           Side
                         </th>
-                        <th className="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-5 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                           Shares
                         </th>
-                        <th className="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-5 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                           Entry
                         </th>
-                        <th className="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-5 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                           Current
                         </th>
-                        <th className="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-5 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                           P&L
                         </th>
-                        <th className="px-5 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-5 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                           Action
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100">
+                    <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
                       {positionsWithData.map((position) => (
                         <tr
                           key={`d-${position.ticker}-${position.side}`}
                           className="hover:bg-gray-50/50 transition-colors"
                         >
-                          <td className="px-5 py-4 text-sm text-gray-900 max-w-[240px] truncate">
+                          <td className="px-5 py-4 text-sm text-gray-900 dark:text-gray-100 max-w-[240px] truncate">
                             {position.market_title}
                           </td>
                           <td className="px-5 py-4 whitespace-nowrap">
@@ -354,13 +354,13 @@ export default function PortfolioPage() {
                               {position.side.toUpperCase()}
                             </span>
                           </td>
-                          <td className="px-5 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <td className="px-5 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                             {position.position}
                           </td>
-                          <td className="px-5 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <td className="px-5 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                             {formatCurrency(position.avg_entry_price || 0)}
                           </td>
-                          <td className="px-5 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <td className="px-5 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                             {formatCurrency(position.currentPrice)}
                           </td>
                           <td className="px-5 py-4 whitespace-nowrap">
@@ -429,8 +429,8 @@ export default function PortfolioPage() {
             <TextureCard interactive={false}>
               <TextureCardContent className="p-5">
                 <div className="flex items-center gap-2 mb-4">
-                  <ChartPieIcon className="w-5 h-5 text-gray-500" />
-                  <h3 className="text-sm font-semibold text-gray-900">
+                  <ChartPieIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                  <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                     Allocation
                   </h3>
                 </div>
@@ -476,11 +476,11 @@ export default function PortfolioPage() {
                           className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                           style={{ backgroundColor: item.color }}
                         />
-                        <span className="text-gray-600 truncate">
+                        <span className="text-gray-600 dark:text-gray-300 truncate">
                           {item.name}
                         </span>
                       </div>
-                      <span className="text-gray-900 font-medium flex-shrink-0 ml-2">
+                      <span className="text-gray-900 dark:text-gray-100 font-medium flex-shrink-0 ml-2">
                         ${item.value.toFixed(0)}
                       </span>
                     </div>
@@ -491,25 +491,25 @@ export default function PortfolioPage() {
 
             <TextureCard interactive={false}>
               <TextureCardContent className="p-5">
-                <h3 className="text-sm font-semibold text-gray-900 mb-4">
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">
                   Position Breakdown
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">YES positions</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">YES positions</span>
                     <span className="text-sm font-medium text-green-600">
                       {positions.filter((p) => p.side === "yes").length}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">NO positions</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">NO positions</span>
                     <span className="text-sm font-medium text-red-600">
                       {positions.filter((p) => p.side === "no").length}
                     </span>
                   </div>
-                  <div className="h-px bg-gray-100" />
+                  <div className="h-px bg-gray-100 dark:bg-slate-800" />
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Best position</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">Best position</span>
                     <span className="text-sm font-medium text-green-600">
                       {positionsWithData.length > 0
                         ? `+${formatCurrency(Math.max(...positionsWithData.map((p) => p.unrealizedPnL)))}`
@@ -517,7 +517,7 @@ export default function PortfolioPage() {
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Worst position</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">Worst position</span>
                     <span className="text-sm font-medium text-red-600">
                       {positionsWithData.length > 0
                         ? formatCurrency(
@@ -545,7 +545,7 @@ function TabButton({ label, active, onClick }: { label: string; active: boolean;
       onClick={onClick}
       className={
         "px-4 py-1.5 text-sm font-semibold rounded-md transition-colors " +
-        (active ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-100")
+        (active ? "bg-blue-600 text-white" : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800")
       }
     >
       {label}
@@ -558,11 +558,11 @@ function TexturedTradesTable({ trades, emptyLabel }: { trades: ReturnType<typeof
     return (
       <TextureCard interactive={false}>
         <TextureCardContent className="p-12 text-center">
-          <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
-            <BriefcaseIcon className="w-8 h-8 text-gray-400" />
+          <div className="w-16 h-16 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center mx-auto mb-4">
+            <BriefcaseIcon className="w-8 h-8 text-gray-400 dark:text-gray-500" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">{emptyLabel}</h3>
-          <p className="text-gray-500 max-w-sm mx-auto">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">{emptyLabel}</h3>
+          <p className="text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
             Trades that resolve or are sold manually will show up here.
           </p>
         </TextureCardContent>
@@ -573,7 +573,7 @@ function TexturedTradesTable({ trades, emptyLabel }: { trades: ReturnType<typeof
     <TextureCard interactive={false}>
       <TextureCardContent className="p-0">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-600">
+          <thead className="bg-gray-50 dark:bg-slate-950 text-gray-600 dark:text-gray-300">
             <tr>
               <th className="text-left p-3 font-medium">Market</th>
               <th className="text-left p-3 font-medium">Side</th>
@@ -583,10 +583,10 @@ function TexturedTradesTable({ trades, emptyLabel }: { trades: ReturnType<typeof
               <th className="text-right p-3 font-medium">Closed</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
             {trades.map((t) => (
               <tr key={t.tradeId}>
-                <td className="p-3 max-w-xs truncate text-gray-900 font-medium">{t.market_title}</td>
+                <td className="p-3 max-w-xs truncate text-gray-900 dark:text-gray-100 font-medium">{t.market_title}</td>
                 <td className="p-3">
                   <span className={
                     "px-2 py-0.5 rounded text-xs font-semibold uppercase " +
@@ -596,13 +596,13 @@ function TexturedTradesTable({ trades, emptyLabel }: { trades: ReturnType<typeof
                   </span>
                 </td>
                 <td className="p-3 text-right tabular-nums">{t.shares}</td>
-                <td className="p-3 text-right tabular-nums text-gray-700">
+                <td className="p-3 text-right tabular-nums text-gray-700 dark:text-gray-300">
                   {t.entryPrice}¢ → {t.exitPrice ?? "—"}¢
                 </td>
                 <td className={"p-3 text-right tabular-nums font-semibold " + (t.pnl >= 0 ? "text-green-600" : "text-red-600")}>
                   {t.pnl >= 0 ? "+" : ""}{formatCurrency(t.pnl)}
                 </td>
-                <td className="p-3 text-right text-gray-500">{t.exitDate ? new Date(t.exitDate).toLocaleDateString() : "—"}</td>
+                <td className="p-3 text-right text-gray-500 dark:text-gray-400">{t.exitDate ? new Date(t.exitDate).toLocaleDateString() : "—"}</td>
               </tr>
             ))}
           </tbody>

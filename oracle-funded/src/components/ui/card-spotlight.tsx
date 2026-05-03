@@ -70,7 +70,7 @@ export const CardSpotlight = ({
         "group relative rounded-xl border p-6 overflow-hidden transition-all duration-300",
         variant === "dark"
           ? "border-gray-700/20 bg-gradient-to-br from-gray-900 to-gray-800 hover:border-gray-600/40 hover:shadow-2xl hover:shadow-blue-500/10"
-          : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-xl hover:shadow-gray-200/50",
+          : "border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-gray-300 hover:shadow-xl hover:shadow-gray-200/50",
         className
       )}
     >

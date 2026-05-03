@@ -43,27 +43,27 @@ export function CryptoCard({
       onClick={onSelect}
       layout
       className={cn(
-        "bg-white rounded-xl border p-4 cursor-pointer transition-all",
-        active ? "border-blue-600 shadow-md" : "border-gray-200 hover:shadow-sm",
+        "bg-white dark:bg-slate-900 rounded-xl border p-4 cursor-pointer transition-all",
+        active ? "border-blue-600 shadow-md" : "border-gray-200 dark:border-slate-800 hover:shadow-sm",
       )}
     >
       <div className="flex items-center justify-between mb-3">
         <div>
           <div className="flex items-center gap-2">
-            <span className="font-bold text-gray-900">{data.symbol}</span>
-            <span className="text-xs text-gray-500">{data.activeMarkets} markets</span>
+            <span className="font-bold text-gray-900 dark:text-gray-100">{data.symbol}</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{data.activeMarkets} markets</span>
           </div>
-          <div className="text-xs text-gray-500">{data.name}</div>
+          <div className="text-xs text-gray-500 dark:text-gray-400">{data.name}</div>
         </div>
         <div className="text-right">
-          <div className="text-lg font-bold text-gray-900 tabular-nums">${formatPrice(livePrice)}</div>
+          <div className="text-lg font-bold text-gray-900 dark:text-gray-100 tabular-nums">${formatPrice(livePrice)}</div>
           <div className={cn("text-xs font-semibold tabular-nums", positive ? "text-green-600" : "text-red-600")}>
             {positive ? "+" : ""}{pct}% (24h)
           </div>
         </div>
       </div>
 
-      <div className="text-xs text-gray-500 mb-2">
+      <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
         Will <span className="font-semibold">{data.symbol}</span> be Up or Down in <span className="font-semibold">{expiry}</span>?
       </div>
 

@@ -61,14 +61,14 @@ export const StatsGrid = () => {
       {stats.map((stat, index) => (
         <div
           key={index}
-          className="bg-white rounded-lg shadow-sm p-6 border border-gray-200"
+          className="bg-white dark:bg-slate-900 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-slate-800"
         >
-          <div className="text-sm text-gray-500 mb-2">{stat.label}</div>
-          <div className="text-2xl font-bold text-gray-900 mb-3">
+          <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">{stat.label}</div>
+          <div className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
             {stat.value}
           </div>
           {stat.limit && (
-            <div className="text-xs text-gray-500 mb-2">
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
               Limit: {stat.limit}
             </div>
           )}

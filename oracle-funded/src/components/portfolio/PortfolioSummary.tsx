@@ -22,20 +22,20 @@ export const PortfolioSummary = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-        <div className="text-sm text-gray-500 mb-2">Open Positions</div>
-        <div className="text-3xl font-bold text-gray-900">{positions.length}</div>
+      <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-slate-800">
+        <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">Open Positions</div>
+        <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">{positions.length}</div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-        <div className="text-sm text-gray-500 mb-2">Total Exposure</div>
-        <div className="text-3xl font-bold text-gray-900">
+      <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-slate-800">
+        <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">Total Exposure</div>
+        <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">
           {formatCurrency(totalValue)}
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-        <div className="text-sm text-gray-500 mb-2">Unrealized P&L</div>
+      <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-slate-800">
+        <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">Unrealized P&L</div>
         <div
           className={`text-3xl font-bold ${
             totalUnrealizedPnL >= 0 ? "text-green-600" : "text-red-600"

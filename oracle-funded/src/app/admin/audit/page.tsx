@@ -27,7 +27,7 @@ const getActionColor = (action: string) => {
   if (action.includes("reject") || action.includes("freeze") || action.includes("breach"))
     return "bg-red-100 text-red-700";
   if (action.includes("login")) return "bg-blue-100 text-blue-700";
-  return "bg-gray-100 text-gray-700";
+  return "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300";
 };
 
 export default function AuditLogsPage() {
@@ -55,11 +55,11 @@ export default function AuditLogsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 -mx-6 -mt-6 px-6 py-6 mb-6">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 -mx-6 -mt-6 px-6 py-6 mb-6">
         <div className="flex items-center gap-4">
           <Link
-            href="/admin/compliance"
-            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            href="/admin"
+            className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
           >
             <ArrowLeftIcon className="h-5 w-5" />
           </Link>
@@ -68,8 +68,8 @@ export default function AuditLogsPage() {
               <DocumentTextIcon className="h-6 w-6 text-blue-600" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Audit Logs</h1>
-              <p className="text-gray-500 mt-1">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Audit Logs</h1>
+              <p className="text-gray-500 dark:text-gray-400 mt-1">
                 Complete history of administrative actions
               </p>
             </div>
@@ -81,13 +81,13 @@ export default function AuditLogsPage() {
       <div className="flex flex-col sm:flex-row gap-4">
         {/* MagnifyingGlassIcon */}
         <div className="flex-1 relative">
-          <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-gray-500" />
           <input
             type="text"
             placeholder="Search by actor, action, or resource ID..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 dark:border-slate-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
           />
         </div>
 
@@ -95,7 +95,7 @@ export default function AuditLogsPage() {
         <select
           value={resourceFilter}
           onChange={(e) => setResourceFilter(e.target.value)}
-          className="px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="px-4 py-2.5 border border-gray-200 dark:border-slate-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
           <option value="all">All Resources</option>
           {resources.map((resource) => (
@@ -107,45 +107,45 @@ export default function AuditLogsPage() {
       </div>
 
       {/* Results count */}
-      <p className="text-sm text-gray-500">
+      <p className="text-sm text-gray-500 dark:text-gray-400">
         Showing {filteredLogs.length} of {auditLogs.length} entries
       </p>
 
       {/* Logs Table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="bg-gray-50 border-b border-gray-200">
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+              <tr className="bg-gray-50 dark:bg-slate-950 border-b border-gray-200 dark:border-slate-800">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                   Timestamp
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                   Actor
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                   Action
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                   Resource
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                   Outcome
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                   IP Address
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-gray-200 dark:divide-slate-800">
               {filteredLogs.map((log) => (
-                <tr key={log.logId} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                <tr key={log.logId} className="hover:bg-gray-50 dark:hover:bg-slate-800/50">
+                  <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
                     {formatDateTime(log.timestamp)}
                   </td>
                   <td className="px-6 py-4">
-                    <p className="font-medium text-gray-900">{log.actorName}</p>
-                    <p className="text-xs text-gray-500 capitalize">
+                    <p className="font-medium text-gray-900 dark:text-gray-100">{log.actorName}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">
                       {log.actorRole.replace("_", " ")}
                     </p>
                   </td>
@@ -160,10 +160,10 @@ export default function AuditLogsPage() {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <p className="text-sm text-gray-900 capitalize">
+                    <p className="text-sm text-gray-900 dark:text-gray-100 capitalize">
                       {log.resource}
                     </p>
-                    <p className="text-xs text-gray-500 font-mono">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 font-mono">
                       {log.resourceId}
                     </p>
                   </td>
@@ -179,7 +179,7 @@ export default function AuditLogsPage() {
                       {log.outcome}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-500 font-mono">
+                  <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 font-mono">
                     {log.ipAddress}
                   </td>
                 </tr>
@@ -189,7 +189,7 @@ export default function AuditLogsPage() {
         </div>
 
         {filteredLogs.length === 0 && (
-          <div className="px-6 py-12 text-center text-gray-500">
+          <div className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
             No audit logs found matching your criteria
           </div>
         )}

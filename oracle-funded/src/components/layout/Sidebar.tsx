@@ -118,7 +118,7 @@ export const Sidebar = () => {
 
           {/* User Account */}
           <motion.div
-            className="flex items-center gap-3 py-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+            className="flex items-center gap-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
             animate={{
               justifyContent: open ? "flex-start" : "center",
               paddingLeft: open ? "12px" : "0px",
@@ -141,7 +141,7 @@ export const Sidebar = () => {
                 duration: 0.3,
                 ease: [0.4, 0, 0.2, 1],
               }}
-              className="text-base font-medium text-neutral-700 whitespace-nowrap overflow-hidden"
+              className="text-base font-medium text-neutral-700 dark:text-gray-300 whitespace-nowrap overflow-hidden"
             >
               {user.username}
             </motion.span>
@@ -159,7 +159,7 @@ const SidebarHeader = () => {
       <button
         onClick={() => setOpen(!open)}
         aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
-        className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors flex-shrink-0 text-neutral-700"
+        className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors flex-shrink-0 text-neutral-700 dark:text-gray-300"
       >
         <Bars3Icon className="h-5 w-5" />
       </button>

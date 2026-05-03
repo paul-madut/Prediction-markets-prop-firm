@@ -56,12 +56,12 @@ const ActionModal = ({
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
-          className="relative bg-white rounded-xl shadow-xl max-w-md w-full mx-4 p-6"
+          className="relative bg-white dark:bg-slate-900 rounded-xl shadow-xl max-w-md w-full mx-4 p-6"
         >
           {!isProcessing && !actionComplete && (
             <button
               onClick={onCancel}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+              className="absolute top-4 right-4 text-gray-400 dark:text-gray-500 hover:text-gray-600"
             >
               <XMarkIcon className="h-5 w-5" />
             </button>
@@ -77,17 +77,17 @@ const ActionModal = ({
               >
                 <CheckCircleIcon className="h-8 w-8 text-green-600" />
               </motion.div>
-              <h3 className="text-lg font-semibold text-gray-900">Success!</h3>
-              <p className="text-sm text-gray-500 mt-2">Action completed successfully</p>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Success!</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Action completed successfully</p>
             </div>
           ) : (
             <>
-              <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-              <p className="text-sm text-gray-500 mt-2">{description}</p>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">{description}</p>
 
               {requireReason && (
                 <div className="mt-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Reason
                   </label>
                   <textarea
@@ -95,7 +95,7 @@ const ActionModal = ({
                     onChange={(e) => setReason(e.target.value)}
                     placeholder="Enter reason for this action..."
                     disabled={isProcessing}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none disabled:bg-gray-50 disabled:text-gray-500"
+                    className="w-full px-3 py-2 border border-gray-200 dark:border-slate-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none disabled:bg-gray-50 disabled:text-gray-500"
                     rows={3}
                   />
                 </div>
@@ -105,7 +105,7 @@ const ActionModal = ({
                 <button
                   onClick={onCancel}
                   disabled={isProcessing}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Cancel
                 </button>
@@ -212,8 +212,8 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
 
   return (
     <>
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Actions</h3>
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Actions</h3>
 
         <div className="space-y-3">
           {/* Freeze/Unfreeze */}
@@ -235,12 +235,12 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
             <button
               onClick={() => setActiveModal("freeze")}
               disabled={isClosed}
-              className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 dark:bg-slate-950 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <NoSymbolIcon className="h-5 w-5" />
               <div className="text-left">
                 <p className="font-medium">Freeze Account</p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                   Temporarily disable trading
                 </p>
               </div>
@@ -251,12 +251,12 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
           <button
             onClick={() => setActiveModal("reset")}
             disabled={isClosed}
-            className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 dark:bg-slate-950 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ArrowPathIcon className="h-5 w-5" />
             <div className="text-left">
               <p className="font-medium">Reset Account</p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Reset to starting balance
               </p>
             </div>
@@ -265,12 +265,12 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
           {/* Add Note */}
           <button
             onClick={() => setActiveModal("note")}
-            className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 dark:bg-slate-950 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
           >
             <DocumentTextIcon className="h-5 w-5" />
             <div className="text-left">
               <p className="font-medium">Add Note</p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Add internal note to profile
               </p>
             </div>
@@ -279,12 +279,12 @@ export const TraderActionsPanel = ({ trader }: TraderActionsPanelProps) => {
           {/* Send Message */}
           <button
             onClick={() => setActiveModal("message")}
-            className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 dark:bg-slate-950 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
           >
             <EnvelopeIcon className="h-5 w-5" />
             <div className="text-left">
               <p className="font-medium">Send Message</p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Email or in-app notification
               </p>
             </div>

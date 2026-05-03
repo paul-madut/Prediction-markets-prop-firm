@@ -78,17 +78,17 @@ export default function TradersPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 -mx-6 -mt-6 px-6 py-6 mb-6">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 -mx-6 -mt-6 px-6 py-6 mb-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-blue-100 rounded-xl">
               <UserGroupIcon className="h-6 w-6 text-blue-600" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 Trader Management
               </h1>
-              <p className="text-gray-500 mt-1">
+              <p className="text-gray-500 dark:text-gray-400 mt-1">
                 View and manage all trader accounts
               </p>
             </div>
@@ -98,19 +98,19 @@ export default function TradersPage() {
             {/* Stats */}
             <div className="flex items-center gap-6 mr-4 text-sm">
               <div>
-                <span className="text-gray-500">Total:</span>
-                <span className="ml-2 font-semibold text-gray-900">
+                <span className="text-gray-500 dark:text-gray-400">Total:</span>
+                <span className="ml-2 font-semibold text-gray-900 dark:text-gray-100">
                   {dashboardStats.totalTraders}
                 </span>
               </div>
               <div>
-                <span className="text-gray-500">Active:</span>
+                <span className="text-gray-500 dark:text-gray-400">Active:</span>
                 <span className="ml-2 font-semibold text-green-600">
                   {dashboardStats.activeTraders}
                 </span>
               </div>
               <div>
-                <span className="text-gray-500">Frozen:</span>
+                <span className="text-gray-500 dark:text-gray-400">Frozen:</span>
                 <span className="ml-2 font-semibold text-blue-600">
                   {dashboardStats.frozenTraders}
                 </span>
@@ -145,7 +145,7 @@ export default function TradersPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="text-sm text-gray-500"
+            className="text-sm text-gray-500 dark:text-gray-400"
           >
             Found{" "}
             <motion.span
