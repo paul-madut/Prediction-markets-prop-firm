@@ -144,15 +144,15 @@ export default function CryptoPage() {
   return (
     <div className="max-w-7xl mx-auto py-6 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Crypto — Up or Down</h1>
-        <p className="text-sm text-gray-600 mt-1">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Crypto — Up or Down</h1>
+        <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
           Pick a direction over a fixed window. Shorter windows pay faster, longer windows offer
           better risk/reward.
         </p>
       </div>
 
       {/* Asset tabs */}
-      <div className="bg-white rounded-xl border border-gray-200 p-2 flex gap-1 overflow-x-auto">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-2 flex gap-1 overflow-x-auto">
         {mockCrypto.slice(0, 6).map((c) => {
           const tabPrice = spots[c.symbol] ?? c.spotUsd;
           const isActive = c.symbol === active.symbol;
@@ -162,11 +162,11 @@ export default function CryptoPage() {
               onClick={() => setActiveSymbol(c.symbol)}
               className={cn(
                 "flex-shrink-0 px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2",
-                isActive ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-100",
+                isActive ? "bg-blue-600 text-white" : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800",
               )}
             >
               <span>{c.symbol}</span>
-              <span className={cn("tabular-nums text-xs", isActive ? "text-blue-100" : "text-gray-500")}>
+              <span className={cn("tabular-nums text-xs", isActive ? "text-blue-100" : "text-gray-500 dark:text-gray-400")}>
                 ${tabPrice >= 1000 ? Math.round(tabPrice).toLocaleString() : tabPrice.toFixed(2)}
               </span>
             </button>
@@ -175,12 +175,12 @@ export default function CryptoPage() {
       </div>
 
       {/* Big price + chart + countdown */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-6">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <div className="text-sm text-gray-500">{active.name}</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">{active.name}</div>
             <div className="flex items-baseline gap-3">
-              <div className="text-4xl font-bold text-gray-900 tabular-nums">
+              <div className="text-4xl font-bold text-gray-900 dark:text-gray-100 tabular-nums">
                 ${livePrice >= 1000 ? Math.round(livePrice).toLocaleString() : livePrice.toFixed(active.spotUsd < 10 ? 4 : 2)}
               </div>
               <div className={cn("text-sm font-semibold tabular-nums", active.change24hPct >= 0 ? "text-green-600" : "text-red-600")}>
@@ -188,16 +188,16 @@ export default function CryptoPage() {
                 {(active.change24hPct * 100).toFixed(2)}% (24h)
               </div>
             </div>
-            <div className="text-xs text-gray-500 mt-1">
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
               {active.symbol} Up or Down — {expiry} window
             </div>
           </div>
           <div className="text-right">
-            <div className="flex items-center gap-1 text-xs text-gray-500 justify-end">
+            <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 justify-end">
               <ClockIcon className="w-3.5 h-3.5" />
               Next bar
             </div>
-            <div className="text-2xl font-bold text-gray-900 tabular-nums">{remainingLabel}</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100 tabular-nums">{remainingLabel}</div>
           </div>
         </div>
 
@@ -228,14 +228,14 @@ export default function CryptoPage() {
 
         {/* Expiry tabs */}
         <div className="mt-4 flex items-center gap-2 flex-wrap">
-          <span className="text-xs text-gray-500 mr-2">Expiry:</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400 mr-2">Expiry:</span>
           {EXPIRIES.map((e) => (
             <button
               key={e}
               onClick={() => setExpiry(e)}
               className={cn(
                 "px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors",
-                expiry === e ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200",
+                expiry === e ? "bg-gray-900 text-white" : "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200",
               )}
             >
               {e}
@@ -245,14 +245,14 @@ export default function CryptoPage() {
       </div>
 
       {/* Inline trade widget */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold text-gray-900">Trade {active.symbol} — {expiry}</h3>
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100">Trade {active.symbol} — {expiry}</h3>
           <button
             onClick={() => setInstant((v) => !v)}
             className={cn(
               "flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded transition-colors",
-              instant ? "bg-yellow-100 text-yellow-800" : "bg-gray-100 text-gray-600",
+              instant ? "bg-yellow-100 text-yellow-800" : "bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300",
             )}
           >
             <BoltIcon className="w-3.5 h-3.5" />
@@ -262,14 +262,14 @@ export default function CryptoPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">Stake amount</label>
+            <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Stake amount</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">$</span>
               <input
                 type="number"
                 value={stakeAmount}
                 onChange={(e) => setStakeAmount(e.target.value)}
-                className="w-full pl-7 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 tabular-nums"
+                className="w-full pl-7 pr-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 tabular-nums"
                 min="1"
               />
             </div>
@@ -278,7 +278,7 @@ export default function CryptoPage() {
                 <button
                   key={amt}
                   onClick={() => setStakeAmount(String(amt))}
-                  className="flex-1 px-2 py-1 text-xs border border-gray-200 rounded hover:bg-gray-50"
+                  className="flex-1 px-2 py-1 text-xs border border-gray-200 dark:border-slate-800 rounded hover:bg-gray-50 dark:hover:bg-slate-800/50"
                 >
                   ${amt}
                 </button>
@@ -312,7 +312,7 @@ export default function CryptoPage() {
 
       {/* Card grid */}
       <div>
-        <h3 className="font-semibold text-gray-900 mb-3">All markets</h3>
+        <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">All markets</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {mockCrypto.map((c) => (
             <CryptoCard

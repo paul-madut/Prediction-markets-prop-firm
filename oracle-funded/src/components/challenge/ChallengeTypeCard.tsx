@@ -77,10 +77,10 @@ export const ChallengeTypeCard = ({
       rotateDepth={8}
       translateDepth={10}
       className={cn(
-        "rounded-2xl overflow-hidden border-2 transition-all duration-300 bg-white",
+        "rounded-2xl overflow-hidden border-2 transition-all duration-300 bg-white dark:bg-slate-900",
         isSelected
           ? `${colors.border} shadow-xl`
-          : "border-gray-200 shadow-md hover:border-gray-300"
+          : "border-gray-200 dark:border-slate-800 shadow-md hover:border-gray-300"
       )}
     >
       <div className="p-6 space-y-5">
@@ -99,10 +99,10 @@ export const ChallengeTypeCard = ({
             </span>
           </div>
 
-          <h3 className="text-2xl font-bold text-gray-900">
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
             {challengeType.name}
           </h3>
-          <p className="text-gray-600 text-sm leading-relaxed">{challengeType.description}</p>
+          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{challengeType.description}</p>
         </div>
 
         {/* Pricing Display */}
@@ -111,22 +111,22 @@ export const ChallengeTypeCard = ({
             "text-center py-5 rounded-xl border transition-colors",
             isSelected
               ? `${colors.bg} ${colors.border}`
-              : "bg-gray-50 border-gray-200"
+              : "bg-gray-50 dark:bg-slate-950 border-gray-200 dark:border-slate-800"
           )}>
-            <div className="text-4xl font-bold text-gray-900">
+            <div className="text-4xl font-bold text-gray-900 dark:text-gray-100">
               {formatCurrency(currentPlan.monthlyPrice)}
             </div>
-            <div className="text-sm text-gray-500 mt-1">one-time fee</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">one-time fee</div>
             <div className={cn(
               "text-sm font-medium mt-2",
-              isSelected ? colors.text : "text-gray-600"
+              isSelected ? colors.text : "text-gray-600 dark:text-gray-300"
             )}>
               Profit Target: {formatCurrency(currentPlan.profitTarget)}
             </div>
           </div>
         ) : (
-          <div className="text-center py-5 rounded-xl bg-gray-100 border border-gray-200">
-            <div className="text-lg font-medium text-gray-400">
+          <div className="text-center py-5 rounded-xl bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-800">
+            <div className="text-lg font-medium text-gray-400 dark:text-gray-500">
               Not available at this size
             </div>
           </div>
@@ -138,11 +138,11 @@ export const ChallengeTypeCard = ({
             <div key={idx} className="flex items-start gap-2.5">
               <div className={cn(
                 "w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5",
-                isSelected ? colors.bg : "bg-gray-100"
+                isSelected ? colors.bg : "bg-gray-100 dark:bg-slate-800"
               )}>
-                <CheckIcon className={cn(isSelected ? colors.text : "text-gray-500")} />
+                <CheckIcon className={cn(isSelected ? colors.text : "text-gray-500 dark:text-gray-400")} />
               </div>
-              <span className="text-sm text-gray-700">{feature}</span>
+              <span className="text-sm text-gray-700 dark:text-gray-300">{feature}</span>
             </div>
           ))}
         </div>
@@ -157,7 +157,7 @@ export const ChallengeTypeCard = ({
               ? `${colors.accent} text-white shadow-lg hover:shadow-xl ${colors.accentHover}`
               : currentPlan
                 ? "bg-gray-900 text-white hover:bg-gray-800 hover:shadow-md"
-                : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                : "bg-gray-200 text-gray-400 dark:text-gray-500 cursor-not-allowed"
           )}
         >
           {isSelected ? "Selected" : currentPlan ? "Select Plan" : "Unavailable"}

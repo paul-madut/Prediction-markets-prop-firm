@@ -38,17 +38,17 @@ export const FAQAccordion = ({ items }: FAQAccordionProps) => {
           <div
             className={cn(
               "rounded-xl border overflow-hidden transition-all duration-300",
-              "bg-white",
+              "bg-white dark:bg-slate-900",
               openIndex === index
                 ? "border-blue-500/40 shadow-lg shadow-blue-100"
-                : "border-gray-200 hover:border-gray-300"
+                : "border-gray-200 dark:border-slate-800 hover:border-gray-300"
             )}
           >
             <button
               onClick={() => toggleItem(index)}
               className="w-full px-6 py-5 flex items-center justify-between gap-4 text-left"
             >
-              <span className="font-semibold text-gray-900">{faq.q}</span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{faq.q}</span>
               <motion.div
                 animate={{ rotate: openIndex === index ? 180 : 0 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -56,7 +56,7 @@ export const FAQAccordion = ({ items }: FAQAccordionProps) => {
                   "flex-shrink-0 p-1 rounded-full transition-colors duration-300",
                   openIndex === index
                     ? "bg-blue-100 text-blue-600"
-                    : "bg-gray-100 text-gray-500"
+                    : "bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400"
                 )}
               >
                 <ChevronDownIcon className="w-5 h-5" />
@@ -75,8 +75,8 @@ export const FAQAccordion = ({ items }: FAQAccordionProps) => {
                   }}
                 >
                   <div className="px-6 pb-5">
-                    <div className="pt-2 border-t border-gray-100">
-                      <p className="text-gray-600 pt-4 leading-relaxed">
+                    <div className="pt-2 border-t border-gray-100 dark:border-slate-800">
+                      <p className="text-gray-600 dark:text-gray-300 pt-4 leading-relaxed">
                         {faq.a}
                       </p>
                     </div>

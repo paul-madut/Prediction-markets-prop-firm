@@ -54,7 +54,7 @@ export default function LoginPage() {
                 Trade Prediction Markets.<br />
                 <span className="text-blue-400">Get Funded.</span>
               </h1>
-              <p className="text-gray-400 text-lg max-w-md">
+              <p className="text-gray-400 dark:text-gray-500 text-lg max-w-md">
                 Prove your edge in prediction markets and trade with our capital. No risk, all reward.
               </p>
             </div>
@@ -68,7 +68,7 @@ export default function LoginPage() {
               ].map((stat) => (
                 <div key={stat.label} className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
                   <div className="text-2xl font-bold text-white">{stat.value}</div>
-                  <div className="text-sm text-gray-400">{stat.label}</div>
+                  <div className="text-sm text-gray-400 dark:text-gray-500">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -76,7 +76,7 @@ export default function LoginPage() {
 
           {/* Testimonial */}
           <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-            <p className="text-gray-300 text-sm italic">
+            <p className="text-gray-300 dark:text-gray-600 text-sm italic">
               &quot;OracleFunded gave me the capital to trade prediction markets full-time. Passed the challenge in 12 days.&quot;
             </p>
             <div className="flex items-center gap-3 mt-4">
@@ -85,7 +85,7 @@ export default function LoginPage() {
               </div>
               <div>
                 <div className="text-white text-sm font-medium">Alex K.</div>
-                <div className="text-gray-500 text-xs">Funded Trader</div>
+                <div className="text-gray-500 dark:text-gray-400 text-xs">Funded Trader</div>
               </div>
             </div>
           </div>
@@ -93,7 +93,7 @@ export default function LoginPage() {
       </div>
 
       {/* Right side - Login form */}
-      <div className="flex-1 flex items-center justify-center p-6 sm:p-8 bg-white">
+      <div className="flex-1 flex items-center justify-center p-6 sm:p-8 bg-white dark:bg-slate-900">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -103,14 +103,14 @@ export default function LoginPage() {
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2 mb-8">
             <Image src="/logo.png" alt="OracleFunded" width={36} height={36} />
-            <span className="font-bold text-xl text-gray-900">OracleFunded</span>
+            <span className="font-bold text-xl text-gray-900 dark:text-gray-100">OracleFunded</span>
           </div>
 
           <div className="space-y-2 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               Welcome back
             </h2>
-            <p className="text-gray-500">
+            <p className="text-gray-500 dark:text-gray-400">
               Sign in to your trading account to continue.
             </p>
           </div>
@@ -132,7 +132,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition z-10"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 transition z-10"
                 >
                   {showPassword ? (
                     <EyeSlashIcon className="w-4 h-4" />
@@ -147,9 +147,9 @@ export default function LoginPage() {
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="w-4 h-4 rounded border-gray-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500"
                 />
-                <span className="text-sm text-gray-600">Remember me</span>
+                <span className="text-sm text-gray-600 dark:text-gray-300">Remember me</span>
               </label>
               <button type="button" className="text-sm text-blue-600 hover:text-blue-700 font-medium">
                 Forgot password?
@@ -179,13 +179,13 @@ export default function LoginPage() {
                 <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
               </div>
               <div className="relative flex justify-center">
-                <span className="bg-white px-4 text-sm text-gray-400">or continue with</span>
+                <span className="bg-white dark:bg-slate-900 px-4 text-sm text-gray-400 dark:text-gray-500">or continue with</span>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <button
-                className="group/btn relative flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-300 hover:shadow-md transition-all duration-200"
+                className="group/btn relative flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 font-medium text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 dark:hover:bg-slate-800/50 hover:border-gray-300 hover:shadow-md transition-all duration-200"
                 type="button"
               >
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
@@ -196,7 +196,7 @@ export default function LoginPage() {
                 <BottomGradient />
               </button>
               <button
-                className="group/btn relative flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-300 hover:shadow-md transition-all duration-200"
+                className="group/btn relative flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 font-medium text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 dark:hover:bg-slate-800/50 hover:border-gray-300 hover:shadow-md transition-all duration-200"
                 type="button"
               >
                 <WalletIcon className="h-4 w-4 text-blue-500" />
@@ -206,7 +206,7 @@ export default function LoginPage() {
             </div>
           </form>
 
-          <p className="mt-8 text-center text-sm text-gray-500">
+          <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
             Don&apos;t have an account?{" "}
             <Link
               href="/register"

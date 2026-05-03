@@ -80,7 +80,7 @@ export class ErrorBoundary extends Component<Props, State> {
             transition={{ duration: 0.3 }}
             className="max-w-md w-full"
           >
-            <div className="bg-white rounded-xl border border-red-200 shadow-lg overflow-hidden">
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-red-200 shadow-lg overflow-hidden">
               {/* Header */}
               <div className="bg-gradient-to-r from-red-50 to-red-100 px-6 py-8 border-b border-red-200">
                 <div className="flex items-center justify-center mb-4">
@@ -88,18 +88,18 @@ export class ErrorBoundary extends Component<Props, State> {
                     <ExclamationTriangleIcon className="h-8 w-8 text-white" />
                   </div>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 text-center">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center">
                   Something went wrong
                 </h2>
-                <p className="text-sm text-gray-600 text-center mt-2">
+                <p className="text-sm text-gray-600 dark:text-gray-300 text-center mt-2">
                   We encountered an unexpected error. Don't worry, your data is safe.
                 </p>
               </div>
 
               {/* Error Details (collapsible in dev mode) */}
               {process.env.NODE_ENV === "development" && this.state.error && (
-                <details className="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                  <summary className="text-sm font-medium text-gray-700 cursor-pointer hover:text-gray-900">
+                <details className="px-6 py-4 bg-gray-50 dark:bg-slate-950 border-b border-gray-200 dark:border-slate-800">
+                  <summary className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer hover:text-gray-900">
                     Error Details (Development Mode)
                   </summary>
                   <div className="mt-3 p-3 bg-red-50 rounded-lg border border-red-200">
@@ -126,7 +126,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 </button>
                 <button
                   onClick={this.handleReportIssue}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors"
                 >
                   <BugAntIcon className="h-4 w-4" />
                   Report Issue
@@ -134,8 +134,8 @@ export class ErrorBoundary extends Component<Props, State> {
               </div>
 
               {/* Footer Help Text */}
-              <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
-                <p className="text-xs text-gray-600 text-center">
+              <div className="px-6 py-4 bg-gray-50 dark:bg-slate-950 border-t border-gray-200 dark:border-slate-800">
+                <p className="text-xs text-gray-600 dark:text-gray-300 text-center">
                   If this problem persists, please contact support or try refreshing the page.
                 </p>
               </div>

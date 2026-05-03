@@ -108,19 +108,19 @@ export const LoadingOverlay = ({
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="bg-white rounded-2xl p-8 flex flex-col items-center gap-6 max-w-sm mx-4 shadow-2xl"
+            className="bg-white dark:bg-slate-900 rounded-2xl p-8 flex flex-col items-center gap-6 max-w-sm mx-4 shadow-2xl"
           >
             <Loader size="lg" variant="spinner" />
 
             {message && (
-              <p className="text-gray-800 text-center font-medium text-lg">
+              <p className="text-gray-800 dark:text-gray-100 text-center font-medium text-lg">
                 {message}
               </p>
             )}
 
             {progress !== undefined && (
               <div className="w-full space-y-2">
-                <div className="flex justify-between text-sm text-gray-600">
+                <div className="flex justify-between text-sm text-gray-600 dark:text-gray-300">
                   <span>Progress</span>
                   <span>{Math.round(progress)}%</span>
                 </div>

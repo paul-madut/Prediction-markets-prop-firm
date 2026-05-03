@@ -41,7 +41,7 @@ const emptyForm: FormState = {
 function tagStyle(tag: NewsEventTag) {
   if (tag === "active") return "bg-emerald-100 text-emerald-700";
   if (tag === "upcoming") return "bg-blue-100 text-blue-700";
-  return "bg-gray-100 text-gray-500";
+  return "bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400";
 }
 
 function isoToLocalInput(iso: string): string {
@@ -109,15 +109,15 @@ export default function AdminNewsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 -mx-6 -mt-6 px-6 py-6 mb-6">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 -mx-6 -mt-6 px-6 py-6 mb-6">
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-indigo-100 rounded-xl">
               <MegaphoneIcon className="h-6 w-6 text-indigo-600" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">News events</h1>
-              <p className="text-sm text-gray-500 mt-1">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">News events</h1>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 Cooldown windows around market-moving news. Order validation rejects
                 trades inside an active window for matched markets.
               </p>
@@ -134,10 +134,10 @@ export default function AdminNewsPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 overflow-hidden">
         {events.length === 0 ? (
           <div className="px-6 py-12 text-center">
-            <p className="text-sm text-gray-500">No news events configured.</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">No news events configured.</p>
             <button
               onClick={openNew}
               className="text-sm font-medium text-indigo-600 hover:text-indigo-700 mt-2"
@@ -147,7 +147,7 @@ export default function AdminNewsPage() {
           </div>
         ) : (
           <table className="w-full text-sm">
-            <thead className="text-left text-xs text-gray-500 uppercase border-b border-gray-200">
+            <thead className="text-left text-xs text-gray-500 dark:text-gray-400 uppercase border-b border-gray-200 dark:border-slate-800">
               <tr>
                 <th className="px-5 py-3 font-medium">Event</th>
                 <th className="px-5 py-3 font-medium">Market filter</th>
@@ -157,14 +157,14 @@ export default function AdminNewsPage() {
                 <th className="px-5 py-3 font-medium text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
               {events.map((e) => {
                 const tag = getNewsEventTag(e);
                 return (
                   <tr key={e.id}>
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium text-gray-900">{e.eventName}</span>
+                        <span className="font-medium text-gray-900 dark:text-gray-100">{e.eventName}</span>
                         <span
                           className={cn(
                             "inline-flex items-center px-2 py-0.5 text-[10px] font-semibold uppercase rounded-full",
@@ -175,19 +175,19 @@ export default function AdminNewsPage() {
                         </span>
                       </div>
                     </td>
-                    <td className="px-5 py-3 font-mono text-xs text-gray-600">
-                      {e.marketFilter ?? <span className="text-gray-400">all markets</span>}
+                    <td className="px-5 py-3 font-mono text-xs text-gray-600 dark:text-gray-300">
+                      {e.marketFilter ?? <span className="text-gray-400 dark:text-gray-500">all markets</span>}
                     </td>
-                    <td className="px-5 py-3 text-xs text-gray-600">
+                    <td className="px-5 py-3 text-xs text-gray-600 dark:text-gray-300">
                       {new Date(e.startsAt).toLocaleString()}
                       <br />
-                      <span className="text-gray-400">→</span>{" "}
+                      <span className="text-gray-400 dark:text-gray-500">→</span>{" "}
                       {new Date(e.endsAt).toLocaleString()}
                     </td>
-                    <td className="px-5 py-3 text-gray-700">{e.cooldownMinutes}m</td>
-                    <td className="px-5 py-3 text-gray-600">
+                    <td className="px-5 py-3 text-gray-700 dark:text-gray-300">{e.cooldownMinutes}m</td>
+                    <td className="px-5 py-3 text-gray-600 dark:text-gray-300">
                       {e.firmId === null ? (
-                        <span className="italic text-gray-500">All firms</span>
+                        <span className="italic text-gray-500 dark:text-gray-400">All firms</span>
                       ) : (
                         e.firmId
                       )}
@@ -196,14 +196,14 @@ export default function AdminNewsPage() {
                       <div className="inline-flex items-center gap-2">
                         <button
                           onClick={() => openEdit(e)}
-                          className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded transition"
+                          className="p-1.5 text-gray-500 dark:text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded transition"
                           aria-label="Edit"
                         >
                           <PencilIcon className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => handleDelete(e.id)}
-                          className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded transition"
+                          className="p-1.5 text-gray-500 dark:text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition"
                           aria-label="Delete"
                         >
                           <TrashIcon className="h-4 w-4" />
@@ -235,17 +235,17 @@ export default function AdminNewsPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 500, damping: 35 }}
-                className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden"
+                className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden"
               >
-                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-                  <h2 className="text-lg font-semibold text-gray-900">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-slate-800">
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                     {form.id ? "Edit news event" : "New news event"}
                   </h2>
                   <button
                     onClick={() => setModalOpen(false)}
-                    className="p-1 hover:bg-gray-100 rounded transition"
+                    className="p-1 hover:bg-gray-100 dark:hover:bg-slate-800 rounded transition"
                   >
-                    <XMarkIcon className="h-5 w-5 text-gray-500" />
+                    <XMarkIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                   </button>
                 </div>
 
@@ -255,7 +255,7 @@ export default function AdminNewsPage() {
                       value={form.eventName}
                       onChange={(e) => setForm((f) => ({ ...f, eventName: e.target.value }))}
                       placeholder="e.g. FOMC Rate Decision — June 2026"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                     />
                   </Field>
 
@@ -269,7 +269,7 @@ export default function AdminNewsPage() {
                         setForm((f) => ({ ...f, marketFilter: e.target.value }))
                       }
                       placeholder="KXFEDDECISION-*"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg font-mono text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                     />
                   </Field>
 
@@ -281,7 +281,7 @@ export default function AdminNewsPage() {
                         onChange={(e) =>
                           setForm((f) => ({ ...f, startsAt: e.target.value }))
                         }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       />
                     </Field>
                     <Field label="Ends at" required>
@@ -291,7 +291,7 @@ export default function AdminNewsPage() {
                         onChange={(e) =>
                           setForm((f) => ({ ...f, endsAt: e.target.value }))
                         }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       />
                     </Field>
                   </div>
@@ -308,7 +308,7 @@ export default function AdminNewsPage() {
                             cooldownMinutes: Math.max(0, parseInt(e.target.value || "0", 10)),
                           }))
                         }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       />
                     </Field>
                     <Field label="Scope">
@@ -317,7 +317,7 @@ export default function AdminNewsPage() {
                         onChange={(e) =>
                           setForm((f) => ({ ...f, firmScope: e.target.value }))
                         }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       >
                         <option value="all">All firms</option>
                         <option value={mockAdminFirm.id}>{mockAdminFirm.name}</option>
@@ -326,10 +326,10 @@ export default function AdminNewsPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-end gap-3 px-6 py-4 bg-gray-50 border-t border-gray-200">
+                <div className="flex items-center justify-end gap-3 px-6 py-4 bg-gray-50 dark:bg-slate-950 border-t border-gray-200 dark:border-slate-800">
                   <button
                     onClick={() => setModalOpen(false)}
-                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition"
+                    className="px-4 py-2 border border-gray-300 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition"
                   >
                     Cancel
                   </button>
@@ -363,12 +363,12 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-xs font-medium text-gray-700 mb-1">
+      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
         {label}
         {required && <span className="text-red-500 ml-0.5">*</span>}
       </label>
       {children}
-      {hint && <p className="text-xs text-gray-500 mt-1">{hint}</p>}
+      {hint && <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{hint}</p>}
     </div>
   );
 }

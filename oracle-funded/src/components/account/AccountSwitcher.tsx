@@ -48,7 +48,7 @@ export function AccountSwitcher({ variant = "full" }: AccountSwitcherProps) {
       <button
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          "w-full flex items-center gap-2 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 transition-colors",
+          "w-full flex items-center gap-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors",
           variant === "full" ? "p-3" : "p-2",
         )}
       >
@@ -57,13 +57,13 @@ export function AccountSwitcher({ variant = "full" }: AccountSwitcherProps) {
             <span className={cn("text-xs font-semibold px-1.5 py-0.5 rounded", PHASE_BADGE[active.accountPhase])}>
               {PHASE_LABELS[active.accountPhase]}
             </span>
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-gray-500 dark:text-gray-400">
               ${(active.accountSize / 100000).toFixed(0)}K
             </span>
           </div>
           {variant === "full" && (
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="font-bold text-gray-900 tabular-nums text-sm">
+              <span className="font-bold text-gray-900 dark:text-gray-100 tabular-nums text-sm">
                 {formatCurrency(active.accountBalance)}
               </span>
               <span className={cn("text-xs font-semibold tabular-nums", profitPct >= 0 ? "text-green-600" : "text-red-600")}>
@@ -72,7 +72,7 @@ export function AccountSwitcher({ variant = "full" }: AccountSwitcherProps) {
             </div>
           )}
         </div>
-        <ChevronUpDownIcon className="w-4 h-4 text-gray-400 flex-shrink-0" />
+        <ChevronUpDownIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 flex-shrink-0" />
       </button>
 
       <AnimatePresence>
@@ -82,7 +82,7 @@ export function AccountSwitcher({ variant = "full" }: AccountSwitcherProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 right-0 top-full mt-2 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50"
+            className="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-200 dark:border-slate-800 overflow-hidden z-50"
           >
             <div className="p-2 max-h-80 overflow-y-auto">
               {accounts.map((a) => {
@@ -96,7 +96,7 @@ export function AccountSwitcher({ variant = "full" }: AccountSwitcherProps) {
                       setOpen(false);
                     }}
                     className={cn(
-                      "w-full text-left px-3 py-2 rounded-md hover:bg-gray-50 flex items-start gap-3 transition-colors",
+                      "w-full text-left px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-slate-800/50 flex items-start gap-3 transition-colors",
                       isActive && "bg-blue-50 hover:bg-blue-50",
                     )}
                   >
@@ -105,7 +105,7 @@ export function AccountSwitcher({ variant = "full" }: AccountSwitcherProps) {
                         <span className={cn("text-xs font-semibold px-1.5 py-0.5 rounded", PHASE_BADGE[a.accountPhase])}>
                           {PHASE_LABELS[a.accountPhase]}
                         </span>
-                        <span className="text-xs text-gray-500">${(a.accountSize / 100000).toFixed(0)}K</span>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">${(a.accountSize / 100000).toFixed(0)}K</span>
                         {isActive && (
                           <span className="text-xs font-semibold text-blue-600 inline-flex items-center gap-1">
                             <CheckCircleIcon className="w-3 h-3" />
@@ -114,7 +114,7 @@ export function AccountSwitcher({ variant = "full" }: AccountSwitcherProps) {
                         )}
                       </div>
                       <div className="flex items-baseline gap-2">
-                        <span className="font-bold text-gray-900 tabular-nums text-sm">
+                        <span className="font-bold text-gray-900 dark:text-gray-100 tabular-nums text-sm">
                           {formatCurrency(a.accountBalance)}
                         </span>
                         <span className={cn("text-xs font-semibold tabular-nums", pct >= 0 ? "text-green-600" : "text-red-600")}>
@@ -129,7 +129,7 @@ export function AccountSwitcher({ variant = "full" }: AccountSwitcherProps) {
             <Link
               href="/dashboard/new-challenge"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-2 px-4 py-3 border-t border-gray-100 text-blue-600 font-semibold text-sm hover:bg-gray-50"
+              className="flex items-center gap-2 px-4 py-3 border-t border-gray-100 dark:border-slate-800 text-blue-600 font-semibold text-sm hover:bg-gray-50 dark:hover:bg-slate-800/50"
             >
               <PlusIcon className="w-4 h-4" />
               Start New Challenge

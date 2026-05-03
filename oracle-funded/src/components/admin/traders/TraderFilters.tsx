@@ -78,7 +78,7 @@ const AnimatedSelect = ({
           </option>
         ))}
       </motion.select>
-      <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+      <ChevronDownIcon className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500 pointer-events-none" />
     </div>
   );
 };
@@ -107,18 +107,18 @@ export const TraderFilters = ({
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm"
+      className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-4 shadow-sm"
     >
       <div className="flex flex-col lg:flex-row gap-4">
         {/* MagnifyingGlassIcon */}
         <div className="flex-1 relative group">
-          <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 transition-colors group-focus-within:text-indigo-500" />
+          <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-gray-500 transition-colors group-focus-within:text-indigo-500" />
           <input
             type="text"
             placeholder="Search by name, email, or ID..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 dark:border-slate-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
           />
           <AnimatePresence>
             {searchQuery && (
@@ -128,7 +128,7 @@ export const TraderFilters = ({
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.15 }}
                 onClick={() => onSearchChange("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full"
               >
                 <XMarkIcon className="h-4 w-4" />
               </motion.button>
@@ -199,12 +199,12 @@ export const TraderFilters = ({
                 exit={{ opacity: 0, scale: 0.9, x: -10 }}
                 transition={{ duration: 0.2 }}
                 onClick={clearFilters}
-                className="px-4 py-2.5 text-sm text-gray-600 hover:text-gray-900 border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center gap-2 transition-colors"
+                className="px-4 py-2.5 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 border border-gray-200 dark:border-slate-800 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800/50 flex items-center gap-2 transition-colors"
               >
                 <XMarkIcon className="h-4 w-4" />
                 Clear
                 {activeFilterCount > 0 && (
-                  <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-gray-200 text-gray-700 rounded-full">
+                  <span className="ml-1 px-1.5 py-0.5 text-xs font-medium bg-gray-200 text-gray-700 dark:text-gray-300 rounded-full">
                     {activeFilterCount}
                   </span>
                 )}

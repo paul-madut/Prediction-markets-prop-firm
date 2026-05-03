@@ -71,7 +71,7 @@ function AlertTile({
         <div className="flex items-center gap-3">
           <div className={cn("p-2 rounded-lg bg-white/70", t.text)}>{icon}</div>
           <div>
-            <p className="text-sm font-semibold text-gray-900">{title}</p>
+            <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">{title}</p>
             <p className={cn("text-xs mt-0.5", t.text)}>{detail}</p>
           </div>
         </div>
@@ -95,15 +95,15 @@ function NumberCard({
   return (
     <Link
       href={href}
-      className="block bg-white rounded-xl border border-gray-200 p-5 hover:border-indigo-300 hover:shadow-sm transition"
+      className="block bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-5 hover:border-indigo-300 hover:shadow-sm transition"
     >
-      <p className="text-sm text-gray-500">{label}</p>
+      <p className="text-sm text-gray-500 dark:text-gray-400">{label}</p>
       <p
         className={cn(
           "text-3xl font-bold mt-1",
           emphasis === "danger" && "text-red-600",
           emphasis === "warning" && "text-amber-600",
-          !emphasis && "text-gray-900"
+          !emphasis && "text-gray-900 dark:text-gray-100"
         )}
       >
         {value}
@@ -130,22 +130,22 @@ function QueueCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-      <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-        <h3 className="font-semibold text-gray-900">{title}</h3>
-        <span className="text-xs text-gray-500">{count} item{count === 1 ? "" : "s"}</span>
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 overflow-hidden">
+      <div className="px-5 py-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between">
+        <h3 className="font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
+        <span className="text-xs text-gray-500 dark:text-gray-400">{count} item{count === 1 ? "" : "s"}</span>
       </div>
-      <div className="divide-y divide-gray-100 min-h-[140px]">
+      <div className="divide-y divide-gray-100 dark:divide-slate-800 min-h-[140px]">
         {count === 0 ? (
           <div className="px-5 py-10 text-center">
-            <CheckCircleIcon className="h-8 w-8 text-gray-300 mx-auto" />
-            <p className="text-sm text-gray-500 mt-2">{emptyMessage}</p>
+            <CheckCircleIcon className="h-8 w-8 text-gray-300 dark:text-gray-600 mx-auto" />
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">{emptyMessage}</p>
           </div>
         ) : (
           children
         )}
       </div>
-      <div className="px-5 py-3 bg-gray-50 border-t border-gray-100">
+      <div className="px-5 py-3 bg-gray-50 dark:bg-slate-950 border-t border-gray-100 dark:border-slate-800">
         <Link
           href={viewAllHref}
           className="text-sm font-medium text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1"
@@ -171,12 +171,12 @@ function FreshnessIndicator() {
   if (!now) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-30 bg-white/90 backdrop-blur border border-gray-200 rounded-full px-3 py-1.5 shadow-sm flex items-center gap-2">
+    <div className="fixed bottom-4 right-4 z-30 bg-white/90 backdrop-blur border border-gray-200 dark:border-slate-800 rounded-full px-3 py-1.5 shadow-sm flex items-center gap-2">
       <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-      <span className="text-xs text-gray-700 font-mono">
+      <span className="text-xs text-gray-700 dark:text-gray-300 font-mono">
         {now.toLocaleTimeString([], { hour12: false })}
       </span>
-      <span className="text-xs text-gray-400">live</span>
+      <span className="text-xs text-gray-400 dark:text-gray-500">live</span>
     </div>
   );
 }
@@ -203,8 +203,8 @@ export default function AdminOverviewPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.25 }}
       >
-        <h1 className="text-2xl font-bold text-gray-900">Overview</h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Overview</h1>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
           Live state of trading, risk, and payouts across the firm.
         </p>
       </motion.div>
@@ -286,22 +286,22 @@ export default function AdminOverviewPage() {
               <Link
                 key={p.payoutId}
                 href={`/admin/payouts/${p.payoutId}`}
-                className="block px-5 py-3 hover:bg-gray-50 transition"
+                className="block px-5 py-3 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition"
               >
                 <div className="flex items-center justify-between">
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
                       {p.traderName}
                     </p>
-                    <p className="text-xs text-gray-500 capitalize">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">
                       {p.paymentMethod.replace("_", " ")}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-semibold text-gray-900">
+                    <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                       {formatCurrency(p.amount)}
                     </span>
-                    <CurrencyDollarIcon className="h-4 w-4 text-gray-400" />
+                    <CurrencyDollarIcon className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                   </div>
                 </div>
               </Link>
@@ -329,14 +329,14 @@ export default function AdminOverviewPage() {
               <Link
                 key={acct.snapshot.accountId}
                 href={`/admin/accounts/${acct.snapshot.accountId}`}
-                className="block px-5 py-3 hover:bg-gray-50 transition"
+                className="block px-5 py-3 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition"
               >
                 <div className="flex items-center justify-between">
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
                       {acct.snapshot.username}
                     </p>
-                    <p className="text-xs text-gray-500 truncate">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                       {acct.configName}
                     </p>
                   </div>

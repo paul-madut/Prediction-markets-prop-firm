@@ -13,7 +13,7 @@ export default function NewChallengeConfigPage() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white border-b border-gray-200 -mx-6 -mt-6 px-6 py-6 mb-6">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 -mx-6 -mt-6 px-6 py-6 mb-6">
         <Link
           href="/admin/configs"
           className="text-sm text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1"
@@ -21,8 +21,8 @@ export default function NewChallengeConfigPage() {
           <ArrowLeftIcon className="h-4 w-4" />
           Back to configs
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900 mt-3">New challenge config</h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-3">New challenge config</h1>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
           Define rules for a new evaluation program.
         </p>
       </div>

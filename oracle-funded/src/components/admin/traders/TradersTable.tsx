@@ -49,7 +49,7 @@ const RiskIndicator = ({ score }: { score: number }) => {
           className={cn("h-full rounded-full", colors[level])}
         />
       </div>
-      <span className="text-xs font-medium text-gray-600">{score}</span>
+      <span className="text-xs font-medium text-gray-600 dark:text-gray-300">{score}</span>
     </div>
   );
 };
@@ -101,7 +101,7 @@ export const TradersTable = ({
   // Show empty state
   if (traders.length === 0) {
     return (
-      <div className="bg-white rounded-xl border border-gray-200">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800">
         <TradersEmptyState />
       </div>
     );
@@ -111,10 +111,10 @@ export const TradersTable = ({
     <TableContainer maxHeight="calc(100vh - 340px)">
       <table className="w-full">
         <StickyTableHeader>
-          <tr className="border-b border-gray-200">
+          <tr className="border-b border-gray-200 dark:border-slate-800">
             {/* Checkbox column */}
             {onSelectionChange && (
-              <th className="px-6 py-3.5 w-12 bg-gray-50">
+              <th className="px-6 py-3.5 w-12 bg-gray-50 dark:bg-slate-950">
                 <input
                   type="checkbox"
                   checked={isAllSelected}
@@ -124,40 +124,40 @@ export const TradersTable = ({
                     }
                   }}
                   onChange={toggleSelectAll}
-                  className="h-4 w-4 text-indigo-600 rounded border-gray-300 focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+                  className="h-4 w-4 text-indigo-600 rounded border-gray-300 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500 cursor-pointer"
                 />
               </th>
             )}
-            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50">
+            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-slate-950">
               Trader
             </th>
-            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50">
+            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-slate-950">
               Status
             </th>
-            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50">
+            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-slate-950">
               Phase
             </th>
-            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50">
+            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-slate-950">
               Balance
             </th>
-            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50">
+            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-slate-950">
               P&L
             </th>
-            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50">
+            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-slate-950">
               KYC
             </th>
-            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50">
+            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-slate-950">
               Risk
             </th>
-            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50">
+            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-slate-950">
               Last Active
             </th>
-            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50">
+            <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-slate-950">
               Actions
             </th>
           </tr>
         </StickyTableHeader>
-        <tbody className="divide-y divide-gray-200">
+        <tbody className="divide-y divide-gray-200 dark:divide-slate-800">
           <AnimatePresence mode="popLayout">
             {traders.map((trader, index) => {
               const pnl = trader.accountBalance - trader.startingBalance;
@@ -187,7 +187,7 @@ export const TradersTable = ({
                         type="checkbox"
                         checked={isSelected}
                         onChange={() => toggleSelect(trader.userId)}
-                        className="h-4 w-4 text-indigo-600 rounded border-gray-300 focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+                        className="h-4 w-4 text-indigo-600 rounded border-gray-300 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500 cursor-pointer"
                       />
                     </td>
                   )}
@@ -201,11 +201,11 @@ export const TradersTable = ({
                       <div>
                         <Link
                           href={`/admin/traders/${trader.userId}`}
-                          className="font-medium text-gray-900 hover:text-indigo-600 transition-colors"
+                          className="font-medium text-gray-900 dark:text-gray-100 hover:text-indigo-600 transition-colors"
                         >
                           {trader.username}
                         </Link>
-                        <p className="text-sm text-gray-500">{trader.email}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{trader.email}</p>
                       </div>
                     </div>
                   </td>
@@ -222,10 +222,10 @@ export const TradersTable = ({
 
                   {/* Balance */}
                   <td className="px-6 py-4">
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-gray-900 dark:text-gray-100">
                       {formatCurrency(trader.accountBalance)}
                     </p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
                       of {formatCurrency(trader.accountSize)}
                     </p>
                   </td>
@@ -263,7 +263,7 @@ export const TradersTable = ({
                   </td>
 
                   {/* Last Active */}
-                  <td className="px-6 py-4 text-sm text-gray-500">
+                  <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                     {formatDate(trader.lastActiveAt)}
                   </td>
 
@@ -291,20 +291,20 @@ export const TradersTable = ({
       </table>
 
       {/* Pagination */}
-      <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between bg-white sticky bottom-0">
-        <p className="text-sm text-gray-500">
+      <div className="px-6 py-4 border-t border-gray-200 dark:border-slate-800 flex items-center justify-between bg-white dark:bg-slate-900 sticky bottom-0">
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           Showing {traders.length} trader{traders.length !== 1 ? "s" : ""}
         </p>
         <div className="flex items-center gap-2">
           <button
             disabled
-            className="px-3 py-1.5 text-sm text-gray-400 border border-gray-200 rounded-lg cursor-not-allowed"
+            className="px-3 py-1.5 text-sm text-gray-400 dark:text-gray-500 border border-gray-200 dark:border-slate-800 rounded-lg cursor-not-allowed"
           >
             Previous
           </button>
           <button
             disabled
-            className="px-3 py-1.5 text-sm text-gray-400 border border-gray-200 rounded-lg cursor-not-allowed"
+            className="px-3 py-1.5 text-sm text-gray-400 dark:text-gray-500 border border-gray-200 dark:border-slate-800 rounded-lg cursor-not-allowed"
           >
             Next
           </button>

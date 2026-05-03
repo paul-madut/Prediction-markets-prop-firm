@@ -69,7 +69,7 @@ export default function NotificationBell({ compact = false }: NotificationBellPr
           "relative p-2 rounded-lg transition-colors",
           compact
             ? "hover:bg-slate-800 text-slate-400 hover:text-white"
-            : "hover:bg-gray-100 text-gray-600 hover:text-gray-900"
+            : "hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-600 dark:text-gray-300 hover:text-gray-900"
         )}
       >
         <BellIcon className="h-5 w-5" />
@@ -111,15 +111,15 @@ export default function NotificationBell({ compact = false }: NotificationBellPr
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.15 }}
             className={cn(
-              "absolute z-50 w-96 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden",
+              "absolute z-50 w-96 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-gray-200 dark:border-slate-800 overflow-hidden",
               compact ? "left-full ml-2 top-0" : "right-0 mt-2"
             )}
           >
             {/* Header */}
-            <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between bg-gray-50">
+            <div className="px-4 py-3 border-b border-gray-200 dark:border-slate-800 flex items-center justify-between bg-gray-50 dark:bg-slate-950">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900">Notifications</h3>
-                <p className="text-xs text-gray-500">
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">Notifications</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   {unreadCount} unread notification{unreadCount !== 1 ? "s" : ""}
                 </p>
               </div>
@@ -130,7 +130,7 @@ export default function NotificationBell({ compact = false }: NotificationBellPr
                     className="p-1.5 hover:bg-gray-200 rounded-lg transition-colors"
                     title="Mark all as read"
                   >
-                    <CheckIcon className="h-4 w-4 text-gray-600" />
+                    <CheckIcon className="h-4 w-4 text-gray-600 dark:text-gray-300" />
                   </button>
                 )}
                 {notifications.length > 0 && (
@@ -139,7 +139,7 @@ export default function NotificationBell({ compact = false }: NotificationBellPr
                     className="p-1.5 hover:bg-gray-200 rounded-lg transition-colors"
                     title="Clear all"
                   >
-                    <TrashIcon className="h-4 w-4 text-gray-600" />
+                    <TrashIcon className="h-4 w-4 text-gray-600 dark:text-gray-300" />
                   </button>
                 )}
               </div>
@@ -149,18 +149,18 @@ export default function NotificationBell({ compact = false }: NotificationBellPr
             <div className="max-h-[400px] overflow-y-auto">
               {recentNotifications.length === 0 ? (
                 <div className="p-8 text-center">
-                  <BellIcon className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-                  <p className="text-sm text-gray-500">No notifications yet</p>
+                  <BellIcon className="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
+                  <p className="text-sm text-gray-500 dark:text-gray-400">No notifications yet</p>
                 </div>
               ) : (
-                <div className="divide-y divide-gray-100">
+                <div className="divide-y divide-gray-100 dark:divide-slate-800">
                   {recentNotifications.map((notification) => (
                     <motion.div
                       key={notification.id}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       className={cn(
-                        "p-4 hover:bg-gray-50 transition-colors cursor-pointer group",
+                        "p-4 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group",
                         !notification.isRead && "bg-indigo-50/50"
                       )}
                       onClick={() => {
@@ -181,17 +181,17 @@ export default function NotificationBell({ compact = false }: NotificationBellPr
                           <p
                             className={cn(
                               "text-sm",
-                              notification.isRead ? "text-gray-600" : "text-gray-900 font-medium"
+                              notification.isRead ? "text-gray-600 dark:text-gray-300" : "text-gray-900 dark:text-gray-100 font-medium"
                             )}
                           >
                             {notification.message}
                           </p>
                           <div className="flex items-center gap-2 mt-1">
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
                               {formatTimestamp(notification.timestamp)}
                             </p>
                             {notification.actionUrl && (
-                              <ArrowTopRightOnSquareIcon className="h-3 w-3 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <ArrowTopRightOnSquareIcon className="h-3 w-3 text-gray-400 dark:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                             )}
                           </div>
                         </div>
@@ -211,7 +211,7 @@ export default function NotificationBell({ compact = false }: NotificationBellPr
 
             {/* Footer */}
             {notifications.length > 5 && (
-              <div className="px-4 py-3 border-t border-gray-200 bg-gray-50">
+              <div className="px-4 py-3 border-t border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-slate-950">
                 <button className="text-sm text-indigo-600 hover:text-indigo-700 font-medium w-full text-center">
                   View all notifications ({notifications.length})
                 </button>

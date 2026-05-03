@@ -1,13 +1,20 @@
 // Plan §3 — firms + firm_members.
 
+export type ThemeMode = "light" | "dark";
+
+export interface BrandConfig {
+  primaryColor: string;
+  secondaryColor: string;
+  accentColor: string;
+  supportEmail: string;
+  theme: ThemeMode;
+}
+
 export interface Firm {
   id: string;
   name: string;
   slug: string;
-  brandConfig: {
-    primaryColor: string;
-    supportEmail: string;
-  };
+  brandConfig: BrandConfig;
   enabledVenues: ("kalshi" | "polymarket")[];
   status: "active" | "paused" | "disabled";
   riskDefaults: {
@@ -37,7 +44,10 @@ export const mockAdminFirm: Firm = {
   slug: "oraclefunded",
   brandConfig: {
     primaryColor: "#4F46E5",
+    secondaryColor: "#0EA5E9",
+    accentColor: "#F59E0B",
     supportEmail: "support@oraclefunded.com",
+    theme: "light",
   },
   enabledVenues: ["kalshi"],
   status: "active",

@@ -81,9 +81,9 @@ export default function BatchActionsBar({
               className
             )}
           >
-            <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 px-6 py-4 flex items-center gap-6">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-800 px-6 py-4 flex items-center gap-6">
               {/* Selected Count */}
-              <div className="flex items-center gap-3 border-r border-gray-200 pr-6">
+              <div className="flex items-center gap-3 border-r border-gray-200 dark:border-slate-800 pr-6">
                 <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
                   <motion.span
                     key={selectedCount}
@@ -95,10 +95,10 @@ export default function BatchActionsBar({
                   </motion.span>
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">
+                  <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                     {selectedCount} trader{selectedCount !== 1 ? "s" : ""} selected
                   </p>
-                  <p className="text-xs text-gray-500">Choose an action below</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Choose an action below</p>
                 </div>
               </div>
 
@@ -125,7 +125,7 @@ export default function BatchActionsBar({
                 <button
                   onClick={onExport}
                   disabled={isProcessing}
-                  className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+                  className="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors disabled:opacity-50"
                 >
                   <ArrowDownTrayIcon className="h-4 w-4" />
                   <span className="text-sm font-medium">Export</span>
@@ -136,10 +136,10 @@ export default function BatchActionsBar({
               <button
                 onClick={onClearSelection}
                 disabled={isProcessing}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 ml-2"
+                className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors disabled:opacity-50 ml-2"
                 title="Clear selection"
               >
-                <XMarkIcon className="h-5 w-5 text-gray-500" />
+                <XMarkIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
               </button>
             </div>
           </motion.div>

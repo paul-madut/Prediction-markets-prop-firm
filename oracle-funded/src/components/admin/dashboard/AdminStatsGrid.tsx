@@ -22,7 +22,7 @@ interface StatCardProps {
 const StatCard = ({ title, value, subValue, icon, iconBg, trend }: StatCardProps) => (
   <motion.div
     className={cn(
-      "bg-white rounded-xl border border-gray-200 p-6",
+      "bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-6",
       "shadow-sm hover:shadow-md",
       "transition-shadow duration-200 ease-out",
       "cursor-default"
@@ -32,9 +32,9 @@ const StatCard = ({ title, value, subValue, icon, iconBg, trend }: StatCardProps
   >
     <div className="flex items-start justify-between">
       <div>
-        <p className="text-sm font-medium text-gray-500">{title}</p>
-        <p className="text-2xl font-bold text-gray-900 mt-1">{value}</p>
-        {subValue && <p className="text-sm text-gray-500 mt-1">{subValue}</p>}
+        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{title}</p>
+        <p className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-1">{value}</p>
+        {subValue && <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{subValue}</p>}
         {trend && (
           <p
             className={cn(
