@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { HomeIcon, ArrowTrendingUpIcon, BriefcaseIcon, ChartBarIcon, QuestionMarkCircleIcon, Cog6ToothIcon, RocketLaunchIcon, WalletIcon, Bars3Icon, BoltIcon, TrophyIcon } from "@heroicons/react/24/outline";
-import { AccountSwitcher } from "@/components/account/AccountSwitcher";
 import { useApp } from "@/context/AppContext";
 import { cn } from "@/lib/utils";
 import {
@@ -109,13 +108,6 @@ export const Sidebar = () => {
               )}
             </Link>
           </div>
-
-          {/* Account switcher */}
-          {open && (
-            <div className="px-1">
-              <AccountSwitcher />
-            </div>
-          )}
 
           {/* Help and Settings Links */}
           <div className="flex flex-col gap-2">
