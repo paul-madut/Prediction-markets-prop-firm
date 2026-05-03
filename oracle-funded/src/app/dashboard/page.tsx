@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, useRef, useTransition } from "react";
 import Link from "next/link";
 import { useApp } from "@/context/AppContext";
 import { DashboardSkeleton } from "@/components/ui/skeleton";
@@ -596,14 +596,27 @@ const PnLCalendar = () => {
 };
 
 export default function Dashboard() {
-  const { user, equityHistory, trades, positions } = useApp();
+  const { user, equityHistory, trades, positions, accounts, activeAccountId, setActiveAccount } = useApp();
   const [ready, setReady] = useState(false);
   const [showCredentials, setShowCredentials] = useState(false);
   const [showShareMetrics, setShowShareMetrics] = useState(false);
+  const [accountSwitcherOpen, setAccountSwitcherOpen] = useState(false);
+  const accountSwitcherRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setReady(true);
   }, []);
+
+  useEffect(() => {
+    if (!accountSwitcherOpen) return;
+    const onClick = (e: MouseEvent) => {
+      if (accountSwitcherRef.current && !accountSwitcherRef.current.contains(e.target as Node)) {
+        setAccountSwitcherOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, [accountSwitcherOpen]);
 
   if (!ready) return <DashboardSkeleton />;
 
@@ -652,27 +665,131 @@ export default function Dashboard() {
         </Link>
       </div>
 
-      {/* Account Selector Bar */}
+      {/* Account Selector Bar — relative z-30 lifts the dropdown's stacking
+          context above the Welcome Back card (TextureCard creates its own
+          stacking context, so a child z-50 alone wasn't enough). */}
+      <div className="relative z-30">
       <TextureCard>
         <TextureCardContent className="py-3 sm:py-4 px-4 sm:px-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
             <div className="flex items-center gap-3 sm:gap-5">
-              {/* Account Size */}
-              <button className="flex items-center gap-2 sm:gap-3 group">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm">
-                  <CurrencyDollarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </div>
-                <div className="text-left">
-                  <div className="text-[10px] uppercase tracking-wider text-gray-400 font-medium">Account Size</div>
-                  <div className="text-lg sm:text-xl font-bold text-gray-900">
-                    <AnimatedNumber
-                      value={user.accountSize / 100}
-                      format={(v) => `$${v.toLocaleString()}`}
-                    />
+              {/* Account switcher (was previously in sidebar) */}
+              <div className="relative" ref={accountSwitcherRef}>
+                <button
+                  onClick={() => setAccountSwitcherOpen((v) => !v)}
+                  aria-haspopup="listbox"
+                  aria-expanded={accountSwitcherOpen}
+                  className="flex items-center gap-2 sm:gap-3 group rounded-lg -m-1 p-1 hover:bg-gray-50 transition-colors"
+                >
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm">
+                    <CurrencyDollarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
-                </div>
-                <ChevronDownIcon className="w-4 h-4 text-gray-300 group-hover:text-blue-500 transition-colors" />
-              </button>
+                  <div className="text-left">
+                    <div className="text-[10px] uppercase tracking-wider text-gray-400 font-medium">Account Size</div>
+                    <div className="text-lg sm:text-xl font-bold text-gray-900">
+                      <AnimatedNumber
+                        value={user.accountSize / 100}
+                        format={(v) => `$${v.toLocaleString()}`}
+                      />
+                    </div>
+                  </div>
+                  <ChevronDownIcon
+                    className={`w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-all ${
+                      accountSwitcherOpen ? "rotate-180 text-blue-500" : ""
+                    }`}
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {accountSwitcherOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute left-0 top-full mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden z-[100]"
+                      role="listbox"
+                    >
+                      <div className="px-4 py-2 border-b border-gray-100">
+                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold">
+                          Switch account
+                        </p>
+                      </div>
+                      <div className="p-2 max-h-80 overflow-y-auto">
+                        {accounts.map((a) => {
+                          const pct =
+                            ((a.accountBalance - a.startingBalance) / a.startingBalance) * 100;
+                          const isActive = a.accountId === activeAccountId;
+                          const phaseLabel =
+                            a.accountPhase === "evaluation_1"
+                              ? "Phase 1"
+                              : a.accountPhase === "evaluation_2"
+                              ? "Phase 2"
+                              : "Funded";
+                          const phaseBadge =
+                            a.accountPhase === "funded"
+                              ? "bg-green-100 text-green-800"
+                              : a.accountPhase === "evaluation_2"
+                              ? "bg-blue-100 text-blue-800"
+                              : "bg-amber-100 text-amber-800";
+                          return (
+                            <button
+                              key={a.accountId}
+                              onClick={() => {
+                                setActiveAccount(a.accountId);
+                                setAccountSwitcherOpen(false);
+                              }}
+                              role="option"
+                              aria-selected={isActive}
+                              className={`w-full text-left px-3 py-2.5 rounded-lg hover:bg-gray-50 transition-colors ${
+                                isActive ? "bg-blue-50 hover:bg-blue-50" : ""
+                              }`}
+                            >
+                              <div className="flex items-center gap-2 mb-1">
+                                <span
+                                  className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${phaseBadge}`}
+                                >
+                                  {phaseLabel}
+                                </span>
+                                <span className="text-xs text-gray-500">
+                                  ${(a.accountSize / 100000).toFixed(0)}K
+                                </span>
+                                {isActive && (
+                                  <span className="ml-auto text-[10px] font-semibold text-blue-600 inline-flex items-center gap-1">
+                                    <CheckCircleIcon className="w-3 h-3" />
+                                    ACTIVE
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex items-baseline gap-2">
+                                <span className="font-bold text-gray-900 tabular-nums text-sm">
+                                  {formatCurrency(a.accountBalance)}
+                                </span>
+                                <span
+                                  className={`text-xs font-semibold tabular-nums ${
+                                    pct >= 0 ? "text-green-600" : "text-red-600"
+                                  }`}
+                                >
+                                  {pct >= 0 ? "+" : ""}
+                                  {pct.toFixed(2)}%
+                                </span>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                      <Link
+                        href="/dashboard/new-challenge"
+                        onClick={() => setAccountSwitcherOpen(false)}
+                        className="flex items-center gap-2 px-4 py-3 border-t border-gray-100 text-blue-600 font-semibold text-sm hover:bg-gray-50"
+                      >
+                        <RocketLaunchIcon className="w-4 h-4" />
+                        Start New Challenge
+                      </Link>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               {/* Vertical Separator */}
               <div className="h-10 w-px bg-gradient-to-b from-transparent via-gray-200 to-transparent hidden sm:block" />
@@ -731,6 +848,7 @@ export default function Dashboard() {
           </div>
         </TextureCardContent>
       </TextureCard>
+      </div>
 
       {/* Welcome Back Section */}
       <TextureCard interactive={false}>
