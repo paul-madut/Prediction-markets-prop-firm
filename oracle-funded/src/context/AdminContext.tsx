@@ -486,7 +486,7 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
       notificationCallback({
         type: "success",
         message: `Payout approved for ${payout.traderName}`,
-        actionUrl: "/admin/financials/payouts",
+        actionUrl: "/admin/payouts",
       });
     }
   }, [adminUser, payoutQueue, addAuditLog]);
@@ -564,7 +564,7 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
         notificationCallback({
           type: "success",
           message: `KYC approved for ${kyc.traderName}`,
-          actionUrl: "/admin/compliance/kyc",
+          actionUrl: "/admin/traders",
         });
       }
     }

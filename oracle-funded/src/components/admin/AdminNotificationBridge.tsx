@@ -26,17 +26,17 @@ export default function AdminNotificationBridge() {
         {
           type: "warning" as const,
           message: "Trader approaching drawdown limit",
-          actionUrl: "/admin/risk",
+          actionUrl: "/admin/signals",
         },
         {
           type: "success" as const,
           message: "Challenge configuration updated",
-          actionUrl: "/admin/challenges",
+          actionUrl: "/admin/configs",
         },
         {
           type: "info" as const,
           message: "New payout request submitted",
-          actionUrl: "/admin/financials/payouts",
+          actionUrl: "/admin/payouts",
         },
       ];
 

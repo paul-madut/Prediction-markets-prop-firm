@@ -1,18 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
-import { ViewfinderCircleIcon, PlusIcon, PencilIcon, StopIcon, PlayIcon, TagIcon } from "@heroicons/react/16/solid";
+import React from "react";
+import Link from "next/link";
+import { ViewfinderCircleIcon, PlusIcon, PencilIcon, StopIcon, PlayIcon } from "@heroicons/react/16/solid";
 import { useAdmin } from "@/context/AdminContext";
-import { AdminChallengeConfig } from "@/types/admin";
 import { formatCurrency } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
-import ChallengeModal from "@/components/admin/challenges/ChallengeModal";
-
-type ModalState = null | 'create' | { mode: 'edit'; config: AdminChallengeConfig };
 
 export default function ChallengesPage() {
-  const { challengeConfigs, toggleChallengeStatus, createChallengeConfig, updateChallengeConfig } = useAdmin();
-  const [modalState, setModalState] = useState<ModalState>(null);
+  const { challengeConfigs, toggleChallengeStatus } = useAdmin();
 
   return (
     <div className="space-y-6">
@@ -33,13 +29,13 @@ export default function ChallengesPage() {
             </div>
           </div>
 
-          <button
-            onClick={() => setModalState('create')}
+          <Link
+            href="/admin/configs/new"
             className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
           >
             <PlusIcon className="h-4 w-4" />
             New Challenge
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -162,13 +158,13 @@ export default function ChallengesPage() {
 
             {/* Actions */}
             <div className="px-6 py-4 border-t border-gray-100 bg-gray-50">
-              <button
-                onClick={() => setModalState({ mode: 'edit', config })}
+              <Link
+                href={`/admin/configs/${config.configId}/edit`}
                 className="flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-700 font-medium"
               >
                 <PencilIcon className="h-4 w-4" />
                 Edit Configuration
-              </button>
+              </Link>
             </div>
           </div>
         ))}
@@ -205,20 +201,6 @@ export default function ChallengesPage() {
         </div>
       </div>
 
-      {/* Challenge Modal */}
-      <ChallengeModal
-        isOpen={modalState !== null}
-        onClose={() => setModalState(null)}
-        onSave={(config) => {
-          if (modalState === 'create') {
-            createChallengeConfig(config);
-          } else if (modalState && typeof modalState === 'object' && modalState.mode === 'edit') {
-            updateChallengeConfig(modalState.config.configId, config);
-          }
-        }}
-        editMode={modalState !== null && typeof modalState === 'object' && modalState.mode === 'edit'}
-        existingConfig={modalState && typeof modalState === 'object' && modalState.mode === 'edit' ? modalState.config : undefined}
-      />
     </div>
   );
 }
