@@ -175,7 +175,7 @@ export const RecentActivityFeed = () => {
       {/* View All Link */}
       <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
         <Link
-          href="/admin/compliance/audit"
+          href="/admin/audit"
           className="text-sm font-medium text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1 group"
         >
           View all activity

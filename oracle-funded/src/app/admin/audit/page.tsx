@@ -58,7 +58,7 @@ export default function AuditLogsPage() {
       <div className="bg-white border-b border-gray-200 -mx-6 -mt-6 px-6 py-6 mb-6">
         <div className="flex items-center gap-4">
           <Link
-            href="/admin/compliance"
+            href="/admin"
             className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <ArrowLeftIcon className="h-5 w-5" />

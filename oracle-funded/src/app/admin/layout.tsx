@@ -24,9 +24,11 @@ export default function AdminLayout({
 
             {/* Main Content - offset for sidebar */}
             <div className="pl-20 lg:pl-[280px] min-h-screen transition-all duration-300 pb-8">
-              <ErrorBoundary>
-                {children}
-              </ErrorBoundary>
+              <main className="p-6">
+                <ErrorBoundary>
+                  {children}
+                </ErrorBoundary>
+              </main>
             </div>
 
             {/* Keyboard Shortcuts Help */}

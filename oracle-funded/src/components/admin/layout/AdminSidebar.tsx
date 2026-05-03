@@ -4,50 +4,34 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { Squares2X2Icon, UserGroupIcon, ViewfinderCircleIcon, ExclamationTriangleIcon, CurrencyDollarIcon, ShieldCheckIcon, Cog6ToothIcon, ArrowRightStartOnRectangleIcon, Bars3Icon } from "@heroicons/react/24/outline";
+import {
+  Squares2X2Icon,
+  UserGroupIcon,
+  CurrencyDollarIcon,
+  ShieldExclamationIcon,
+  AdjustmentsHorizontalIcon,
+  MegaphoneIcon,
+  DocumentMagnifyingGlassIcon,
+  BuildingOffice2Icon,
+  ArrowRightStartOnRectangleIcon,
+  Bars3Icon,
+} from "@heroicons/react/24/outline";
 import { useAdmin } from "@/context/AdminContext";
 import { cn } from "@/lib/utils";
 import NotificationBell from "./NotificationBell";
 
 const adminLinks = [
-  {
-    label: "Overview",
-    href: "/admin",
-    icon: <Squares2X2Icon className="h-5 w-5" />,
-  },
-  {
-    label: "Traders",
-    href: "/admin/traders",
-    icon: <UserGroupIcon className="h-5 w-5" />,
-  },
-  {
-    label: "Challenges",
-    href: "/admin/challenges",
-    icon: <ViewfinderCircleIcon className="h-5 w-5" />,
-  },
-  {
-    label: "Risk",
-    href: "/admin/risk",
-    icon: <ExclamationTriangleIcon className="h-5 w-5" />,
-  },
-  {
-    label: "Financials",
-    href: "/admin/financials",
-    icon: <CurrencyDollarIcon className="h-5 w-5" />,
-  },
-  {
-    label: "Compliance",
-    href: "/admin/compliance",
-    icon: <ShieldCheckIcon className="h-5 w-5" />,
-  },
+  { label: "Overview", href: "/admin", icon: <Squares2X2Icon className="h-5 w-5" /> },
+  { label: "Traders", href: "/admin/traders", icon: <UserGroupIcon className="h-5 w-5" /> },
+  { label: "Payouts", href: "/admin/payouts", icon: <CurrencyDollarIcon className="h-5 w-5" /> },
+  { label: "Signals", href: "/admin/signals", icon: <ShieldExclamationIcon className="h-5 w-5" /> },
+  { label: "Configs", href: "/admin/configs", icon: <AdjustmentsHorizontalIcon className="h-5 w-5" /> },
+  { label: "News", href: "/admin/news", icon: <MegaphoneIcon className="h-5 w-5" /> },
+  { label: "Audit", href: "/admin/audit", icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" /> },
 ];
 
 const bottomLinks = [
-  {
-    label: "Settings",
-    href: "/admin/settings",
-    icon: <Cog6ToothIcon className="h-5 w-5" />,
-  },
+  { label: "Firm", href: "/admin/firm", icon: <BuildingOffice2Icon className="h-5 w-5" /> },
 ];
 
 export const AdminSidebar = () => {
@@ -56,9 +40,7 @@ export const AdminSidebar = () => {
   const [open, setOpen] = useState(true);
 
   const isActive = (href: string) => {
-    if (href === "/admin") {
-      return pathname === "/admin";
-    }
+    if (href === "/admin") return pathname === "/admin";
     return pathname.startsWith(href);
   };
 
@@ -94,7 +76,7 @@ export const AdminSidebar = () => {
       {open && dashboardStats.activeAlerts > 0 && (
         <div className="mx-4 mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
           <div className="flex items-center gap-2 text-red-400">
-            <ExclamationTriangleIcon className="h-4 w-4" />
+            <ShieldExclamationIcon className="h-4 w-4" />
             <span className="text-sm font-medium">
               {dashboardStats.activeAlerts} active alerts
             </span>
@@ -106,10 +88,10 @@ export const AdminSidebar = () => {
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {adminLinks.map((link) => {
           const active = isActive(link.href);
-          const showBadge =
-            link.href === "/admin/risk" && dashboardStats.activeAlerts > 0;
-          const showKYCBadge =
-            link.href === "/admin/compliance" && dashboardStats.pendingKYC > 0;
+          const showSignalBadge =
+            link.href === "/admin/signals" && dashboardStats.activeAlerts > 0;
+          const showPayoutBadge =
+            link.href === "/admin/payouts" && dashboardStats.pendingPayouts > 0;
 
           return (
             <Link
@@ -133,8 +115,7 @@ export const AdminSidebar = () => {
                 {link.label}
               </motion.span>
 
-              {/* Badge for alerts */}
-              {showBadge && (
+              {showSignalBadge && (
                 <motion.span
                   animate={{ opacity: open ? 1 : 0 }}
                   className="ml-auto bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full"
@@ -143,22 +124,24 @@ export const AdminSidebar = () => {
                 </motion.span>
               )}
 
-              {/* Badge for KYC */}
-              {showKYCBadge && (
+              {showPayoutBadge && (
                 <motion.span
                   animate={{ opacity: open ? 1 : 0 }}
                   className="ml-auto bg-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full"
                 >
-                  {dashboardStats.pendingKYC}
+                  {dashboardStats.pendingPayouts}
                 </motion.span>
               )}
 
-              {/* Collapsed badge indicator */}
-              {!open && (showBadge || showKYCBadge) && (
-                <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full" />
+              {!open && (showSignalBadge || showPayoutBadge) && (
+                <span
+                  className={cn(
+                    "absolute top-1 right-1 h-2 w-2 rounded-full",
+                    showSignalBadge ? "bg-red-500" : "bg-amber-500"
+                  )}
+                />
               )}
 
-              {/* Active indicator */}
               {active && (
                 <motion.div
                   layoutId="activeIndicator"
@@ -197,7 +180,6 @@ export const AdminSidebar = () => {
           );
         })}
 
-        {/* Back to Trader Dashboard */}
         <Link
           href="/"
           className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200"
@@ -212,7 +194,6 @@ export const AdminSidebar = () => {
           </motion.span>
         </Link>
 
-        {/* Admin User */}
         <div
           className={cn(
             "flex items-center gap-3 py-2 rounded-lg transition-colors",
