@@ -16,7 +16,7 @@ export default function EditChallengeConfigPage() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white border-b border-gray-200 -mx-6 -mt-6 px-6 py-6 mb-6">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 -mx-6 -mt-6 px-6 py-6 mb-6">
         <Link
           href="/admin/configs"
           className="text-sm text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1"
@@ -24,7 +24,7 @@ export default function EditChallengeConfigPage() {
           <ArrowLeftIcon className="h-4 w-4" />
           Back to configs
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900 mt-3">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-3">
           {config ? `Edit "${config.name}"` : "Config not found"}
         </h1>
       </div>
@@ -41,9 +41,9 @@ export default function EditChallengeConfigPage() {
           }}
         />
       ) : (
-        <div className="bg-white border border-gray-200 rounded-xl p-12 text-center">
-          <p className="text-sm text-gray-500">
-            ID <code className="px-1 py-0.5 bg-gray-100 rounded">{id}</code> doesn&apos;t exist.
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-xl p-12 text-center">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            ID <code className="px-1 py-0.5 bg-gray-100 dark:bg-slate-800 rounded">{id}</code> doesn&apos;t exist.
           </p>
         </div>
       )}

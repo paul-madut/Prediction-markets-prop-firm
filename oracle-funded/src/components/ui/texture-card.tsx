@@ -8,7 +8,7 @@ const TextureCard = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-xl border border-gray-200 bg-gradient-to-b from-white to-gray-50/80 shadow-sm transition-all duration-300 ease-out",
+      "rounded-xl border border-gray-200 dark:border-slate-800 bg-gradient-to-b from-white to-gray-50/80 shadow-sm transition-all duration-300 ease-out",
       interactive && "hover:shadow-md hover:border-gray-300/80 hover:-translate-y-0.5",
       className
     )}
@@ -41,7 +41,7 @@ const TextureCardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("text-lg font-semibold leading-none tracking-tight text-gray-900", className)}
+    className={cn("text-lg font-semibold leading-none tracking-tight text-gray-900 dark:text-gray-100", className)}
     {...props}
   />
 ));

@@ -162,7 +162,7 @@ export default function PayoutsPage() {
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       {/* Subtitle */}
-      <p className="text-sm text-gray-500">
+      <p className="text-sm text-gray-500 dark:text-gray-400">
         Request withdrawals from your funded account profits.
       </p>
 
@@ -188,17 +188,17 @@ export default function PayoutsPage() {
 
       {/* Stats Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="flex items-center gap-2 text-gray-500 text-sm mb-1">
+        <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-4">
+          <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-sm mb-1">
             <WalletIcon className="w-4 h-4" />
             Account Balance
           </div>
-          <p className="text-xl font-bold text-gray-900">
+          <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
             {formatCurrency(user.accountBalance)}
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="flex items-center gap-2 text-gray-500 text-sm mb-1">
+        <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-4">
+          <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-sm mb-1">
             <ArrowTrendingUpIcon className="w-4 h-4" />
             Total Profit
           </div>
@@ -211,8 +211,8 @@ export default function PayoutsPage() {
             {formatCurrency(profitCents)}
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="flex items-center gap-2 text-gray-500 text-sm mb-1">
+        <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-4">
+          <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-sm mb-1">
             <CurrencyDollarIcon className="w-4 h-4" />
             Available to Withdraw
           </div>
@@ -220,12 +220,12 @@ export default function PayoutsPage() {
             {formatCurrency(traderShare)}
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="flex items-center gap-2 text-gray-500 text-sm mb-1">
+        <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-4">
+          <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-sm mb-1">
             <ArrowUpRightIcon className="w-4 h-4" />
             Total Paid Out
           </div>
-          <p className="text-xl font-bold text-gray-900">
+          <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
             {formatCurrency(totalPaidOut)}
           </p>
         </div>
@@ -233,29 +233,29 @@ export default function PayoutsPage() {
 
       {/* Profit Split Breakdown */}
       {isFunded && profitCents > 0 && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Profit Split</h2>
+        <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-200 dark:border-slate-800">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Profit Split</h2>
           </div>
           <div className="p-6">
             <div className="flex items-center gap-4 mb-4">
               <div className="flex-1 bg-green-100 rounded-full h-3 overflow-hidden">
                 <div className="bg-green-500 h-full rounded-full" style={{ width: "80%" }} />
               </div>
-              <span className="text-sm font-medium text-gray-600 w-10 text-right">80%</span>
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-300 w-10 text-right">80%</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-500">Gross Profit</p>
-                <p className="text-lg font-bold text-gray-900">{formatCurrency(profitCents)}</p>
+              <div className="p-3 bg-gray-50 dark:bg-slate-950 rounded-lg">
+                <p className="text-sm text-gray-500 dark:text-gray-400">Gross Profit</p>
+                <p className="text-lg font-bold text-gray-900 dark:text-gray-100">{formatCurrency(profitCents)}</p>
               </div>
               <div className="p-3 bg-green-50 rounded-lg border border-green-100">
                 <p className="text-sm text-green-700">Your Share (80%)</p>
                 <p className="text-lg font-bold text-green-700">{formatCurrency(traderShare)}</p>
               </div>
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-500">Firm Share (20%)</p>
-                <p className="text-lg font-bold text-gray-900">{formatCurrency(firmShare)}</p>
+              <div className="p-3 bg-gray-50 dark:bg-slate-950 rounded-lg">
+                <p className="text-sm text-gray-500 dark:text-gray-400">Firm Share (20%)</p>
+                <p className="text-lg font-bold text-gray-900 dark:text-gray-100">{formatCurrency(firmShare)}</p>
               </div>
             </div>
           </div>
@@ -263,14 +263,14 @@ export default function PayoutsPage() {
       )}
 
       {/* Request Payout Form */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900">Request Payout</h2>
+      <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-200 dark:border-slate-800">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Request Payout</h2>
         </div>
         <div className="p-6 space-y-6">
           {/* Payment Method Selection */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
               Payment Method
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -282,23 +282,23 @@ export default function PayoutsPage() {
                   className={`relative p-4 rounded-lg border-2 text-left transition-all ${
                     selectedMethod === method.id
                       ? "border-blue-600 bg-blue-50"
-                      : "border-gray-200 hover:border-gray-300 bg-white"
+                      : "border-gray-200 dark:border-slate-800 hover:border-gray-300 bg-white dark:bg-slate-900"
                   } ${!canRequestPayout ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                 >
                   <div className="flex items-center gap-3 mb-2">
                     <div
                       className={`${
-                        selectedMethod === method.id ? "text-blue-600" : "text-gray-500"
+                        selectedMethod === method.id ? "text-blue-600" : "text-gray-500 dark:text-gray-400"
                       }`}
                     >
                       {method.icon}
                     </div>
-                    <span className="font-medium text-gray-900">{method.label}</span>
+                    <span className="font-medium text-gray-900 dark:text-gray-100">{method.label}</span>
                   </div>
-                  <p className="text-xs text-gray-500">{method.description}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{method.description}</p>
                   <div className="flex items-center justify-between mt-3 text-xs">
-                    <span className="text-gray-400">Fee: {method.fee}</span>
-                    <span className="text-gray-400">{method.time}</span>
+                    <span className="text-gray-400 dark:text-gray-500">Fee: {method.fee}</span>
+                    <span className="text-gray-400 dark:text-gray-500">{method.time}</span>
                   </div>
                   {selectedMethod === method.id && (
                     <div className="absolute top-2 right-2">
@@ -312,11 +312,11 @@ export default function PayoutsPage() {
 
           {/* Amount Input */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Amount (USD)
             </label>
             <div className="relative max-w-xs">
-              <CurrencyDollarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <CurrencyDollarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" />
               <input
                 type="number"
                 value={requestAmount}
@@ -326,11 +326,11 @@ export default function PayoutsPage() {
                 min={minPayout / 100}
                 max={traderShare / 100}
                 step="0.01"
-                className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full pl-9 pr-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
             {canRequestPayout && (
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                 Maximum: {formatCurrency(traderShare)}
               </p>
             )}
@@ -367,7 +367,7 @@ export default function PayoutsPage() {
               )}
             </button>
             {!canRequestPayout && isFunded && (
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Minimum withdrawal is {formatCurrency(minPayout)}.
               </p>
             )}
@@ -376,9 +376,9 @@ export default function PayoutsPage() {
       </div>
 
       {/* Payout History */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900">Payout History</h2>
+      <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-200 dark:border-slate-800 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Payout History</h2>
           <div className="flex gap-1">
             {(["all", "pending", "completed"] as const).map((tab) => (
               <button
@@ -387,7 +387,7 @@ export default function PayoutsPage() {
                 className={`px-3 py-1 rounded-md text-xs font-medium transition-colors capitalize ${
                   filter === tab
                     ? "bg-blue-600 text-white"
-                    : "text-gray-600 hover:bg-gray-100"
+                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800"
                 }`}
               >
                 {tab}
@@ -399,8 +399,8 @@ export default function PayoutsPage() {
         {/* Mobile Card Layout */}
         <div className="block md:hidden p-4 space-y-3">
           {filteredPayouts.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              <CurrencyDollarIcon className="w-10 h-10 mx-auto mb-2 text-gray-300" />
+            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+              <CurrencyDollarIcon className="w-10 h-10 mx-auto mb-2 text-gray-300 dark:text-gray-600" />
               <p className="font-medium">No payouts yet</p>
               <p className="text-sm">Your payout history will appear here.</p>
             </div>
@@ -410,10 +410,10 @@ export default function PayoutsPage() {
               return (
                 <div
                   key={payout.id}
-                  className="bg-gray-50 rounded-lg p-4 space-y-2"
+                  className="bg-gray-50 dark:bg-slate-950 rounded-lg p-4 space-y-2"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-900">
+                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                       {payout.id}
                     </span>
                     <span
@@ -424,14 +424,14 @@ export default function PayoutsPage() {
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-gray-900">
+                    <span className="text-lg font-bold text-gray-900 dark:text-gray-100">
                       {formatCurrency(payout.amount)}
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
                       {getMethodLabel(payout.method)}
                     </span>
                   </div>
-                  <div className="text-xs text-gray-400">
+                  <div className="text-xs text-gray-400 dark:text-gray-500">
                     Requested {formatDate(payout.requestedAt)}
                     {payout.processedAt && (
                       <> &middot; Paid {formatDate(payout.processedAt)}</>
@@ -446,48 +446,48 @@ export default function PayoutsPage() {
         {/* Desktop Table */}
         <div className="hidden md:block">
           {filteredPayouts.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
-              <CurrencyDollarIcon className="w-10 h-10 mx-auto mb-2 text-gray-300" />
+            <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+              <CurrencyDollarIcon className="w-10 h-10 mx-auto mb-2 text-gray-300 dark:text-gray-600" />
               <p className="font-medium">No payouts yet</p>
               <p className="text-sm">Your payout history will appear here.</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50">
+                <thead className="bg-gray-50 dark:bg-slate-950">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       ID
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Amount
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Method
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Requested
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Processed
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-200 dark:divide-slate-800">
                   {filteredPayouts.map((payout) => {
                     const status = statusConfig[payout.status];
                     return (
-                      <tr key={payout.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <tr key={payout.id} className="hover:bg-gray-50 dark:hover:bg-slate-800/50">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
                           {payout.id}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900 dark:text-gray-100">
                           {formatCurrency(payout.amount)}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
                           {getMethodLabel(payout.method)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -498,10 +498,10 @@ export default function PayoutsPage() {
                             {status.label}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                           {formatDate(payout.requestedAt)}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                           {payout.processedAt
                             ? formatDate(payout.processedAt)
                             : "-"}

@@ -62,7 +62,7 @@ const CustomTooltip = ({
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-gray-900 text-white px-3.5 py-2.5 rounded-xl shadow-2xl text-xs border border-gray-700/60 backdrop-blur-sm">
-      <p className="text-gray-400 mb-1 text-[11px]">
+      <p className="text-gray-400 dark:text-gray-500 mb-1 text-[11px]">
         {labelPrefix}
         {label}
       </p>
@@ -233,7 +233,7 @@ export default function AnalyticsPage() {
                   <ArrowTrendingDownIcon className="w-5 h-5 text-red-600" />
                 )}
               </div>
-              <span className="text-sm text-gray-500">Total P&L</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">Total P&L</span>
             </div>
             <div
               className={`text-2xl font-bold ${totalPnL >= 0 ? "text-green-600" : "text-red-600"}`}
@@ -262,12 +262,12 @@ export default function AnalyticsPage() {
               <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
                 <ViewfinderCircleIcon className="w-5 h-5 text-blue-600" />
               </div>
-              <span className="text-sm text-gray-500">Win Rate</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">Win Rate</span>
             </div>
-            <div className="text-2xl font-bold text-gray-900">
+            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {formatPercent(winRate)}
             </div>
-            <div className="text-xs text-gray-400 mt-1.5">
+            <div className="text-xs text-gray-400 dark:text-gray-500 mt-1.5">
               {winningTrades.length}W / {losingTrades.length}L
             </div>
           </TextureCardContent>
@@ -280,12 +280,12 @@ export default function AnalyticsPage() {
               <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center">
                 <SignalIcon className="w-5 h-5 text-purple-600" />
               </div>
-              <span className="text-sm text-gray-500">Profit Factor</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">Profit Factor</span>
             </div>
-            <div className="text-2xl font-bold text-gray-900">
+            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {profitFactor === Infinity ? "\u221E" : profitFactor.toFixed(2)}
             </div>
-            <div className="text-xs text-gray-400 mt-1.5">
+            <div className="text-xs text-gray-400 dark:text-gray-500 mt-1.5">
               {profitFactor >= 1.5
                 ? "Strong edge"
                 : profitFactor >= 1
@@ -302,7 +302,7 @@ export default function AnalyticsPage() {
               <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
                 <BoltIcon className="w-5 h-5 text-amber-600" />
               </div>
-              <span className="text-sm text-gray-500">Expectancy</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">Expectancy</span>
             </div>
             <div
               className={`text-2xl font-bold ${expectancy >= 0 ? "text-green-600" : "text-red-600"}`}
@@ -310,7 +310,7 @@ export default function AnalyticsPage() {
               {expectancy >= 0 ? "+" : ""}
               {formatCurrency(expectancy)}
             </div>
-            <div className="text-xs text-gray-400 mt-1.5">
+            <div className="text-xs text-gray-400 dark:text-gray-500 mt-1.5">
               Per trade average
             </div>
           </TextureCardContent>
@@ -321,27 +321,27 @@ export default function AnalyticsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <TextureCard>
           <TextureCardContent className="p-5">
-            <div className="text-xs text-gray-500 uppercase tracking-wide mb-2">Sharpe ratio</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Sharpe ratio</div>
             <div className={`text-2xl font-bold ${sharpe >= 0 ? "text-green-600" : "text-red-600"}`}>
               {sharpe.toFixed(2)}
             </div>
-            <div className="text-xs text-gray-400 mt-1.5">Risk-adjusted return per trade</div>
+            <div className="text-xs text-gray-400 dark:text-gray-500 mt-1.5">Risk-adjusted return per trade</div>
           </TextureCardContent>
         </TextureCard>
 
         <TextureCard>
           <TextureCardContent className="p-5">
-            <div className="text-xs text-gray-500 uppercase tracking-wide mb-2">Avg holding time</div>
-            <div className="text-2xl font-bold text-gray-900">{holding.label}</div>
-            <div className="text-xs text-gray-400 mt-1.5">Across closed positions</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Avg holding time</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{holding.label}</div>
+            <div className="text-xs text-gray-400 dark:text-gray-500 mt-1.5">Across closed positions</div>
           </TextureCardContent>
         </TextureCard>
 
         <TextureCard>
           <TextureCardContent className="p-5">
-            <div className="text-xs text-gray-500 uppercase tracking-wide mb-2">Long / Short</div>
-            <div className="text-2xl font-bold text-gray-900 tabular-nums">{longShort.label}</div>
-            <div className="text-xs text-gray-400 mt-1.5">
+            <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Long / Short</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100 tabular-nums">{longShort.label}</div>
+            <div className="text-xs text-gray-400 dark:text-gray-500 mt-1.5">
               {longShort.long} yes · {longShort.short} no
             </div>
           </TextureCardContent>
@@ -356,16 +356,16 @@ export default function AnalyticsPage() {
         <TextureCardContent className="p-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 Account Performance
               </h3>
-              <p className="text-sm text-gray-400 mt-0.5">
+              <p className="text-sm text-gray-400 dark:text-gray-500 mt-0.5">
                 Equity curve over time
               </p>
             </div>
             <div className="flex items-center gap-3 text-sm">
               <div className="flex items-center gap-2 px-3 py-1.5 bg-red-50 rounded-lg">
-                <span className="text-gray-500">Max DD</span>
+                <span className="text-gray-500 dark:text-gray-400">Max DD</span>
                 <span className="font-semibold text-red-600">
                   {maxDrawdown.toFixed(2)}%
                 </span>
@@ -373,7 +373,7 @@ export default function AnalyticsPage() {
               <div
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-lg ${roi >= 0 ? "bg-green-50" : "bg-red-50"}`}
               >
-                <span className="text-gray-500">ROI</span>
+                <span className="text-gray-500 dark:text-gray-400">ROI</span>
                 <span
                   className={`font-semibold ${roi >= 0 ? "text-green-600" : "text-red-600"}`}
                 >
@@ -446,21 +446,21 @@ export default function AnalyticsPage() {
         <div className="lg:col-span-3">
           <TextureCard interactive={false}>
             <TextureCardContent className="p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-5">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-5">
                 Trading Breakdown
               </h3>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-5">
                 <div>
-                  <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+                  <div className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">
                     Total Trades
                   </div>
-                  <div className="text-xl font-bold text-gray-900">
+                  <div className="text-xl font-bold text-gray-900 dark:text-gray-100">
                     {closedTrades.length}
                   </div>
                 </div>
                 <div>
-                  <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+                  <div className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">
                     Avg Win
                   </div>
                   <div className="text-xl font-bold text-green-600">
@@ -468,7 +468,7 @@ export default function AnalyticsPage() {
                   </div>
                 </div>
                 <div>
-                  <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+                  <div className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">
                     Avg Loss
                   </div>
                   <div className="text-xl font-bold text-red-600">
@@ -476,15 +476,15 @@ export default function AnalyticsPage() {
                   </div>
                 </div>
                 <div>
-                  <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+                  <div className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">
                     Risk / Reward
                   </div>
-                  <div className="text-xl font-bold text-gray-900">
+                  <div className="text-xl font-bold text-gray-900 dark:text-gray-100">
                     {riskRewardRatio.toFixed(2)}
                   </div>
                 </div>
                 <div>
-                  <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+                  <div className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">
                     Best Trade
                   </div>
                   <div className="text-xl font-bold text-green-600">
@@ -492,7 +492,7 @@ export default function AnalyticsPage() {
                   </div>
                 </div>
                 <div>
-                  <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+                  <div className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">
                     Worst Trade
                   </div>
                   <div className="text-xl font-bold text-red-600">
@@ -502,10 +502,10 @@ export default function AnalyticsPage() {
               </div>
 
               {/* Streak pills */}
-              <div className="mt-6 pt-5 border-t border-gray-100">
+              <div className="mt-6 pt-5 border-t border-gray-100 dark:border-slate-800">
                 <div className="flex items-center gap-2 mb-4">
                   <FireIcon className="w-4 h-4 text-orange-500" />
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     Streaks
                   </span>
                 </div>
@@ -513,7 +513,7 @@ export default function AnalyticsPage() {
                   <div
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg ${currentStreakType === "win" ? "bg-green-50" : "bg-red-50"}`}
                   >
-                    <span className="text-xs text-gray-500">Current</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">Current</span>
                     <span
                       className={`text-sm font-bold ${currentStreakType === "win" ? "text-green-600" : "text-red-600"}`}
                     >
@@ -522,19 +522,19 @@ export default function AnalyticsPage() {
                     </span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-green-50">
-                    <span className="text-xs text-gray-500">Best</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">Best</span>
                     <span className="text-sm font-bold text-green-600">
                       {maxWinStreak}W
                     </span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-50">
-                    <span className="text-xs text-gray-500">Worst</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">Worst</span>
                     <span className="text-sm font-bold text-red-600">
                       {maxLossStreak}L
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50">
-                    <span className="text-xs text-gray-500">Max DD</span>
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50 dark:bg-slate-950">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">Max DD</span>
                     <span className="text-sm font-bold text-red-600">
                       {maxDrawdown.toFixed(2)}%
                     </span>
@@ -549,7 +549,7 @@ export default function AnalyticsPage() {
         <div className="lg:col-span-2">
           <TextureCard interactive={false}>
             <TextureCardContent className="p-6 h-full flex flex-col">
-              <h3 className="text-lg font-semibold text-gray-900 mb-5">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-5">
                 Win / Loss
               </h3>
 
@@ -596,10 +596,10 @@ export default function AnalyticsPage() {
                   </svg>
                   {/* Center label */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-3xl font-bold text-gray-900">
+                    <span className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                       {winPercent}%
                     </span>
-                    <span className="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">
+                    <span className="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-widest mt-0.5">
                       Win Rate
                     </span>
                   </div>
@@ -610,9 +610,9 @@ export default function AnalyticsPage() {
                   <div className="text-center">
                     <div className="flex items-center gap-1.5 mb-1">
                       <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-                      <span className="text-xs text-gray-500">Wins</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">Wins</span>
                     </div>
-                    <div className="text-lg font-bold text-gray-900">
+                    <div className="text-lg font-bold text-gray-900 dark:text-gray-100">
                       {winningTrades.length}
                     </div>
                     <div className="text-xs text-green-600 font-medium">
@@ -626,9 +626,9 @@ export default function AnalyticsPage() {
                   <div className="text-center">
                     <div className="flex items-center gap-1.5 mb-1">
                       <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                      <span className="text-xs text-gray-500">Losses</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">Losses</span>
                     </div>
-                    <div className="text-lg font-bold text-gray-900">
+                    <div className="text-lg font-bold text-gray-900 dark:text-gray-100">
                       {losingTrades.length}
                     </div>
                     <div className="text-xs text-red-600 font-medium">
@@ -649,10 +649,10 @@ export default function AnalyticsPage() {
         <TextureCardContent className="p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 Trade Distribution
               </h3>
-              <p className="text-sm text-gray-400 mt-0.5">P&L per trade</p>
+              <p className="text-sm text-gray-400 dark:text-gray-500 mt-0.5">P&L per trade</p>
             </div>
             <Link
               href="/dashboard/history"
@@ -712,7 +712,7 @@ export default function AnalyticsPage() {
       {categoryData.length > 0 && (
         <TextureCard interactive={false}>
           <TextureCardContent className="p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-5">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-5">
               Performance by Category
             </h3>
 
@@ -726,13 +726,13 @@ export default function AnalyticsPage() {
                   <div key={cat.name}>
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
-                        <span className="font-medium text-gray-900 min-w-[80px]">
+                        <span className="font-medium text-gray-900 dark:text-gray-100 min-w-[80px]">
                           {cat.name}
                         </span>
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-gray-400 dark:text-gray-500">
                           {cat.trades} trades
                         </span>
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-gray-400 dark:text-gray-500">
                           {formatPercent(cat.winRate)} win
                         </span>
                       </div>
@@ -742,7 +742,7 @@ export default function AnalyticsPage() {
                         {cat.pnl >= 0 ? "+" : ""}${cat.pnl.toFixed(2)}
                       </span>
                     </div>
-                    <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                    <div className="w-full bg-gray-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                       <div
                         className={`h-2 rounded-full transition-all duration-700 ${cat.pnl >= 0 ? "bg-green-500" : "bg-red-400"}`}
                         style={{ width: `${barWidth}%` }}

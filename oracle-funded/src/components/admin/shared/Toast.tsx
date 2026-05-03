@@ -84,7 +84,7 @@ function SingleToast({ id, type, title, message, duration = 5000, onDismiss }: T
       exit={{ opacity: 0, x: 100, scale: 0.95 }}
       transition={{ type: "spring", stiffness: 500, damping: 35 }}
       className={cn(
-        "bg-white rounded-lg shadow-lg border-l-4 overflow-hidden cursor-pointer hover:shadow-xl transition-shadow",
+        "bg-white dark:bg-slate-900 rounded-lg shadow-lg border-l-4 overflow-hidden cursor-pointer hover:shadow-xl transition-shadow",
         getBorderColor()
       )}
       onClick={() => onDismiss(id)}
@@ -92,17 +92,17 @@ function SingleToast({ id, type, title, message, duration = 5000, onDismiss }: T
       <div className="p-4 flex items-start gap-3">
         <div className="flex-shrink-0 mt-0.5">{getIcon()}</div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-gray-900">{title}</p>
-          {message && <p className="text-sm text-gray-600 mt-1">{message}</p>}
+          <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">{title}</p>
+          {message && <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{message}</p>}
         </div>
         <button
           onClick={(e) => {
             e.stopPropagation();
             onDismiss(id);
           }}
-          className="flex-shrink-0 p-1 hover:bg-gray-100 rounded transition-colors"
+          className="flex-shrink-0 p-1 hover:bg-gray-100 dark:hover:bg-slate-800 rounded transition-colors"
         >
-          <XMarkIcon className="h-4 w-4 text-gray-400" />
+          <XMarkIcon className="h-4 w-4 text-gray-400 dark:text-gray-500" />
         </button>
       </div>
 

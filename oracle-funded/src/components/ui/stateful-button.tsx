@@ -71,7 +71,7 @@ export const StatefulButton = ({
     error: "bg-red-600 text-white",
   };
 
-  const disabledClasses = "bg-gray-300 text-gray-500 cursor-not-allowed";
+  const disabledClasses = "bg-gray-300 text-gray-500 dark:text-gray-400 cursor-not-allowed";
 
   return (
     <button

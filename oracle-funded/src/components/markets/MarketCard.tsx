@@ -17,7 +17,7 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
   return (
     <button
       onClick={onClick}
-      className="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-lg hover:border-blue-200 hover:scale-[1.02] transition-all duration-200 text-left"
+      className="w-full bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-6 hover:shadow-lg hover:border-blue-200 hover:scale-[1.02] transition-all duration-200 text-left"
     >
       {/* Category Badge */}
       <div className="flex items-center justify-between mb-3">
@@ -33,7 +33,7 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
       </div>
 
       {/* Market Question */}
-      <h3 className="text-lg font-semibold text-gray-900 mb-4 line-clamp-2">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 line-clamp-2">
         {market.title}
       </h3>
 
@@ -52,7 +52,7 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
       </div>
 
       {/* Market Info */}
-      <div className="space-y-1 text-sm text-gray-600">
+      <div className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
         <div className="flex justify-between">
           <span>Volume:</span>
           <span className="font-semibold">{formatVolume(market.volume)}</span>

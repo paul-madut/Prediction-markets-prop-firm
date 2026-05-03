@@ -90,7 +90,7 @@ export const DesktopSidebar = ({
   return (
     <motion.div
       className={cn(
-        "h-full py-4 hidden md:flex md:flex-col bg-white flex-shrink-0 border-r border-gray-200 relative",
+        "h-full py-4 hidden md:flex md:flex-col bg-white dark:bg-slate-900 flex-shrink-0 border-r border-gray-200 dark:border-slate-800 relative",
         className
       )}
       animate={{
@@ -120,12 +120,12 @@ export const MobileSidebar = ({
       {/* Mobile top bar with hamburger */}
       <div
         className={cn(
-          "h-12 px-4 flex flex-row md:hidden items-center bg-white w-full border-b border-gray-200"
+          "h-12 px-4 flex flex-row md:hidden items-center bg-white dark:bg-slate-900 w-full border-b border-gray-200 dark:border-slate-800"
         )}
         {...props}
       >
         <button
-          className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+          className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
           onClick={() => setOpen(!open)}
         >
           <Bars3Icon className="text-neutral-800 w-5 h-5" />
@@ -150,12 +150,12 @@ export const MobileSidebar = ({
               exit={{ x: "-100%" }}
               transition={{ duration: 0.25, ease: "easeOut" }}
               className={cn(
-                "fixed h-full w-72 inset-y-0 left-0 bg-white p-6 z-[100] flex flex-col justify-between shadow-xl md:hidden",
+                "fixed h-full w-72 inset-y-0 left-0 bg-white dark:bg-slate-900 p-6 z-[100] flex flex-col justify-between shadow-xl md:hidden",
                 className
               )}
             >
               <button
-                className="absolute right-4 top-4 p-1.5 rounded-lg hover:bg-gray-100 transition-colors text-neutral-800"
+                className="absolute right-4 top-4 p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors text-neutral-800"
                 onClick={() => setOpen(false)}
               >
                 <XMarkIcon className="w-5 h-5" />
@@ -195,7 +195,7 @@ export const SidebarLink = ({
       }}
       className={cn(
         "flex items-center group/sidebar rounded-lg relative",
-        "hover:bg-gray-100",
+        "hover:bg-gray-100 dark:hover:bg-slate-800",
         // Open: full-width row with gap, padding, optional active border
         open && "gap-3 justify-start px-3 py-3 w-full",
         open && isActive && "bg-blue-50 border-l-4 border-blue-600",
@@ -210,7 +210,7 @@ export const SidebarLink = ({
       <motion.div
         className={cn(
           "h-5 w-5 flex-shrink-0",
-          isActive ? "text-blue-600" : "text-neutral-700 group-hover/sidebar:text-blue-600"
+          isActive ? "text-blue-600" : "text-neutral-700 dark:text-gray-300 group-hover/sidebar:text-blue-600"
         )}
         transition={{ duration: 0.2 }}
       >
@@ -228,7 +228,7 @@ export const SidebarLink = ({
         }}
         className={cn(
           "text-base font-medium whitespace-pre !p-0 !m-0 overflow-hidden",
-          isActive ? "text-blue-600" : "text-neutral-700 group-hover/sidebar:text-blue-600"
+          isActive ? "text-blue-600" : "text-neutral-700 dark:text-gray-300 group-hover/sidebar:text-blue-600"
         )}
       >
         {link.label}

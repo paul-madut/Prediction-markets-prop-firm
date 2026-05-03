@@ -13,9 +13,9 @@ const textureButtonVariants = cva(
         accent:
           "bg-gradient-to-b from-indigo-500 to-indigo-600 text-white shadow-md border border-indigo-600/50 hover:from-indigo-600 hover:to-indigo-700 hover:shadow-lg focus-visible:ring-indigo-500",
         secondary:
-          "bg-gradient-to-b from-white to-gray-50 text-gray-700 shadow-sm border border-gray-200 hover:from-gray-50 hover:to-gray-100 hover:shadow-md focus-visible:ring-gray-400",
+          "bg-gradient-to-b from-white to-gray-50 text-gray-700 dark:text-gray-300 shadow-sm border border-gray-200 dark:border-slate-800 hover:from-gray-50 hover:to-gray-100 hover:shadow-md focus-visible:ring-gray-400",
         minimal:
-          "bg-transparent text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-gray-400",
+          "bg-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-gray-900 focus-visible:ring-gray-400",
       },
       size: {
         default: "h-10 px-5 py-2",

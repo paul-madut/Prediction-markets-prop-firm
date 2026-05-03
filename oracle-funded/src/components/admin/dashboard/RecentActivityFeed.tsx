@@ -32,7 +32,7 @@ const getActionColor = (action: string) => {
     return "bg-red-100 text-red-600";
   if (action.includes("risk") || action.includes("alert"))
     return "bg-amber-100 text-amber-600";
-  return "bg-gray-100 text-gray-600";
+  return "bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300";
 };
 
 const formatAction = (action: string): string => {
@@ -96,20 +96,20 @@ export const RecentActivityFeed = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm"
+      className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 overflow-hidden shadow-sm"
     >
-      <div className="px-6 py-4 border-b border-gray-200">
+      <div className="px-6 py-4 border-b border-gray-200 dark:border-slate-800">
         <div className="flex items-center gap-2">
-          <SignalIcon className="h-5 w-5 text-gray-400" />
+          <SignalIcon className="h-5 w-5 text-gray-400 dark:text-gray-500" />
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">Recent Activity</h3>
-            <p className="text-sm text-gray-500">Latest admin actions and system events</p>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Activity</h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Latest admin actions and system events</p>
           </div>
         </div>
       </div>
 
       <motion.div
-        className="divide-y divide-gray-100"
+        className="divide-y divide-gray-100 dark:divide-slate-800"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -119,7 +119,7 @@ export const RecentActivityFeed = () => {
             <motion.div
               key={log.logId}
               variants={itemVariants}
-              className="px-6 py-4 hover:bg-gray-50 transition-colors duration-150"
+              className="px-6 py-4 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors duration-150"
             >
               <div className="flex items-start gap-4">
                 {/* Icon */}
@@ -138,7 +138,7 @@ export const RecentActivityFeed = () => {
                 {/* Content */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
                       {formatAction(log.action)}
                     </p>
                     <span
@@ -152,18 +152,18 @@ export const RecentActivityFeed = () => {
                       {log.outcome}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-500 mt-0.5">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
                     by {log.actorName} ({log.actorRole.replace("_", " ")})
                   </p>
                   {log.resourceId && (
-                    <p className="text-xs text-gray-400 mt-1 font-mono">
+                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-1 font-mono">
                       {log.resource}: {log.resourceId}
                     </p>
                   )}
                 </div>
 
                 {/* Timestamp */}
-                <span className="text-xs text-gray-400 flex-shrink-0">
+                <span className="text-xs text-gray-400 dark:text-gray-500 flex-shrink-0">
                   {formatTimeAgo(log.timestamp)}
                 </span>
               </div>
@@ -173,7 +173,7 @@ export const RecentActivityFeed = () => {
       </motion.div>
 
       {/* View All Link */}
-      <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
+      <div className="px-6 py-4 border-t border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-slate-950">
         <Link
           href="/admin/audit"
           className="text-sm font-medium text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1 group"

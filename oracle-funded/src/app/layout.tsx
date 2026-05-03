@@ -4,6 +4,7 @@ import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { AppProvider } from "@/context/AppContext";
+import { FirmBrandingProvider } from "@/context/FirmBrandingContext";
 
 const monaSans = localFont({
   src: "../fonts/MonaSans.woff2",
@@ -32,9 +33,11 @@ export default function RootLayout({
         className={`${monaSans.variable} ${geistMono.variable} antialiased`}
       >
         <ClerkProvider>
-          <AppProvider>
-            {children}
-          </AppProvider>
+          <FirmBrandingProvider>
+            <AppProvider>
+              {children}
+            </AppProvider>
+          </FirmBrandingProvider>
         </ClerkProvider>
       </body>
     </html>

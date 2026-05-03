@@ -206,10 +206,10 @@ export const PhaseTimeline = () => {
                         <Icon className={cn("w-6 h-6", colors.text)} />
                       </motion.div>
                       <div className="flex-1">
-                        <h3 className="text-xl font-bold text-gray-900 mb-1">
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-1">
                           {phase.title}
                         </h3>
-                        <p className="text-gray-600 text-sm">{phase.description}</p>
+                        <p className="text-gray-600 dark:text-gray-300 text-sm">{phase.description}</p>
                       </div>
                     </div>
 
@@ -233,7 +233,7 @@ export const PhaseTimeline = () => {
                               colors.text.replace("text-", "bg-")
                             )}
                           />
-                          <span className="text-gray-700 text-sm leading-relaxed">
+                          <span className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                             {item}
                           </span>
                         </motion.li>
@@ -251,9 +251,9 @@ export const PhaseTimeline = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: index * 0.15 + 0.5 }}
-                    className="bg-white border border-gray-200 rounded-full p-1 shadow-sm"
+                    className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-full p-1 shadow-sm"
                   >
-                    <ChevronRightIcon className="w-4 h-4 text-gray-400" />
+                    <ChevronRightIcon className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                   </motion.div>
                 </div>
               )}

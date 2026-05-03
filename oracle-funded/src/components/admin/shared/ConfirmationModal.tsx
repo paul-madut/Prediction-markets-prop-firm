@@ -106,10 +106,10 @@ export default function ConfirmationModal({
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 500, damping: 35 }}
               onKeyDown={handleKeyDown}
-              className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
+              className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
             >
               {/* Header */}
-              <div className="flex items-start gap-4 p-6 border-b border-gray-200">
+              <div className="flex items-start gap-4 p-6 border-b border-gray-200 dark:border-slate-800">
                 <div className={cn(
                   "p-2 rounded-full",
                   confirmVariant === "danger" && "bg-red-100",
@@ -119,19 +119,19 @@ export default function ConfirmationModal({
                   {getIcon()}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                     {title}
                   </h3>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                     {message}
                   </p>
                 </div>
                 <button
                   onClick={handleClose}
                   disabled={isProcessing}
-                  className="p-1 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
+                  className="p-1 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors disabled:opacity-50"
                 >
-                  <XMarkIcon className="h-5 w-5 text-gray-500" />
+                  <XMarkIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                 </button>
               </div>
 
@@ -139,7 +139,7 @@ export default function ConfirmationModal({
               {requireInput && (
                 <div className="p-6">
                   {inputLabel && (
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       {inputLabel}
                     </label>
                   )}
@@ -147,7 +147,7 @@ export default function ConfirmationModal({
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder={inputPlaceholder}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none"
                     rows={3}
                     autoFocus
                     disabled={isProcessing}
@@ -156,11 +156,11 @@ export default function ConfirmationModal({
               )}
 
               {/* Footer */}
-              <div className="flex items-center justify-end gap-3 px-6 py-4 bg-gray-50 border-t border-gray-200">
+              <div className="flex items-center justify-end gap-3 px-6 py-4 bg-gray-50 dark:bg-slate-950 border-t border-gray-200 dark:border-slate-800">
                 <button
                   onClick={handleClose}
                   disabled={isProcessing}
-                  className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-50"
+                  className="px-6 py-2 border border-gray-300 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors disabled:opacity-50"
                 >
                   {cancelText}
                 </button>

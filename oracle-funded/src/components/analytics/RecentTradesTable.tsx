@@ -54,21 +54,21 @@ export function RecentTradesTable({ trades, limit = 25 }: RecentTradesTableProps
 
   if (trades.length === 0) {
     return (
-      <div className="bg-white rounded-xl border border-gray-200 p-8 text-center text-sm text-gray-500">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-8 text-center text-sm text-gray-500 dark:text-gray-400">
         No trades yet on this account.
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-      <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-        <h3 className="font-semibold text-gray-900">Recent trades</h3>
-        <span className="text-xs text-gray-500">{trades.length} total</span>
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 overflow-hidden">
+      <div className="p-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between">
+        <h3 className="font-semibold text-gray-900 dark:text-gray-100">Recent trades</h3>
+        <span className="text-xs text-gray-500 dark:text-gray-400">{trades.length} total</span>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-600">
+          <thead className="bg-gray-50 dark:bg-slate-950 text-gray-600 dark:text-gray-300">
             <tr>
               <th className="text-left p-3 font-medium">Outcome</th>
               <th className="text-left p-3 font-medium">Side</th>
@@ -79,13 +79,13 @@ export function RecentTradesTable({ trades, limit = 25 }: RecentTradesTableProps
               <SortableHeader label="Date" onClick={() => toggle("date")} active={sortKey === "date"} dir={sortDir} align="right" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
             {rows.map((t) => {
               const total = t.shares * t.entryPrice;
               const buy = !t.exitDate;
               return (
                 <tr key={t.tradeId}>
-                  <td className="p-3 text-gray-900 font-medium max-w-xs truncate">{t.market_title}</td>
+                  <td className="p-3 text-gray-900 dark:text-gray-100 font-medium max-w-xs truncate">{t.market_title}</td>
                   <td className="p-3">
                     <span
                       className={cn(
@@ -100,16 +100,16 @@ export function RecentTradesTable({ trades, limit = 25 }: RecentTradesTableProps
                   </td>
                   <td className="p-3 text-right tabular-nums">{t.shares}</td>
                   <td className="p-3 text-right tabular-nums">{t.entryPrice}¢</td>
-                  <td className="p-3 text-right tabular-nums text-gray-700">{formatCurrency(total)}</td>
+                  <td className="p-3 text-right tabular-nums text-gray-700 dark:text-gray-300">{formatCurrency(total)}</td>
                   <td
                     className={cn(
                       "p-3 text-right tabular-nums font-semibold",
-                      t.pnl > 0 ? "text-green-600" : t.pnl < 0 ? "text-red-600" : "text-gray-500",
+                      t.pnl > 0 ? "text-green-600" : t.pnl < 0 ? "text-red-600" : "text-gray-500 dark:text-gray-400",
                     )}
                   >
                     {t.pnl === 0 ? "—" : (t.pnl > 0 ? "+" : "") + formatCurrency(t.pnl)}
                   </td>
-                  <td className="p-3 text-right text-gray-500 whitespace-nowrap">
+                  <td className="p-3 text-right text-gray-500 dark:text-gray-400 whitespace-nowrap">
                     {new Date(t.entryDate).toLocaleDateString()}
                   </td>
                 </tr>
@@ -141,7 +141,7 @@ function SortableHeader({
         onClick={onClick}
         className={cn(
           "inline-flex items-center gap-1 hover:text-gray-900 transition-colors",
-          active && "text-gray-900 font-semibold",
+          active && "text-gray-900 dark:text-gray-100 font-semibold",
         )}
       >
         {label}

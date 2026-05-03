@@ -87,8 +87,8 @@ export default function MarketDetailPage() {
   if (!event || !market) {
     return (
       <div className="max-w-3xl mx-auto py-16 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Market not found</h1>
-        <p className="text-gray-600 mb-6">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Market not found</h1>
+        <p className="text-gray-600 dark:text-gray-300 mb-6">
           The ticker &ldquo;{params?.ticker}&rdquo; doesn&apos;t match any open market.
         </p>
         <Link
@@ -133,7 +133,7 @@ export default function MarketDetailPage() {
       {/* Breadcrumb */}
       <Link
         href="/dashboard/markets"
-        className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+        className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900"
       >
         <ArrowLeftIcon className="w-4 h-4" /> Back to Markets
       </Link>
@@ -142,9 +142,9 @@ export default function MarketDetailPage() {
         {/* MAIN */}
         <div className="space-y-6">
           {/* Header */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-6">
             <div className="flex items-start gap-4">
-              <div className="relative w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
+              <div className="relative w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-slate-800">
                 {event.image ? (
                   <Image src={event.image} alt={event.title} fill className="object-cover" unoptimized />
                 ) : (
@@ -158,13 +158,13 @@ export default function MarketDetailPage() {
                   <span className="px-2 py-0.5 text-xs font-semibold rounded bg-blue-100 text-blue-800">
                     {event.category}
                   </span>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
                     {event.outcomes.length} outcome{event.outcomes.length === 1 ? "" : "s"}
                   </span>
                 </div>
-                <h1 className="text-2xl font-bold text-gray-900">{event.title}</h1>
-                <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
-                  <span>Volume: <span className="font-semibold text-gray-900">{formatVolume(event.volume_total)}</span></span>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{event.title}</h1>
+                <div className="mt-2 flex items-center gap-4 text-sm text-gray-600 dark:text-gray-300">
+                  <span>Volume: <span className="font-semibold text-gray-900 dark:text-gray-100">{formatVolume(event.volume_total)}</span></span>
                   <span className="flex items-center gap-1">
                     <ClockIcon className="w-4 h-4" />
                     Closes {formatDate(event.close_time)}
@@ -175,9 +175,9 @@ export default function MarketDetailPage() {
 
             {/* Resolution criteria */}
             {resolution && (
-              <div className="mt-5 pt-5 border-t border-gray-100">
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">Resolution criteria</h3>
-                <p className={cn("text-sm text-gray-600", !resolutionExpanded && isLongResolution && "line-clamp-3")}>
+              <div className="mt-5 pt-5 border-t border-gray-100 dark:border-slate-800">
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Resolution criteria</h3>
+                <p className={cn("text-sm text-gray-600 dark:text-gray-300", !resolutionExpanded && isLongResolution && "line-clamp-3")}>
                   {resolution}
                 </p>
                 {isLongResolution && (
@@ -194,20 +194,20 @@ export default function MarketDetailPage() {
           </div>
 
           {/* Chart */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <div className="text-sm text-gray-500">{market.outcome_label || "YES"} price</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">{market.outcome_label || "YES"} price</div>
                 <div className="text-3xl font-bold text-blue-600 tabular-nums">{yesAsk}¢</div>
               </div>
-              <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+              <div className="flex items-center gap-1 bg-gray-100 dark:bg-slate-800 rounded-lg p-1">
                 {(["1D", "7D", "30D", "ALL"] as Range[]).map((r) => (
                   <button
                     key={r}
                     onClick={() => setRange(r)}
                     className={cn(
                       "px-3 py-1 text-xs font-semibold rounded transition-colors",
-                      range === r ? "bg-white text-gray-900 shadow-sm" : "text-gray-600 hover:text-gray-900",
+                      range === r ? "bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 shadow-sm" : "text-gray-600 dark:text-gray-300 hover:text-gray-900",
                     )}
                   >
                     {r}
@@ -240,11 +240,11 @@ export default function MarketDetailPage() {
 
           {/* Outcomes table */}
           {isMulti && (
-            <div className="bg-white rounded-xl border border-gray-200">
-              <div className="p-4 border-b border-gray-100">
-                <h3 className="font-semibold text-gray-900">Outcomes</h3>
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800">
+              <div className="p-4 border-b border-gray-100 dark:border-slate-800">
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100">Outcomes</h3>
               </div>
-              <div className="divide-y divide-gray-100">
+              <div className="divide-y divide-gray-100 dark:divide-slate-800">
                 {[...event.outcomes]
                   .sort((a, b) => b.yes_ask - a.yes_ask)
                   .map((o) => {
@@ -257,17 +257,17 @@ export default function MarketDetailPage() {
                           setLivePrice(null);
                         }}
                         className={cn(
-                          "w-full p-4 flex items-center justify-between hover:bg-gray-50 transition-colors",
+                          "w-full p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors",
                           active && "bg-blue-50",
                         )}
                       >
-                        <span className="font-medium text-gray-900">{o.outcome_label || o.title}</span>
+                        <span className="font-medium text-gray-900 dark:text-gray-100">{o.outcome_label || o.title}</span>
                         <div className="flex items-center gap-4 tabular-nums">
-                          <span className="text-sm text-gray-500">{formatVolume(o.volume)}</span>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">{formatVolume(o.volume)}</span>
                           <span className="font-bold text-blue-600 w-12 text-right">{o.yes_ask}¢</span>
                           <span className={cn(
                             "text-xs font-semibold px-2 py-1 rounded",
-                            active ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700",
+                            active ? "bg-blue-600 text-white" : "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300",
                           )}>
                             {active ? "Selected" : "Select"}
                           </span>
@@ -280,17 +280,17 @@ export default function MarketDetailPage() {
           )}
 
           {/* Activity */}
-          <div className="bg-white rounded-xl border border-gray-200">
-            <div className="p-4 border-b border-gray-100">
-              <h3 className="font-semibold text-gray-900">Recent activity</h3>
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800">
+            <div className="p-4 border-b border-gray-100 dark:border-slate-800">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100">Recent activity</h3>
             </div>
             {tradeActivity.length === 0 ? (
-              <div className="p-8 text-center text-sm text-gray-500">
+              <div className="p-8 text-center text-sm text-gray-500 dark:text-gray-400">
                 No trades yet on this outcome. Be the first.
               </div>
             ) : (
               <table className="w-full text-sm">
-                <thead className="bg-gray-50 text-gray-600">
+                <thead className="bg-gray-50 dark:bg-slate-950 text-gray-600 dark:text-gray-300">
                   <tr>
                     <th className="text-left p-3 font-medium">Side</th>
                     <th className="text-right p-3 font-medium">Shares</th>
@@ -298,7 +298,7 @@ export default function MarketDetailPage() {
                     <th className="text-right p-3 font-medium">Time</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
                   {tradeActivity.map((t) => (
                     <tr key={t.tradeId}>
                       <td className="p-3">
@@ -311,7 +311,7 @@ export default function MarketDetailPage() {
                       </td>
                       <td className="p-3 text-right tabular-nums">{t.shares}</td>
                       <td className="p-3 text-right tabular-nums">{t.entryPrice}¢</td>
-                      <td className="p-3 text-right text-gray-500">{formatDate(t.entryDate)}</td>
+                      <td className="p-3 text-right text-gray-500 dark:text-gray-400">{formatDate(t.entryDate)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -325,11 +325,11 @@ export default function MarketDetailPage() {
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-xl border border-gray-200 p-5 space-y-4"
+            className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-5 space-y-4"
           >
             <div>
-              <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">Trade</div>
-              <div className="font-semibold text-gray-900 line-clamp-2">{market.outcome_label || market.title}</div>
+              <div className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">Trade</div>
+              <div className="font-semibold text-gray-900 dark:text-gray-100 line-clamp-2">{market.outcome_label || market.title}</div>
             </div>
 
             {/* Yes/No prices */}
@@ -338,34 +338,34 @@ export default function MarketDetailPage() {
                 onClick={() => setSide("yes")}
                 className={cn(
                   "p-3 rounded-lg border-2 text-left transition-colors",
-                  side === "yes" ? "border-green-600 bg-green-50" : "border-gray-200 hover:bg-gray-50",
+                  side === "yes" ? "border-green-600 bg-green-50" : "border-gray-200 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <div className="text-xs text-gray-500">YES</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">YES</div>
                 <div className="font-bold text-green-700 tabular-nums text-lg">{yesAsk}¢</div>
               </button>
               <button
                 onClick={() => setSide("no")}
                 className={cn(
                   "p-3 rounded-lg border-2 text-left transition-colors",
-                  side === "no" ? "border-red-600 bg-red-50" : "border-gray-200 hover:bg-gray-50",
+                  side === "no" ? "border-red-600 bg-red-50" : "border-gray-200 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <div className="text-xs text-gray-500">NO</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">NO</div>
                 <div className="font-bold text-red-700 tabular-nums text-lg">{noAsk}¢</div>
               </button>
             </div>
 
             {/* Amount */}
             <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">Amount</label>
+              <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Amount</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">$</span>
                 <input
                   type="number"
                   value={stakeAmount}
                   onChange={(e) => setStakeAmount(e.target.value)}
-                  className="w-full pl-7 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 tabular-nums"
+                  className="w-full pl-7 pr-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 tabular-nums"
                   min="1"
                 />
               </div>
@@ -374,7 +374,7 @@ export default function MarketDetailPage() {
                   <button
                     key={pct}
                     onClick={() => setStakeFromBalancePct(pct)}
-                    className="px-2 py-1 text-xs font-semibold border border-gray-200 rounded hover:bg-gray-50"
+                    className="px-2 py-1 text-xs font-semibold border border-gray-200 dark:border-slate-800 rounded hover:bg-gray-50 dark:hover:bg-slate-800/50"
                   >
                     {pct}% of acct
                   </button>
@@ -382,13 +382,13 @@ export default function MarketDetailPage() {
               </div>
             </div>
 
-            <div className="text-sm space-y-1 bg-gray-50 rounded-lg p-3">
+            <div className="text-sm space-y-1 bg-gray-50 dark:bg-slate-950 rounded-lg p-3">
               <div className="flex justify-between">
-                <span className="text-gray-600">Shares</span>
+                <span className="text-gray-600 dark:text-gray-300">Shares</span>
                 <span className="font-semibold tabular-nums">{shares}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Total cost</span>
+                <span className="text-gray-600 dark:text-gray-300">Total cost</span>
                 <span className="font-semibold tabular-nums">{formatCurrency(totalCost)}</span>
               </div>
             </div>
@@ -403,7 +403,7 @@ export default function MarketDetailPage() {
                 : `Buy ${side === "yes" ? "Yes" : "No"} @ ${price}¢`}
             </StatefulButton>
 
-            <div className="text-xs text-gray-500 text-center">
+            <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
               Account balance: {formatCurrency(user.accountBalance)}
             </div>
           </motion.div>

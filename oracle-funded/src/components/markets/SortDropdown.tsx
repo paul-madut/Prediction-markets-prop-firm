@@ -33,14 +33,14 @@ export function SortDropdown<T extends string>({ options, value, onChange }: Sor
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold border border-gray-200 rounded-lg bg-white hover:bg-gray-50 transition-colors"
+        className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold border border-gray-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
       >
-        <span className="text-gray-700">{active.label}</span>
-        <ChevronDownIcon className={cn("w-4 h-4 text-gray-400 transition-transform", open && "rotate-180")} />
+        <span className="text-gray-700 dark:text-gray-300">{active.label}</span>
+        <ChevronDownIcon className={cn("w-4 h-4 text-gray-400 dark:text-gray-500 transition-transform", open && "rotate-180")} />
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 min-w-[200px] bg-white rounded-lg shadow-lg border border-gray-200 p-1 z-50">
+        <div className="absolute right-0 top-full mt-2 min-w-[200px] bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-gray-200 dark:border-slate-800 p-1 z-50">
           {options.map((o) => (
             <button
               key={o.value}
@@ -49,7 +49,7 @@ export function SortDropdown<T extends string>({ options, value, onChange }: Sor
                 setOpen(false);
               }}
               className={cn(
-                "w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-50 flex items-center justify-between",
+                "w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-50 dark:hover:bg-slate-800/50 flex items-center justify-between",
                 o.value === value && "bg-blue-50 text-blue-700",
               )}
             >

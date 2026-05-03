@@ -82,7 +82,7 @@ export const SectionNav = ({ sections }: SectionNavProps) => {
                     "group flex items-center gap-3 w-full px-3 py-2 rounded-lg transition-all duration-200",
                     activeSection === section.id
                       ? "bg-blue-500/20 text-blue-400"
-                      : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                      : "text-gray-400 dark:text-gray-500 hover:bg-gray-800 hover:text-white"
                   )}
                 >
                   <span
@@ -105,7 +105,7 @@ export const SectionNav = ({ sections }: SectionNavProps) => {
               {/* Back to top */}
               <button
                 onClick={scrollToTop}
-                className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-all duration-200"
+                className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-gray-400 dark:text-gray-500 hover:bg-gray-800 hover:text-white transition-all duration-200"
               >
                 <ChevronUpIcon className="w-4 h-4" />
                 <span className="text-sm font-medium">Back to top</span>
@@ -138,7 +138,7 @@ export const SectionNav = ({ sections }: SectionNavProps) => {
                         "flex items-center gap-3 w-full px-3 py-2 rounded-lg transition-all duration-200 text-left",
                         activeSection === section.id
                           ? "bg-blue-500/20 text-blue-400"
-                          : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                          : "text-gray-400 dark:text-gray-500 hover:bg-gray-800 hover:text-white"
                       )}
                     >
                       <span
@@ -157,7 +157,7 @@ export const SectionNav = ({ sections }: SectionNavProps) => {
 
                   <button
                     onClick={scrollToTop}
-                    className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-all duration-200"
+                    className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-gray-400 dark:text-gray-500 hover:bg-gray-800 hover:text-white transition-all duration-200"
                   >
                     <ChevronUpIcon className="w-4 h-4" />
                     <span className="text-sm font-medium">Back to top</span>
@@ -172,7 +172,7 @@ export const SectionNav = ({ sections }: SectionNavProps) => {
                 "w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300",
                 isMobileOpen
                   ? "bg-blue-500 text-white"
-                  : "bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 text-gray-400 hover:text-white"
+                  : "bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 text-gray-400 dark:text-gray-500 hover:text-white"
               )}
             >
               <QueueListIcon className="w-5 h-5" />

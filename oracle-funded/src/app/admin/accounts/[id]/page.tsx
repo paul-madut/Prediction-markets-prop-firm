@@ -162,11 +162,11 @@ function StatusBadge({ status }: { status: string }) {
     active: "bg-emerald-100 text-emerald-700",
     funded: "bg-emerald-100 text-emerald-700",
     passed: "bg-emerald-100 text-emerald-700",
-    pending: "bg-gray-100 text-gray-700",
+    pending: "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300",
     passed_phase: "bg-blue-100 text-blue-700",
     breached: "bg-red-100 text-red-700",
     failed: "bg-red-100 text-red-700",
-    disabled: "bg-gray-200 text-gray-600",
+    disabled: "bg-gray-200 text-gray-600 dark:text-gray-300",
     closed: "bg-red-100 text-red-700",
     frozen: "bg-amber-100 text-amber-700",
   };
@@ -174,7 +174,7 @@ function StatusBadge({ status }: { status: string }) {
     <span
       className={cn(
         "inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full capitalize",
-        map[status] ?? "bg-gray-100 text-gray-700"
+        map[status] ?? "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300"
       )}
     >
       {status.replace("_", " ")}
@@ -204,7 +204,7 @@ export default function AdminAccountDetailPage() {
   if (!account) {
     return (
       <div className="space-y-6">
-        <div className="bg-white border-b border-gray-200 -mx-6 -mt-6 px-6 py-6 mb-6">
+        <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 -mx-6 -mt-6 px-6 py-6 mb-6">
           <Link
             href="/admin/traders"
             className="text-sm text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1"
@@ -213,11 +213,11 @@ export default function AdminAccountDetailPage() {
             Back to traders
           </Link>
         </div>
-        <div className="bg-white border border-gray-200 rounded-xl p-12 text-center">
-          <ExclamationTriangleIcon className="h-12 w-12 text-gray-300 mx-auto" />
-          <h2 className="text-lg font-semibold text-gray-900 mt-4">Account not found</h2>
-          <p className="text-sm text-gray-500 mt-1">
-            ID <code className="px-1 py-0.5 bg-gray-100 rounded">{id}</code> doesn&apos;t exist.
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-xl p-12 text-center">
+          <ExclamationTriangleIcon className="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto" />
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-4">Account not found</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            ID <code className="px-1 py-0.5 bg-gray-100 dark:bg-slate-800 rounded">{id}</code> doesn&apos;t exist.
           </p>
         </div>
       </div>
@@ -238,7 +238,7 @@ export default function AdminAccountDetailPage() {
   return (
     <div className="space-y-6">
       {/* Page header */}
-      <div className="bg-white border-b border-gray-200 -mx-6 -mt-6 px-6 py-6 mb-6">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 -mx-6 -mt-6 px-6 py-6 mb-6">
         <Link
           href="/admin/traders"
           className="text-sm text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1 mb-4"
@@ -254,20 +254,20 @@ export default function AdminAccountDetailPage() {
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-xl font-bold text-gray-900 truncate">
+                <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 truncate">
                   {snapshot.username}
                 </h1>
                 <StatusBadge status={snapshot.accountStatus} />
               </div>
-              <p className="text-sm text-gray-500 truncate">{snapshot.email}</p>
-              <div className="flex items-center gap-3 text-xs text-gray-500 mt-1 flex-wrap">
+              <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{snapshot.email}</p>
+              <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mt-1 flex-wrap">
                 <span>{account.configName}</span>
                 <span>·</span>
                 <span>{account.phaseLabel}</span>
                 <span>·</span>
                 <span>{account.daysRemaining}d remaining</span>
                 <span>·</span>
-                <code className="px-1.5 py-0.5 bg-gray-100 rounded">
+                <code className="px-1.5 py-0.5 bg-gray-100 dark:bg-slate-800 rounded">
                   {snapshot.accountId}
                 </code>
               </div>
@@ -288,14 +288,14 @@ export default function AdminAccountDetailPage() {
               <DropdownMenu.Content
                 align="end"
                 sideOffset={6}
-                className="bg-white border border-gray-200 rounded-lg shadow-lg min-w-[220px] py-1 z-50"
+                className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-lg shadow-lg min-w-[220px] py-1 z-50"
               >
                 {(Object.keys(actionMeta) as AccountAction[]).map((key) => (
                   <DropdownMenu.Item
                     key={key}
                     onSelect={() => setPendingAction(key)}
                     className={cn(
-                      "px-3 py-2 text-sm text-gray-700 flex items-center gap-2 cursor-pointer outline-none",
+                      "px-3 py-2 text-sm text-gray-700 dark:text-gray-300 flex items-center gap-2 cursor-pointer outline-none",
                       "data-[highlighted]:bg-indigo-50 data-[highlighted]:text-indigo-700"
                     )}
                   >
@@ -340,8 +340,8 @@ export default function AdminAccountDetailPage() {
       </section>
 
       {/* Tabs */}
-      <Tabs.Root defaultValue="overview" className="bg-white rounded-xl border border-gray-200">
-        <Tabs.List className="flex border-b border-gray-200 px-2">
+      <Tabs.Root defaultValue="overview" className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800">
+        <Tabs.List className="flex border-b border-gray-200 dark:border-slate-800 px-2">
           {[
             ["overview", "Overview"],
             ["positions", "Positions"],
@@ -354,7 +354,7 @@ export default function AdminAccountDetailPage() {
               key={value}
               value={value}
               className={cn(
-                "px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent",
+                "px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent",
                 "data-[state=active]:text-indigo-600 data-[state=active]:border-indigo-600",
                 "hover:text-gray-900 transition"
               )}
@@ -367,7 +367,7 @@ export default function AdminAccountDetailPage() {
         {/* Overview */}
         <Tabs.Content value="overview" className="p-6 space-y-6">
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 mb-3">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
               Equity vs floor (24d)
             </h3>
             <div className="h-64">
@@ -408,10 +408,10 @@ export default function AdminAccountDetailPage() {
 
           {account.ruleOverrides && Object.keys(account.ruleOverrides).length > 0 && (
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-2">
+              <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
                 Active rule overrides
               </h3>
-              <pre className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-xs font-mono text-gray-700 overflow-x-auto">
+              <pre className="bg-gray-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-800 rounded-lg p-3 text-xs font-mono text-gray-700 dark:text-gray-300 overflow-x-auto">
                 {JSON.stringify(account.ruleOverrides, null, 2)}
               </pre>
             </div>
@@ -424,8 +424,8 @@ export default function AdminAccountDetailPage() {
             <EmptyState message="No open positions." />
           ) : (
             <table className="w-full text-sm">
-              <thead className="text-left text-xs text-gray-500 uppercase">
-                <tr className="border-b border-gray-200">
+              <thead className="text-left text-xs text-gray-500 dark:text-gray-400 uppercase">
+                <tr className="border-b border-gray-200 dark:border-slate-800">
                   <th className="pb-2 pr-4">Market</th>
                   <th className="pb-2 pr-4">Side</th>
                   <th className="pb-2 pr-4">Contracts</th>
@@ -436,10 +436,10 @@ export default function AdminAccountDetailPage() {
               </thead>
               <tbody>
                 {account.positions.map((p) => (
-                  <tr key={`${p.ticker}-${p.side}`} className="border-b border-gray-100 last:border-0">
+                  <tr key={`${p.ticker}-${p.side}`} className="border-b border-gray-100 dark:border-slate-800 last:border-0">
                     <td className="py-3 pr-4">
-                      <p className="font-medium text-gray-900">{p.market_title}</p>
-                      <code className="text-xs text-gray-500">{p.ticker}</code>
+                      <p className="font-medium text-gray-900 dark:text-gray-100">{p.market_title}</p>
+                      <code className="text-xs text-gray-500 dark:text-gray-400">{p.ticker}</code>
                     </td>
                     <td className="py-3 pr-4 uppercase font-semibold">{p.side}</td>
                     <td className="py-3 pr-4">{p.position}</td>
@@ -465,7 +465,7 @@ export default function AdminAccountDetailPage() {
           {account.recentTrades.length === 0 ? (
             <EmptyState message="No recent trades." />
           ) : (
-            <ul className="divide-y divide-gray-100">
+            <ul className="divide-y divide-gray-100 dark:divide-slate-800">
               {account.recentTrades.map((t) => {
                 const isSystem = t.ticket?.startsWith("SYS-");
                 return (
@@ -473,7 +473,7 @@ export default function AdminAccountDetailPage() {
                     <div className="flex items-center justify-between gap-4">
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <p className="font-medium text-gray-900 truncate">
+                          <p className="font-medium text-gray-900 dark:text-gray-100 truncate">
                             {t.market_title}
                           </p>
                           {isSystem && (
@@ -482,7 +482,7 @@ export default function AdminAccountDetailPage() {
                             </span>
                           )}
                         </div>
-                        <p className="text-xs text-gray-500 mt-0.5">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                           {t.shares} contracts · {t.side.toUpperCase()} · entry {t.entryPrice}¢ → exit {t.exitPrice}¢
                         </p>
                       </div>
@@ -505,7 +505,7 @@ export default function AdminAccountDetailPage() {
 
         {/* Drawdown */}
         <Tabs.Content value="drawdown" className="p-6">
-          <h3 className="text-sm font-semibold text-gray-900 mb-3">
+          <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
             Equity, balance, and floors
           </h3>
           <div className="h-72">
@@ -551,21 +551,21 @@ export default function AdminAccountDetailPage() {
           {account.activity.length === 0 ? (
             <EmptyState message="No state transitions yet." />
           ) : (
-            <ol className="relative border-l border-gray-200 ml-3 space-y-6">
+            <ol className="relative border-l border-gray-200 dark:border-slate-800 ml-3 space-y-6">
               {account.activity.map((entry) => (
                 <li key={entry.id} className="ml-6">
                   <span className="absolute -left-[7px] mt-1.5 h-3 w-3 rounded-full bg-indigo-500 ring-2 ring-white" />
                   <div className="flex items-baseline gap-2">
-                    <span className="text-sm font-medium text-gray-900 capitalize">
+                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100 capitalize">
                       {entry.fromStatus ? `${entry.fromStatus} → ${entry.toStatus}` : entry.toStatus}
                     </span>
-                    <time className="text-xs text-gray-500">
+                    <time className="text-xs text-gray-500 dark:text-gray-400">
                       {new Date(entry.occurredAt).toLocaleString()}
                     </time>
                   </div>
-                  {entry.reason && <p className="text-sm text-gray-600 mt-1">{entry.reason}</p>}
+                  {entry.reason && <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{entry.reason}</p>}
                   {entry.metadata && (
-                    <pre className="mt-2 text-xs font-mono text-gray-600 bg-gray-50 border border-gray-200 rounded p-2 overflow-x-auto">
+                    <pre className="mt-2 text-xs font-mono text-gray-600 dark:text-gray-300 bg-gray-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-800 rounded p-2 overflow-x-auto">
                       {JSON.stringify(entry.metadata, null, 2)}
                     </pre>
                   )}
@@ -581,8 +581,8 @@ export default function AdminAccountDetailPage() {
             <EmptyState message="No audit entries for this account." />
           ) : (
             <table className="w-full text-sm">
-              <thead className="text-left text-xs text-gray-500 uppercase">
-                <tr className="border-b border-gray-200">
+              <thead className="text-left text-xs text-gray-500 dark:text-gray-400 uppercase">
+                <tr className="border-b border-gray-200 dark:border-slate-800">
                   <th className="pb-2 pr-4">Time</th>
                   <th className="pb-2 pr-4">Action</th>
                   <th className="pb-2 pr-4">Actor</th>
@@ -591,15 +591,15 @@ export default function AdminAccountDetailPage() {
               </thead>
               <tbody>
                 {account.audit.map((entry) => (
-                  <tr key={entry.id} className="border-b border-gray-100 last:border-0 align-top">
-                    <td className="py-3 pr-4 text-xs text-gray-500 whitespace-nowrap">
+                  <tr key={entry.id} className="border-b border-gray-100 dark:border-slate-800 last:border-0 align-top">
+                    <td className="py-3 pr-4 text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
                       {new Date(entry.timestamp).toLocaleString()}
                     </td>
                     <td className="py-3 pr-4 font-mono text-xs">{entry.action}</td>
                     <td className="py-3 pr-4">{entry.actor}</td>
-                    <td className="py-3 pr-4 text-xs text-gray-600">
+                    <td className="py-3 pr-4 text-xs text-gray-600 dark:text-gray-300">
                       {entry.before || entry.after || entry.metadata ? (
-                        <pre className="font-mono whitespace-pre-wrap break-words bg-gray-50 border border-gray-200 rounded p-2">
+                        <pre className="font-mono whitespace-pre-wrap break-words bg-gray-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-800 rounded p-2">
                           {JSON.stringify(
                             { before: entry.before, after: entry.after, metadata: entry.metadata },
                             null,
@@ -607,7 +607,7 @@ export default function AdminAccountDetailPage() {
                           )}
                         </pre>
                       ) : (
-                        <span className="text-gray-400">—</span>
+                        <span className="text-gray-400 dark:text-gray-500">—</span>
                       )}
                     </td>
                   </tr>
@@ -653,21 +653,21 @@ function KpiCard({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
-      className="bg-white rounded-xl border border-gray-200 p-4"
+      className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-4"
     >
-      <p className="text-xs text-gray-500 uppercase tracking-wide">{label}</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">{label}</p>
       <p
         className={cn(
           "text-xl font-bold mt-1",
           tone === "positive" && "text-emerald-600",
           tone === "negative" && "text-red-600",
           tone === "warning" && "text-amber-600",
-          !tone && "text-gray-900"
+          !tone && "text-gray-900 dark:text-gray-100"
         )}
       >
         {value}
       </p>
-      {sub && <p className="text-xs text-gray-500 mt-0.5">{sub}</p>}
+      {sub && <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{sub}</p>}
     </motion.div>
   );
 }
@@ -675,7 +675,7 @@ function KpiCard({
 function EmptyState({ message }: { message: string }) {
   return (
     <div className="text-center py-12">
-      <p className="text-sm text-gray-500">{message}</p>
+      <p className="text-sm text-gray-500 dark:text-gray-400">{message}</p>
     </div>
   );
 }

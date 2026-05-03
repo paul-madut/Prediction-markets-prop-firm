@@ -27,7 +27,7 @@ export default function HelpPage() {
     <div className="space-y-10 max-w-7xl mx-auto">
       {/* Help Categories */}
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-gray-900 text-center">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center">
           How Can We Help?
         </h2>
 
@@ -75,7 +75,7 @@ export default function HelpPage() {
 
       {/* Contact Support */}
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-gray-900 text-center">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center">
           Contact Support
         </h2>
 
@@ -108,7 +108,7 @@ export default function HelpPage() {
 
       {/* FAQ Section */}
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-gray-900 text-center">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center">
           Frequently Asked Questions
         </h2>
 
@@ -137,12 +137,12 @@ export default function HelpPage() {
           ].map((faq, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg shadow-sm p-6 border border-gray-200"
+              className="bg-white dark:bg-slate-900 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-slate-800"
             >
-              <h3 className="font-semibold text-gray-900 mb-2 text-lg">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2 text-lg">
                 {faq.q}
               </h3>
-              <p className="text-gray-700">{faq.a}</p>
+              <p className="text-gray-700 dark:text-gray-300">{faq.a}</p>
             </div>
           ))}
         </div>
@@ -150,37 +150,37 @@ export default function HelpPage() {
 
       {/* Additional Resources */}
       <div className="bg-blue-50 rounded-xl p-8 border border-blue-100">
-        <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
+        <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center">
           Additional Resources
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
           <a
             href="/dashboard/rules"
-            className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all"
+            className="p-4 bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 hover:border-blue-300 hover:shadow-md transition-all"
           >
             <DocumentTextIcon className="h-8 w-8 mx-auto mb-2 text-blue-600" />
-            <div className="font-semibold text-gray-900">Trading Rules</div>
-            <p className="text-sm text-gray-600 mt-1">
+            <div className="font-semibold text-gray-900 dark:text-gray-100">Trading Rules</div>
+            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
               Review all challenge rules
             </p>
           </a>
           <a
             href="/dashboard/analytics"
-            className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all"
+            className="p-4 bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 hover:border-blue-300 hover:shadow-md transition-all"
           >
             <BookOpenIcon className="h-8 w-8 mx-auto mb-2 text-blue-600" />
-            <div className="font-semibold text-gray-900">Trading Guide</div>
-            <p className="text-sm text-gray-600 mt-1">
+            <div className="font-semibold text-gray-900 dark:text-gray-100">Trading Guide</div>
+            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
               Learn trading strategies
             </p>
           </a>
           <a
             href="/dashboard/settings"
-            className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all"
+            className="p-4 bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 hover:border-blue-300 hover:shadow-md transition-all"
           >
             <QuestionMarkCircleIcon className="h-8 w-8 mx-auto mb-2 text-blue-600" />
-            <div className="font-semibold text-gray-900">Account Settings</div>
-            <p className="text-sm text-gray-600 mt-1">
+            <div className="font-semibold text-gray-900 dark:text-gray-100">Account Settings</div>
+            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
               Manage your preferences
             </p>
           </a>

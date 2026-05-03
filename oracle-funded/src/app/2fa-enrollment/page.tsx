@@ -135,7 +135,7 @@ export default function TwoFAEnrollmentPage() {
 
                 <div className="mt-4 grid grid-cols-2 gap-4 items-center">
                   {/* QR placeholder */}
-                  <div className="aspect-square bg-white rounded-lg flex items-center justify-center">
+                  <div className="aspect-square bg-white dark:bg-slate-900 rounded-lg flex items-center justify-center">
                     <div className="grid grid-cols-7 gap-0.5 p-3">
                       {Array.from({ length: 49 }).map((_, i) => (
                         <div
@@ -143,7 +143,7 @@ export default function TwoFAEnrollmentPage() {
                           className={cn(
                             "h-3 w-3",
                             // Pseudo-random pattern based on index
-                            (i * 7 + (i % 3)) % 3 === 0 ? "bg-black" : "bg-white"
+                            (i * 7 + (i % 3)) % 3 === 0 ? "bg-black" : "bg-white dark:bg-slate-900"
                           )}
                         />
                       ))}

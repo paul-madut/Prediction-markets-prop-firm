@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+/* Class-based dark mode for Tailwind v4 — enables `dark:...` utilities
+   when any ancestor (typically <html>) carries the .dark class. */
+@variant dark (&:where(.dark, .dark *));
+
+/* ============================================
+   BRAND TOKENS — runtime-customizable
+   Set by FirmBrandingContext on mount. The defaults here let SSR render
+   the correct colors before hydration.
+   ============================================ */
+
+:root {
+  --brand-primary: #4F46E5;
+  --brand-secondary: #0EA5E9;
+  --brand-accent: #F59E0B;
+}
+
 /* ============================================
    DESIGN TOKEN SYSTEM
    ============================================ */
@@ -126,6 +142,18 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html.dark body {
+  background: #020617; /* slate-950 */
+  color: #f3f4f6;
+}
+
+/* Make native form controls render reasonably in dark mode */
+html.dark input,
+html.dark select,
+html.dark textarea {
+  color-scheme: dark;
 }
 
 /* ============================================

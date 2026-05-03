@@ -87,9 +87,9 @@ export const RuleCard = ({
               </motion.div>
             )}
             <div className="flex-1">
-              <h3 className="text-xl font-bold text-gray-900 mb-1">{title}</h3>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-1">{title}</h3>
               {description && (
-                <p className="text-gray-600 text-sm">{description}</p>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">{description}</p>
               )}
             </div>
           </div>
@@ -114,7 +114,7 @@ export const RuleCard = ({
                     colors.text.replace("text-", "bg-")
                   )}
                 />
-                <span className="text-gray-700 text-sm leading-relaxed">
+                <span className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                   {item}
                 </span>
               </motion.li>

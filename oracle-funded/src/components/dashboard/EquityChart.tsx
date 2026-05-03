@@ -15,8 +15,8 @@ export const EquityChart = () => {
   }));
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">Equity Overview</h3>
+    <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-slate-800">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Equity Overview</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={chartData}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />

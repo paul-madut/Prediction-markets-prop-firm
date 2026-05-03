@@ -210,23 +210,23 @@ export default function ChallengeModal({
             transition={{ type: "spring", stiffness: 500, damping: 35 }}
             className="fixed inset-4 md:inset-10 z-50 overflow-hidden"
           >
-            <div className="h-full bg-white rounded-2xl shadow-2xl flex flex-col">
+            <div className="h-full bg-white dark:bg-slate-900 rounded-2xl shadow-2xl flex flex-col">
               {/* Header */}
-              <div className="flex items-center justify-between px-8 py-6 border-b border-gray-200">
+              <div className="flex items-center justify-between px-8 py-6 border-b border-gray-200 dark:border-slate-800">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                     {editMode ? "Edit Challenge" : "New Challenge"}
                   </h2>
-                  <p className="text-gray-500 mt-1">
+                  <p className="text-gray-500 dark:text-gray-400 mt-1">
                     {editMode ? "Update challenge configuration" : "Create a new evaluation program"}
                   </p>
                 </div>
                 <button
                   onClick={handleClose}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
                   disabled={isSaving}
                 >
-                  <XMarkIcon className="h-6 w-6 text-gray-500" />
+                  <XMarkIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
                 </button>
               </div>
 
@@ -238,7 +238,7 @@ export default function ChallengeModal({
                     <form onSubmit={handleSubmit} id="challenge-form">
                       {/* Basic Info Section */}
                       <div className="space-y-6">
-                        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
                           <ViewfinderCircleIcon className="h-5 w-5 text-indigo-600" />
                           Basic Information
                         </h3>
@@ -246,7 +246,7 @@ export default function ChallengeModal({
                         <div className="space-y-4">
                           {/* Name */}
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Challenge Name *
                             </label>
                             <input
@@ -255,7 +255,7 @@ export default function ChallengeModal({
                               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                               className={cn(
                                 "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500",
-                                errors.name ? "border-red-500" : "border-gray-300"
+                                errors.name ? "border-red-500" : "border-gray-300 dark:border-slate-700"
                               )}
                               placeholder="e.g., Blitz $10,000"
                               maxLength={100}
@@ -270,7 +270,7 @@ export default function ChallengeModal({
 
                           {/* Description */}
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Description *
                             </label>
                             <textarea
@@ -278,7 +278,7 @@ export default function ChallengeModal({
                               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                               className={cn(
                                 "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none",
-                                errors.description ? "border-red-500" : "border-gray-300"
+                                errors.description ? "border-red-500" : "border-gray-300 dark:border-slate-700"
                               )}
                               placeholder="Brief description of this challenge"
                               rows={3}
@@ -291,7 +291,7 @@ export default function ChallengeModal({
                                   {errors.description}
                                 </p>
                               ) : (
-                                <span className="text-sm text-gray-500">
+                                <span className="text-sm text-gray-500 dark:text-gray-400">
                                   {formData.description.length}/500
                                 </span>
                               )}
@@ -300,13 +300,13 @@ export default function ChallengeModal({
 
                           {/* Challenge Type */}
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Challenge Type *
                             </label>
                             <select
                               value={formData.challengeTypeId}
                               onChange={(e) => setFormData({ ...formData, challengeTypeId: e.target.value as "blitz" | "2step" | "3step" })}
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                              className="w-full px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                             >
                               <option value="blitz">Blitz (Single Phase)</option>
                               <option value="2step">2-Step (Two Phases)</option>
@@ -318,7 +318,7 @@ export default function ChallengeModal({
 
                       {/* Pricing Section */}
                       <div className="space-y-6 mt-8">
-                        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
                           <CurrencyDollarIcon className="h-5 w-5 text-indigo-600" />
                           Pricing
                         </h3>
@@ -326,7 +326,7 @@ export default function ChallengeModal({
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {/* Account Size */}
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Account Size * (USD)
                             </label>
                             <input
@@ -335,7 +335,7 @@ export default function ChallengeModal({
                               onChange={(e) => setFormData({ ...formData, accountSize: parseFloat(e.target.value) * 100 || 0 })}
                               className={cn(
                                 "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500",
-                                errors.accountSize ? "border-red-500" : "border-gray-300"
+                                errors.accountSize ? "border-red-500" : "border-gray-300 dark:border-slate-700"
                               )}
                               placeholder="50000"
                               step="1000"
@@ -347,7 +347,7 @@ export default function ChallengeModal({
 
                           {/* Base Price */}
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Base Price * (USD)
                             </label>
                             <input
@@ -356,7 +356,7 @@ export default function ChallengeModal({
                               onChange={(e) => setFormData({ ...formData, basePrice: parseFloat(e.target.value) * 100 || 0 })}
                               className={cn(
                                 "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500",
-                                errors.basePrice ? "border-red-500" : "border-gray-300"
+                                errors.basePrice ? "border-red-500" : "border-gray-300 dark:border-slate-700"
                               )}
                               placeholder="40.00"
                               step="1"
@@ -376,11 +376,11 @@ export default function ChallengeModal({
                             className="h-4 w-4 text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500"
                           />
                           <div className="flex-1">
-                            <label className="font-medium text-gray-900 flex items-center gap-2">
+                            <label className="font-medium text-gray-900 dark:text-gray-100 flex items-center gap-2">
                               <TagIcon className="h-4 w-4 text-amber-600" />
                               This is a promotional offer
                             </label>
-                            <p className="text-sm text-gray-600 mt-0.5">
+                            <p className="text-sm text-gray-600 dark:text-gray-300 mt-0.5">
                               Offer a discounted price with expiration date
                             </p>
                           </div>
@@ -390,7 +390,7 @@ export default function ChallengeModal({
                         {formData.isPromotion && (
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-8">
                             <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-1">
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                 Discounted Price * (USD)
                               </label>
                               <input
@@ -399,7 +399,7 @@ export default function ChallengeModal({
                                 onChange={(e) => setFormData({ ...formData, discountedPrice: parseFloat(e.target.value) * 100 || 0 })}
                                 className={cn(
                                   "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500",
-                                  errors.discountedPrice ? "border-red-500" : "border-gray-300"
+                                  errors.discountedPrice ? "border-red-500" : "border-gray-300 dark:border-slate-700"
                                 )}
                                 placeholder="32.00"
                                 step="1"
@@ -410,14 +410,14 @@ export default function ChallengeModal({
                             </div>
 
                             <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-1">
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                 Expires At
                               </label>
                               <input
                                 type="datetime-local"
                                 value={formData.discountExpiresAt ? formData.discountExpiresAt.slice(0, 16) : ""}
                                 onChange={(e) => setFormData({ ...formData, discountExpiresAt: e.target.value ? `${e.target.value}:00Z` : undefined })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                               />
                             </div>
                           </div>
@@ -426,7 +426,7 @@ export default function ChallengeModal({
 
                       {/* Rules Section */}
                       <div className="space-y-6 mt-8">
-                        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
                           <ArrowTrendingDownIcon className="h-5 w-5 text-indigo-600" />
                           Trading Rules
                         </h3>
@@ -434,7 +434,7 @@ export default function ChallengeModal({
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           {/* Profit ViewfinderCircleIcon */}
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Profit ViewfinderCircleIcon * (%)
                             </label>
                             <input
@@ -443,7 +443,7 @@ export default function ChallengeModal({
                               onChange={(e) => setFormData({ ...formData, profitTargetPercent: parseFloat(e.target.value) || 0 })}
                               className={cn(
                                 "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500",
-                                errors.profitTargetPercent ? "border-red-500" : "border-gray-300"
+                                errors.profitTargetPercent ? "border-red-500" : "border-gray-300 dark:border-slate-700"
                               )}
                               placeholder="8"
                               step="0.1"
@@ -457,7 +457,7 @@ export default function ChallengeModal({
 
                           {/* Daily Loss Limit */}
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Daily Loss Limit * (%)
                             </label>
                             <input
@@ -466,7 +466,7 @@ export default function ChallengeModal({
                               onChange={(e) => setFormData({ ...formData, dailyLossLimitPercent: parseFloat(e.target.value) || 0 })}
                               className={cn(
                                 "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500",
-                                errors.dailyLossLimitPercent ? "border-red-500" : "border-gray-300"
+                                errors.dailyLossLimitPercent ? "border-red-500" : "border-gray-300 dark:border-slate-700"
                               )}
                               placeholder="5"
                               step="0.1"
@@ -480,7 +480,7 @@ export default function ChallengeModal({
 
                           {/* Max Drawdown */}
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Max Drawdown * (%)
                             </label>
                             <input
@@ -489,7 +489,7 @@ export default function ChallengeModal({
                               onChange={(e) => setFormData({ ...formData, maxDrawdownPercent: parseFloat(e.target.value) || 0 })}
                               className={cn(
                                 "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500",
-                                errors.maxDrawdownPercent ? "border-red-500" : "border-gray-300"
+                                errors.maxDrawdownPercent ? "border-red-500" : "border-gray-300 dark:border-slate-700"
                               )}
                               placeholder="10"
                               step="0.1"
@@ -504,13 +504,13 @@ export default function ChallengeModal({
 
                         {/* Drawdown Type */}
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             Drawdown Type *
                           </label>
                           <select
                             value={formData.drawdownType}
                             onChange={(e) => setFormData({ ...formData, drawdownType: e.target.value as "EOD" | "realtime" | "trailing" })}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            className="w-full px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                           >
                             <option value="EOD">End of Day (EOD)</option>
                             <option value="realtime">Real-time</option>
@@ -521,7 +521,7 @@ export default function ChallengeModal({
 
                       {/* Advanced Section */}
                       <div className="space-y-6 mt-8">
-                        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
                           <CalendarIcon className="h-5 w-5 text-indigo-600" />
                           Requirements
                         </h3>
@@ -529,7 +529,7 @@ export default function ChallengeModal({
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {/* Min Trading Days */}
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Minimum Trading Days *
                             </label>
                             <input
@@ -538,7 +538,7 @@ export default function ChallengeModal({
                               onChange={(e) => setFormData({ ...formData, minTradingDays: parseInt(e.target.value) || 0 })}
                               className={cn(
                                 "w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500",
-                                errors.minTradingDays ? "border-red-500" : "border-gray-300"
+                                errors.minTradingDays ? "border-red-500" : "border-gray-300 dark:border-slate-700"
                               )}
                               placeholder="10"
                               min="1"
@@ -551,14 +551,14 @@ export default function ChallengeModal({
 
                           {/* Max Trading Days */}
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                               Maximum Trading Days (Optional)
                             </label>
                             <input
                               type="number"
                               value={formData.maxTradingDays || ""}
                               onChange={(e) => setFormData({ ...formData, maxTradingDays: e.target.value ? parseInt(e.target.value) : undefined })}
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                              className="w-full px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                               placeholder="Leave empty for no limit"
                               min="1"
                             />
@@ -566,14 +566,14 @@ export default function ChallengeModal({
                         </div>
 
                         {/* Enable/Disable */}
-                        <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <div className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-slate-950 rounded-lg border border-gray-200 dark:border-slate-800">
                           <input
                             type="checkbox"
                             checked={formData.isEnabled}
                             onChange={(e) => setFormData({ ...formData, isEnabled: e.target.checked })}
                             className="h-4 w-4 text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500"
                           />
-                          <label className="font-medium text-gray-900">
+                          <label className="font-medium text-gray-900 dark:text-gray-100">
                             Enable this challenge immediately
                           </label>
                         </div>
@@ -584,13 +584,13 @@ export default function ChallengeModal({
                   {/* Preview Panel - 1 column */}
                   <div className="space-y-4">
                     <div className="sticky top-0 space-y-4">
-                      <h3 className="text-lg font-semibold text-gray-900">Preview</h3>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Preview</h3>
 
                       <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-200 space-y-4">
                         {/* Account Info */}
                         <div>
-                          <p className="text-sm text-gray-600">Account Size</p>
-                          <p className="text-2xl font-bold text-gray-900">
+                          <p className="text-sm text-gray-600 dark:text-gray-300">Account Size</p>
+                          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                             {formatCurrency(formData.accountSize)}
                           </p>
                         </div>
@@ -599,33 +599,33 @@ export default function ChallengeModal({
 
                         {/* Profit ViewfinderCircleIcon */}
                         <div>
-                          <p className="text-sm text-gray-600">Profit Target</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-300">Profit Target</p>
                           <p className="text-lg font-semibold text-green-600">
                             {formatCurrency(profitTargetAmount)}
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
                             {formData.profitTargetPercent}% of account
                           </p>
                         </div>
 
                         {/* Daily Loss Limit */}
                         <div>
-                          <p className="text-sm text-gray-600">Daily Loss Limit</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-300">Daily Loss Limit</p>
                           <p className="text-lg font-semibold text-red-600">
                             {formatCurrency(dailyLossAmount)}
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
                             {formData.dailyLossLimitPercent}% of account
                           </p>
                         </div>
 
                         {/* Max Drawdown */}
                         <div>
-                          <p className="text-sm text-gray-600">Max Drawdown</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-300">Max Drawdown</p>
                           <p className="text-lg font-semibold text-red-600">
                             {formatCurrency(maxDrawdownAmount)}
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
                             {formData.maxDrawdownPercent}% of account ({formData.drawdownType})
                           </p>
                         </div>
@@ -634,14 +634,14 @@ export default function ChallengeModal({
                         <div className="h-px bg-indigo-200" />
 
                         <div>
-                          <p className="text-sm text-gray-600">Price</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-300">Price</p>
                           {formData.isPromotion && formData.discountedPrice ? (
                             <>
                               <div className="flex items-baseline gap-2">
                                 <p className="text-2xl font-bold text-amber-600">
                                   {formatCurrency(formData.discountedPrice)}
                                 </p>
-                                <p className="text-sm text-gray-400 line-through">
+                                <p className="text-sm text-gray-400 dark:text-gray-500 line-through">
                                   {formatCurrency(formData.basePrice)}
                                 </p>
                               </div>
@@ -650,7 +650,7 @@ export default function ChallengeModal({
                               </p>
                             </>
                           ) : (
-                            <p className="text-2xl font-bold text-gray-900">
+                            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                               {formatCurrency(formData.basePrice)}
                             </p>
                           )}
@@ -661,18 +661,18 @@ export default function ChallengeModal({
 
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center justify-between">
-                            <span className="text-gray-600">Min Trading Days</span>
-                            <span className="font-medium text-gray-900">{formData.minTradingDays}</span>
+                            <span className="text-gray-600 dark:text-gray-300">Min Trading Days</span>
+                            <span className="font-medium text-gray-900 dark:text-gray-100">{formData.minTradingDays}</span>
                           </div>
                           {formData.maxTradingDays && (
                             <div className="flex items-center justify-between">
-                              <span className="text-gray-600">Max Trading Days</span>
-                              <span className="font-medium text-gray-900">{formData.maxTradingDays}</span>
+                              <span className="text-gray-600 dark:text-gray-300">Max Trading Days</span>
+                              <span className="font-medium text-gray-900 dark:text-gray-100">{formData.maxTradingDays}</span>
                             </div>
                           )}
                           <div className="flex items-center justify-between">
-                            <span className="text-gray-600">Challenge Type</span>
-                            <span className="font-medium text-gray-900 uppercase">{formData.challengeTypeId}</span>
+                            <span className="text-gray-600 dark:text-gray-300">Challenge Type</span>
+                            <span className="font-medium text-gray-900 dark:text-gray-100 uppercase">{formData.challengeTypeId}</span>
                           </div>
                         </div>
                       </div>
@@ -682,8 +682,8 @@ export default function ChallengeModal({
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-between px-8 py-6 border-t border-gray-200 bg-gray-50">
-                <p className="text-sm text-gray-500">
+              <div className="flex items-center justify-between px-8 py-6 border-t border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-slate-950">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                   * Required fields
                 </p>
                 <div className="flex items-center gap-3">
@@ -691,7 +691,7 @@ export default function ChallengeModal({
                     type="button"
                     onClick={handleClose}
                     disabled={isSaving}
-                    className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+                    className="px-6 py-2 border border-gray-300 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors disabled:opacity-50"
                   >
                     Cancel
                   </button>

@@ -126,7 +126,7 @@ export default function MarketsPage() {
 
           {filteredEvents.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500">No markets found matching your criteria</p>
+              <p className="text-gray-500 dark:text-gray-400">No markets found matching your criteria</p>
             </div>
           )}
         </>
