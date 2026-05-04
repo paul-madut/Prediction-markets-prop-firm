@@ -25,7 +25,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
         <TopBar />
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-slate-950 p-4 pb-8 md:p-6 md:pb-8">
+        <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-slate-950 p-4 pb-16 md:p-6 md:pb-20">
           <PageTransition>
             {children}
           </PageTransition>
