@@ -244,3 +244,51 @@ For MVP demo purposes, no real DB is connected, so this does not block progress.
 Since Clerk user IDs are not UUIDs and `audit_log.actor_user_id` is `@db.Uuid` (non-nullable
 UUID in the DB), the register action omits `actorUserId` (it is nullable: `String?`). The Clerk
 user ID is stored in `metadata.clerkUserId` (jsonb) instead.
+
+---
+
+## PHASE 2 — TENANT EXTRACTION MIDDLEWARE
+
+### Decision 13 — Middleware injects trusted tenant headers; no DB call in middleware
+
+**Date:** 2026-05-05
+**Task:** Add middleware for tenant extraction
+
+**What was built:**
+
+1. **`oracle-funded/src/middleware.ts`** (updated) — the existing `clerkMiddleware` handler now:
+   - Strips any client-supplied `x-webflux-*` headers before every request (prevents injection)
+   - After `auth.protect()`, calls `await auth()` to get `userId` and `sessionId` from the
+     Clerk-verified JWT and sets them as `x-webflux-user-id` / `x-webflux-session-id` headers
+   - Parses the first subdomain segment from the `host` header (skipping reserved names like
+     `www`, `app`, `api`) and sets it as `x-webflux-firm-slug` (e.g. `acme.oracle-funded.com`
+     → `x-webflux-firm-slug: acme`)
+   - Returns `NextResponse.next({ request: { headers: requestHeaders } })` to forward the
+     enriched headers to the route handler
+
+2. **`packages/auth/src/headers.ts`** (new) — `readTenantHeaders(headers: Headers): TenantHeaders`
+   — reads the three injected headers in route handlers or server components
+
+3. **`packages/auth/src/context.ts`** (updated) — `getAuthContext` now accepts an optional
+   `firmSlug` parameter; when set, it scopes the `firmMember` lookup to that firm (using a
+   `firm: { slug: firmSlug }` relation filter) rather than returning the user's first membership.
+
+**Why no DB call in middleware:**
+Prisma does not support the Next.js edge runtime (the middleware default). Running the middleware
+in Node.js runtime is possible but adds ~50 ms latency to every request — unacceptable for a
+prod SaaS. The DB lookup is deferred to the route handler where `withAuth` / `enrichClerkAuth`
+already does it. The headers give the route handler enough context to scope the lookup correctly
+without a second round-trip.
+
+**Security note:**
+`x-webflux-*` headers are stripped on every request unconditionally, before the route handler
+sees them. A client cannot inject fake values; the headers route handlers read are always
+middleware-produced.
+
+**Header reference:**
+
+| Header | Source | Usage |
+|---|---|---|
+| `x-webflux-user-id` | Clerk JWT `sub` | Trust as authenticated userId |
+| `x-webflux-session-id` | Clerk JWT `sid` | Session correlation |
+| `x-webflux-firm-slug` | `host` subdomain | Scope DB lookups to specific firm |

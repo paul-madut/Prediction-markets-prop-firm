@@ -54,7 +54,14 @@ PHASE 2: AUTH
     - Creates firm_members row with role='trader', writes audit_log
     - Returns AuthContext (same shape as GET /api/auth/me), status 201
     - See docs/decisions.md Decision 12
-[ ] Add middleware for tenant extraction
+[x] Add middleware for tenant extraction
+    - oracle-funded/src/middleware.ts: strips x-webflux-* headers first, then injects
+      x-webflux-user-id, x-webflux-session-id from Clerk JWT; x-webflux-firm-slug from subdomain
+    - packages/auth/src/headers.ts: readTenantHeaders(headers) helper for route handlers
+    - packages/auth/src/context.ts: getAuthContext now accepts optional firmSlug to scope
+      firm_members lookup to a specific firm (multi-tenant URL routing)
+    - No DB call in middleware (Prisma/edge incompatibility); lookup deferred to route handler
+    - See docs/decisions.md Decision 13
 
 ----------------------------------
 

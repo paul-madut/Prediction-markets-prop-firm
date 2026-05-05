@@ -1,0 +1,1 @@
+{"version":3,"file":"headers.d.ts","sourceRoot":"","sources":["../src/headers.ts"],"names":[],"mappings":"AAAA;;;;;;;;;;;;;;;;;;GAkBG;AACH,MAAM,WAAW,aAAa;IAC5B,6DAA6D;IAC7D,MAAM,EAAE,MAAM,GAAG,IAAI,CAAC;IACtB,mDAAmD;IACnD,SAAS,EAAE,MAAM,GAAG,IAAI,CAAC;IACzB;;;;OAIG;IACH,QAAQ,EAAE,MAAM,GAAG,IAAI,CAAC;CACzB;AAED,wBAAgB,iBAAiB,CAAC,OAAO,EAAE,OAAO,GAAG,aAAa,CAMjE"}
