@@ -24,6 +24,7 @@ exports.exponentialBackoffMs = exponentialBackoffMs;
 exports.generateUuid = generateUuid;
 exports.safeParseInt = safeParseInt;
 __exportStar(require("./eval.js"), exports);
+__exportStar(require("./pnl.js"), exports);
 // ─── Money ────────────────────────────────────────────────────────────────────
 /** Convert cents (bigint) to a display string: 1050n → "$10.50" */
 function formatCents(cents) {

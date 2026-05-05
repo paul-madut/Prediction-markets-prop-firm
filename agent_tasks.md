@@ -81,7 +81,11 @@ PHASE 3: ACCOUNT SERVICE
       computeEffectiveFloor, checkBreach — all bigint, no floats
     - GET /api/accounts/[id]/equity returns equity snapshot, effective floor, distanceToFloor, isBreach
     - See docs/decisions.md Decision 15
-[ ] Stub PnL calculation
+[x] Stub PnL calculation
+    - computeFillPrice, computeBalanceChange, computeNewAvgEntryPrice,
+      computeRealizedPnl, computeUnrealizedPnl, computePositionDelta in packages/utils/src/pnl.ts
+    - All bigint money; fill price returns null on missing quote side
+    - See docs/decisions.md Decision 16
 
 ----------------------------------
 

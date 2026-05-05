@@ -1,4 +1,5 @@
 export * from './eval.js';
+export * from './pnl.js';
 /** Convert cents (bigint) to a display string: 1050n → "$10.50" */
 export declare function formatCents(cents: bigint): string;
 /** Apply a percentage to a bigint amount using integer math. */

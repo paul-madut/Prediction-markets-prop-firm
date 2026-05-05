@@ -383,3 +383,50 @@ oracle-funded's tsconfig had `target: ES2017` which rejects BigInt literal synta
 This was a pre-existing error (existing account routes already used BigInt literals). Changed to
 `target: ES2020` (BigInt native support). Next.js/SWC always targets a modern runtime regardless
 of this flag; the bump only affects IDE type-checking, not the compiled output.
+
+---
+
+## PHASE 3 — STUB PNL CALCULATION
+
+### Decision 16 — PnL stub is pure functions in packages/utils; no DB or price-feed dependency
+
+**Date:** 2026-05-05
+**Task:** Stub PnL calculation
+
+**What was built:**
+- `packages/utils/src/pnl.ts` — pure PnL computation functions:
+  - `computeFillPrice(quote, side, action)` — market-order fill price from a MarketQuote.
+    Buys fill at ask; sells fill at bid. Returns null if the required side is absent.
+  - `computeBalanceChange(action, contracts, fillPriceCents, feesCents)` — net cash delta
+    from a fill. Negative for opens (cash out), positive for closes (cash in). Fees always
+    reduce proceeds regardless of direction.
+  - `computeNewAvgEntryPrice(existingContracts, existingAvg, addedContracts, fillPrice)` —
+    weighted-average entry price after adding contracts. Uses BigInt multiplication to avoid
+    float drift; result is floor-divided to the nearest cent (firm-favourable rounding).
+  - `computeRealizedPnl(closingContracts, avgEntry, closingPrice)` — realized PnL on a
+    closing trade: (closingPrice − avgEntry) × contracts. Can be negative.
+  - `computeUnrealizedPnl(netContracts, avgEntry, currentBid)` — conservative mark-to-bid
+    unrealized PnL. Caller supplies the correct bid for the position side (yesBid/noBid).
+  - `computePositionDelta(action, contracts, fillPrice, fees, existingContracts, existingAvg,
+    currentBid)` — composite: returns a `PositionDelta` with all fields the order engine needs
+    to upsert the position row and insert the trade row in one call.
+  - All exported from `packages/utils/src/index.ts`
+
+**Design choices:**
+
+1. **All money is BigInt.** The `computeFillPrice` and `computeNewAvgEntryPrice` return `number`
+   (prices are always <100 cents, no overflow risk) but all PnL and balance values are `bigint`.
+   Consistent with the "money is integers, never floats" architectural rule.
+
+2. **No floor/ceil on PnL.** Realized and unrealized PnL are exact integer arithmetic (no
+   rounding occurs because price × contracts is always an integer when both are integers).
+   Only `computeNewAvgEntryPrice` floors (floor division on BigInt) because averaging can
+   produce a fractional cent; rounding towards zero is firm-favourable.
+
+3. **`avgEntryPriceCents` is unchanged on close.** Remaining open contracts still carry the
+   original cost basis. Only `netContracts` and `realizedPnlCents` reflect the close.
+
+4. **"Stub" scope:** these functions contain no DB reads, no Redis calls, and no HTTP logic.
+   They are the mathematical building blocks for the order engine (Phase 4) and the eval tick
+   loop's position marking (Phase 5). The order engine wires them into the fill transaction;
+   the eval loop calls `computeUnrealizedPnl` when updating stored PnL after price changes.
