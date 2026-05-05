@@ -38,7 +38,10 @@ PHASE 1: MONOREPO + INFRA
 
 PHASE 2: AUTH
 
-[ ] Implement JWT auth (access + refresh)
+[x] Implement JWT auth (access + refresh)
+    - packages/auth created: verifyToken, getAuthContext, withAuth, enrichClerkAuth
+    - Uses @clerk/backend for server-side JWT verification (Clerk, not Supabase Auth)
+    - See docs/decisions.md Decision 10
 [ ] Add login endpoint
 [ ] Add register endpoint (tenant-scoped)
 [ ] Add middleware for tenant extraction

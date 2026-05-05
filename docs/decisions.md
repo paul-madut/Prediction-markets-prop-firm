@@ -111,6 +111,45 @@ This is the minimal workspace needed. The oracle-funded app retains its own `nod
 
 ---
 
+## PHASE 2 — AUTH
+
+### Decision 10 — Clerk instead of Supabase Auth; packages/auth wraps Clerk server SDK
+
+**Date:** 2026-05-05
+**Task:** Implement JWT auth (access + refresh)
+
+**MVP plan specified:** Supabase Auth with MFA TOTP.
+
+**Actual implementation:** The existing `oracle-funded/` Next.js app already uses
+`@clerk/nextjs` (^7.2.7) with test keys committed to `.env.local`. Replacing Clerk with
+Supabase Auth would require rewriting sign-in/sign-up pages, middleware, the `ClerkProvider`
+root layout, and migrating all existing test user accounts — significant scope with no
+feature gain for the MVP demo.
+
+**What was built:**
+- `packages/auth` — framework-agnostic auth utilities:
+  - `verifyToken(token)` — verifies a Clerk session JWT using `@clerk/backend`
+  - `extractBearerToken(header)` — parses Authorization header
+  - `getAuthContext(userId, sessionId, db)` — resolves firm membership (firmId + role)
+    from the `firm_members` table, returning a typed `AuthContext`
+  - `withAuth(handler, db)` — route handler wrapper for Next.js App Router and the
+    worker's HTTP endpoints; enforces Bearer auth + firm membership
+  - `enrichClerkAuth(clerkAuth, db)` — convenience helper for Next.js Server Components
+    and API routes that already have the Clerk `auth()` object
+
+**Access + refresh token model:**
+- Access token = Clerk session JWT (short-lived, typically 1–60 min). Verified server-side
+  via `@clerk/backend` JWKS check. Passed as `Authorization: Bearer <token>` on API calls.
+- Refresh = managed transparently by `@clerk/nextjs` on the frontend. The client SDK
+  rotates tokens before expiry using Clerk's session endpoint. No custom refresh endpoint
+  is needed for MVP.
+
+**Supabase MFA deferred:** MFA TOTP on admin/owner roles was specified in the plan.
+Clerk supports MFA natively. Will be configured in Clerk dashboard (not code changes)
+before the Blueberry demo.
+
+---
+
 ## PHASE 1 — ROW-LEVEL SECURITY (APP LAYER)
 
 ### Decision 9 — App-layer RLS via Prisma Client Extension (`createScopedClient`)
