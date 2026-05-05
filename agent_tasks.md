@@ -67,7 +67,14 @@ PHASE 2: AUTH
 
 PHASE 3: ACCOUNT SERVICE
 
-[ ] Create account CRUD endpoints
+[x] Create account CRUD endpoints
+    - GET /api/accounts — list (trader: own accounts; admin/owner: all firm accounts)
+    - POST /api/accounts — admin/owner only; provisions account directly (bypasses payment)
+    - GET /api/accounts/[id] — single account with config, phase, open positions
+    - PATCH /api/accounts/[id] — admin/owner only; status update (active ↔ disabled)
+    - BigInt cent values serialized as strings in JSON responses
+    - State log + audit log written on every PATCH
+    - See docs/decisions.md Decision 14
 [ ] Implement balance + equity logic
 [ ] Stub PnL calculation
 

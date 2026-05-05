@@ -292,3 +292,49 @@ middleware-produced.
 | `x-webflux-user-id` | Clerk JWT `sub` | Trust as authenticated userId |
 | `x-webflux-session-id` | Clerk JWT `sid` | Session correlation |
 | `x-webflux-firm-slug` | `host` subdomain | Scope DB lookups to specific firm |
+
+---
+
+## PHASE 3 — ACCOUNT SERVICE
+
+### Decision 14 — Account CRUD endpoints: scope, BigInt serialization, allowed status transitions
+
+**Date:** 2026-05-05
+**Task:** Create account CRUD endpoints
+
+**What was built:**
+- `oracle-funded/src/app/api/accounts/route.ts` — `GET /api/accounts` + `POST /api/accounts`
+- `oracle-funded/src/app/api/accounts/[id]/route.ts` — `GET /api/accounts/[id]` + `PATCH /api/accounts/[id]`
+
+**Scope rules:**
+- Traders: GET returns only their own accounts; GET [id] returns 404 if they don't own the account.
+- Admins/owners: GET returns all accounts in the firm; GET [id] returns any firm account.
+- POST and PATCH require admin or owner role.
+
+**BigInt serialization:**
+Prisma returns `BigInt` for `*Cents` fields (`startingBalanceCents`, `currentBalanceCents`, etc.).
+`JSON.stringify` throws on `BigInt` by default. Both routes use an inline `bigintJson()` helper
+that passes a replacer converting `bigint → string`. Clients receive cent values as numeric
+strings (e.g., `"10000000"`). This avoids precision loss for balances above `Number.MAX_SAFE_INTEGER`
+and keeps the wire format unambiguous.
+
+**PATCH allowed statuses:**
+Only `active` and `disabled` are accepted via PATCH. All other statuses (`pending`, `breached`,
+`funded`, `passed_phase`) are set exclusively by system flows (payment webhook, eval engine,
+phase transition logic). Restricting the admin PATCH surface prevents manual corruption of
+eval-engine state. The eval engine uses optimistic locking (`version`); the PATCH increments
+`version` so any in-flight eval tick that reads the old version will safely detect the conflict.
+
+**POST (admin provisioning) drawdown floor formula:**
+Uses integer basis-point arithmetic to match the eval engine (MVP plan Section 6):
+```
+drawdownBps = round(totalDrawdownPct * 100)   // e.g. 1000 for 10.00%
+floor = startingBalance - (startingBalance * drawdownBps / 10000)
+```
+Avoids float rounding; consistent with `computeStaticFloor` in the eval engine.
+
+**Assumption — Stripe payment flow is the canonical provisioning path:**
+`POST /api/accounts` exists for admin testing and manual provisioning. Challenge purchasers
+will be provisioned via the Stripe webhook handler (Phase 6, Day 6). Both paths produce
+accounts in `status: 'pending'`; activation to `active` is a separate admin step or payment
+webhook step depending on the firm's flow.
