@@ -645,7 +645,7 @@ export default function Dashboard() {
   const tradingDaysProgress = (user.tradingDaysCompleted / user.tradingDaysRequired) * 100;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Demo Mode Banner */}
       <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg px-3 sm:px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
         <div className="flex items-center gap-2 sm:gap-3 flex-wrap">

@@ -117,17 +117,13 @@ export const Sidebar = () => {
           </div>
 
           {/* User Account */}
-          <motion.div
-            className="flex items-center gap-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
-            animate={{
-              justifyContent: open ? "flex-start" : "center",
-              paddingLeft: open ? "12px" : "0px",
-              paddingRight: open ? "12px" : "0px",
-            }}
-            transition={{
-              duration: 0.3,
-              ease: [0.4, 0, 0.2, 1],
-            }}
+          <div
+            className={cn(
+              "flex items-center gap-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors cursor-pointer",
+              open
+                ? "py-2 px-3 justify-start"
+                : "h-10 w-10 mx-auto justify-center"
+            )}
           >
             <div className="h-7 w-7 flex-shrink-0 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-xs font-semibold">
               {user.username.charAt(0).toUpperCase()}
@@ -145,7 +141,7 @@ export const Sidebar = () => {
             >
               {user.username}
             </motion.span>
-          </motion.div>
+          </div>
         </div>
       </SidebarBody>
     </AceternitySidebar>
@@ -155,7 +151,12 @@ export const Sidebar = () => {
 const SidebarHeader = () => {
   const { open, setOpen } = useSidebar();
   return (
-    <div className="flex items-center gap-2 py-1 pl-1 relative z-20 mb-2">
+    <div
+      className={cn(
+        "flex items-center gap-2 py-1 relative z-20 mb-2",
+        open ? "pl-1" : "justify-center"
+      )}
+    >
       <button
         onClick={() => setOpen(!open)}
         aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
