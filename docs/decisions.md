@@ -108,3 +108,32 @@ packages:
 ```
 
 This is the minimal workspace needed. The oracle-funded app retains its own `node_modules` and lockfile for now; after a `pnpm install` from the root, pnpm will hoist shared deps and link workspace packages.
+
+---
+
+## PHASE 1 — ROW-LEVEL SECURITY (APP LAYER)
+
+### Decision 9 — App-layer RLS via Prisma Client Extension (`createScopedClient`)
+
+**Date:** 2026-05-05  
+**Task:** Implement row-level security logic at app layer
+
+**What was implemented:**
+
+Two complementary RLS layers:
+
+1. **DB-level (Supabase):** `packages/db/migrations/001_rls_policies.sql` — PostgreSQL RLS policies enforced by Supabase for all anon/authenticated JWT callers. Primary tenant fence; applies to the Next.js app.
+
+2. **App-layer (worker):** `createScopedClient(firmId)` in `packages/db/src/index.ts` — Prisma Client Extension that injects `firmId` into every `where` clause for firm-scoped models. Used by the worker process (which uses the Supabase service role key and therefore bypasses DB-level RLS).
+
+**Models excluded from auto-scoping:**
+- `PriceHistory` — no `firm_id` column; global market data
+- `NewsEvent` — `firm_id` is nullable (null means platform-wide); complex filter, left to callers
+
+**Operations excluded from where-injection:**
+- `create`, `createMany` — carry `data`, not `where`; callers must supply `firmId` in the data object
+
+**Why Prisma Client Extension over middleware:**
+Prisma middleware is deprecated in v5. Extensions are the v5 API and produce a properly typed return value via `ScopedClient = ReturnType<typeof createScopedClient>`.
+
+**Assumption:** The SQL migration is applied manually via Supabase Dashboard or `supabase db push` when the Supabase project is provisioned. It is not run by Prisma migrate (different toolchain).

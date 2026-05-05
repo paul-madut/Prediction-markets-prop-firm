@@ -27,7 +27,12 @@ PHASE 1: MONOREPO + INFRA
     - Prisma client generated and validated
 
 [x] Add tenant_id to all tables
-[ ] Implement row-level security logic at app layer
+[x] Implement row-level security logic at app layer
+    - createScopedClient(firmId) in packages/db/src/index.ts via Prisma Client Extension
+    - Injects firmId into all where clauses for firm-scoped models (excludes PriceHistory, NewsEvent)
+    - ScopedClient type exported for use in worker and API routes
+    - DB-level Supabase RLS policies in packages/db/migrations/001_rls_policies.sql
+    - See docs/decisions.md Decision 9
 
 ----------------------------------
 
