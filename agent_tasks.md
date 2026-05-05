@@ -16,15 +16,17 @@ PHASE 1: MONOREPO + INFRA
     - packages/types (all domain types from MVP plan Section 3)
     - packages/utils (money math, time, backoff, uuid helpers)
 
-[ ] Setup PostgreSQL schema using Prisma:
-    - tenants
-    - users
-    - trading_accounts
-    - orders
-    - positions
-    - trades
+[x] Setup PostgreSQL schema using Prisma:
+    - firms, firm_members (tenancy & users)
+    - challenge_configs, challenge_phases
+    - accounts (trading_accounts), orders, trades, positions
+    - drawdown_snapshots, breach_events, account_state_log, cheat_signals
+    - payments, payouts
+    - audit_log, news_events, price_history
+    - firm_id included on all tables (absorbed next task; see docs/decisions.md Decision 6)
+    - Prisma client generated and validated
 
-[ ] Add tenant_id to all tables
+[x] Add tenant_id to all tables
 [ ] Implement row-level security logic at app layer
 
 ----------------------------------

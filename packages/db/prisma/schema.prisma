@@ -1,0 +1,402 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// TENANCY & USERS
+// ============================================================
+
+model Firm {
+  id                                    String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                                  String
+  slug                                  String   @unique
+  brandConfig                           Json     @default("{}") @map("brand_config")
+  enabledVenues                         String[] @map("enabled_venues")
+  status                                String   @default("active") @map("status")
+  priceHistorySampleIntervalSeconds     Int      @default(30) @map("price_history_sample_interval_seconds")
+  createdAt                             DateTime @default(now()) @map("created_at")
+
+  members           FirmMember[]
+  configs           ChallengeConfig[]
+  accounts          Account[]
+  orders            Order[]
+  trades            Trade[]
+  positions         Position[]
+  drawdownSnapshots DrawdownSnapshot[]
+  breachEvents      BreachEvent[]
+  accountStateLogs  AccountStateLog[]
+  cheatSignals      CheatSignal[]
+  payments          Payment[]
+  payouts           Payout[]
+  auditLogs         AuditLog[]
+  newsEvents        NewsEvent[]
+
+  @@map("firms")
+}
+
+// Links auth.users to firms. user_id references auth.users(id) —
+// FK enforced at DB level via migration, not Prisma (different schema).
+model FirmMember {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId    String   @map("firm_id") @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  role      String   @map("role")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  firm Firm @relation(fields: [firmId], references: [id])
+
+  @@unique([firmId, userId])
+  @@map("firm_members")
+}
+
+// ============================================================
+// CHALLENGE CONFIG
+// ============================================================
+
+model ChallengeConfig {
+  id                    String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId                String   @map("firm_id") @db.Uuid
+  name                  String
+  accountSizeCents      BigInt   @map("account_size_cents")
+  challengeFeeCents     Int      @map("challenge_fee_cents")
+  drawdownType          String   @map("drawdown_type")
+  trailingReference     String   @default("eod_balance") @map("trailing_reference")
+  totalDrawdownPct      Decimal  @map("total_drawdown_pct") @db.Decimal(5, 2)
+  dailyDrawdownPct      Decimal? @map("daily_drawdown_pct") @db.Decimal(5, 2)
+  minTradingDays        Int      @default(0) @map("min_trading_days")
+  profitSplitPct        Decimal  @map("profit_split_pct") @db.Decimal(5, 2)
+  breachComparison      String   @default("lt") @map("breach_comparison")
+  breachCloseBehavior   String   @map("breach_close_behavior")
+  refundDisablesAccount Boolean  @default(true) @map("refund_disables_account")
+  maxPositionsPerMarket Int      @default(1) @map("max_positions_per_market")
+  maxPositionsTotal     Int      @default(5) @map("max_positions_total")
+  maxContractsPerOrder  Int?     @map("max_contracts_per_order")
+  isActive              Boolean  @default(true) @map("is_active")
+  createdAt             DateTime @default(now()) @map("created_at")
+
+  firm     Firm             @relation(fields: [firmId], references: [id])
+  phases   ChallengePhase[]
+  accounts Account[]
+  payments Payment[]
+
+  @@map("challenge_configs")
+}
+
+model ChallengePhase {
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  configId         String   @map("config_id") @db.Uuid
+  phaseNumber      Int      @map("phase_number")
+  name             String
+  profitTargetPct  Decimal  @map("profit_target_pct") @db.Decimal(5, 2)
+  minTradingDays   Int      @default(0) @map("min_trading_days")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  config   ChallengeConfig @relation(fields: [configId], references: [id])
+  accounts Account[]
+
+  @@unique([configId, phaseNumber])
+  @@map("challenge_phases")
+}
+
+// ============================================================
+// TRADING
+// ============================================================
+
+model Account {
+  id                     String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId                 String    @map("firm_id") @db.Uuid
+  userId                 String    @map("user_id") @db.Uuid
+  configId               String    @map("config_id") @db.Uuid
+  currentPhaseId         String    @map("current_phase_id") @db.Uuid
+  status                 String
+  startingBalanceCents   BigInt    @map("starting_balance_cents")
+  currentBalanceCents    BigInt    @map("current_balance_cents")
+  highestEodBalanceCents BigInt    @map("highest_eod_balance_cents")
+  highestEodEquityCents  BigInt    @map("highest_eod_equity_cents")
+  drawdownFloorCents     BigInt    @map("drawdown_floor_cents")
+  dailyLossFloorCents    BigInt?   @map("daily_loss_floor_cents")
+  dayStartEquityCents    BigInt    @default(0) @map("day_start_equity_cents")
+  currentTradingDay      DateTime? @map("current_trading_day") @db.Date
+  tradingDaysCount       Int       @default(0) @map("trading_days_count")
+  firstTradeAt           DateTime? @map("first_trade_at")
+  breachAt               DateTime? @map("breach_at")
+  // Plain UUID — circular FK to breach_events enforced at DB level only
+  breachEventId          String?   @map("breach_event_id") @db.Uuid
+  ruleOverrides          Json      @default("{}") @map("rule_overrides")
+  overrideReason         String?   @map("override_reason")
+  overrideSetByUserId    String?   @map("override_set_by_user_id") @db.Uuid
+  overrideSetAt          DateTime? @map("override_set_at")
+  overrideExpiresAt      DateTime? @map("override_expires_at")
+  lastEodRunAt           DateTime? @map("last_eod_run_at")
+  version                Int       @default(0)
+  createdAt              DateTime  @default(now()) @map("created_at")
+
+  firm              Firm               @relation(fields: [firmId], references: [id])
+  config            ChallengeConfig    @relation(fields: [configId], references: [id])
+  currentPhase      ChallengePhase     @relation(fields: [currentPhaseId], references: [id])
+  orders            Order[]
+  trades            Trade[]
+  positions         Position[]
+  drawdownSnapshots DrawdownSnapshot[]
+  breachEvents      BreachEvent[]
+  accountStateLogs  AccountStateLog[]
+  cheatSignals      CheatSignal[]
+  payments          Payment[]
+  payouts           Payout[]
+
+  @@index([firmId, status], name: "idx_accounts_firm_status")
+  @@index([userId, firmId], name: "idx_accounts_user_firm")
+  @@map("accounts")
+}
+
+model Order {
+  id                   String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId               String    @map("firm_id") @db.Uuid
+  accountId            String    @map("account_id") @db.Uuid
+  venue                String
+  externalMarketId     String    @map("external_market_id")
+  externalMarketTicker String    @map("external_market_ticker")
+  side                 String
+  sizeContracts        Int       @map("size_contracts")
+  orderType            String    @default("market") @map("order_type")
+  limitPriceCents      Int?      @map("limit_price_cents")
+  timeInForce          String?   @default("gtc") @map("time_in_force")
+  expiresAt            DateTime? @map("expires_at")
+  idempotencyKey       String    @unique @map("idempotency_key") @db.Uuid
+  status               String
+  rejectedReason       String?   @map("rejected_reason")
+  submittedAt          DateTime  @default(now()) @map("submitted_at")
+  filledAt             DateTime? @map("filled_at")
+
+  firm    Firm    @relation(fields: [firmId], references: [id])
+  account Account @relation(fields: [accountId], references: [id])
+  trades  Trade[]
+
+  @@index([venue, externalMarketId], name: "idx_orders_venue_market")
+  @@map("orders")
+}
+
+model Trade {
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId           String   @map("firm_id") @db.Uuid
+  accountId        String   @map("account_id") @db.Uuid
+  // Nullable: system-generated trades (breach close, manual adjustment) have no parent order
+  orderId          String?  @map("order_id") @db.Uuid
+  venue            String
+  externalMarketId String   @map("external_market_id")
+  side             String
+  sizeContracts    Int      @map("size_contracts")
+  priceCents       Int      @map("price_cents")
+  feesCents        Int      @default(0) @map("fees_cents")
+  realizedPnlCents BigInt?  @map("realized_pnl_cents")
+  isOpening        Boolean  @map("is_opening")
+  metadata         Json?
+  executedAt       DateTime @default(now()) @map("executed_at")
+
+  firm    Firm    @relation(fields: [firmId], references: [id])
+  account Account @relation(fields: [accountId], references: [id])
+  order   Order?  @relation(fields: [orderId], references: [id])
+
+  @@index([accountId, executedAt], name: "idx_trades_account_executed")
+  @@map("trades")
+}
+
+model Position {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId             String    @map("firm_id") @db.Uuid
+  accountId          String    @map("account_id") @db.Uuid
+  venue              String
+  externalMarketId   String    @map("external_market_id")
+  side               String
+  netContracts       Int       @map("net_contracts")
+  avgEntryPriceCents Int       @map("avg_entry_price_cents")
+  unrealizedPnlCents BigInt    @map("unrealized_pnl_cents")
+  lastPricedAt       DateTime? @map("last_priced_at")
+
+  firm    Firm    @relation(fields: [firmId], references: [id])
+  account Account @relation(fields: [accountId], references: [id])
+
+  @@unique([accountId, venue, externalMarketId, side])
+  @@map("positions")
+}
+
+// ============================================================
+// RISK & STATE
+// ============================================================
+
+model DrawdownSnapshot {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId          String   @map("firm_id") @db.Uuid
+  accountId       String   @map("account_id") @db.Uuid
+  equityCents     BigInt   @map("equity_cents")
+  balanceCents    BigInt   @map("balance_cents")
+  floorCents      BigInt   @map("floor_cents")
+  dailyFloorCents BigInt?  @map("daily_floor_cents")
+  recordedAt      DateTime @default(now()) @map("recorded_at")
+
+  firm    Firm    @relation(fields: [firmId], references: [id])
+  account Account @relation(fields: [accountId], references: [id])
+
+  @@index([accountId, recordedAt(sort: Desc)], name: "idx_drawdown_snapshots_account_time")
+  @@map("drawdown_snapshots")
+}
+
+model BreachEvent {
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId              String   @map("firm_id") @db.Uuid
+  accountId           String   @map("account_id") @db.Uuid
+  equityAtBreachCents BigInt   @map("equity_at_breach_cents")
+  floorAtBreachCents  BigInt   @map("floor_at_breach_cents")
+  closeBehavior       String   @map("close_behavior")
+  breachedAt          DateTime @default(now()) @map("breached_at")
+
+  firm    Firm    @relation(fields: [firmId], references: [id])
+  account Account @relation(fields: [accountId], references: [id])
+
+  @@map("breach_events")
+}
+
+model AccountStateLog {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId      String   @map("firm_id") @db.Uuid
+  accountId   String   @map("account_id") @db.Uuid
+  fromStatus  String?  @map("from_status")
+  toStatus    String   @map("to_status")
+  reason      String?
+  actorUserId String?  @map("actor_user_id") @db.Uuid
+  metadata    Json     @default("{}")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  firm    Firm    @relation(fields: [firmId], references: [id])
+  account Account @relation(fields: [accountId], references: [id])
+
+  @@map("account_state_log")
+}
+
+model CheatSignal {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId           String    @map("firm_id") @db.Uuid
+  accountId        String    @map("account_id") @db.Uuid
+  signalType       String    @map("signal_type")
+  severity         String
+  score            Decimal?  @db.Decimal
+  evidence         Json      @default("{}")
+  status           String    @default("pending")
+  reviewedByUserId String?   @map("reviewed_by_user_id") @db.Uuid
+  reviewedAt       DateTime? @map("reviewed_at")
+  reviewerNotes    String?   @map("reviewer_notes")
+  detectedAt       DateTime  @default(now()) @map("detected_at")
+
+  firm    Firm    @relation(fields: [firmId], references: [id])
+  account Account @relation(fields: [accountId], references: [id])
+
+  @@map("cheat_signals")
+}
+
+// ============================================================
+// MONEY & OPS
+// ============================================================
+
+model Payment {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId          String    @map("firm_id") @db.Uuid
+  userId          String    @map("user_id") @db.Uuid
+  configId        String    @map("config_id") @db.Uuid
+  // Provisioned after payment; null until webhook confirms
+  accountId       String?   @map("account_id") @db.Uuid
+  stripeSessionId String?   @map("stripe_session_id")
+  stripeEventId   String?   @unique @map("stripe_event_id")
+  amountCents     Int       @map("amount_cents")
+  status          String    @default("pending")
+  paidAt          DateTime? @map("paid_at")
+  refundedAt      DateTime? @map("refunded_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  firm    Firm            @relation(fields: [firmId], references: [id])
+  config  ChallengeConfig @relation(fields: [configId], references: [id])
+  account Account?        @relation(fields: [accountId], references: [id])
+
+  @@map("payments")
+}
+
+model Payout {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId             String    @map("firm_id") @db.Uuid
+  accountId          String    @map("account_id") @db.Uuid
+  userId             String    @map("user_id") @db.Uuid
+  requestedCents     BigInt    @map("requested_cents")
+  profitSplitPct     Decimal   @map("profit_split_pct") @db.Decimal(5, 2)
+  traderAmountCents  BigInt    @map("trader_amount_cents")
+  status             String    @default("requested")
+  paymentMethod      String?   @map("payment_method")
+  paymentDestination String?   @map("payment_destination")
+  externalReference  String?   @map("external_reference")
+  reviewedByUserId   String?   @map("reviewed_by_user_id") @db.Uuid
+  reviewedAt         DateTime? @map("reviewed_at")
+  reviewerNotes      String?   @map("reviewer_notes")
+  requestedAt        DateTime  @default(now()) @map("requested_at")
+  paidAt             DateTime? @map("paid_at")
+
+  firm    Firm    @relation(fields: [firmId], references: [id])
+  account Account @relation(fields: [accountId], references: [id])
+
+  @@map("payouts")
+}
+
+// ============================================================
+// CROSS-CUTTING
+// ============================================================
+
+model AuditLog {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId      String   @map("firm_id") @db.Uuid
+  actorUserId String?  @map("actor_user_id") @db.Uuid
+  action      String
+  entityType  String   @map("entity_type")
+  entityId    String   @map("entity_id") @db.Uuid
+  beforeState Json?    @map("before_state")
+  afterState  Json?    @map("after_state")
+  metadata    Json     @default("{}")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  firm Firm @relation(fields: [firmId], references: [id])
+
+  @@index([firmId, createdAt(sort: Desc)], name: "idx_audit_firm_created")
+  @@index([entityType, entityId], name: "idx_audit_entity")
+  @@map("audit_log")
+}
+
+// firmId nullable: null = applies to all firms
+model NewsEvent {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firmId          String?  @map("firm_id") @db.Uuid
+  marketFilter    String?  @map("market_filter")
+  eventName       String   @map("event_name")
+  startsAt        DateTime @map("starts_at")
+  endsAt          DateTime @map("ends_at")
+  cooldownMinutes Int      @default(2) @map("cooldown_minutes")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  firm Firm? @relation(fields: [firmId], references: [id])
+
+  @@map("news_events")
+}
+
+model PriceHistory {
+  id               BigInt   @id @default(autoincrement())
+  venue            String
+  externalMarketId String   @map("external_market_id")
+  yesBid           Int?     @map("yes_bid")
+  yesAsk           Int?     @map("yes_ask")
+  noBid            Int?     @map("no_bid")
+  noAsk            Int?     @map("no_ask")
+  recordedAt       DateTime @default(now()) @map("recorded_at")
+
+  @@index([venue, externalMarketId, recordedAt(sort: Desc)], name: "idx_price_history_market_time")
+  @@map("price_history")
+}

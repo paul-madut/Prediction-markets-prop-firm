@@ -51,6 +51,49 @@ Architectural decisions, assumptions, and deviations recorded per task.
 
 ---
 
+## PHASE 1 — PRISMA SCHEMA SETUP
+
+### Decision 6 — Implemented all 17 MVP-plan tables, not the 6 listed in agent_tasks.md
+
+**Date:** 2026-05-05  
+**Task:** Setup PostgreSQL schema using Prisma
+
+**agent_tasks.md listed:** tenants, users, trading_accounts, orders, positions, trades
+
+**Actual implementation (17 tables):**
+- `firms`, `firm_members` — tenancy & users
+- `challenge_configs`, `challenge_phases` — challenge configuration
+- `accounts`, `orders`, `trades`, `positions` — trading core
+- `drawdown_snapshots`, `breach_events`, `account_state_log`, `cheat_signals` — risk & state
+- `payments`, `payouts` — money & ops
+- `audit_log`, `news_events`, `price_history` — cross-cutting
+
+**Reason:** The MVP plan (Section 3) is authoritative and specifies all 17 tables as MVP-required. The agent_tasks.md checklist was an early sketch that understated scope. Implementing a partial schema would leave the worker, eval engine, and payment flows without the tables they need, breaking the repo.
+
+The task also listed `tenant_id` as a follow-on item; `firm_id` is included on all tables from the start (it is `firm_id` in the plan, not `tenant_id`) to avoid a second migration.
+
+---
+
+### Decision 7 — auth.users FKs are UUID strings with DB-level enforcement, not Prisma relations
+
+**Date:** 2026-05-05  
+**Task:** Setup PostgreSQL schema using Prisma
+
+**Fields affected:** `firm_members.user_id`, `accounts.user_id`, `payments.user_id`, `payouts.user_id`, all `actor_user_id` / `override_set_by_user_id` fields.
+
+**Reason:** Supabase Auth stores users in `auth.users` (a separate PostgreSQL schema). Prisma cannot define FK relations across schemas. These fields are typed as `String @db.Uuid` in the schema. The actual FK constraint (`REFERENCES auth.users(id)`) will be applied via a raw SQL migration when the Supabase project is provisioned.
+
+---
+
+### Decision 8 — accounts.breach_event_id is a plain UUID, no Prisma relation
+
+**Date:** 2026-05-05  
+**Task:** Setup PostgreSQL schema using Prisma
+
+**Reason:** `accounts` and `breach_events` have a circular FK: `accounts.breach_event_id → breach_events.id` and `breach_events.account_id → accounts.id`. Prisma cannot express bidirectional circular FK relations. `accounts.breach_event_id` is kept as `String? @db.Uuid` (no `@relation`). The `BreachEvent` model defines the `account Account @relation(...)` side normally. The reverse FK is enforced at DB level in the migration.
+
+---
+
 ### Decision 5 — Root pnpm workspace includes oracle-funded, apps/*, packages/*
 
 **Date:** 2026-05-05  
