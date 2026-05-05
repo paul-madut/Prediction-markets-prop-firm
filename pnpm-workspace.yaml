@@ -1,0 +1,4 @@
+packages:
+  - 'oracle-funded'
+  - 'apps/*'
+  - 'packages/*'
