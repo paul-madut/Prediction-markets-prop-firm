@@ -100,7 +100,15 @@ PHASE 4: TRADING CORE (STUBBED)
     - POST creates order as 'pending' (valid) or 'rejected' (invalid); fill deferred
     - Idempotency via idempotencyKey UUID; audit log on every submission
     - See docs/decisions.md Decision 17
-[ ] Implement mock order execution (no real API yet)
+[x] Implement mock order execution (no real API yet)
+    - getMockMarketQuote(externalMarketId) in packages/utils/src/mock-price.ts
+      (FNV-1a hash → YES mid in [25,75] cents, 2-cent spread, NO = complement)
+    - fillMockOrder(orderId, prisma) in oracle-funded/src/lib/order-engine/fill-mock-order.ts
+      (8-step atomic transaction: FOR UPDATE lock, position re-read, computePositionDelta,
+       trade insert, position upsert, balance + version update, order fill, audit log)
+    - POST /api/orders now calls fillMockOrder synchronously after creating pending order;
+      response includes tradeId + fillPriceCents on success, fillError on failure
+    - See docs/decisions.md Decision 18
 [ ] Store orders + trades
 
 ----------------------------------

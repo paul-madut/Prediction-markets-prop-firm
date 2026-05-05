@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@webflux/db';
 import { enrichClerkAuth } from '@webflux/auth';
 import { validateOrder } from '@webflux/utils';
+import { fillMockOrder } from '@/lib/order-engine/fill-mock-order';
 
 // BigInt fields don't serialize via JSON.stringify by default.
 function bigintJson(data: unknown, status = 200): Response {
@@ -313,5 +314,15 @@ export async function POST(req: Request) {
     },
   });
 
-  return bigintJson(order, 201);
+  // Immediately execute mock fill (no real venue API in Phase 4).
+  const fill = await fillMockOrder(order.id, prisma);
+
+  if (!fill.ok) {
+    // Fill failed — order stays 'pending'; surface the reason so callers can debug.
+    return bigintJson({ ...order, fillError: fill.reason }, 201);
+  }
+
+  // Re-fetch so the response reflects the 'filled' status and filledAt timestamp.
+  const filledOrder = await prisma.order.findUniqueOrThrow({ where: { id: order.id } });
+  return bigintJson({ ...filledOrder, tradeId: fill.tradeId, fillPriceCents: fill.fillPriceCents }, 201);
 }

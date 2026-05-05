@@ -478,3 +478,62 @@ The MVP plan's SQL schema for `orders` shows `side` (yes/no) but not `action` (b
 In prediction-market trading these are orthogonal: a trader can buy YES, sell YES, buy NO, or
 sell NO. Since `computeFillPrice` in pnl.ts already requires both, adding `action` to the
 schema is necessary and unambiguous. Existing rows default to `"buy"` (safe; no rows exist yet).
+
+---
+
+## PHASE 4 — MOCK ORDER EXECUTION
+
+### Decision 18 — Mock fill executes synchronously in POST /api/orders; deterministic price via FNV-1a hash
+
+**Date:** 2026-05-05
+**Task:** Implement mock order execution (no real API yet)
+
+**What was built:**
+
+1. **`packages/utils/src/mock-price.ts`** — `getMockMarketQuote(externalMarketId)`:
+   - Returns a `MarketQuote` with YES mid price deterministically mapped from the
+     FNV-1a 32-bit hash of `externalMarketId` into [25, 75] cents.
+   - Spread = 2 cents per side (bid = mid−1, ask = mid+1).
+   - NO prices are the binary complement (NO mid = 100 − YES mid).
+   - Same market always fills at the same price range — important for reproducible demos.
+   - Exported from `packages/utils/src/index.ts`.
+
+2. **`oracle-funded/src/lib/order-engine/fill-mock-order.ts`** — `fillMockOrder(orderId, prisma)`:
+   Implements the 8-step fill sequence from MVP plan §5 as a single Prisma interactive
+   transaction:
+   - Step 1: `SELECT ... FOR UPDATE` locks the account row against concurrent eval-loop
+     and parallel order fills.
+   - Step 2: Re-reads account + existing position inside the locked transaction (correct
+     position state even if another fill committed between order creation and here).
+   - Step 3: Calls `computePositionDelta` from `@webflux/utils` (all bigint math).
+   - Step 4: Inserts trade row with mock metadata.
+   - Step 5: Upserts position row via Prisma's `upsert` (ON CONFLICT DO UPDATE semantics),
+     using the composite unique key `(accountId, venue, externalMarketId, side)`.
+   - Step 6: Updates `accounts.currentBalanceCents + version` with optimistic lock
+     (`updateMany` with `version` in where clause; throws on conflict).
+   - Step 7: Marks order `status = 'filled'`.
+   - Step 8: Writes `audit_log` row with fill details.
+
+3. **`oracle-funded/src/app/api/orders/route.ts`** (updated):
+   - `POST /api/orders` now calls `fillMockOrder` immediately after creating the pending
+     order. The response body includes `tradeId` and `fillPriceCents` on success.
+   - If the fill fails (e.g., version conflict), the response includes `fillError` and the
+     order remains in `'pending'` state for retry/debugging.
+
+**Why synchronous fill instead of a queue:**
+The MVP plan specifies "All orders are market orders that fill immediately" and
+"<500ms round-trip target." Queuing adds latency and requires a BullMQ worker.
+Synchronous fill in the API route is correct for the mock-execution phase; Phase 5
+(worker eval loop) can take over fill processing when real Kalshi integration exists.
+The fill function is deliberately extracted to `src/lib/order-engine/` so it can be
+called by both the API route (now) and the worker process (future) without duplication.
+
+**Assumption — no minimum-age cushion for mock:**
+The MVP plan specifies a 500ms minimum-age cushion to prevent latency arb. Since
+mock prices are static (not real-time), this check adds no value and is skipped.
+It will be added when real Kalshi prices are live (Phase Day 3 in the build plan).
+
+**`MarketQuote` Json cast:**
+Prisma's `InputJsonValue` requires an index signature (`[key: string]: ...`) on object
+types. `MarketQuote` has specific named fields only. Fixed by spreading into
+`Record<string, number>` before storing in `metadata` / `auditLog.afterState`.

@@ -1,4 +1,5 @@
 export * from './eval.js';
+export * from './mock-price.js';
 export * from './order-validation.js';
 export * from './pnl.js';
 /** Convert cents (bigint) to a display string: 1050n → "$10.50" */
