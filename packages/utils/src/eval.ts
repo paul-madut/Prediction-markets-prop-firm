@@ -1,0 +1,172 @@
+// ─── Equity & Floor Computation ───────────────────────────────────────────────
+//
+// Pure functions used by the eval tick loop (worker) and the /equity API route.
+// All money is bigint cents; no floats. Percentages are decimal numbers (e.g. 10.00
+// means 10%). Arithmetic uses integer basis-point math to avoid rounding drift.
+
+// Private helpers — avoid importing from index.ts to prevent circular imports.
+function _applyPct(amount: bigint, pct: number): bigint {
+  return (amount * BigInt(Math.round(pct * 100))) / 10000n;
+}
+
+function _bigintMax(a: bigint, b: bigint): bigint {
+  return a > b ? a : b;
+}
+
+// ─── Snapshot types ───────────────────────────────────────────────────────────
+
+/** Minimal position data needed for stored-PnL equity computation. */
+export interface PositionPnlEntry {
+  netContracts: number;
+  unrealizedPnlCents: bigint;
+}
+
+/** Position data needed for live-price equity computation in the eval loop. */
+export interface PositionWithPrice {
+  netContracts: number;
+  avgEntryPriceCents: number;
+  /** Current best bid for the position's side (conservative mark). */
+  currentBidCents: number;
+}
+
+/** Challenge config fields relevant to floor computation. */
+export interface FloorConfig {
+  /** 'static' | 'trailing_eod' */
+  drawdownType: string;
+  /** 'eod_balance' | 'eod_equity' | 'eod_max_balance_equity' */
+  trailingReference: string;
+  /** Total drawdown percentage, e.g. 10.00 for 10%. */
+  totalDrawdownPct: number;
+  /** Daily drawdown percentage, null if not configured. */
+  dailyDrawdownPct: number | null;
+}
+
+/** Account state fields needed to compute floors. */
+export interface AccountFloorState {
+  startingBalanceCents: bigint;
+  highestEodBalanceCents: bigint;
+  highestEodEquityCents: bigint;
+  /** Equity at start of current trading day; used for daily floor. */
+  dayStartEquityCents: bigint;
+  /** Per-account overrides; keys shadow the config fields when set. */
+  ruleOverrides: Partial<{ total_drawdown_pct: number; daily_drawdown_pct: number }>;
+}
+
+// ─── Equity ──────────────────────────────────────────────────────────────────
+
+/**
+ * Computes equity from the stored unrealized PnL values on open positions.
+ * Suitable for the API layer where live prices are not yet available.
+ * equity = balance + Σ unrealizedPnlCents for positions with netContracts ≠ 0
+ */
+export function computeEquityFromStoredPnl(
+  balanceCents: bigint,
+  positions: PositionPnlEntry[],
+): bigint {
+  return positions.reduce(
+    (acc, pos) => (pos.netContracts !== 0 ? acc + pos.unrealizedPnlCents : acc),
+    balanceCents,
+  );
+}
+
+/**
+ * Computes equity by marking open positions to live bid prices.
+ * Used by the eval tick loop in the worker process.
+ * equity = balance + Σ (currentBid - avgEntry) × netContracts
+ */
+export function computeEquityFromPrices(
+  balanceCents: bigint,
+  positions: PositionWithPrice[],
+): bigint {
+  return positions.reduce((acc, pos) => {
+    if (pos.netContracts === 0) return acc;
+    const unrealizedPnl = BigInt(
+      (pos.currentBidCents - pos.avgEntryPriceCents) * pos.netContracts,
+    );
+    return acc + unrealizedPnl;
+  }, balanceCents);
+}
+
+// ─── Floor Computation ───────────────────────────────────────────────────────
+
+/**
+ * Static drawdown floor: startingBalance × (1 − totalDrawdownPct / 100).
+ * Immutable after challenge creation; never moves intraday or EOD.
+ */
+export function computeStaticFloor(
+  state: AccountFloorState,
+  config: FloorConfig,
+): bigint {
+  const pct = state.ruleOverrides.total_drawdown_pct ?? config.totalDrawdownPct;
+  return state.startingBalanceCents - _applyPct(state.startingBalanceCents, pct);
+}
+
+/**
+ * Trailing-EOD drawdown floor: computed from the highest recorded EOD reference.
+ * The reference value (balance, equity, or max of both) is determined by
+ * config.trailingReference. The floor moves up with the trader's high-water mark
+ * and never decreases.
+ */
+export function computeTrailingFloor(
+  state: AccountFloorState,
+  config: FloorConfig,
+): bigint {
+  let reference: bigint;
+  switch (config.trailingReference) {
+    case 'eod_equity':
+      reference = state.highestEodEquityCents;
+      break;
+    case 'eod_max_balance_equity':
+      reference = _bigintMax(state.highestEodBalanceCents, state.highestEodEquityCents);
+      break;
+    default: // 'eod_balance'
+      reference = state.highestEodBalanceCents;
+  }
+  const pct = state.ruleOverrides.total_drawdown_pct ?? config.totalDrawdownPct;
+  return reference - _applyPct(reference, pct);
+}
+
+/**
+ * Daily loss floor: dayStartEquity × (1 − dailyDrawdownPct / 100).
+ * Returns null if no daily drawdown limit is configured on this challenge.
+ * Resets at the start of each trading day (00:00 UTC) via the EOD job.
+ */
+export function computeDailyFloor(
+  state: AccountFloorState,
+  config: FloorConfig,
+): bigint | null {
+  const pct = state.ruleOverrides.daily_drawdown_pct ?? config.dailyDrawdownPct;
+  if (pct == null) return null;
+  return state.dayStartEquityCents - _applyPct(state.dayStartEquityCents, pct);
+}
+
+/**
+ * Effective floor: max(overall drawdown floor, daily loss floor).
+ * The account breaches if equity falls below this threshold.
+ */
+export function computeEffectiveFloor(
+  state: AccountFloorState,
+  config: FloorConfig,
+): bigint {
+  const baseFloor =
+    config.drawdownType === 'static'
+      ? computeStaticFloor(state, config)
+      : computeTrailingFloor(state, config);
+  const dailyFloor = computeDailyFloor(state, config);
+  return dailyFloor != null ? _bigintMax(baseFloor, dailyFloor) : baseFloor;
+}
+
+// ─── Breach Detection ────────────────────────────────────────────────────────
+
+/**
+ * Returns true if equity has breached the floor.
+ * comparison='lt'  → breach when equity  < floor (default, "strictly below")
+ * comparison='lte' → breach when equity <= floor ("at or below")
+ */
+export function checkBreach(
+  equity: bigint,
+  floor: bigint,
+  comparison: string,
+): boolean {
+  return comparison === 'lte' ? equity <= floor : equity < floor;
+}

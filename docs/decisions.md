@@ -338,3 +338,48 @@ Avoids float rounding; consistent with `computeStaticFloor` in the eval engine.
 will be provisioned via the Stripe webhook handler (Phase 6, Day 6). Both paths produce
 accounts in `status: 'pending'`; activation to `active` is a separate admin step or payment
 webhook step depending on the firm's flow.
+
+---
+
+## PHASE 3 — BALANCE + EQUITY LOGIC
+
+### Decision 15 — Equity computation in packages/utils; API endpoint uses stored unrealizedPnlCents
+
+**Date:** 2026-05-05
+**Task:** Implement balance + equity logic
+
+**What was built:**
+
+1. **`packages/utils/src/eval.ts`** — pure equity/floor computation functions:
+   - `computeEquityFromStoredPnl(balance, positions)` — equity from stored DB values; used by the API layer
+   - `computeEquityFromPrices(balance, positionsWithPrices)` — equity from live bid prices; for the worker eval tick loop
+   - `computeStaticFloor(state, config)` — fixed floor at challenge start
+   - `computeTrailingFloor(state, config)` — trailing-EOD high-water mark floor (supports all three reference modes)
+   - `computeDailyFloor(state, config)` — daily loss floor (null if no daily limit configured)
+   - `computeEffectiveFloor(state, config)` — max(base floor, daily floor)
+   - `checkBreach(equity, floor, comparison)` — supports both 'lt' and 'lte' comparison modes
+   - All exported from `packages/utils/src/index.ts`
+
+2. **`oracle-funded/src/app/api/accounts/[id]/equity/route.ts`** — `GET /api/accounts/[id]/equity`
+   - Returns equity snapshot: balanceCents, openPositionsPnlCents, equityCents, drawdownFloorCents,
+     dailyFloorCents, distanceToFloorCents, distanceToFloorPct, isBreach
+   - Same access control as `GET /api/accounts/[id]` (traders see own; admins see all in firm)
+   - Uses stored `unrealizedPnlCents` from the `positions` table
+   - When the order engine keeps `unrealizedPnlCents` current, this endpoint is accurate in real-time
+
+**Why stored PnL for the API, not live prices:**
+The API layer has no connection to the price feed (that lives in the worker). The `positions.unrealizedPnlCents`
+column is designed to be updated by the order engine on every fill and by the eval tick loop
+on every price update. Using the stored value keeps the API stateless and fast. The worker's
+eval tick is the single source of truth for live equity; the API reads the materialized state.
+
+**Per-account rule overrides:**
+The `ruleOverrides` JSON field can override `total_drawdown_pct` and `daily_drawdown_pct`
+per-account. The computation functions check for these overrides before falling back to the
+config values, exactly as specified in the MVP plan.
+
+**TypeScript target bump:**
+oracle-funded's tsconfig had `target: ES2017` which rejects BigInt literal syntax (`0n`, `10000n`).
+This was a pre-existing error (existing account routes already used BigInt literals). Changed to
+`target: ES2020` (BigInt native support). Next.js/SWC always targets a modern runtime regardless
+of this flag; the bump only affects IDE type-checking, not the compiled output.

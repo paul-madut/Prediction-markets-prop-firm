@@ -72,6 +72,9 @@ importers:
       '@webflux/db':
         specifier: workspace:*
         version: link:../packages/db
+      '@webflux/utils':
+        specifier: workspace:*
+        version: link:../packages/utils
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1

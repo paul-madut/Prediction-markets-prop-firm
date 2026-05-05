@@ -75,7 +75,12 @@ PHASE 3: ACCOUNT SERVICE
     - BigInt cent values serialized as strings in JSON responses
     - State log + audit log written on every PATCH
     - See docs/decisions.md Decision 14
-[ ] Implement balance + equity logic
+[x] Implement balance + equity logic
+    - computeEquityFromStoredPnl / computeEquityFromPrices in packages/utils/src/eval.ts
+    - computeStaticFloor, computeTrailingFloor (all 3 reference modes), computeDailyFloor,
+      computeEffectiveFloor, checkBreach — all bigint, no floats
+    - GET /api/accounts/[id]/equity returns equity snapshot, effective floor, distanceToFloor, isBreach
+    - See docs/decisions.md Decision 15
 [ ] Stub PnL calculation
 
 ----------------------------------

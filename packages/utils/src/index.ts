@@ -1,3 +1,5 @@
+export * from './eval.js';
+
 // ─── Money ────────────────────────────────────────────────────────────────────
 
 /** Convert cents (bigint) to a display string: 1050n → "$10.50" */
