@@ -109,7 +109,11 @@ PHASE 4: TRADING CORE (STUBBED)
     - POST /api/orders now calls fillMockOrder synchronously after creating pending order;
       response includes tradeId + fillPriceCents on success, fillError on failure
     - See docs/decisions.md Decision 18
-[ ] Store orders + trades
+[x] Store orders + trades
+    - GET /api/orders/[id] — single order with its trades; traders scoped to own orders
+    - GET /api/trades — list last 100 trades; traders must supply accountId; admins may omit
+    - GET /api/trades/[id] — single trade with parent order; same ownership rules
+    - See docs/decisions.md Decision 19
 
 ----------------------------------
 

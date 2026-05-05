@@ -537,3 +537,34 @@ It will be added when real Kalshi prices are live (Phase Day 3 in the build plan
 Prisma's `InputJsonValue` requires an index signature (`[key: string]: ...`) on object
 types. `MarketQuote` has specific named fields only. Fixed by spreading into
 `Record<string, number>` before storing in `metadata` / `auditLog.afterState`.
+
+---
+
+## PHASE 4 — STORE ORDERS + TRADES
+
+### Decision 19 — Trade and single-order read endpoints follow the same auth/scope pattern as orders list
+
+**Date:** 2026-05-05
+**Task:** Store orders + trades
+
+**What was built:**
+- `oracle-funded/src/app/api/orders/[id]/route.ts` — `GET /api/orders/[id]`
+  - Returns a single order including its `trades` relation (array, newest first)
+  - Traders: only own orders (scoped via `account.userId`); Admins: any firm order
+- `oracle-funded/src/app/api/trades/route.ts` — `GET /api/trades?accountId=<uuid>`
+  - Returns the most recent 100 trades for an account, newest first
+  - Traders must supply `accountId` and must own that account; Admins may omit `accountId`
+    to list all firm trades, or scope to a specific account
+- `oracle-funded/src/app/api/trades/[id]/route.ts` — `GET /api/trades/[id]`
+  - Returns a single trade including its `order` relation (nullable — system-generated trades have no parent order)
+  - Same ownership rules as the trades list endpoint
+
+**Assumption — orders and trades are already being stored:**
+The previous two Phase 4 tasks (`Create order service interface` and `Implement mock order execution`)
+already write order and trade rows atomically in `POST /api/orders` + `fillMockOrder()`. This
+task adds the missing read surface; no schema or write-path changes were needed.
+
+**Scope rule summary (consistent across all order/trade endpoints):**
+- Trader: must own the account — enforced by filtering `account.userId = ctx.userId`
+- Admin/owner: sees all records within the firm (`firmId = ctx.firmId`)
+- Both: always scoped to `firmId` so cross-firm reads are impossible even with a valid session
