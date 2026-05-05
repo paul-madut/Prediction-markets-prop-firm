@@ -91,7 +91,15 @@ PHASE 3: ACCOUNT SERVICE
 
 PHASE 4: TRADING CORE (STUBBED)
 
-[ ] Create order service interface
+[x] Create order service interface
+    - OrderAction type + SubmitOrderRequest + OrderRejectionReason in packages/types
+    - action field added to Order model in Prisma schema (prisma generate re-run)
+    - validateOrder() pure function in packages/utils/src/order-validation.ts
+      (checks 1-3, 6-9 from MVP plan §5; checks 4+5 deferred to fill transaction)
+    - GET /api/orders + POST /api/orders in oracle-funded/src/app/api/orders/route.ts
+    - POST creates order as 'pending' (valid) or 'rejected' (invalid); fill deferred
+    - Idempotency via idempotencyKey UUID; audit log on every submission
+    - See docs/decisions.md Decision 17
 [ ] Implement mock order execution (no real API yet)
 [ ] Store orders + trades
 

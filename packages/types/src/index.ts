@@ -134,8 +134,31 @@ export type Account = {
 // ─── Orders & Trades ─────────────────────────────────────────────────────────
 
 export type Side = 'yes' | 'no';
+export type OrderAction = 'buy' | 'sell';
 export type OrderType = 'market' | 'limit';
 export type TimeInForce = 'gtc' | 'day' | 'ioc' | 'fok';
+
+export type OrderRejectionReason =
+  | 'not_tradeable_state'
+  | 'account_not_owned'
+  | 'venue_not_enabled'
+  | 'size_exceeds_limit'
+  | 'position_not_found'
+  | 'order_too_large'
+  | 'position_limit_exceeded'
+  | 'news_cooldown'
+  | 'limit_orders_not_supported';
+
+export type SubmitOrderRequest = {
+  accountId: string;
+  venue: Venue;
+  externalMarketId: string;
+  externalMarketTicker: string;
+  side: Side;
+  action: OrderAction;
+  sizeContracts: number;
+  idempotencyKey: string;
+};
 
 export type OrderStatus =
   | 'pending'
@@ -152,6 +175,7 @@ export type Order = {
   externalMarketId: string;
   externalMarketTicker: string;
   side: Side;
+  action: OrderAction;
   sizeContracts: number;
   orderType: OrderType;
   limitPriceCents: number | null;

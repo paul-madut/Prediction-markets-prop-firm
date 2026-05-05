@@ -430,3 +430,51 @@ of this flag; the bump only affects IDE type-checking, not the compiled output.
    They are the mathematical building blocks for the order engine (Phase 4) and the eval tick
    loop's position marking (Phase 5). The order engine wires them into the fill transaction;
    the eval loop calls `computeUnrealizedPnl` when updating stored PnL after price changes.
+
+---
+
+## PHASE 4 — TRADING CORE (STUBBED)
+
+### Decision 17 — Order service interface: action field added to orders; fill deferred to next task
+
+**Date:** 2026-05-05
+**Task:** Create order service interface
+
+**What was built:**
+
+1. **`packages/db/prisma/schema.prisma`** — `action String @default("buy")` added to the `Order`
+   model. The MVP plan schema omitted this field but the fill computation (`computeFillPrice` in
+   `packages/utils/src/pnl.ts`) requires it to resolve bid vs ask. Default `"buy"` is
+   backward-compatible with zero existing rows.
+
+2. **`packages/types/src/index.ts`** — Added:
+   - `OrderAction = 'buy' | 'sell'`
+   - `OrderRejectionReason` union of all 9 validation failure codes
+   - `SubmitOrderRequest` — the canonical wire type for POST /api/orders
+   - Updated `Order` to include `action: OrderAction`
+
+3. **`packages/utils/src/order-validation.ts`** — Pure validation functions:
+   - `OrderValidationInput` — all data the chain needs (no DB/Redis dependencies)
+   - `validateOrder(input)` — implements checks 1–3, 6–9 from MVP plan §5 validation chain
+   - Checks 4 (market open) and 5 (price freshness) are deferred to the fill transaction
+     where live price data is available; the API layer has no price feed access
+
+4. **`oracle-funded/src/app/api/orders/route.ts`**:
+   - `GET /api/orders?accountId=<uuid>` — lists last 100 orders; traders scope to own account,
+     admins may omit `accountId` for all firm orders
+   - `POST /api/orders` — full validation chain (account state, ownership, venue, size,
+     position limits, news cooldown), idempotency via `idempotencyKey` (UUID), persists
+     as `status='pending'` on success or `status='rejected'` with `rejectedReason` on failure
+   - Audit log written on every submission (both valid and rejected)
+
+**Why orders stay 'pending' after this task:**
+The fill transaction — computing mock fill price, locking the account row, inserting trade,
+upserting position, updating balance — is the next task ("Implement mock order execution").
+Keeping validation and execution in separate tasks produces a cleaner diff and matches the
+`SUBMITTED → VALIDATING → FILLING → FILLED` lifecycle from the plan.
+
+**Assumption — `action` field not in original schema:**
+The MVP plan's SQL schema for `orders` shows `side` (yes/no) but not `action` (buy/sell).
+In prediction-market trading these are orthogonal: a trader can buy YES, sell YES, buy NO, or
+sell NO. Since `computeFillPrice` in pnl.ts already requires both, adding `action` to the
+schema is necessary and unambiguous. Existing rows default to `"buy"` (safe; no rows exist yet).

@@ -162,6 +162,7 @@ model Order {
   externalMarketId     String    @map("external_market_id")
   externalMarketTicker String    @map("external_market_ticker")
   side                 String
+  action               String    @default("buy")
   sizeContracts        Int       @map("size_contracts")
   orderType            String    @default("market") @map("order_type")
   limitPriceCents      Int?      @map("limit_price_cents")
