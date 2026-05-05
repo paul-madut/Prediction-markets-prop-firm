@@ -176,3 +176,30 @@ Two complementary RLS layers:
 Prisma middleware is deprecated in v5. Extensions are the v5 API and produce a properly typed return value via `ScopedClient = ReturnType<typeof createScopedClient>`.
 
 **Assumption:** The SQL migration is applied manually via Supabase Dashboard or `supabase db push` when the Supabase project is provisioned. It is not run by Prisma migrate (different toolchain).
+
+---
+
+## PHASE 2 — LOGIN ENDPOINT
+
+### Decision 11 — Login endpoint is GET /api/auth/me, not a credential endpoint
+
+**Date:** 2026-05-05
+**Task:** Add login endpoint
+
+**What was built:**
+- `oracle-funded/src/app/api/auth/me/route.ts` — `GET /api/auth/me`
+- Protected by Clerk middleware (as all non-public routes are)
+- Uses Clerk's `auth()` from `@clerk/nextjs/server` to extract userId/sessionId
+- Calls `enrichClerkAuth` from `@webflux/auth` to resolve firmId + role from the DB
+- Returns `{ userId, sessionId, firmId, role }` as JSON
+
+**Reason:** Clerk manages credential-based sign-in entirely (sign-in page, password hashing, token issuance). There is no username/password endpoint — that would duplicate Clerk's responsibility. The "login endpoint" in this system means: after Clerk authenticates a user, the frontend calls `GET /api/auth/me` to obtain the user's app-specific context (firm membership and role). This is the standard pattern for Clerk-based SaaS apps.
+
+**Package builds required:**
+- `packages/db` and `packages/auth` must be built (`tsc`) before oracle-funded can import from them.
+- `prisma generate` must be run in `packages/db` to generate typed Prisma client.
+- Both steps have been performed; dist/ folders exist in both packages.
+
+**Error handling:**
+- 401 if Clerk session is missing or invalid (middleware handles this before route runs)
+- 403 if the user has no `firm_members` row (newly registered user not yet onboarded)

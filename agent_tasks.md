@@ -42,7 +42,11 @@ PHASE 2: AUTH
     - packages/auth created: verifyToken, getAuthContext, withAuth, enrichClerkAuth
     - Uses @clerk/backend for server-side JWT verification (Clerk, not Supabase Auth)
     - See docs/decisions.md Decision 10
-[ ] Add login endpoint
+[x] Add login endpoint
+    - GET /api/auth/me in oracle-funded/src/app/api/auth/me/route.ts
+    - Uses Clerk auth() + enrichClerkAuth from @webflux/auth to resolve firmId/role
+    - Built packages/db and packages/auth (dist/ folders created)
+    - See docs/decisions.md Decision 11
 [ ] Add register endpoint (tenant-scoped)
 [ ] Add middleware for tenant extraction
 
