@@ -451,8 +451,8 @@ export default function PortfolioPage() {
                         ))}
                       </Pie>
                       <Tooltip
-                        formatter={(value: number | undefined) => [
-                          `$${(value ?? 0).toFixed(2)}`,
+                        formatter={(value) => [
+                          `$${(Number(value) || 0).toFixed(2)}`,
                           "Exposure",
                         ]}
                         contentStyle={{

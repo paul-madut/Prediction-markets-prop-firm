@@ -980,7 +980,7 @@ export default function Dashboard() {
                     border: "1px solid #e5e7eb",
                     borderRadius: "8px",
                   }}
-                  formatter={(value: number | undefined) => [`$${(value ?? 0).toFixed(2)}`, "Equity"]}
+                  formatter={(value) => [`$${(Number(value) || 0).toFixed(2)}`, "Equity"]}
                 />
                 <Area
                   type="monotone"

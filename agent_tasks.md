@@ -47,7 +47,13 @@ PHASE 2: AUTH
     - Uses Clerk auth() + enrichClerkAuth from @webflux/auth to resolve firmId/role
     - Built packages/db and packages/auth (dist/ folders created)
     - See docs/decisions.md Decision 11
-[ ] Add register endpoint (tenant-scoped)
+[x] Add register endpoint (tenant-scoped)
+    - POST /api/auth/register in oracle-funded/src/app/api/auth/register/route.ts
+    - Accepts { firmSlug } body; requires active Clerk session
+    - Looks up firm by slug, enforces one-firm-per-user (409 on duplicate)
+    - Creates firm_members row with role='trader', writes audit_log
+    - Returns AuthContext (same shape as GET /api/auth/me), status 201
+    - See docs/decisions.md Decision 12
 [ ] Add middleware for tenant extraction
 
 ----------------------------------

@@ -203,3 +203,44 @@ Prisma middleware is deprecated in v5. Extensions are the v5 API and produce a p
 **Error handling:**
 - 401 if Clerk session is missing or invalid (middleware handles this before route runs)
 - 403 if the user has no `firm_members` row (newly registered user not yet onboarded)
+
+---
+
+## PHASE 2 — REGISTER ENDPOINT
+
+### Decision 12 — Register endpoint links Clerk user to a firm; userId stored as-is despite @db.Uuid mismatch
+
+**Date:** 2026-05-05
+**Task:** Add register endpoint (tenant-scoped)
+
+**What was built:**
+- `oracle-funded/src/app/api/auth/register/route.ts` — `POST /api/auth/register`
+- Accepts `{ firmSlug: string }` in request body
+- Requires an active Clerk session (protected by Clerk middleware, same as all non-public routes)
+- Looks up the firm by slug (must exist and be `active`)
+- Enforces MVP rule: one firm per user (rejects with 409 if user already has any firm membership)
+- Creates a `firm_members` row with `role: 'trader'`
+- Writes an `audit_log` row (action: `member.register`)
+- Returns the resolved auth context (same shape as `GET /api/auth/me`), status 201
+
+**Known limitation — Clerk user IDs vs Postgres UUID fields:**
+The `firm_members.user_id` column is typed `@db.Uuid` in the Prisma schema (per the original
+Supabase Auth design where user IDs are UUIDs). Clerk user IDs have the form `user_2abc...`
+and are NOT valid UUIDs. Passing them to Postgres UUID columns will fail at runtime with a
+real database.
+
+Pre-existing issue: this same problem exists in `getAuthContext` (introduced in Decision 10)
+which queries `firmMember.findFirst({ where: { userId: clerkAuth.userId } })`.
+
+**Resolution path (deferred):** When a Supabase project is provisioned, either:
+a) Switch from Clerk back to Supabase Auth (user IDs are UUIDs) — preferred per MVP plan, or
+b) Change all `user_id` / `actor_user_id` columns from `@db.Uuid` to plain `String` (text)
+   and drop the UUID constraint, or
+c) Map Clerk user IDs to UUIDs in a lookup table on first contact.
+
+For MVP demo purposes, no real DB is connected, so this does not block progress.
+
+**`actorUserId` omitted from audit_log for register:**
+Since Clerk user IDs are not UUIDs and `audit_log.actor_user_id` is `@db.Uuid` (non-nullable
+UUID in the DB), the register action omits `actorUserId` (it is nullable: `String?`). The Clerk
+user ID is stored in `metadata.clerkUserId` (jsonb) instead.
