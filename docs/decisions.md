@@ -568,3 +568,57 @@ task adds the missing read surface; no schema or write-path changes were needed.
 - Trader: must own the account — enforced by filtering `account.userId = ctx.userId`
 - Admin/owner: sees all records within the firm (`firmId = ctx.firmId`)
 - Both: always scoped to `firmId` so cross-firm reads are impossible even with a valid session
+
+---
+
+## VENUE ORDERING
+
+### Decision 20 — Polymarket promoted to MVP-primary venue; Kalshi deferred to Day 8 (conditional)
+
+**Date:** 2026-05-05
+**Task:** Reorder build sequence Day 3 ↔ Day 8 venue work
+
+**Original plan (WebFlux_MVP_Plan.md §11):**
+- Day 3: `be/kalshi-real` — Kalshi as primary venue, WebSocket + RSA-PSS auth
+- Day 8: `be/polymarket-real` — Polymarket as secondary, Gamma REST polling
+
+**Reordered:**
+- Day 3: `be/polymarket-real` — Polymarket as MVP-primary
+- Day 8: `be/kalshi-real` (conditional on credentials) — Kalshi as secondary, enabled per-tenant via `firms.enabled_venues`
+
+**Reason — founder jurisdiction + lead time:**
+Founder is Canadian. Kalshi is CFTC-regulated and accounts (which gate API keys) are
+tied to US-jurisdiction KYC. Even with eligibility, Kalshi review takes 1-2 weeks.
+Polymarket Gamma REST is publicly accessible — no account, no keys, no jurisdiction
+check for read-only market data, which is all the platform needs since trading is
+simulated (MVP plan §1: "Simulated trading: market orders, validated fills").
+Building the Day 4-7 critical path (order engine, eval engine, Stripe, admin) on
+Polymarket data unblocks the demo without waiting on Kalshi.
+
+**Why this is low-cost:**
+The provider abstraction (`MarketDataProvider` interface, planned for Day 3) was
+designed for venue-agnosticism from the start. Promoting Polymarket from secondary
+to primary is a re-ordering of work, not a re-architecture. Kalshi plugs into the
+same interface on Day 8.
+
+**Blueberry pitch implication:**
+Blueberry Funding is US-facing and presumably wants Kalshi for compliance. Two
+mitigations:
+1. Demo on Polymarket, sell on the abstraction: "platform is venue-agnostic; here's
+   working Polymarket; Kalshi enables per-tenant via `firms.enabled_venues` once
+   credentials are in place."
+2. Have Blueberry supply Kalshi credentials for their tenant post-pilot — they'd be
+   the operator of record on a US-regulated venue anyway, which is the cleaner
+   long-term arrangement than the Canadian founder personally holding US keys.
+
+**Action items:**
+- Submit Kalshi API application this week regardless, so the 1-2 week clock runs in
+  parallel with Day 3-7 work.
+- If credentials arrive by Day 8 start, do the Kalshi sub-task; otherwise skip it
+  and use recovered hours for Day 9 buffer.
+- Risk 5 in the plan updated to reflect the new ordering.
+
+**Files changed:**
+- `WebFlux_MVP_Plan.md` §11 Day 3 — now `be/polymarket-real` with rationale block
+- `WebFlux_MVP_Plan.md` §11 Day 8 — now `be/payouts-real` + `be/kalshi-real (conditional)`
+- `WebFlux_MVP_Plan.md` §15 Risk 5 — updated to "Kalshi API approval delay / Canadian jurisdiction block"

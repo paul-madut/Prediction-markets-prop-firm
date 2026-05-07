@@ -2084,17 +2084,24 @@ Goal: Complete-looking product on main. Safety net for demo.
 - (2 hrs) Loading/error/empty states across the app.  
 - (1 hr) Tag as `v0-mock-complete` and merge to `main`. This is your demo fallback.
 
-### Day 3 — `be/kalshi-real` (8 hrs)
+### Day 3 — `be/polymarket-real` (8 hrs)
 
-Branch off main. Build the real Kalshi provider.
+Branch off main. Build the real Polymarket provider as the MVP-primary venue.
+
+Rationale for ordering swap (was `be/kalshi-real`): founder is Canadian; Kalshi API
+keys are tied to a funded US-jurisdiction account and have 1-2 week approval lead
+time. Polymarket Gamma REST is publicly accessible with no account / no keys, which
+unblocks the entire downstream pipeline (order engine, eval engine) immediately.
+Provider abstraction is unchanged — Kalshi slots in on Day 8 once partner credentials
+or Canadian access are confirmed. See `docs/decisions.md` Decision 20.
 
 - (1 hr) Provider abstraction interface, orchestrator skeleton.  
-- (3 hrs) KalshiProvider: WebSocket auth (RSA-PSS), state machine, exponential backoff with jitter, message handlers.  
-- (2 hrs) Subscription manager, dynamic subscriptions based on positions \+ browsing.  
+- (3 hrs) PolymarketProvider: Gamma REST poller (30s cadence), market list + quote endpoints, normalisation to internal `MarketQuote` shape.  
+- (2 hrs) Subscription manager: dynamic poll set based on open positions + browsed markets; backoff on 429; respect rate limits.  
 - (1 hr) Heartbeat to Redis. 30s self-heal, 60s external alert.  
-- (1 hr) Hot price cache writes, test against Kalshi demo, verify reconnection.
+- (1 hr) Hot price cache writes, verify staleness handling, test reconnection after network drop.
 
-Merge to main: trader UI now shows real Kalshi prices.
+Merge to main: trader UI now shows real Polymarket prices.
 
 ### Day 4 — `be/order-engine-real` (8 hrs)
 
@@ -2137,15 +2144,20 @@ Merge to main: real payment flow.
 
 Merge to main: admin can run real operations.
 
-### Day 8 — `be/payouts-real` \+ `be/polymarket-real` (8 hrs)
+### Day 8 — `be/payouts-real` \+ `be/kalshi-real` (8 hrs)
+
+Kalshi moves here from Day 3 (see swap rationale on Day 3). Only attempt the Kalshi
+sub-task if API credentials are in hand by start-of-day; otherwise skip it and use
+the recovered hours for buffer / Day 9 prep. Kalshi can be enabled per-tenant via
+`firms.enabled_venues` post-demo without re-architecting.
 
 - (2 hrs) Payout request flow: validation, balance deduction, audit.  
 - (2 hrs) Payout review: approve, reject, mark-paid actions.  
-- (2 hrs) PolymarketProvider via Gamma REST polling (30s cadence).  
+- (2 hrs) **KalshiProvider (conditional on credentials)**: WebSocket auth (RSA-PSS), state machine, exponential backoff with jitter, message handlers, subscription manager. Plugs into the same `MarketDataProvider` interface built on Day 3.  
 - (1 hr) Email templates: welcome, breach, payout-paid. Resend integration.  
 - (1 hr) News events admin page with cooldown enforcement.
 
-Merge to main: full feature parity with mock.
+Merge to main: full feature parity with mock. Kalshi enabled per-tenant if credentials available; otherwise Polymarket-only.
 
 ### Day 9 — Bug bash \+ integration testing (8 hrs)
 
@@ -2418,9 +2430,9 @@ Realistic assessment of what can go wrong and what to do.
 
 **Probability:** High. Mock data hides edge cases. **Impact:** Medium. Day 9 specifically reserved for finding these. **Mitigation:** Adversarial mock data on day 2 to surface edge cases earlier.
 
-### Risk 5: Kalshi API approval delay
+### Risk 5: Kalshi API approval delay / Canadian jurisdiction block
 
-**Probability:** Medium. Their review takes 1-2 weeks. **Impact:** Medium-low. Demo environment doesn't require approval. **Mitigation:** Apply this week. Develop against demo. Production credentials when ready.
+**Probability:** Medium-high. Founder is Canadian; Kalshi accounts (and therefore API keys) are tied to US-jurisdiction KYC. Even with eligibility, review takes 1-2 weeks. **Impact:** Low (post-mitigation). **Mitigation:** Polymarket is now the MVP-primary venue (Day 3); the platform demos end-to-end without Kalshi. Kalshi is deferred to Day 8 and is conditional on credentials being available — either via a US partner (e.g. Blueberry-supplied keys for their tenant) or confirmed Canadian access. If neither is ready by Day 8, ship Polymarket-only and enable Kalshi per-tenant post-launch. Submit the Kalshi application this week regardless to start the clock.
 
 ### Risk 6: Founder burnout by day 7
 
