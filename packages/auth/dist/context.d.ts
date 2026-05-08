@@ -1,7 +1,7 @@
 import type { PrismaClient } from '@prisma/client';
 import type { AuthContext } from './types.js';
 /**
- * Enrich a verified token with firm membership (firmId + role) from the DB.
+ * Enrich a verified Supabase user with firm membership (firmId + role) from the DB.
  *
  * When `firmSlug` is supplied (set by the tenant-extraction middleware from the
  * request subdomain), the lookup is scoped to that specific firm. This ensures

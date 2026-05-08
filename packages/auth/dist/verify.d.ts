@@ -1,14 +1,20 @@
 import type { VerifiedToken } from './types.js';
 /**
- * Verify a Clerk session JWT (access token).
+ * Verify a Supabase access token (JWT).
  *
- * Refresh tokens are managed by the Clerk SDK on the frontend
- * (@clerk/nextjs rotates them transparently). This function is for
- * server-side verification of the short-lived access token passed as a
- * Bearer header — used in the worker's HTTP endpoints and API routes
- * that receive tokens from non-browser clients.
+ * Supabase issues short-lived ES256 JWTs signed with a project-specific
+ * asymmetric key. Verification fetches the public JWKS from the project's
+ * /auth/v1/.well-known/jwks.json endpoint (cached in-process by `jose`).
  *
- * Throws if the token is invalid, expired, or the secret key is missing.
+ * Used for:
+ *   - API routes that receive tokens from non-browser clients (Bearer header).
+ *   - Worker HTTP endpoints.
+ *
+ * For Next.js Server Components / Route Handlers that already have a
+ * Supabase server client, prefer `enrichSupabaseAuth(user, db, firmSlug)`
+ * which uses the SDK's session handling instead.
+ *
+ * Throws on missing env, invalid signature, expired token, or missing `sub`.
  */
 export declare function verifyToken(token: string): Promise<VerifiedToken>;
 /**

@@ -3,9 +3,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { BellIcon, Cog6ToothIcon, ArrowRightStartOnRectangleIcon, UserIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useApp } from "@/context/AppContext";
-import { useClerk } from "@clerk/nextjs";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -26,8 +26,14 @@ const pageTitles: Record<string, string> = {
 
 export const TopBar = () => {
   const { user } = useApp();
-  const { signOut } = useClerk();
+  const router = useRouter();
   const pathname = usePathname();
+  const signOut = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push("/sign-in");
+    router.refresh();
+  };
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [notificationCount] = useState(3);
@@ -189,7 +195,7 @@ export const TopBar = () => {
                 </Link>
                 <div className="border-t border-gray-200 dark:border-slate-800 my-1" />
                 <button
-                  onClick={() => signOut({ redirectUrl: "/sign-in" })}
+                  onClick={() => signOut()}
                   className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors w-full"
                 >
                   <ArrowRightStartOnRectangleIcon className="w-4 h-4" />

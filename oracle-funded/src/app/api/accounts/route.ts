@@ -1,7 +1,7 @@
-import { auth } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 import { prisma } from '@webflux/db';
-import { enrichClerkAuth } from '@webflux/auth';
+import { enrichSupabaseAuth } from '@webflux/auth';
 
 // BigInt fields don't serialize via JSON.stringify by default.
 // Return them as strings so clients can use arbitrary-precision libraries.
@@ -20,15 +20,13 @@ function bigintJson(data: unknown, status = 200): Response {
  * Admins and owners see all accounts in the firm.
  */
 export async function GET() {
-  const clerkAuth = await auth();
-  if (!clerkAuth.userId) {
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getClaims();
+  if (!data?.claims?.sub) {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
 
-  const ctx = await enrichClerkAuth(
-    { userId: clerkAuth.userId, sessionId: clerkAuth.sessionId },
-    prisma,
-  );
+  const ctx = await enrichSupabaseAuth(data.claims, prisma);
   if (!ctx) {
     return NextResponse.json({ error: 'No firm membership found' }, { status: 403 });
   }
@@ -93,15 +91,13 @@ export async function GET() {
  * Returns 422 if the challenge config has no phases.
  */
 export async function POST(req: Request) {
-  const clerkAuth = await auth();
-  if (!clerkAuth.userId) {
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getClaims();
+  if (!data?.claims?.sub) {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
 
-  const ctx = await enrichClerkAuth(
-    { userId: clerkAuth.userId, sessionId: clerkAuth.sessionId },
-    prisma,
-  );
+  const ctx = await enrichSupabaseAuth(data.claims, prisma);
   if (!ctx) {
     return NextResponse.json({ error: 'No firm membership found' }, { status: 403 });
   }
@@ -207,6 +203,7 @@ export async function POST(req: Request) {
   await prisma.auditLog.create({
     data: {
       firmId: ctx.firmId,
+      actorUserId: ctx.userId,
       action: 'account.provision',
       entityType: 'account',
       entityId: account.id,
@@ -216,10 +213,7 @@ export async function POST(req: Request) {
         configName: config.name,
         startingBalanceCents: startingBalance.toString(),
       },
-      metadata: {
-        provisionedByClerkUserId: clerkAuth.userId,
-        targetUserId,
-      },
+      metadata: { targetUserId },
     },
   });
 

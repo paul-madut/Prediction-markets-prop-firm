@@ -2,27 +2,46 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyToken = verifyToken;
 exports.extractBearerToken = extractBearerToken;
-const backend_1 = require("@clerk/backend");
+const jose_1 = require("jose");
+const jwksCache = new Map();
+function getJwks() {
+    const url = process.env.SUPABASE_JWT_JWKS_URL;
+    if (!url)
+        throw new Error('SUPABASE_JWT_JWKS_URL env var is required');
+    let jwks = jwksCache.get(url);
+    if (!jwks) {
+        jwks = (0, jose_1.createRemoteJWKSet)(new URL(url));
+        jwksCache.set(url, jwks);
+    }
+    return jwks;
+}
 /**
- * Verify a Clerk session JWT (access token).
+ * Verify a Supabase access token (JWT).
  *
- * Refresh tokens are managed by the Clerk SDK on the frontend
- * (@clerk/nextjs rotates them transparently). This function is for
- * server-side verification of the short-lived access token passed as a
- * Bearer header — used in the worker's HTTP endpoints and API routes
- * that receive tokens from non-browser clients.
+ * Supabase issues short-lived ES256 JWTs signed with a project-specific
+ * asymmetric key. Verification fetches the public JWKS from the project's
+ * /auth/v1/.well-known/jwks.json endpoint (cached in-process by `jose`).
  *
- * Throws if the token is invalid, expired, or the secret key is missing.
+ * Used for:
+ *   - API routes that receive tokens from non-browser clients (Bearer header).
+ *   - Worker HTTP endpoints.
+ *
+ * For Next.js Server Components / Route Handlers that already have a
+ * Supabase server client, prefer `enrichSupabaseAuth(user, db, firmSlug)`
+ * which uses the SDK's session handling instead.
+ *
+ * Throws on missing env, invalid signature, expired token, or missing `sub`.
  */
 async function verifyToken(token) {
-    const secretKey = process.env.CLERK_SECRET_KEY;
-    if (!secretKey)
-        throw new Error('CLERK_SECRET_KEY env var is required');
-    const payload = await (0, backend_1.verifyToken)(token, { secretKey });
+    const { payload } = await (0, jose_1.jwtVerify)(token, getJwks());
+    if (!payload.sub)
+        throw new Error('JWT missing sub claim');
+    const sessionId = typeof payload.session_id === 'string'
+        ? payload.session_id
+        : '';
     return {
         userId: payload.sub,
-        // `sid` is a standard Clerk claim but not in the base JwtPayload type.
-        sessionId: payload.sid ?? '',
+        sessionId,
     };
 }
 /**
