@@ -29,6 +29,7 @@ __exportStar(require("./order-validation.js"), exports);
 __exportStar(require("./pnl.js"), exports);
 __exportStar(require("./polymarket.js"), exports);
 __exportStar(require("./providers.js"), exports);
+__exportStar(require("./rate-limit.js"), exports);
 // ─── Money ────────────────────────────────────────────────────────────────────
 /** Convert cents (bigint) to a display string: 1050n → "$10.50" */
 function formatCents(cents) {

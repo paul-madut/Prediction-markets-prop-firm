@@ -2,8 +2,13 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { prisma } from '@webflux/db';
 import { enrichSupabaseAuth } from '@webflux/auth';
-import { validateOrder } from '@webflux/utils';
+import { checkRateLimit, validateOrder } from '@webflux/utils';
 import { fillOrder } from '@/lib/order-engine/fill-order';
+
+// Per-account order rate limit. Generous for MVP; tighten when Upstash lets
+// us share state across Vercel instances. Window is one second.
+const ORDER_RATE_LIMIT_MAX = 10;
+const ORDER_RATE_LIMIT_WINDOW_MS = 1000;
 
 // BigInt fields don't serialize via JSON.stringify by default.
 function bigintJson(data: unknown, status = 200): Response {
@@ -119,10 +124,25 @@ export async function POST(req: Request) {
     typeof b.externalMarketTicker === 'string' ? b.externalMarketTicker.trim() : '';
   const side = typeof b.side === 'string' ? b.side.trim() : '';
   const action = typeof b.action === 'string' ? b.action.trim() : '';
+  const orderType = typeof b.orderType === 'string' ? b.orderType.trim() : 'market';
   const sizeContracts =
     typeof b.sizeContracts === 'number' ? b.sizeContracts : -1;
   const idempotencyKey =
     typeof b.idempotencyKey === 'string' ? b.idempotencyKey.trim() : '';
+
+  // Limit orders are post-MVP — schema columns exist but submission is rejected.
+  if (orderType === 'limit') {
+    return NextResponse.json(
+      { error: 'Limit orders are not supported in MVP', rejectedReason: 'limit_orders_not_supported' },
+      { status: 422 },
+    );
+  }
+  if (orderType !== 'market') {
+    return NextResponse.json(
+      { error: 'orderType must be "market" (limit not supported in MVP)' },
+      { status: 400 },
+    );
+  }
 
   if (!accountId || !venue || !externalMarketId || !externalMarketTicker) {
     return NextResponse.json(
@@ -155,6 +175,27 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { error: 'idempotencyKey must be a valid UUID v4' },
       { status: 400 },
+    );
+  }
+
+  // ── Rate limit (per-account, sliding window) ──────────────────────────────
+  // Checked before idempotency replay so retries of the same key don't burn budget.
+
+  const rl = checkRateLimit(
+    `orders:${accountId}`,
+    ORDER_RATE_LIMIT_MAX,
+    ORDER_RATE_LIMIT_WINDOW_MS,
+  );
+  if (!rl.allowed) {
+    return new NextResponse(
+      JSON.stringify({ error: 'Order rate limit exceeded', retryAfterMs: rl.retryAfterMs }),
+      {
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json',
+          'Retry-After': String(Math.ceil(rl.retryAfterMs / 1000)),
+        },
+      },
     );
   }
 

@@ -673,3 +673,54 @@ Redis, which is not yet provisioned (UPSTASH_REDIS_REST_URL/TOKEN empty in
 Every trade row carries `metadata.mock: boolean`. Today: false for Polymarket,
 true for Kalshi. When Kalshi goes live in Phase 8, that flag inverts; trades
 written before that date can be identified by `mock:true AND venue:'kalshi'`.
+
+---
+
+## PHASE 4 — ORDER ENGINE HARDENING
+
+### Decision 22 — Latency-arb prevention shipped: 500ms cushion + in-lock quote re-read
+
+**Date:** 2026-05-08
+**Task:** be/order-engine-real (Day 4 of MVP plan §11)
+
+**What shipped:**
+- 500 ms minimum-age cushion in `fillOrder` (configurable via
+  `FillOrderOptions.minAgeMs`, default 500, tests pass 0).
+- Binding fill price now fetched **inside** the FOR UPDATE transaction, not
+  before submission. The pre-lock fetch is a cheap rejection probe only.
+- `orderType` accepted in POST /api/orders body; `'limit'` returns 422 with
+  `rejectedReason: 'limit_orders_not_supported'` (schema columns exist;
+  validation is the gate).
+- Per-account sliding-window rate limit (10 orders/sec by default) in
+  `packages/utils/rate-limit.ts`, applied in POST /api/orders before the
+  idempotency replay check.
+- `fill-mock-order.ts` renamed to `fill-order.ts`; function `fillMockOrder` →
+  `fillOrder`. The "mock" name was misleading once Polymarket became a real
+  quote source.
+- Schema fix migration `20260508000000_orders_action_column.sql`: adds
+  `orders.action` (not in initial SQL but present in Prisma schema since
+  Phase 4 task 1 — Decision 17). Backfilled with default `'buy'`.
+
+**Workspace package.json hardening:**
+The `exports.require` mapping in `@webflux/db`, `@webflux/utils`, and
+`@webflux/auth` pointed to `dist/index.cjs` which was never built (tsc
+emitted CJS-shape `dist/index.js` without a CJS extension). Replaced with
+a single `default` mapping at `dist/index.js` so tsx and Node's CJS
+resolver both find it. This was the blocker preventing
+`tests/phase-4-order-engine.sh` from running the real `fillOrder()`.
+
+**What did NOT ship (deferred):**
+- Worker-side fill processing: Day 4's "API submits → worker fills" split
+  needs Redis + BullMQ. Today's POST /api/orders calls `fillOrder()`
+  synchronously — same atomicity, just inline. Phase 3.5 / 5 will move this.
+- 500 ms cushion is process-local; under multi-instance Vercel deployment
+  the cushion still works per-instance because it's a per-order wait
+  (`submittedAt + 500ms`) keyed off the row, not in-process state.
+
+**Light test (`tests/phase-4-order-engine.sh`, 11/11 ✓):**
+Provisions a fresh Supabase user + `firm_members` row + active account →
+inserts a pending order against a real Polymarket market → invokes the
+production `fillOrder()` via `tsx oracle-funded/scripts/run-fill.ts` →
+asserts order flipped to `filled`, exactly one trade row, position upserted
+with the right contracts, account balance dropped. Rate-limiter window math
+verified separately.

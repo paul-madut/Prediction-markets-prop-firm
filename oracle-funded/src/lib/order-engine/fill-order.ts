@@ -4,6 +4,13 @@
 // uses live Gamma REST data; Kalshi falls back to deterministic mock prices
 // until Phase 8 (Decision 20). When Upstash is provisioned, a Redis cache
 // will sit in front of the venue calls — the call signature stays the same.
+//
+// Latency-arb prevention (MVP plan §5):
+//   1. Minimum-age cushion: a fill cannot run until `submittedAt + 500ms`,
+//      so traders can't race a price update by submitting on a hot signal.
+//   2. In-lock quote re-read: the binding fill price is fetched AFTER the
+//      account FOR UPDATE lock is acquired, not at submission time. The
+//      pre-lock fetch is for early rejection only.
 
 import type { PrismaClient } from '@webflux/db';
 import {
@@ -20,6 +27,13 @@ export type FillResult =
   | { ok: true; tradeId: string; fillPriceCents: number }
   | { ok: false; reason: string };
 
+export interface FillOrderOptions {
+  /** Override the 500ms minimum-age cushion. Use 0 in tests to bypass the wait. */
+  minAgeMs?: number;
+}
+
+const DEFAULT_MIN_AGE_MS = 500;
+
 /**
  * Execute a fill for a pending market order.
  *
@@ -31,38 +45,58 @@ export type FillResult =
 export async function fillOrder(
   orderId: string,
   prisma: PrismaClient,
+  options: FillOrderOptions = {},
 ): Promise<FillResult> {
+  const minAgeMs = options.minAgeMs ?? DEFAULT_MIN_AGE_MS;
+
   // Pre-fetch the order outside the transaction (read-only, no lock needed).
   const order = await prisma.order.findUnique({ where: { id: orderId } });
   if (!order) return { ok: false, reason: 'order_not_found' };
   if (order.status !== 'pending') return { ok: false, reason: 'order_not_pending' };
 
   const venue = order.venue as MarketVenue;
-  const quote = await fetchProviderQuote(venue, order.externalMarketId);
-  if (!quote) return { ok: false, reason: 'no_quote_for_market' };
 
-  const quoteMeta: Record<string, number> = { ...quote };
+  // Pre-lock probe: cheap rejection if this market currently has no top of book.
+  // The binding price is fetched again inside the transaction below.
+  const probeQuote = await fetchProviderQuote(venue, order.externalMarketId);
+  if (!probeQuote) return { ok: false, reason: 'no_quote_for_market' };
+  if (computeFillPrice(probeQuote, order.side as Side, order.action as OrderAction) === null) {
+    return { ok: false, reason: 'no_quote_for_side' };
+  }
 
-  const fillPriceCents = computeFillPrice(
-    quote,
-    order.side as Side,
-    order.action as OrderAction,
-  );
-  if (fillPriceCents === null) return { ok: false, reason: 'no_quote_for_side' };
-
-  // Bid price used for conservative unrealized PnL mark.
-  const currentBidCents = order.side === 'yes' ? quote.yesBid : quote.noBid;
+  // Latency-arb cushion: don't fill faster than 500ms after submission.
+  // This is a per-order wait, not a rate limit. Tests pass 0 to skip.
+  if (minAgeMs > 0) {
+    const ageMs = Date.now() - order.submittedAt.getTime();
+    if (ageMs < minAgeMs) {
+      await new Promise((r) => setTimeout(r, minAgeMs - ageMs));
+    }
+  }
 
   let tradeId: string;
+  let boundFillPriceCents = 0;
 
   try {
-    tradeId = await prisma.$transaction(async (tx) => {
+    const txResult = await prisma.$transaction(async (tx) => {
       // ── Step 1: Lock the account row ────────────────────────────────────────
       await tx.$executeRaw`
         SELECT 1 FROM accounts WHERE id = ${order.accountId}::uuid FOR UPDATE
       `;
 
-      // ── Step 2: Read account + position inside the locked transaction ────────
+      // ── Step 2a: Re-fetch the live quote AFTER the lock ─────────────────────
+      // This is the binding price; the pre-lock quote was a cheap rejection probe.
+      const quote = await fetchProviderQuote(venue, order.externalMarketId);
+      if (!quote) throw new Error('no_quote_for_market');
+      const fillPriceCents = computeFillPrice(
+        quote,
+        order.side as Side,
+        order.action as OrderAction,
+      );
+      if (fillPriceCents === null) throw new Error('no_quote_for_side');
+      const currentBidCents = order.side === 'yes' ? quote.yesBid : quote.noBid;
+      const quoteMeta: Record<string, number> = { ...quote };
+
+      // ── Step 2b: Read account + position inside the locked transaction ──────
       const account = await tx.account.findUniqueOrThrow({
         where: { id: order.accountId },
         select: {
@@ -191,12 +225,14 @@ export async function fillOrder(
         },
       });
 
-      return trade.id;
+      return { tradeId: trade.id, fillPriceCents };
     });
+    tradeId = txResult.tradeId;
+    boundFillPriceCents = txResult.fillPriceCents;
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     return { ok: false, reason: msg };
   }
 
-  return { ok: true, tradeId, fillPriceCents };
+  return { ok: true, tradeId, fillPriceCents: boundFillPriceCents };
 }
