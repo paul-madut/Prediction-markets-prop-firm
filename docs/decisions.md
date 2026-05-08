@@ -1038,3 +1038,132 @@ exist yet; future production runs of this migration would need a
 - React Email / MJML templates — the MVP demo uses bare HTML.
 - Domain-verified Resend sender — using `onboarding@resend.dev` until a
   custom domain is set up.
+
+---
+
+## PHASE 9 — OBSERVABILITY + CRON
+
+### Decision 27 — Vercel Cron (not Railway worker) drives eval cadence; observability is Sentry + pino + /api/health
+
+**Date:** 2026-05-08
+**Task:** §10 of the MVP plan (Observability) + Day-5 EOD scheduling that
+was deferred during Phase 5.
+
+**Why no Railway worker yet:**
+The plan §2 calls for a long-running Railway process with a Polymarket
+WebSocket client + 1Hz eval tick. The MVP demo doesn't need that fidelity:
+- Order fills already trigger `evalTick` synchronously (Phase 5).
+- Polymarket prices move slowly relative to a 10-minute demo window.
+- A 1-minute Vercel Cron covers price-only-drift breach detection well
+  enough for any believable demo scenario.
+- Postponing the Railway worker eliminates a moving part for launch.
+
+When traffic justifies the worker (real traders + real money + real
+reaction time on news), the cron-based path is replaced by the worker
+running `evalTick` in-process — no API surface change, just a different
+trigger.
+
+**What shipped:**
+- `oracle-funded/sentry.{server,client,edge}.config.ts` — Sentry init
+  for all three Next.js runtimes; uses `NEXT_PUBLIC_SENTRY_DSN`.
+- `oracle-funded/src/lib/logger.ts` — pino with redaction (Authorization
+  header, cookie, password, access_token, refresh_token); pretty-prints
+  in dev, JSON in prod for BetterStack ingestion.
+- `oracle-funded/src/lib/redis.ts` — Upstash REST client singleton;
+  returns `null` if env unset so health check can soft-degrade.
+- `GET /api/health` — DB ping + Redis ping; returns 200 when both
+  healthy, 503 if either fails. Worker heartbeat is reported but
+  informational (a stale worker doesn't fail health since the app still
+  serves traffic).
+- `GET /api/cron/tick-all` — runs `evalTick` for every `active`/`funded`
+  account; heartbeats Redis on success. Auth via `CRON_SECRET` Bearer
+  header (Vercel Cron sends this automatically).
+- `GET /api/cron/eod` — runs `runEod()` once per UTC day; same auth.
+- `oracle-funded/vercel.json` — schedules tick-all every minute and EOD
+  at 00:01 UTC.
+- `oracle-funded/src/lib/cron-auth.ts` — shared Bearer-token guard for
+  cron routes; fail-closed in production when `CRON_SECRET` is unset.
+
+**Light test (`tests/phase-9-observability.sh`, 13/13 ✓):**
+- /api/health → 200 with DB + Redis ok
+- Cron routes reject calls without correct secret (401)
+- tick-all runs across all active accounts and writes a fresh heartbeat
+- EOD route runs idempotently
+- pino logger imports + emits without throwing
+
+**Trap and fix during the test write:**
+Pino's pretty-printer writes to stdout in dev mode, which interleaved
+with route response output and broke `tail -1` JSON parsing. Tests now
+run under `LOG_LEVEL=silent` so route output is the only thing on
+stdout. The pino smoke check uses a unique `PHASE9_PINO_OK` marker +
+`grep` so ordering doesn't matter.
+
+---
+
+## INTEGRATION AUDIT + DEMO PREP
+
+### Decision 28 — Cross-firm scoping is clean; Blueberry configs seeded; orchestrator + RUNBOOK landed
+
+**Date:** 2026-05-08
+**Task:** Day 9 (bug bash / integration testing) + Day 10 (demo prep)
+of MVP plan §11.
+
+**Audit results — all clean:**
+
+1. **Cross-firm leak audit.** Every API route's Prisma `findFirst` /
+   `findMany` / `count` includes `firmId: ctx.firmId` in the where
+   clause (verified by exhaustive grep across `oracle-funded/src/app/api/`).
+   The three exceptions are intentional and protected:
+   - `auth/register` does a cross-firm `firmMember.findFirst` to enforce
+     the MVP's "one firm per user" rule.
+   - `cron/tick-all` finds accounts across all firms — runs as a system
+     process, gated by `CRON_SECRET`.
+   - Stripe webhook handler reads `firmId` from `event.metadata`, signed
+     by Stripe; cross-firm impersonation would need to forge a webhook
+     signature.
+
+2. **Audit-log coverage.** Every mutation route writes at least one
+   `audit_log.create`. The few cases where mutation count exceeds audit
+   count are explicable: a `breach_event.create` is itself an audit-trail
+   row; the synthetic mark-to-floor `trade.create` rows on breach are
+   audit-by-design.
+
+3. **BigInt JSON serialization.** Every route that returns Prisma rows
+   with `*Cents` fields uses the `bigintJson()` helper or equivalent
+   replacer; wire-format `BigInt → string` conversion is consistent.
+
+**Blueberry demo data (migration `20260508000006_blueberry_configs.sql`):**
+Three configs beyond the existing demo:
+- **PRO6** — $50K, 5% trailing-EOD drawdown, 6% target, $299, 80% split
+- **PRO10** — $100K, 8% trailing-EOD drawdown, 10% target, $599, 80% split
+- **Instant Funded** — $25K, 4% static drawdown, $399, 70% split, no
+  evaluation gate (status flips straight to `funded` on payment).
+
+Phase 1 smoke test updated to assert the demo config by id and the three
+Blueberry configs by name — replaces the now-stale "exactly 1 config"
+assertion.
+
+**Test orchestrator (`tests/run-all.sh`):**
+Runs all 9 phase tests in order, prints a one-line PASS/FAIL summary per
+phase plus the total assertion count from each test's `Result:` line.
+Bash-3 compatible (no associative arrays — macOS default shell). Returns
+non-zero exit on any phase failure.
+
+Final state when Decision 28 landed: **9 phases / 129/129 assertions ✓**.
+
+**Runbook (`/RUNBOOK.md`):**
+- Pre-demo checklist (service health, Stripe CLI, demo data verification,
+  test-account login)
+- 10-minute demo flow (sign-up → checkout → fill → equity → admin →
+  force-breach → payout)
+- Common breakages table (8 rows covering the most likely demo-time
+  failure modes)
+- Service dependencies map (what's live vs what's deferred)
+
+**What's still deferred but not blocking demo:**
+- Continuous Railway worker (Vercel Cron substitutes for MVP).
+- Kalshi (Decision 20).
+- TOTP enrolment UI (admin-guard skips AAL2 in `NEXT_PUBLIC_DEMO_MODE=true`).
+- Frontend wiring for backend routes — pages are mock-data; backend
+  contract is correct.
+- Domain-verified Resend sender.

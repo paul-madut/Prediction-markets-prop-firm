@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/tick-all",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/eod",
+      "schedule": "1 0 * * *"
+    }
+  ]
+}

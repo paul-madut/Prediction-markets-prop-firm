@@ -44,14 +44,25 @@ assert "demo firm row count"     "1"          "$(count "$firms")"
 assert "demo firm name"          "Demo Prop Firm" "$(field "$firms" name)"
 assert "demo firm status"        "active"     "$(field "$firms" status)"
 
-# 3. Demo challenge config seeded.
-configs=$(q "challenge_configs?firm_id=eq.00000000-0000-0000-0000-000000000001")
-assert "challenge_configs count" "1" "$(count "$configs")"
-assert "config trailing_eod"     "trailing_eod" "$(field "$configs" drawdown_type)"
+# 3. Demo challenge config seeded (specific row by id, not a global count —
+#    Blueberry configs from migration 20260508000006 are also expected here).
+demo_config=$(q "challenge_configs?id=eq.00000000-0000-0000-0000-000000000002")
+assert "demo config seeded"      "1"            "$(count "$demo_config")"
+assert "config trailing_eod"     "trailing_eod" "$(field "$demo_config" drawdown_type)"
 
-# 4. Demo phase seeded.
+# 4. At least one phase exists for the demo config.
 phases=$(q "challenge_phases?config_id=eq.00000000-0000-0000-0000-000000000002")
-assert "challenge_phases count"  "1" "$(count "$phases")"
+phase_count=$(count "$phases")
+[ "$phase_count" -ge 1 ] && echo "  ✓ demo config has ≥ 1 phase" && ok=$((ok+1)) \
+  || { echo "  ✗ demo config has no phases"; fail=$((fail+1)); }
+
+# 5. Blueberry configs from migration 20260508000006 are present.
+for slug in "PRO6 — \$50K Evaluation" "PRO10 — \$100K Evaluation" "Instant Funded — \$25K"; do
+  enc=$(python3 -c "import urllib.parse;print(urllib.parse.quote('''$slug'''))")
+  blueberry=$(q "challenge_configs?name=eq.$enc")
+  [ "$(count "$blueberry")" = "1" ] && echo "  ✓ Blueberry config '$slug' present" && ok=$((ok+1)) \
+    || { echo "  ✗ Blueberry config '$slug' missing"; fail=$((fail+1)); }
+done
 
 echo
 echo "Result: $ok passed, $fail failed"
