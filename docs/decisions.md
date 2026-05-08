@@ -724,3 +724,90 @@ production `fillOrder()` via `tsx oracle-funded/scripts/run-fill.ts` →
 asserts order flipped to `filled`, exactly one trade row, position upserted
 with the right contracts, account balance dropped. Rate-limiter window math
 verified separately.
+
+---
+
+## PHASE 5 — EVAL ENGINE
+
+### Decision 23 — Eval tick + mark-to-floor + EOD job; equity-formula bug fixed
+
+**Date:** 2026-05-08
+**Task:** be/eval-engine-real (Day 5 of MVP plan §11)
+
+**Equity formula bug — the most important fix in this phase:**
+`computeEquityFromPrices` was computing `equity = balance + Σ (currentBid −
+avgEntry) × N`. That's the P&L delta, not the position market value.
+Adding it to a balance that already had cost basis subtracted (because
+`computeBalanceChange` returns `-gross` on a buy) double-counted the cost
+basis as a loss, so equity ran ~one cost-basis low for every open position.
+On a $10K account holding 1000 contracts at 60¢, equity was off by $600 —
+enough to trigger false breaches on a 10% drawdown rule. Fixed:
+
+```
+equity = balance + Σ (currentBid × N)              // live path
+       = balance + Σ (avgEntry × N + unrealizedPnl) // stored path (same value)
+```
+
+Both helpers in `packages/utils/eval.ts` were updated; `PositionPnlEntry`
+gained `avgEntryPriceCents`. Property 3 in the smoke test confirms the two
+paths produce the same number for the same inputs.
+
+**What shipped:**
+- `oracle-funded/src/lib/eval-engine/tick.ts` — `evalTick(accountId)`:
+  FOR UPDATE lock, re-mark every open position against live Polymarket
+  bids, write a `drawdown_snapshots` row, run `checkBreach` against the
+  effective floor, run mark-to-floor close on breach, advance phase on
+  profit-target hit. All in one atomic Prisma transaction with optimistic
+  version locking.
+- `oracle-funded/src/lib/eval-engine/mark-to-floor.ts` — `planMarkToFloorClose`:
+  marks each open position at `currentBid` for a fair-value close; if the
+  resulting balance still lands below the floor, bumps the LAST closing
+  trade's price by the per-contract delta needed to land balance on the
+  floor exactly (round up to avoid a 1-cent undershoot).
+- `oracle-funded/src/lib/eval-engine/eod.ts` — `runEod(asOfUtc)`:
+  scans active/funded accounts, advances high-water marks, anchors next
+  day's daily floor by setting `dayStartEquity = closing equity`, increments
+  `tradingDaysCount` if the account had any trade today. Idempotent via
+  `last_eod_run_at` — same-day re-runs return `accountsAdvanced: 0`.
+- POST `/api/orders` calls `evalTick(accountId)` after every fill so a
+  breach induced by the new position surfaces synchronously.
+
+**Schema drift cleanup:**
+While wiring `evalTick` against the real DB I ran into four Prisma↔SQL
+drifts that had been latent since Decision 6 (where SQL was authoritative
+for some choices but Prisma was authoritative for others, and they fell
+out of sync). All fixed in this phase:
+
+| Drift | Resolution |
+|---|---|
+| `challenge_phases.phase_index` (SQL) vs `phase_number` (Prisma) | Migration `20260508000001` — rename column |
+| `drawdown_snapshots.id BIGSERIAL` vs `String @db.Uuid` | Prisma fix — BigInt with autoincrement (BIGSERIAL is right for high-volume append) |
+| `breach_events`: SQL has `breach_type`, `metadata`, `occurred_at`; Prisma has `breached_at` only | Prisma adds `breachType` + `metadata`; migration `20260508000002` renames `occurred_at` → `breached_at` |
+| `account_state_log.id BIGSERIAL` vs UUID; `occurred_at` vs `created_at` | Prisma fix on id; migration `20260508000003` renames column |
+
+These were silent bugs — every code path that wrote to these tables (the
+order engine, the auth flow's audit log writes, etc.) would have hit them
+the first time real load arrived. Phase 4 happened to dodge the audit_log
+one because audit_log itself was already aligned.
+
+**Light test (`tests/phase-5-eval-engine.sh`, 12/12 ✓):**
+- Property 1: static floor invariant (same state → same value)
+- Property 2: trailing-EOD floor monotonically non-decreasing
+- Property 3: `computeEquityFromStoredPnl == computeEquityFromPrices`
+  for the same input — proves the two-path equity formula is consistent
+- Property 4a/b/c: mark-to-floor close — single position above floor
+  preserved as-is; underwater single position adjusts last trade up to
+  the floor exactly; multi-position adjustment lands only on the last
+- Integration: induces a real breach (real Polymarket market, force
+  drawdown floor above current equity), runs `evalTick`, asserts
+  account.status='breached', breach_event written, position zeroed
+- Property 5: EOD job is idempotent — second run on the same UTC day
+  advances 0 accounts
+
+**What did NOT ship:**
+- Continuous worker poll loop (1Hz per active account) — needs Redis +
+  the worker process. Today's eval runs synchronously after every fill
+  and on demand via `evalTick(accountId)`. Price-only drifts between
+  fills won't be caught until Phase 3.5/5 wires the worker.
+- 00:01 UTC EOD cron — `runEod()` is callable; scheduling is a Vercel
+  Cron config that lands at deploy time.

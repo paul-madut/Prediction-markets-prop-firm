@@ -15,9 +15,10 @@ function _bigintMax(a: bigint, b: bigint): bigint {
 
 // ─── Snapshot types ───────────────────────────────────────────────────────────
 
-/** Minimal position data needed for stored-PnL equity computation. */
+/** Position data needed for stored-PnL equity computation. */
 export interface PositionPnlEntry {
   netContracts: number;
+  avgEntryPriceCents: number;
   unrealizedPnlCents: bigint;
 }
 
@@ -55,24 +56,37 @@ export interface AccountFloorState {
 // ─── Equity ──────────────────────────────────────────────────────────────────
 
 /**
- * Computes equity from the stored unrealized PnL values on open positions.
- * Suitable for the API layer where live prices are not yet available.
- * equity = balance + Σ unrealizedPnlCents for positions with netContracts ≠ 0
+ * Computes equity from stored unrealized P&L on open positions.
+ *
+ *   equity = balance + Σ position_market_value
+ *          = balance + Σ (avgEntry × N + unrealizedPnl)
+ *          = balance + Σ (avgEntry × N + (currentBid − avgEntry) × N)
+ *          = balance + Σ (currentBid × N)
+ *
+ * The cost basis was already subtracted from `balance` when the position was
+ * opened (computeBalanceChange returns -gross on a buy), so the position
+ * market value, not the P&L delta, is what gets added back. Adding only the
+ * P&L would double-count the cost basis as a loss.
  */
 export function computeEquityFromStoredPnl(
   balanceCents: bigint,
   positions: PositionPnlEntry[],
 ): bigint {
-  return positions.reduce(
-    (acc, pos) => (pos.netContracts !== 0 ? acc + pos.unrealizedPnlCents : acc),
-    balanceCents,
-  );
+  return positions.reduce((acc, pos) => {
+    if (pos.netContracts === 0) return acc;
+    const costBasis = BigInt(pos.netContracts) * BigInt(pos.avgEntryPriceCents);
+    return acc + costBasis + pos.unrealizedPnlCents;
+  }, balanceCents);
 }
 
 /**
  * Computes equity by marking open positions to live bid prices.
- * Used by the eval tick loop in the worker process.
- * equity = balance + Σ (currentBid - avgEntry) × netContracts
+ * Used by the eval tick loop when fresh quotes are available.
+ *
+ *   equity = balance + Σ (currentBid × netContracts)
+ *
+ * Conservative: bid (not mid or ask) — what the trader would receive if they
+ * closed every open position right now.
  */
 export function computeEquityFromPrices(
   balanceCents: bigint,
@@ -80,10 +94,8 @@ export function computeEquityFromPrices(
 ): bigint {
   return positions.reduce((acc, pos) => {
     if (pos.netContracts === 0) return acc;
-    const unrealizedPnl = BigInt(
-      (pos.currentBidCents - pos.avgEntryPriceCents) * pos.netContracts,
-    );
-    return acc + unrealizedPnl;
+    const positionValue = BigInt(pos.netContracts) * BigInt(pos.currentBidCents);
+    return acc + positionValue;
   }, balanceCents);
 }
 

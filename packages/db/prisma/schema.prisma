@@ -231,7 +231,9 @@ model Position {
 // ============================================================
 
 model DrawdownSnapshot {
-  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  // SQL schema uses BIGSERIAL for snapshot tables (lower storage, faster index
+  // on high-volume append). UUID would be wasteful.
+  id              BigInt   @id @default(autoincrement())
   firmId          String   @map("firm_id") @db.Uuid
   accountId       String   @map("account_id") @db.Uuid
   equityCents     BigInt   @map("equity_cents")
@@ -251,9 +253,11 @@ model BreachEvent {
   id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   firmId              String   @map("firm_id") @db.Uuid
   accountId           String   @map("account_id") @db.Uuid
+  breachType          String   @map("breach_type")
   equityAtBreachCents BigInt   @map("equity_at_breach_cents")
   floorAtBreachCents  BigInt   @map("floor_at_breach_cents")
   closeBehavior       String   @map("close_behavior")
+  metadata            Json     @default("{}")
   breachedAt          DateTime @default(now()) @map("breached_at")
 
   firm    Firm    @relation(fields: [firmId], references: [id])
@@ -263,7 +267,8 @@ model BreachEvent {
 }
 
 model AccountStateLog {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  // BIGSERIAL in SQL — high-volume append, UUID would be wasteful (matches DrawdownSnapshot).
+  id          BigInt   @id @default(autoincrement())
   firmId      String   @map("firm_id") @db.Uuid
   accountId   String   @map("account_id") @db.Uuid
   fromStatus  String?  @map("from_status")

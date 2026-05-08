@@ -82,6 +82,7 @@ export async function GET(
         where: { netContracts: { not: 0 } },
         select: {
           netContracts: true,
+          avgEntryPriceCents: true,
           unrealizedPnlCents: true,
         },
       },

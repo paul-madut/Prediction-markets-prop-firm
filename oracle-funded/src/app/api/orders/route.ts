@@ -4,6 +4,7 @@ import { prisma } from '@webflux/db';
 import { enrichSupabaseAuth } from '@webflux/auth';
 import { checkRateLimit, validateOrder } from '@webflux/utils';
 import { fillOrder } from '@/lib/order-engine/fill-order';
+import { evalTick } from '@/lib/eval-engine/tick';
 
 // Per-account order rate limit. Generous for MVP; tighten when Upstash lets
 // us share state across Vercel instances. Window is one second.
@@ -360,7 +361,21 @@ export async function POST(req: Request) {
     return bigintJson({ ...order, fillError: fill.reason }, 201);
   }
 
+  // Run an eval tick so a breach induced by this fill (or by price drift since
+  // the last tick) is caught synchronously. Worker poll loop will catch
+  // price-only drifts between fills once Phase 3.5 lands.
+  let evalOutcome: Awaited<ReturnType<typeof evalTick>> | null = null;
+  try {
+    evalOutcome = await evalTick(accountId);
+  } catch {
+    // Don't fail the order if the post-fill tick blows up — the worker tick
+    // will catch any state divergence on the next pass.
+  }
+
   // Re-fetch so the response reflects the 'filled' status and filledAt timestamp.
   const filledOrder = await prisma.order.findUniqueOrThrow({ where: { id: order.id } });
-  return bigintJson({ ...filledOrder, tradeId: fill.tradeId, fillPriceCents: fill.fillPriceCents }, 201);
+  return bigintJson(
+    { ...filledOrder, tradeId: fill.tradeId, fillPriceCents: fill.fillPriceCents, evalOutcome },
+    201,
+  );
 }

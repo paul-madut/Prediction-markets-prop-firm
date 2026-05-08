@@ -21,6 +21,7 @@ A script exits 0 on success, non-zero on any check failure.
 | `phase-2-auth.sh` | Supabase user lifecycle, JWT signing, JWKS verification through `packages/auth`, cross-schema FK constraints, ON DELETE CASCADE |
 | `phase-3-polymarket.sh` | Gamma REST reachable, `fetchProviderQuote` normalizes correctly (binary complement, no crossed book, prices in [0,100]), null for bogus ids, kalshi falls back to mock |
 | `phase-4-order-engine.sh` | Real `fillOrder()` end-to-end: live Polymarket market → pending order → trade row written → position upserted → account balance updated, plus rate-limiter window math |
+| `phase-5-eval-engine.sh` | 5 property tests (static floor invariant, trailing floor monotonic, stored-PnL ≡ live-price equity, mark-to-floor lands exactly on the floor, EOD idempotent) + integration test that induces a real breach and verifies state transitions and synthetic close trades |
 
 These are intentionally narrow — they catch wiring/config breakage, not
 business-logic correctness. Domain-correctness tests (eval engine math,
