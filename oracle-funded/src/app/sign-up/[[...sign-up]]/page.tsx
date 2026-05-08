@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { ArrowRightIcon, ArrowPathIcon, ExclamationTriangleIcon, EnvelopeIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import { motion, AnimatePresence } from "framer-motion";
+import { AuthShell } from "@/components/auth/AuthShell";
+import { PasswordInput } from "@/components/auth/PasswordInput";
 import { createClient } from "@/lib/supabase/client";
-import { DemoBanner } from "@/components/DemoBanner";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -14,7 +16,7 @@ export default function SignUpPage() {
   const [info, setInfo] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent): Promise<void> {
     e.preventDefault();
     setError(null);
     setInfo(null);
@@ -22,14 +24,12 @@ export default function SignUpPage() {
 
     const supabase = createClient();
     const { data, error } = await supabase.auth.signUp({ email, password });
-
     if (error) {
       setLoading(false);
       setError(error.message);
       return;
     }
 
-    // If email confirmation is enabled, the session won't be set yet.
     if (!data.session) {
       setLoading(false);
       setInfo("Check your email to confirm your address, then sign in.");
@@ -52,83 +52,146 @@ export default function SignUpPage() {
     router.refresh();
   }
 
+  // Lightweight password strength signal (visual only — server enforces minLength=8).
+  const strength = (() => {
+    let s = 0;
+    if (password.length >= 8) s += 1;
+    if (/[A-Z]/.test(password)) s += 1;
+    if (/[0-9]/.test(password)) s += 1;
+    if (/[^A-Za-z0-9]/.test(password)) s += 1;
+    return s;
+  })();
+
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-gray-900 to-blue-950">
-      <DemoBanner />
-      <div className="flex-1 flex items-center justify-center relative px-4">
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
-        <div className="absolute top-1/4 -left-20 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl" />
-        <div className="relative z-10 w-full max-w-md">
-          <div className="bg-gray-900/70 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8">
-            <h1 className="text-2xl font-semibold text-white mb-1">Create account</h1>
-            <p className="text-sm text-gray-400 mb-6">Start trading on OracleFunded.</p>
+    <AuthShell
+      side="up"
+      ctaSwitchHref="/sign-in"
+      ctaSwitchLabel="Sign in"
+      ctaSwitchPrompt="Already have an account?"
+    >
+      <div className="space-y-1.5">
+        <h2
+          className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+          style={{ fontFamily: "var(--font-mona-sans, var(--font-sans))" }}
+        >
+          Create your account
+        </h2>
+        <p className="text-sm text-slate-500 dark:text-slate-400">
+          Free to start — challenge fees apply when you buy your first evaluation.
+        </p>
+      </div>
 
-            <form onSubmit={onSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="email" className="block text-xs font-medium text-gray-300 mb-1.5">
-                  Email
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800/50 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="password" className="block text-xs font-medium text-gray-300 mb-1.5">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  minLength={8}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800/50 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-
-              {error && (
-                <div className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2">
-                  {error}
-                </div>
-              )}
-              {info && (
-                <div className="text-sm text-blue-300 bg-blue-500/10 border border-blue-500/30 rounded-lg px-3 py-2">
-                  {info}
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2 rounded-lg transition"
-              >
-                {loading ? "Creating account…" : "Sign up"}
-              </button>
-            </form>
-
-            <p className="text-sm text-gray-400 mt-6 text-center">
-              Already have an account?{" "}
-              <Link href="/sign-in" className="text-indigo-400 hover:text-indigo-300">
-                Sign in
-              </Link>
-            </p>
+      <form onSubmit={onSubmit} className="mt-8 space-y-4">
+        <div>
+          <label
+            htmlFor="email"
+            className="block text-[11px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5"
+          >
+            Email
+          </label>
+          <div className="relative">
+            <EnvelopeIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500 pointer-events-none" />
+            <input
+              id="email"
+              type="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="w-full pl-9 pr-3.5 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+            />
           </div>
         </div>
-      </div>
-    </div>
+
+        <div>
+          <label
+            htmlFor="password"
+            className="block text-[11px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5"
+          >
+            Password
+          </label>
+          <PasswordInput
+            id="password"
+            value={password}
+            onChange={setPassword}
+            autoComplete="new-password"
+            minLength={8}
+            placeholder="At least 8 characters"
+          />
+          {/* Subtle strength meter. Doesn't gate submit — backend minLength is the source of truth. */}
+          {password.length > 0 && (
+            <div className="mt-2 flex items-center gap-1.5">
+              {[0, 1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className={`h-1 flex-1 rounded-full transition-colors ${
+                    strength > i
+                      ? strength === 1
+                        ? "bg-rose-400"
+                        : strength === 2
+                          ? "bg-amber-400"
+                          : strength === 3
+                            ? "bg-blue-400"
+                            : "bg-emerald-400"
+                      : "bg-slate-200 dark:bg-slate-800"
+                  }`}
+                />
+              ))}
+              <span className="text-[10px] uppercase tracking-wider text-slate-400 dark:text-slate-500 ml-2">
+                {strength === 0 ? "" : strength === 1 ? "weak" : strength === 2 ? "fair" : strength === 3 ? "good" : "strong"}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <AnimatePresence mode="wait">
+          {error && (
+            <motion.div
+              key="err"
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-start gap-2 px-3 py-2 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded-lg text-sm text-red-700 dark:text-red-300"
+            >
+              <ExclamationTriangleIcon className="w-4 h-4 mt-0.5 shrink-0" />
+              <span>{error}</span>
+            </motion.div>
+          )}
+          {info && (
+            <motion.div
+              key="info"
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-start gap-2 px-3 py-2 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900 rounded-lg text-sm text-blue-700 dark:text-blue-300"
+            >
+              <CheckCircleIcon className="w-4 h-4 mt-0.5 shrink-0" />
+              <span>{info}</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-lg bg-gradient-to-b from-blue-500 to-blue-600 text-white text-sm font-semibold shadow-lg shadow-blue-500/20 hover:from-blue-600 hover:to-blue-700 hover:shadow-xl hover:shadow-blue-500/25 active:translate-y-[0.5px] disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+        >
+          {loading ? (
+            <>
+              <ArrowPathIcon className="w-4 h-4 animate-spin" />
+              Creating account…
+            </>
+          ) : (
+            <>
+              Create account
+              <ArrowRightIcon className="w-4 h-4" />
+            </>
+          )}
+        </button>
+      </form>
+    </AuthShell>
   );
 }
