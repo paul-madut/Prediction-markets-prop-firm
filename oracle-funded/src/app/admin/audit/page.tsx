@@ -1,199 +1,194 @@
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
-import { DocumentTextIcon, ArrowLeftIcon, MagnifyingGlassIcon, FunnelIcon } from "@heroicons/react/16/solid";
-import { useAdmin } from "@/context/AdminContext";
-import { cn } from "@/lib/utils";
+// /admin/audit — wired audit log search backed by GET /api/admin/audit.
+// Filters by action substring + actor user id + entity type. Keyset
+// pagination via the nextCursor returned by the route.
 
-const formatDateTime = (timestamp: string) => {
-  return new Date(timestamp).toLocaleString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-};
+import { useEffect, useState } from "react";
+import { ArrowPathIcon, MagnifyingGlassIcon } from "@heroicons/react/16/solid";
+import { TextureCard, TextureCardContent } from "@/components/ui/texture-card";
+import { api, ApiError } from "@/lib/api-client";
+import { formatDate } from "@/lib/formatters";
 
-const formatAction = (action: string): string => {
-  return action.replace(/\./g, " ").replace(/_/g, " ");
-};
+interface AuditRow {
+  id: string;
+  firmId: string;
+  actorUserId: string | null;
+  action: string;
+  entityType: string;
+  entityId: string;
+  beforeState: unknown;
+  afterState: unknown;
+  metadata: unknown;
+  createdAt: string;
+}
 
-const getActionColor = (action: string) => {
-  if (action.includes("approve") || action.includes("unfreeze"))
-    return "bg-green-100 text-green-700";
-  if (action.includes("reject") || action.includes("freeze") || action.includes("breach"))
-    return "bg-red-100 text-red-700";
-  if (action.includes("login")) return "bg-blue-100 text-blue-700";
-  return "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300";
-};
+interface AuditResponse {
+  rows: AuditRow[];
+  nextCursor: string | null;
+  count: number;
+}
 
-export default function AuditLogsPage() {
-  const { auditLogs } = useAdmin();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [resourceFilter, setResourceFilter] = useState<string>("all");
+export default function AdminAuditPage() {
+  const [rows, setRows] = useState<AuditRow[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  // Get unique resources for filter
-  const resources = Array.from(new Set(auditLogs.map((log) => log.resource)));
+  const [action, setAction] = useState("");
+  const [actor, setActor] = useState("");
+  const [entityType, setEntityType] = useState("");
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  // FunnelIcon logs
-  const filteredLogs = auditLogs.filter((log) => {
-    const matchesSearch =
-      !searchQuery ||
-      log.actorName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      log.action.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      log.resourceId.toLowerCase().includes(searchQuery.toLowerCase());
+  async function load(): Promise<void> {
+    setLoading(true);
+    setError(null);
+    try {
+      const params = new URLSearchParams();
+      if (action.trim()) params.set("action", action.trim());
+      if (actor.trim()) params.set("actorUserId", actor.trim());
+      if (entityType.trim()) params.set("entityType", entityType.trim());
+      params.set("limit", "100");
+      const data = await api.get<AuditResponse>(`/api/admin/audit?${params}`);
+      setRows(data.rows);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : String(err));
+      setRows([]);
+    } finally {
+      setLoading(false);
+    }
+  }
 
-    const matchesResource =
-      resourceFilter === "all" || log.resource === resourceFilter;
-
-    return matchesSearch && matchesResource;
-  });
+  useEffect(() => {
+    void load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 -mx-6 -mt-6 px-6 py-6 mb-6">
-        <div className="flex items-center gap-4">
-          <Link
-            href="/admin"
-            className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
-          >
-            <ArrowLeftIcon className="h-5 w-5" />
-          </Link>
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-blue-100 rounded-xl">
-              <DocumentTextIcon className="h-6 w-6 text-blue-600" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Audit Logs</h1>
-              <p className="text-gray-500 dark:text-gray-400 mt-1">
-                Complete history of administrative actions
-              </p>
-            </div>
-          </div>
+    <div className="space-y-6 max-w-7xl mx-auto">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Audit log</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            Every admin action and system state change is recorded here.
+          </p>
+        </div>
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-full">
+          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-xs font-semibold text-emerald-700 uppercase tracking-wide">
+            Live data
+          </span>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        {/* MagnifyingGlassIcon */}
-        <div className="flex-1 relative">
-          <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-gray-500" />
-          <input
-            type="text"
-            placeholder="Search by actor, action, or resource ID..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 dark:border-slate-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-          />
-        </div>
-
-        {/* Resource FunnelIcon */}
-        <select
-          value={resourceFilter}
-          onChange={(e) => setResourceFilter(e.target.value)}
-          className="px-4 py-2.5 border border-gray-200 dark:border-slate-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        >
-          <option value="all">All Resources</option>
-          {resources.map((resource) => (
-            <option key={resource} value={resource}>
-              {resource.charAt(0).toUpperCase() + resource.slice(1)}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Results count */}
-      <p className="text-sm text-gray-500 dark:text-gray-400">
-        Showing {filteredLogs.length} of {auditLogs.length} entries
-      </p>
-
-      {/* Logs Table */}
-      <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-gray-50 dark:bg-slate-950 border-b border-gray-200 dark:border-slate-800">
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
-                  Timestamp
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
-                  Actor
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
-                  Action
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
-                  Resource
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
-                  Outcome
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
-                  IP Address
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-slate-800">
-              {filteredLogs.map((log) => (
-                <tr key={log.logId} className="hover:bg-gray-50 dark:hover:bg-slate-800/50">
-                  <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                    {formatDateTime(log.timestamp)}
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="font-medium text-gray-900 dark:text-gray-100">{log.actorName}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">
-                      {log.actorRole.replace("_", " ")}
-                    </p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={cn(
-                        "px-2.5 py-1 text-xs font-medium rounded-full capitalize",
-                        getActionColor(log.action)
-                      )}
-                    >
-                      {formatAction(log.action)}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="text-sm text-gray-900 dark:text-gray-100 capitalize">
-                      {log.resource}
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 font-mono">
-                      {log.resourceId}
-                    </p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={cn(
-                        "px-2.5 py-1 text-xs font-medium rounded-full capitalize",
-                        log.outcome === "success"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
-                      )}
-                    >
-                      {log.outcome}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 font-mono">
-                    {log.ipAddress}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {filteredLogs.length === 0 && (
-          <div className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
-            No audit logs found matching your criteria
+      <TextureCard interactive={false}>
+        <TextureCardContent className="p-4 flex flex-col sm:flex-row gap-3 items-end">
+          <div className="flex-1 min-w-0">
+            <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">Action</label>
+            <input
+              type="text"
+              placeholder="e.g. payout.approved"
+              value={action}
+              onChange={(e) => setAction(e.target.value)}
+              className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
-        )}
-      </div>
+          <div className="flex-1 min-w-0">
+            <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">Actor user id</label>
+            <input
+              type="text"
+              placeholder="UUID"
+              value={actor}
+              onChange={(e) => setActor(e.target.value)}
+              className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg text-sm font-mono text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="w-full sm:w-48">
+            <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">Entity type</label>
+            <input
+              type="text"
+              placeholder="account / payment / payout / order"
+              value={entityType}
+              onChange={(e) => setEntityType(e.target.value)}
+              className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <button
+            onClick={() => void load()}
+            disabled={loading}
+            className="inline-flex items-center gap-1.5 h-10 px-4 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
+          >
+            {loading ? <ArrowPathIcon className="w-4 h-4 animate-spin" /> : <MagnifyingGlassIcon className="w-4 h-4" />}
+            Search
+          </button>
+        </TextureCardContent>
+      </TextureCard>
+
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-700">
+          {error}
+        </div>
+      )}
+
+      <TextureCard interactive={false}>
+        <TextureCardContent className="p-0">
+          {rows === null && (
+            <div className="px-6 py-8 text-sm text-gray-500 dark:text-gray-400">Loading…</div>
+          )}
+          {rows !== null && rows.length === 0 && (
+            <div className="px-6 py-12 text-center text-sm text-gray-500 dark:text-gray-400">
+              No audit rows match those filters.
+            </div>
+          )}
+          {rows !== null && rows.length > 0 && (
+            <ul className="divide-y divide-gray-100 dark:divide-slate-800">
+              {rows.map((r) => {
+                const expanded = expandedId === r.id;
+                return (
+                  <li
+                    key={r.id}
+                    className="px-6 py-3 hover:bg-gray-50 dark:hover:bg-slate-950/50 cursor-pointer"
+                    onClick={() => setExpandedId(expanded ? null : r.id)}
+                  >
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-sm font-semibold text-gray-900 dark:text-gray-100">
+                            {r.action}
+                          </span>
+                          <span className="text-xs text-gray-400 dark:text-gray-500 uppercase">{r.entityType}</span>
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 font-mono truncate">
+                          actor {r.actorUserId ? `${r.actorUserId.slice(0, 8)}…` : "system"} · entity {r.entityId.slice(0, 8)}…
+                        </div>
+                      </div>
+                      <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0">
+                        {formatDate(r.createdAt, "MMM dd HH:mm:ss")}
+                      </span>
+                    </div>
+                    {expanded && (
+                      <div className="mt-3 pl-3 border-l-2 border-blue-300 dark:border-blue-700 grid grid-cols-1 lg:grid-cols-3 gap-3 text-xs">
+                        <div>
+                          <div className="text-gray-400 dark:text-gray-500 uppercase font-semibold mb-1">Before</div>
+                          <pre className="bg-gray-50 dark:bg-slate-950 rounded p-2 overflow-x-auto text-gray-700 dark:text-gray-300">{JSON.stringify(r.beforeState ?? null, null, 2)}</pre>
+                        </div>
+                        <div>
+                          <div className="text-gray-400 dark:text-gray-500 uppercase font-semibold mb-1">After</div>
+                          <pre className="bg-gray-50 dark:bg-slate-950 rounded p-2 overflow-x-auto text-gray-700 dark:text-gray-300">{JSON.stringify(r.afterState ?? null, null, 2)}</pre>
+                        </div>
+                        <div>
+                          <div className="text-gray-400 dark:text-gray-500 uppercase font-semibold mb-1">Metadata</div>
+                          <pre className="bg-gray-50 dark:bg-slate-950 rounded p-2 overflow-x-auto text-gray-700 dark:text-gray-300">{JSON.stringify(r.metadata ?? {}, null, 2)}</pre>
+                        </div>
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </TextureCardContent>
+      </TextureCard>
     </div>
   );
 }

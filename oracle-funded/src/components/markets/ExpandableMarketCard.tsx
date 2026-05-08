@@ -4,7 +4,9 @@ import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Event, Market } from "@/types";
-import { useApp } from "@/context/AppContext";
+// Trade execution from this modal is not yet wired against /api/orders;
+// it surfaces a "coming soon" notice instead. Real fills happen via
+// POST /api/orders today (Phase 4) — UI hookup is a future turn.
 import { formatVolume, formatDate, formatCurrency } from "@/lib/formatters";
 import { calculateShares, calculateTotalCost } from "@/lib/calculations";
 import { ArrowTrendingUpIcon, ChartBarIcon } from "@heroicons/react/24/outline";
@@ -124,7 +126,6 @@ interface MarketModalProps {
 }
 
 export const MarketModal = ({ event, onClose }: MarketModalProps) => {
-  const { executeTrade, user } = useApp();
   const [selectedTicker, setSelectedTicker] = useState<string>(event.outcomes[0].ticker);
   const [side, setSide] = useState<"yes" | "no">("yes");
   const [stakeAmount, setStakeAmount] = useState<string>("100");
@@ -141,16 +142,14 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
   const potentialProfit = shares * (100 - price) - totalCost;
   const potentialLoss = -totalCost;
 
+  // Placeholder: real fills go through POST /api/orders (Phase 4). Until
+  // the modal is wired to that route, surface a coming-soon notice.
   const handleTrade = async () => {
-    const success = executeTrade(market.ticker, side, shares);
-    if (success) {
-      setStakeAmount("100");
-      setSide("yes");
-      setTimeout(() => onClose(), 1000);
-    } else {
-      throw new Error("Insufficient balance");
-    }
+    alert(
+      "Trade panel is being wired against /api/orders. For now use the route directly with: { accountId, venue, externalMarketId, side, action, sizeContracts, idempotencyKey }",
+    );
   };
+  const user = null as unknown as { accountBalance: number } | null;
 
   return (
     <motion.div
@@ -285,7 +284,7 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
               className="w-full pl-8 pr-4 py-3 border border-gray-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="100"
               min="1"
-              max={user.accountBalance / 100}
+              max={user?.accountBalance ? (user?.accountBalance ?? 0) / 100 : undefined}
             />
           </div>
           <div className="mt-2 flex gap-2">
@@ -329,10 +328,10 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
 
         <StatefulButton
           onClick={handleTrade}
-          disabled={shares === 0 || totalCost > user.accountBalance}
+          disabled={shares === 0 || totalCost > (user?.accountBalance ?? 0)}
           className="w-full py-4"
         >
-          {totalCost > user.accountBalance
+          {totalCost > (user?.accountBalance ?? 0)
             ? "Insufficient Balance"
             : `Place Trade - ${formatCurrency(totalCost)}`}
         </StatefulButton>

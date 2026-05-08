@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { useApp } from "@/context/AppContext";
-import { Market } from "@/types";
+import { Event, Market } from "@/types";
+import { api, ApiError } from "@/lib/api-client";
 import { MarketFilters } from "@/components/markets/MarketFilters";
 import { MarketCard } from "@/components/markets/ExpandableMarketCard";
 import { MarketCardSkeleton } from "@/components/markets/MarketCardSkeleton";
@@ -20,7 +20,19 @@ const MARKET_SORT_OPTIONS: SortOption<MarketSort>[] = [
 ];
 
 export default function MarketsPage() {
-  const { events, marketsLoading } = useApp();
+  // Live Polymarket data via /api/markets (Phase 3). The route returns
+  // both the flat market list and the event envelopes; we use events.
+  const [events, setEvents] = useState<Event[]>([]);
+  const [marketsLoading, setMarketsLoading] = useState(true);
+  const [marketsError, setMarketsError] = useState<string | null>(null);
+  useEffect(() => {
+    api
+      .get<{ events: Event[] }>("/api/markets?limit=50")
+      .then((d) => setEvents(d.events ?? []))
+      .catch((err) => setMarketsError(err instanceof ApiError ? err.message : String(err)))
+      .finally(() => setMarketsLoading(false));
+  }, []);
+
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortKey, setSortKey] = useState<MarketSort>("trending");

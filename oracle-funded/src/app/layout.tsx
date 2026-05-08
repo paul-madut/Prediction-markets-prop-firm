@@ -3,7 +3,6 @@ import { Geist_Mono, Geist } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { AppProvider } from "@/context/AppContext";
-import { FirmBrandingProvider } from "@/context/FirmBrandingContext";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
@@ -34,11 +33,9 @@ export default function RootLayout({
       <body
         className={`${monaSans.variable} ${geistMono.variable} antialiased`}
       >
-        <FirmBrandingProvider>
-          <AppProvider>
-            {children}
-          </AppProvider>
-        </FirmBrandingProvider>
+        <AppProvider>
+          {children}
+        </AppProvider>
       </body>
     </html>
   );

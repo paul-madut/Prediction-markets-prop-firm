@@ -84,32 +84,38 @@ Sign in at http://localhost:3000/sign-in — should land on /dashboard.
 1. **Trader sign-up** → /sign-up → confirm landing on /dashboard with the
    firm context resolved
 2. **Browse markets** → /dashboard/markets → live Polymarket data
-3. **Buy a challenge** → /dashboard/buy → real configs from /api/configs
+3. **Buy a challenge** → /dashboard/new-challenge → real configs from /api/configs
    → click Purchase on PRO6 → Stripe Checkout (use card 4242 4242 4242 4242)
 4. **Place a market order** → fills via /api/orders → trade row written,
    position upserted, balance debited
 5. **Show eval state** → /api/accounts/<id>/equity → equity, floor,
    distance, isBreach
-6. **Trader payout** → /dashboard/payouts-live → request a payout from a
+6. **Trader payout** → /dashboard/payouts → request a payout from a
    funded account → see the live "you'll receive X" preview (profit split)
-7. **Admin queue** → /admin/payouts-live → see the request → Approve →
+7. **Admin queue** → /admin/payouts → see the request → Approve →
    Mark Paid with external reference → trader gets payout-paid email
 8. **Force breach** → POST /api/admin/accounts/<id>/force-breach → shows
    mark-to-floor close, breach_event row, account flips to breached
 9. **Audit trail** → GET /api/admin/audit (filterable by action) → every
    step above is recorded with actor + before/after state
 
-Wired pages on real backend (use these for the demo):
+Wired pages on real backend (every page below loads live data):
 - `/sign-in`, `/sign-up` — Supabase auth
-- `/dashboard/buy` — real challenge configs + Stripe Checkout
-- `/dashboard/payouts-live` — real payout request + history
-- `/admin/payouts-live` — real admin queue (approve / reject / mark paid)
-- `/dashboard/markets` — already-wired Polymarket data
+- `/dashboard` (home) — real account state, equity vs floor, distance bar
+- `/dashboard/new-challenge` — real challenge configs + Stripe Checkout
+- `/dashboard/payouts` — real payout request + history
+- `/dashboard/markets` — live Polymarket data
+- `/admin` — real pending-payout summary
+- `/admin/payouts` — real admin queue (approve / reject / mark paid)
+- `/admin/audit` — real audit log search
 
-Mock-data pages (still styled, work for visual demo but not load-bearing):
-- `/dashboard` (home) — equity history, calendar, journal
-- `/dashboard/portfolio`, `/history`, `/analytics`
-- `/admin/traders`, `/admin/audit` (page UI), `/admin/compliance`
+Stub pages (consistent "in development" placeholder, not mock data):
+- `/dashboard/portfolio`, `/history`, `/analytics`, `/challenge`, `/crypto`,
+  `/rules`, `/settings`, `/help`, `/markets/[ticker]`
+- `/admin/traders`, `/admin/configs`, `/admin/firm`, `/admin/news`,
+  `/admin/signals`, `/admin/accounts/[id]`
+
+No mock data files exist anywhere in the repo.
 
 ## What to watch for during demo
 

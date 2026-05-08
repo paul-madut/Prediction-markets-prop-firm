@@ -1,228 +1,278 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useApp } from "@/context/AppContext";
-import { NewChallengeSkeleton } from "@/components/ui/skeleton";
-import { useRouter } from "next/navigation";
-import { ChallengePlan } from "@/types";
-import { ChallengeTypeCard } from "@/components/challenge/ChallengeTypeCard";
-import { StatefulButton } from "@/components/ui/stateful-button";
-import { NoiseBackground } from "@/components/ui/noise-background";
-import { formatCurrency } from "@/lib/formatters";
-import { ChevronDownIcon } from "@heroicons/react/16/solid";
+// /dashboard/buy — real-backend Buy-Challenge page.
+//
+// Pulls the active challenge_configs for the firm from /api/configs, renders
+// them with the existing TextureCard / TextureButton design system, and on
+// purchase calls /api/checkout to create a Stripe Checkout Session and
+// redirects to the returned URL. Stripe handles the rest of the payment;
+// the webhook handler provisions the account.
+//
+// Visual style matches /dashboard/new-challenge (the mock variant) so the
+// two routes feel like the same product. Once frontend is fully wired,
+// new-challenge can be retired.
 
-export default function NewChallengePage() {
-  const { plans, challengeTypes, selectPlan } = useApp();
-  const router = useRouter();
-  const [ready, setReady] = useState(false);
-  const [localSelectedPlan, setLocalSelectedPlan] = useState<ChallengePlan | null>(
-    null
-  );
-  // Global account size state - synced across all cards
-  const [selectedAccountSize, setSelectedAccountSize] = useState(5000000);
+import { useEffect, useState } from "react";
+import {
+  ArrowRightIcon,
+  CheckCircleIcon,
+  ChartBarIcon,
+  CurrencyDollarIcon,
+  ShieldCheckIcon,
+} from "@heroicons/react/24/outline";
+import { TextureCard, TextureCardContent } from "@/components/ui/texture-card";
+import { TextureButton } from "@/components/ui/texture-button";
+import { api, ApiError } from "@/lib/api-client";
+import { formatCurrency } from "@/lib/formatters";
+
+interface Phase {
+  phaseNumber: number;
+  name: string;
+  profitTargetPct: string;
+  minTradingDays: number;
+}
+
+interface Config {
+  id: string;
+  name: string;
+  accountSizeCents: string;
+  challengeFeeCents: number;
+  drawdownType: string;
+  trailingReference: string;
+  totalDrawdownPct: string;
+  dailyDrawdownPct: string | null;
+  profitSplitPct: string;
+  phases: Phase[];
+}
+
+export default function BuyChallengePage() {
+  const [configs, setConfigs] = useState<Config[] | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [purchasing, setPurchasing] = useState<string | null>(null);
+  const [purchaseError, setPurchaseError] = useState<string | null>(null);
 
   useEffect(() => {
-    setReady(true);
+    api
+      .get<Config[]>("/api/configs")
+      .then(setConfigs)
+      .catch((err) => {
+        setLoadError(err instanceof ApiError ? err.message : String(err));
+        setConfigs([]);
+      });
   }, []);
 
-  if (!ready) return <NewChallengeSkeleton />;
-
-  // Get unique account sizes from all plans
-  const accountSizes = [...new Set(plans.map((p) => p.accountSize))].sort(
-    (a, b) => a - b
-  );
-
-  const handleProceed = async () => {
-    if (localSelectedPlan) {
-      // Simulate async checkout operation
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      selectPlan(localSelectedPlan.planId);
-      router.push("/");
+  async function purchase(configId: string): Promise<void> {
+    setPurchaseError(null);
+    setPurchasing(configId);
+    try {
+      const { url } = await api.post<{ url: string | null }>("/api/checkout", { configId });
+      if (!url) throw new Error("Checkout session created but URL missing");
+      window.location.href = url;
+    } catch (err) {
+      setPurchaseError(err instanceof Error ? err.message : String(err));
+      setPurchasing(null);
     }
-  };
-
-  // Group plans by challenge type
-  const getPlansByType = (typeId: 'blitz' | '2step' | '3step') =>
-    plans.filter((p) => p.challengeTypeId === typeId);
+  }
 
   return (
     <div className="space-y-10 max-w-7xl mx-auto">
-      {/* Page Header */}
+      {/* Page header — matches new-challenge headline rhythm */}
       <div className="text-center space-y-3">
         <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
-          Choose Your Trading Challenge
+          Buy a Trading Challenge
         </h1>
         <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Select the evaluation style that matches your trading approach. Each challenge type offers different requirements and pricing structures.
+          Live challenge configurations from your firm. Click Purchase to start
+          a Stripe checkout — your account is provisioned automatically when
+          payment succeeds.
         </p>
       </div>
 
-      {/* Account Size Selector - Synced across all cards */}
+      {/* Real-data indicator: tiny pill so demo viewers know this is live */}
       <div className="flex justify-center">
-        <div className="inline-flex flex-col items-center gap-2">
-          <label className="text-sm font-medium text-gray-600 dark:text-gray-300">Select Account Size</label>
-          <div className="relative">
-            <select
-              value={selectedAccountSize}
-              onChange={(e) => setSelectedAccountSize(Number(e.target.value))}
-              className="appearance-none bg-white dark:bg-slate-900 border-2 border-gray-200 dark:border-slate-800 rounded-xl px-6 py-3 pr-12 text-lg font-semibold text-gray-900 dark:text-gray-100 cursor-pointer hover:border-blue-300 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all shadow-sm"
-            >
-              {accountSizes.map((size) => (
-                <option key={size} value={size}>
-                  {formatCurrency(size)}
-                </option>
-              ))}
-            </select>
-            <ChevronDownIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500 pointer-events-none" />
-          </div>
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-full">
+          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-xs font-semibold text-emerald-700 uppercase tracking-wide">
+            Live data
+          </span>
+          <span className="text-xs text-emerald-700">
+            from <code className="font-mono">/api/configs</code>
+          </span>
         </div>
       </div>
 
-      {/* Challenge Type Cards Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {challengeTypes.map((challengeType) => {
-          const typePlans = getPlansByType(challengeType.id);
-          const isSelected =
-            localSelectedPlan?.challengeTypeId === challengeType.id;
-
-          return (
-            <ChallengeTypeCard
-              key={challengeType.id}
-              challengeType={challengeType}
-              availablePlans={typePlans}
-              selectedPlan={localSelectedPlan}
-              onSelectPlan={setLocalSelectedPlan}
-              isSelected={isSelected}
-              selectedAccountSize={selectedAccountSize}
-            />
-          );
-        })}
-      </div>
-
-      {/* Proceed Button */}
-      {localSelectedPlan && (
-        <div className="max-w-md mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <NoiseBackground
-            containerClassName="rounded-lg"
-            gradientColors={["rgb(37, 99, 235)", "rgb(59, 130, 246)"]}
-            noiseIntensity={0.12}
-            speed={0.04}
-          >
-            <div className="p-1">
-              <StatefulButton
-                onClick={handleProceed}
-                className="w-full py-4 text-lg font-semibold"
-              >
-                Proceed to Checkout - {formatCurrency(localSelectedPlan.monthlyPrice)}
-              </StatefulButton>
-            </div>
-          </NoiseBackground>
+      {/* Errors */}
+      {loadError && (
+        <div className="max-w-md mx-auto bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-700">
+          Failed to load configs: {loadError}
+        </div>
+      )}
+      {purchaseError && (
+        <div className="max-w-md mx-auto bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-700">
+          {purchaseError}
         </div>
       )}
 
-      {/* Challenge Comparison Section */}
-      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6 space-y-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center">
-          Challenge Comparison
-        </h2>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-gray-200 dark:border-slate-800">
-                <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">
-                  Feature
-                </th>
-                {challengeTypes.map((type) => (
-                  <th
-                    key={type.id}
-                    className="text-center py-3 px-4 font-semibold text-gray-700 dark:text-gray-300"
-                  >
-                    {type.name}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
-              <tr>
-                <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Evaluation Phases</td>
-                {challengeTypes.map((type) => (
-                  <td key={type.id} className="text-center py-3 px-4 font-semibold">
-                    {type.phases}
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Profit Target</td>
-                {challengeTypes.map((type) => (
-                  <td key={type.id} className="text-center py-3 px-4 font-semibold">
-                    {type.profitTargetPercent}%
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Daily Loss Limit</td>
-                {challengeTypes.map((type) => (
-                  <td key={type.id} className="text-center py-3 px-4 font-semibold">
-                    {type.dailyLossLimitPercent}%
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Max Drawdown</td>
-                {challengeTypes.map((type) => (
-                  <td key={type.id} className="text-center py-3 px-4 font-semibold">
-                    {type.maxDrawdownPercent}%
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Min Trading Days</td>
-                {challengeTypes.map((type) => (
-                  <td key={type.id} className="text-center py-3 px-4 font-semibold">
-                    {type.minTradingDays}
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Price Multiplier</td>
-                {challengeTypes.map((type) => (
-                  <td key={type.id} className="text-center py-3 px-4 font-semibold">
-                    {type.pricingMultiplier}x
-                  </td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* What's Included Section */}
-      <div className="bg-gray-50 dark:bg-slate-950 rounded-xl p-6 space-y-4">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 text-center">
-          What's Included in All Challenges
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[
-            "Access to all prediction markets",
-            "Real-time market data",
-            "80/20 profit split when funded",
-            "Bi-weekly payouts",
-            "No time limit on phases",
-            "Scale up to larger accounts",
-            "Trade on weekends",
-            "Professional trader dashboard",
-            "24/7 support",
-          ].map((item, idx) => (
+      {/* Loading skeleton */}
+      {configs === null && !loadError && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {[0, 1, 2].map((i) => (
             <div
-              key={idx}
-              className="flex items-center gap-2 text-gray-700 dark:text-gray-300"
-            >
-              <div className="w-2 h-2 rounded-full bg-blue-600" />
-              <span className="text-sm">{item}</span>
-            </div>
+              key={i}
+              className="h-72 bg-gray-100 dark:bg-slate-800 rounded-2xl animate-pulse"
+            />
           ))}
         </div>
+      )}
+
+      {/* Empty state */}
+      {configs?.length === 0 && !loadError && (
+        <div className="text-center text-gray-500 dark:text-gray-400 py-16">
+          No active challenges available right now.
+        </div>
+      )}
+
+      {/* Cards grid */}
+      {configs && configs.length > 0 && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {configs.map((c) => {
+            const accountSize = Number(c.accountSizeCents);
+            const isInstant = c.drawdownType === "static" && c.phases[0]?.minTradingDays === 0;
+            const profitTarget = c.phases[0]?.profitTargetPct ?? "—";
+            const minDays = c.phases[0]?.minTradingDays ?? 0;
+            const isPurchasing = purchasing === c.id;
+
+            return (
+              <TextureCard key={c.id} interactive={false}>
+                <TextureCardContent className="p-0">
+                  {/* Header strip — colored badge by drawdown style */}
+                  <div
+                    className={`px-6 pt-6 pb-4 border-b border-gray-100 dark:border-slate-800 ${
+                      isInstant
+                        ? "bg-gradient-to-br from-emerald-50 to-teal-50"
+                        : c.drawdownType === "trailing_eod"
+                          ? "bg-gradient-to-br from-blue-50 to-indigo-50"
+                          : "bg-gradient-to-br from-gray-50 to-slate-50 dark:from-slate-900 dark:to-slate-950"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <span
+                        className={`text-[10px] font-semibold px-2 py-0.5 rounded uppercase tracking-wide ${
+                          isInstant
+                            ? "bg-emerald-100 text-emerald-700"
+                            : "bg-blue-100 text-blue-700"
+                        }`}
+                      >
+                        {isInstant ? "Instant Funded" : "Evaluation"}
+                      </span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        {c.drawdownType === "trailing_eod" ? "Trailing-EOD" : "Static"}{" "}
+                        drawdown
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">
+                      {c.name}
+                    </h3>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+                        {formatCurrency(accountSize)}
+                      </span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">account</span>
+                    </div>
+                  </div>
+
+                  {/* Stats body */}
+                  <div className="px-6 py-5 space-y-3">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                        <ChartBarIcon className="w-4 h-4" />
+                        Profit target
+                      </span>
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">
+                        {profitTarget}%
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                        <ShieldCheckIcon className="w-4 h-4" />
+                        Total drawdown
+                      </span>
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">
+                        {c.totalDrawdownPct}%
+                      </span>
+                    </div>
+                    {c.dailyDrawdownPct && (
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                          <ShieldCheckIcon className="w-4 h-4" />
+                          Daily drawdown
+                        </span>
+                        <span className="font-semibold text-gray-900 dark:text-gray-100">
+                          {c.dailyDrawdownPct}%
+                        </span>
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                        <CurrencyDollarIcon className="w-4 h-4" />
+                        Profit split
+                      </span>
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">
+                        {c.profitSplitPct}% to trader
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                        <CheckCircleIcon className="w-4 h-4" />
+                        Min trading days
+                      </span>
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">
+                        {minDays}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <div className="px-6 pb-6">
+                    <div className="flex items-end justify-between mb-4">
+                      <div>
+                        <div className="text-xs uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium">
+                          One-time fee
+                        </div>
+                        <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                          ${(c.challengeFeeCents / 100).toFixed(2)}
+                        </div>
+                      </div>
+                    </div>
+                    <TextureButton
+                      variant="primary"
+                      size="lg"
+                      className="w-full"
+                      onClick={() => purchase(c.id)}
+                      disabled={isPurchasing}
+                    >
+                      {isPurchasing ? (
+                        "Redirecting to Stripe…"
+                      ) : (
+                        <>
+                          Purchase
+                          <ArrowRightIcon className="w-4 h-4" />
+                        </>
+                      )}
+                    </TextureButton>
+                  </div>
+                </TextureCardContent>
+              </TextureCard>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Reassurance footer */}
+      <div className="text-center text-xs text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+        Powered by Stripe. Your account is provisioned automatically when
+        payment is confirmed by webhook. Refunds disable the account by default
+        per challenge config.
       </div>
     </div>
   );

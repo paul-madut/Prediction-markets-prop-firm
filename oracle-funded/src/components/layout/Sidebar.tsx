@@ -1,182 +1,72 @@
 "use client";
 
-import React, { useState } from "react";
+// Minimal trader sidebar — links to wired pages first, stubbed pages
+// after a divider. No context dependencies.
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { HomeIcon, ArrowTrendingUpIcon, BriefcaseIcon, ChartBarIcon, QuestionMarkCircleIcon, Cog6ToothIcon, RocketLaunchIcon, WalletIcon, Bars3Icon, BoltIcon, TrophyIcon } from "@heroicons/react/24/outline";
-import { useApp } from "@/context/AppContext";
-import { cn } from "@/lib/utils";
 import {
-  Sidebar as AceternitySidebar,
-  SidebarBody,
-  SidebarLink,
-  useSidebar,
-} from "@/components/ui/sidebar";
+  HomeIcon,
+  ChartBarIcon,
+  RocketLaunchIcon,
+  CurrencyDollarIcon,
+  ChartPieIcon,
+  ClockIcon,
+  Cog6ToothIcon,
+  QuestionMarkCircleIcon,
+} from "@heroicons/react/24/outline";
 
-export const Sidebar = () => {
+const wiredLinks = [
+  { href: "/dashboard", label: "Dashboard", icon: HomeIcon },
+  { href: "/dashboard/markets", label: "Markets", icon: ChartBarIcon },
+  { href: "/dashboard/new-challenge", label: "Buy challenge", icon: RocketLaunchIcon },
+  { href: "/dashboard/payouts", label: "Payouts", icon: CurrencyDollarIcon },
+];
+
+const stubLinks = [
+  { href: "/dashboard/portfolio", label: "Portfolio", icon: ChartPieIcon },
+  { href: "/dashboard/history", label: "History", icon: ClockIcon },
+  { href: "/dashboard/settings", label: "Settings", icon: Cog6ToothIcon },
+  { href: "/dashboard/help", label: "Help", icon: QuestionMarkCircleIcon },
+];
+
+export function Sidebar() {
   const pathname = usePathname();
-  const { user } = useApp();
-  const [open, setOpen] = useState(false);
-
-  const mainLinks = [
-    {
-      label: "Dashboard",
-      href: "/dashboard",
-      icon: <HomeIcon />,
-    },
-    {
-      label: "Challenge",
-      href: "/dashboard/challenge",
-      icon: <TrophyIcon />,
-    },
-    {
-      label: "Markets",
-      href: "/dashboard/markets",
-      icon: <ArrowTrendingUpIcon />,
-    },
-    {
-      label: "Crypto",
-      href: "/dashboard/crypto",
-      icon: <BoltIcon />,
-    },
-    {
-      label: "Portfolio",
-      href: "/dashboard/portfolio",
-      icon: <BriefcaseIcon />,
-    },
-    {
-      label: "Analytics",
-      href: "/dashboard/analytics",
-      icon: <ChartBarIcon />,
-    },
-    {
-      label: "Payouts",
-      href: "/dashboard/payouts",
-      icon: <WalletIcon />,
-    },
-  ];
-
-  const bottomLinks = [
-    {
-      label: "Help",
-      href: "/dashboard/help",
-      icon: <QuestionMarkCircleIcon />,
-    },
-    {
-      label: "Settings",
-      href: "/dashboard/settings",
-      icon: <Cog6ToothIcon />,
-    },
-  ];
-
   return (
-    <AceternitySidebar open={open} setOpen={setOpen}>
-      <SidebarBody className="justify-between gap-10">
-        <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-          <SidebarHeader />
-
-          {/* Divider below header */}
-          <div className="h-px bg-gray-200 w-full mb-6" />
-
-          <div className="flex flex-col gap-2">
-            {mainLinks.map((link, idx) => (
-              <SidebarLink key={idx} link={link} />
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom Section with Divider */}
-        <div className="flex flex-col gap-3">
-          {/* Divider */}
-          <div className="h-px bg-gray-200 w-full" />
-
-          {/* Get Funded CTA */}
-          <div className={cn("px-3", !open && "flex justify-center px-0")}>
-            <Link
-              href="/dashboard/new-challenge"
-              className={cn(
-                "flex items-center justify-center rounded-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-md hover:shadow-lg",
-                open ? "w-full py-3 px-4 gap-2" : "h-10 w-10"
-              )}
-            >
-              <RocketLaunchIcon className="h-5 w-5 flex-shrink-0" />
-              {open && (
-                <span className="text-sm whitespace-nowrap">
-                  Get Funded
-                </span>
-              )}
-            </Link>
-          </div>
-
-          {/* Help and Settings Links */}
-          <div className="flex flex-col gap-2">
-            {bottomLinks.map((link, idx) => (
-              <SidebarLink key={idx} link={link} />
-            ))}
-          </div>
-
-          {/* User Account */}
-          <div
-            className={cn(
-              "flex items-center gap-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors cursor-pointer",
-              open
-                ? "py-2 px-3 justify-start"
-                : "h-10 w-10 mx-auto justify-center"
-            )}
+    <aside className="md:w-60 md:min-h-screen bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-800 px-3 py-4 flex md:flex-col gap-1 overflow-x-auto md:overflow-x-visible">
+      <div className="px-2 mb-2 hidden md:block">
+        <Link href="/dashboard" className="text-base font-bold text-gray-900 dark:text-gray-100">
+          OracleFunded
+        </Link>
+      </div>
+      {wiredLinks.map((l) => {
+        const active = pathname === l.href || (l.href !== "/dashboard" && pathname?.startsWith(l.href));
+        return (
+          <Link
+            key={l.href}
+            href={l.href}
+            className={`shrink-0 inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium ${
+              active
+                ? "bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300"
+                : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800"
+            }`}
           >
-            <div className="h-7 w-7 flex-shrink-0 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-xs font-semibold">
-              {user.username.charAt(0).toUpperCase()}
-            </div>
-            <motion.span
-              animate={{
-                opacity: open ? 1 : 0,
-                width: open ? "auto" : 0,
-              }}
-              transition={{
-                duration: 0.3,
-                ease: [0.4, 0, 0.2, 1],
-              }}
-              className="text-base font-medium text-neutral-700 dark:text-gray-300 whitespace-nowrap overflow-hidden"
-            >
-              {user.username}
-            </motion.span>
-          </div>
-        </div>
-      </SidebarBody>
-    </AceternitySidebar>
+            <l.icon className="w-4 h-4" />
+            <span>{l.label}</span>
+          </Link>
+        );
+      })}
+      <div className="hidden md:block h-px bg-gray-100 dark:bg-slate-800 my-2" />
+      {stubLinks.map((l) => (
+        <Link
+          key={l.href}
+          href={l.href}
+          className="shrink-0 inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-800"
+        >
+          <l.icon className="w-4 h-4" />
+          <span>{l.label}</span>
+        </Link>
+      ))}
+    </aside>
   );
-};
-
-const SidebarHeader = () => {
-  const { open, setOpen } = useSidebar();
-  return (
-    <div
-      className={cn(
-        "flex items-center gap-2 py-1 relative z-20 mb-2",
-        open ? "pl-1" : "justify-center"
-      )}
-    >
-      <button
-        onClick={() => setOpen(!open)}
-        aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
-        className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors flex-shrink-0 text-neutral-700 dark:text-gray-300"
-      >
-        <Bars3Icon className="h-5 w-5" />
-      </button>
-      <motion.span
-        animate={{
-          opacity: open ? 1 : 0,
-          width: open ? "auto" : 0,
-        }}
-        transition={{
-          duration: 0.3,
-          ease: [0.4, 0, 0.2, 1],
-        }}
-        className="font-bold text-blue-600 whitespace-pre text-lg overflow-hidden"
-      >
-        OracleFunded
-      </motion.span>
-    </div>
-  );
-};
+}
