@@ -622,3 +622,54 @@ mitigations:
 - `WebFlux_MVP_Plan.md` §11 Day 3 — now `be/polymarket-real` with rationale block
 - `WebFlux_MVP_Plan.md` §11 Day 8 — now `be/payouts-real` + `be/kalshi-real (conditional)`
 - `WebFlux_MVP_Plan.md` §15 Risk 5 — updated to "Kalshi API approval delay / Canadian jurisdiction block"
+
+---
+
+## PHASE 3 — POLYMARKET PROVIDER (PARTIAL)
+
+### Decision 21 — Phase 3 ships the REST provider; the worker poll loop + Redis cache are deferred until Upstash is provisioned
+
+**Date:** 2026-05-08
+**Task:** be/polymarket-real (Day 3 of MVP plan §11)
+
+**What shipped:**
+- `packages/utils/src/polymarket.ts` — `fetchPolymarketQuote(externalMarketId)`:
+  Gamma REST `/markets/<id>`, normalises decimal-fraction prices to integer
+  cents, returns null on closed/inactive/illiquid markets.
+- `packages/utils/src/providers.ts` — `fetchProviderQuote(venue, id)` dispatcher:
+  Polymarket → live Gamma; Kalshi → deterministic mock (deferred per Decision 20).
+- `oracle-funded/src/lib/order-engine/fill-order.ts` (renamed from
+  `fill-mock-order.ts`) — quotes now flow through the dispatcher; trade rows
+  flag `mock: true` only when `isMockVenue(venue)`.
+- `tests/phase-3-polymarket.sh` — 9 assertions: API reachable, normalisation
+  invariants (binary complement, no crossed book, [0,100] range), null for
+  bogus ids, kalshi mock fallback.
+
+**What did NOT ship:**
+The MVP plan's Day 3 also calls for a worker poll loop, subscription manager,
+heartbeat-to-Redis, and a hot price cache. All of these depend on Upstash
+Redis, which is not yet provisioned (UPSTASH_REDIS_REST_URL/TOKEN empty in
+`.env.local`).
+
+**Why partial is correct:**
+- The order engine still works end-to-end without the cache: `fetchProviderQuote`
+  hits Gamma REST inline on every fill (~100-300 ms latency, well under the
+  500 ms target for MVP demo traffic).
+- The `MarketDataProvider` shape is the same whether quotes come from REST
+  directly or from a Redis cache, so Phase 3.5 (cache + worker loop) is a
+  pure infrastructure addition with no API surface change.
+- Skipping Upstash today preserves momentum; the architecture stays sound
+  and the demo flow works.
+
+**What Phase 3.5 will add when Upstash arrives:**
+- Worker process polls Polymarket on a 30 s cadence, writes
+  `quote:polymarket:<id>` keys with 60 s TTL.
+- `fetchProviderQuote` reads cache first, falls back to inline REST on miss.
+- Worker writes `worker:heartbeat:lastMessageAt` for `/api/health` to monitor.
+- Subscription manager populates the poll set from open positions + browsed
+  markets; backs off on 429.
+
+**Trade metadata convention:**
+Every trade row carries `metadata.mock: boolean`. Today: false for Polymarket,
+true for Kalshi. When Kalshi goes live in Phase 8, that flag inverts; trades
+written before that date can be identified by `mock:true AND venue:'kalshi'`.

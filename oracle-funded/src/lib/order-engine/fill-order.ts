@@ -1,12 +1,17 @@
-// Atomic fill transaction for mock order execution (Phase 4).
-// No real venue API — prices come from getMockMarketQuote().
-// Implements the 9-step fill sequence from MVP plan §5.
+// Atomic fill transaction. Implements the 9-step fill sequence from MVP plan §5.
+//
+// Quote source: fetchProviderQuote dispatches to the right venue. Polymarket
+// uses live Gamma REST data; Kalshi falls back to deterministic mock prices
+// until Phase 8 (Decision 20). When Upstash is provisioned, a Redis cache
+// will sit in front of the venue calls — the call signature stays the same.
 
 import type { PrismaClient } from '@webflux/db';
 import {
   computeFillPrice,
   computePositionDelta,
-  getMockMarketQuote,
+  fetchProviderQuote,
+  isMockVenue,
+  type MarketVenue,
   type OrderAction,
   type Side,
 } from '@webflux/utils';
@@ -16,34 +21,26 @@ export type FillResult =
   | { ok: false; reason: string };
 
 /**
- * Execute a mock fill for a pending market order.
+ * Execute a fill for a pending market order.
  *
- * The entire fill is a single Prisma interactive transaction:
- *   1. Lock the account row (FOR UPDATE prevents concurrent eval-loop conflicts)
- *   2. Re-read position state inside the transaction
- *   3. Generate and compute mock fill price
- *   4. Insert trade row
- *   5. Upsert position row
- *   6. Update account balance + version + first_trade_at
- *   7. Mark order filled
- *   8. Write audit log
- *
- * Returns { ok: false } without throwing if the order is not in 'pending' state
- * or the account cannot be found; callers should log but not surface these as 5xx.
+ * Returns { ok: false } without throwing if the order is not in 'pending' state,
+ * the account is missing, the venue cannot price the market right now, or
+ * an optimistic-locking conflict happens. Callers should log but not surface
+ * these as 5xx — the order row stays in 'pending' for retry.
  */
-export async function fillMockOrder(
+export async function fillOrder(
   orderId: string,
   prisma: PrismaClient,
 ): Promise<FillResult> {
-  // Pre-fetch the order (outside the transaction — read-only, no lock needed).
+  // Pre-fetch the order outside the transaction (read-only, no lock needed).
   const order = await prisma.order.findUnique({ where: { id: orderId } });
   if (!order) return { ok: false, reason: 'order_not_found' };
   if (order.status !== 'pending') return { ok: false, reason: 'order_not_pending' };
 
-  // Mock quote — deterministic per market, always "fresh".
-  const quote = getMockMarketQuote(order.externalMarketId);
-  // Spread to Record<string, number> so Prisma's InputJsonValue constraint is satisfied
-  // (MarketQuote lacks an index signature that Prisma's Json type requires).
+  const venue = order.venue as MarketVenue;
+  const quote = await fetchProviderQuote(venue, order.externalMarketId);
+  if (!quote) return { ok: false, reason: 'no_quote_for_market' };
+
   const quoteMeta: Record<string, number> = { ...quote };
 
   const fillPriceCents = computeFillPrice(
@@ -53,7 +50,7 @@ export async function fillMockOrder(
   );
   if (fillPriceCents === null) return { ok: false, reason: 'no_quote_for_side' };
 
-  // The bid price used for conservative unrealized PnL mark.
+  // Bid price used for conservative unrealized PnL mark.
   const currentBidCents = order.side === 'yes' ? quote.yesBid : quote.noBid;
 
   let tradeId: string;
@@ -61,7 +58,6 @@ export async function fillMockOrder(
   try {
     tradeId = await prisma.$transaction(async (tx) => {
       // ── Step 1: Lock the account row ────────────────────────────────────────
-      // FOR UPDATE ensures the eval loop and concurrent fills wait for us.
       await tx.$executeRaw`
         SELECT 1 FROM accounts WHERE id = ${order.accountId}::uuid FOR UPDATE
       `;
@@ -79,7 +75,6 @@ export async function fillMockOrder(
         },
       });
 
-      // Re-validate account is still tradeable (state may have changed since submission).
       if (account.status !== 'active' && account.status !== 'funded') {
         throw new Error(`account_not_tradeable:${account.status}`);
       }
@@ -107,6 +102,8 @@ export async function fillMockOrder(
 
       const newBalanceCents = account.currentBalanceCents + delta.balanceChangeCents;
 
+      const tradeMock = isMockVenue(venue);
+
       // ── Step 4: Insert trade row ─────────────────────────────────────────────
       const trade = await tx.trade.create({
         data: {
@@ -121,7 +118,7 @@ export async function fillMockOrder(
           feesCents: 0,
           realizedPnlCents: delta.realizedPnlCents,
           isOpening: delta.isOpening,
-          metadata: { mock: true, quote: quoteMeta },
+          metadata: { mock: tradeMock, quote: quoteMeta },
         },
         select: { id: true },
       });
@@ -156,7 +153,6 @@ export async function fillMockOrder(
       });
 
       // ── Step 6: Update account balance + version + first_trade_at ───────────
-      // Optimistic lock via version check inside the same locked transaction.
       const updated = await tx.account.updateMany({
         where: { id: order.accountId, version: account.version },
         data: {
@@ -166,7 +162,6 @@ export async function fillMockOrder(
         },
       });
       if (updated.count === 0) {
-        // Version conflict — another writer modified the account concurrently.
         throw new Error('version_conflict');
       }
 
@@ -189,7 +184,8 @@ export async function fillMockOrder(
             sizeContracts: order.sizeContracts,
             balanceChangeCents: delta.balanceChangeCents.toString(),
             newBalanceCents: newBalanceCents.toString(),
-            mock: true,
+            venue,
+            mock: tradeMock,
           },
           metadata: { quote: quoteMeta },
         },

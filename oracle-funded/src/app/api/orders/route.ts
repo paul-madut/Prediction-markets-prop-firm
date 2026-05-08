@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import { prisma } from '@webflux/db';
 import { enrichSupabaseAuth } from '@webflux/auth';
 import { validateOrder } from '@webflux/utils';
-import { fillMockOrder } from '@/lib/order-engine/fill-mock-order';
+import { fillOrder } from '@/lib/order-engine/fill-order';
 
 // BigInt fields don't serialize via JSON.stringify by default.
 function bigintJson(data: unknown, status = 200): Response {
@@ -310,8 +310,9 @@ export async function POST(req: Request) {
     },
   });
 
-  // Immediately execute mock fill (no real venue API in Phase 4).
-  const fill = await fillMockOrder(order.id, prisma);
+  // Immediately execute fill. Quote source dispatched per-venue —
+  // Polymarket pulls live Gamma REST data; Kalshi falls back to mock.
+  const fill = await fillOrder(order.id, prisma);
 
   if (!fill.ok) {
     // Fill failed — order stays 'pending'; surface the reason so callers can debug.
