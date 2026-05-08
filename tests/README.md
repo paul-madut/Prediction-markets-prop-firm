@@ -22,6 +22,7 @@ A script exits 0 on success, non-zero on any check failure.
 | `phase-3-polymarket.sh` | Gamma REST reachable, `fetchProviderQuote` normalizes correctly (binary complement, no crossed book, prices in [0,100]), null for bogus ids, kalshi falls back to mock |
 | `phase-4-order-engine.sh` | Real `fillOrder()` end-to-end: live Polymarket market → pending order → trade row written → position upserted → account balance updated, plus rate-limiter window math |
 | `phase-5-eval-engine.sh` | 5 property tests (static floor invariant, trailing floor monotonic, stored-PnL ≡ live-price equity, mark-to-floor lands exactly on the floor, EOD idempotent) + integration test that induces a real breach and verifies state transitions and synthetic close trades |
+| `phase-6-payments.sh` | Stripe webhook end-to-end: real signature verification (signed via SDK's `generateTestHeaderString`), `checkout.session.completed` provisions account + flips payment to paid, replay is idempotent (`already_processed`), bad signature returns 400, `charge.refunded` flips payment + disables account |
 
 These are intentionally narrow — they catch wiring/config breakage, not
 business-logic correctness. Domain-correctness tests (eval engine math,

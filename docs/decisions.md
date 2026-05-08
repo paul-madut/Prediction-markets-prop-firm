@@ -811,3 +811,73 @@ one because audit_log itself was already aligned.
   fills won't be caught until Phase 3.5/5 wires the worker.
 - 00:01 UTC EOD cron — `runEod()` is callable; scheduling is a Vercel
   Cron config that lands at deploy time.
+
+---
+
+## PHASE 6 — STRIPE PAYMENTS
+
+### Decision 24 — Webhook handler is the canonical provisioning path; idempotency via `payments.stripe_event_id`
+
+**Date:** 2026-05-08
+**Task:** be/payments-real (Day 6 of MVP plan §11)
+
+**What shipped:**
+- `oracle-funded/src/lib/stripe.ts` — singleton `getStripe()` with the
+  SDK's bundled API version pinned (`2026-04-22.dahlia` for stripe@22.1.1).
+- `POST /api/checkout` — creates a Stripe Checkout Session for a chosen
+  challenge config, persists a pending `payments` row with the session id,
+  echoes `firmId/userId/configId` through `metadata` so the webhook can
+  pair without re-auth.
+- `POST /api/stripe/webhook` — three concerns in one route:
+  1. **Signature verification** via `stripe.webhooks.constructEvent`,
+     reading the raw body (Next.js App Router's `req.text()`).
+  2. **Idempotency** — every event id is stamped on
+     `payments.stripe_event_id` (UNIQUE). Replay sees the existing row
+     and returns 200 with `handled=false, reason=already_processed`.
+  3. **Provisioning** — `checkout.session.completed` opens an
+     `accounts` row (status='active') in the same transaction that
+     flips the payment to 'paid'.
+- Refund + dispute paths: `charge.refunded` flips payment to 'refunded'
+  and (when `config.refundDisablesAccount`) flips the underlying account
+  to 'disabled'. `charge.dispute.created` flips payment to 'disputed'
+  and writes an audit row for admin review.
+
+**Schema fix:** migration `20260508000004_payments_refunded_at.sql` adds
+`payments.refunded_at` — Prisma had `refundedAt` since Phase 1 but the
+SQL initial schema was missing the column.
+
+**Critical webhook design choices:**
+- Raw body: the route uses `req.text()`, NOT `req.json()`. Next.js doesn't
+  parse the body automatically for App Router POST handlers, so we get the
+  bytes Stripe signed. Parsing first would corrupt the signature check.
+- "already_processed" path: the handler throws `Error("already_processed")`
+  on idempotency hit and the top-level catch maps that to a 200 (not 5xx).
+  Stripe retries on 5xx, so a 5xx for already-processed would loop forever.
+- Refund handler resolves session id three ways in order:
+  `charge.metadata.stripe_session_id` → `payment_intent → sessions.list`.
+  The first path is what tests use; the second is what real Stripe events
+  produce.
+
+**Light test (`tests/phase-6-payments.sh`, 14/14 ✓):**
+The webhook route is exercised via `tsx scripts/run-stripe-webhook.ts`,
+which constructs a complete `Stripe.Event` JSON, signs it via
+`stripe.webhooks.generateTestHeaderString` (the SDK's official test
+signer), wraps it in a `Request`, and calls `POST(req)` directly. No dev
+server needed — full signature verification still runs.
+
+Coverage:
+- `checkout.session.completed` → 200 + provisioning + payment flips
+- Replay same event id → 200 with `handled=false, reason=already_processed`
+- No second account created on replay
+- Wrong webhook secret → 400 (verifies signature check is real; the
+  signer uses `STRIPE_TEST_SIGNING_SECRET` so the verifier's
+  `STRIPE_WEBHOOK_SECRET` is genuinely different)
+- `charge.refunded` → 200, payment 'refunded', account 'disabled'
+
+**What did NOT ship:**
+- Recovery cron for stuck payments (status='pending' >1 hour) — needs
+  Vercel Cron config; the SQL query is a one-liner when scheduled.
+- Real Stripe Checkout UI redirect flow — the route returns the URL but
+  no trader-facing button calls it yet (frontend Phase 8 wires it up).
+- Full Stripe Customer / saved-card flow — payment_method_types only
+  accepts `card` for the MVP demo.
