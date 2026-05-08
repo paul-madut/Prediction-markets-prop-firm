@@ -84,17 +84,32 @@ Sign in at http://localhost:3000/sign-in — should land on /dashboard.
 1. **Trader sign-up** → /sign-up → confirm landing on /dashboard with the
    firm context resolved
 2. **Browse markets** → /dashboard/markets → live Polymarket data
-3. **Buy a challenge** → click a config → /api/checkout returns Stripe URL
-   → complete in test mode (use card 4242 4242 4242 4242)
+3. **Buy a challenge** → /dashboard/buy → real configs from /api/configs
+   → click Purchase on PRO6 → Stripe Checkout (use card 4242 4242 4242 4242)
 4. **Place a market order** → fills via /api/orders → trade row written,
    position upserted, balance debited
 5. **Show eval state** → /api/accounts/<id>/equity → equity, floor,
    distance, isBreach
-6. **Admin view** → switch to admin user → /admin/audit → see every action
-7. **Force breach** → POST /api/admin/accounts/<id>/force-breach → shows
+6. **Trader payout** → /dashboard/payouts-live → request a payout from a
+   funded account → see the live "you'll receive X" preview (profit split)
+7. **Admin queue** → /admin/payouts-live → see the request → Approve →
+   Mark Paid with external reference → trader gets payout-paid email
+8. **Force breach** → POST /api/admin/accounts/<id>/force-breach → shows
    mark-to-floor close, breach_event row, account flips to breached
-8. **Payout** → from a funded account → request → admin approves →
-   marks paid → trader gets email (or Resend dashboard shows the send)
+9. **Audit trail** → GET /api/admin/audit (filterable by action) → every
+   step above is recorded with actor + before/after state
+
+Wired pages on real backend (use these for the demo):
+- `/sign-in`, `/sign-up` — Supabase auth
+- `/dashboard/buy` — real challenge configs + Stripe Checkout
+- `/dashboard/payouts-live` — real payout request + history
+- `/admin/payouts-live` — real admin queue (approve / reject / mark paid)
+- `/dashboard/markets` — already-wired Polymarket data
+
+Mock-data pages (still styled, work for visual demo but not load-bearing):
+- `/dashboard` (home) — equity history, calendar, journal
+- `/dashboard/portfolio`, `/history`, `/analytics`
+- `/admin/traders`, `/admin/audit` (page UI), `/admin/compliance`
 
 ## What to watch for during demo
 

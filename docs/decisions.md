@@ -1230,3 +1230,77 @@ while frontend wiring continues incrementally. Once every flow is wired,
 - Admin UI (traders list, payouts queue, audit log) — backend routes
   exist; admin UI is one render layer away
 - Trader payouts request UI (backend `/api/payouts` ready)
+
+---
+
+## PHASE 11 — FE PAYOUTS WIRING (TRADER + ADMIN)
+
+### Decision 30 — Trader request UX shows the firm cut up-front; admin queue refetches after every action
+
+**Date:** 2026-05-08
+**Task:** Trader payout request UI + admin payouts queue (continuation of
+the `-live` route pattern from Phase 10).
+
+**What shipped:**
+- `oracle-funded/src/components/payouts/PayoutStatusBadge.tsx` — shared
+  badge for the six real statuses (`requested|approved|processing|paid|
+  rejected|failed`). Iconography matches the mock UI's visual language.
+- `/dashboard/payouts-live` — trader-facing payout flow:
+  - Stats row: Available Profit (across all funded accounts), Pending
+    (debits sitting in `requested|approved|processing`), Lifetime Paid
+    (trader take from `paid` rows).
+  - Request form with three honest UX touches:
+    1. Account selector hidden when only one funded account exists.
+    2. Per-account profit shown next to each option in the dropdown so
+       the trader can't ask for more than they've earned.
+    3. Real-time "you'll receive X" preview using `profit_split_pct` so
+       the firm cut isn't a surprise after submission.
+  - History list with `PayoutStatusBadge` per row + reviewer notes shown
+    when present + external reference shown when paid.
+- `/admin/payouts-live` — admin payouts queue:
+  - Status filter pills (Requested / Approved / Paid / Rejected / All).
+  - Each row shows trader UUID (truncated), account UUID (truncated),
+    requested amount → trader take, and the right action(s) for current
+    state (Approve+Reject for `requested`, Mark Paid for `approved`).
+  - Reject prompts via Framer-Motion modal for required reason.
+  - Mark-paid prompts for an optional external reference.
+  - List **refetches after every action** rather than optimistically
+    updating — keeps the UI consistent with what the audit pipeline saw.
+
+**Why new routes alongside the mock UI (per Decision 29):**
+The existing `/dashboard/payouts` and `/admin/payouts` are mock-driven.
+Replacing them in-place would break the existing demo while migration
+continues. New routes at `/dashboard/payouts-live` and
+`/admin/payouts-live` keep both paths runnable. Once full migration is
+done, the mock routes retire.
+
+**UX trap I caught while building:**
+The mock UI used `pending` as the initial state; real backend uses
+`requested`. A trader landing on `/dashboard/payouts-live` after the
+existing UI would see different state names. Solved by `PayoutStatusBadge`
+covering both name spaces — the component renders an unknown status as
+a neutral gray pill rather than throwing, so legacy mock rows wouldn't
+break anything if they ever flow through this badge.
+
+**Light test (`tests/phase-11-fe-payouts.sh`, 21/21 ✓):**
+- Trader request math: $1,000 → $800 trader take (80% split)
+- Balance debited up-front by both requests (Phase 8 invariant holds)
+- Admin queue lists both pending requests (firm-scoped, not per-trader)
+- Approve → flips to approved, records `reviewed_by_user_id` + notes
+- Mark-paid → flips to paid, records `external_reference` + `paid_at`
+- Paid status filter returns the paid row
+- Reject → refunds balance, records reason
+- Final balance reflects only the paid request stays debited
+- Bad-state guard: approving an already-paid payout returns 409
+- `PayoutStatusBadge` renders all 6 real statuses with a non-empty span
+
+**Suite total after Phase 11: 11/11 phases / 163/163 assertions ✓.**
+
+**Still mock data:**
+- Dashboard home (account state, equity history, calendar, journal)
+- Portfolio + history + analytics pages
+- Admin: traders list, audit log search UI, KYC, compliance, settings
+
+The audit log search backend (`GET /api/admin/audit`) and the admin route
+list backends are all live; UI wiring is one render layer away when
+priority allows.
