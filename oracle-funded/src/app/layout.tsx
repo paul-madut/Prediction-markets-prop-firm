@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
 import { Geist_Mono, Geist } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -35,13 +34,11 @@ export default function RootLayout({
       <body
         className={`${monaSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ClerkProvider>
-          <FirmBrandingProvider>
-            <AppProvider>
-              {children}
-            </AppProvider>
-          </FirmBrandingProvider>
-        </ClerkProvider>
+        <FirmBrandingProvider>
+          <AppProvider>
+            {children}
+          </AppProvider>
+        </FirmBrandingProvider>
       </body>
     </html>
   );

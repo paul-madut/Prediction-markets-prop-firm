@@ -13,13 +13,13 @@ function json(body: unknown, status: number): Response {
 }
 
 /**
- * Route handler wrapper that enforces JWT auth + firm-context resolution.
+ * Route handler wrapper that enforces Bearer JWT auth + firm-context resolution.
  *
- * Extracts the Bearer token from the Authorization header, verifies it as
- * a Clerk session token, looks up the caller's firm membership, and passes
+ * Extracts the Bearer token from the Authorization header, verifies it as a
+ * Supabase access token, looks up the caller's firm membership, and passes
  * the resolved AuthContext to the inner handler.
  *
- * Usage — Next.js App Router API route:
+ * Usage — Next.js App Router API route receiving a programmatic Bearer token:
  *
  *   import { withAuth } from '@webflux/auth';
  *   import { prisma } from '@webflux/db';
@@ -30,10 +30,8 @@ function json(body: unknown, status: number): Response {
  *     return Response.json(accounts);
  *   }, prisma);
  *
- * Usage — worker Express-style handler:
- *
- *   const handler = withAuth(async (req, auth) => { ... }, prisma);
- *   app.get('/api/something', (req, res) => handler(req).then(r => ...));
+ * For browser-session API routes, prefer reading the user from the Supabase
+ * SSR client and calling `enrichSupabaseAuth` directly.
  *
  * Returns 401 on missing/invalid token, 403 if the user has no firm membership.
  */
@@ -61,22 +59,24 @@ export function withAuth(handler: AuthedHandler, db: PrismaClient) {
 }
 
 /**
- * Enrich a Clerk auth object (from Next.js `auth()`) with firm context.
+ * Enrich a Supabase user (from SSR client) with firm membership context.
  *
  * Use in Next.js Server Components and Route Handlers when you already
- * have the Clerk auth object and don't want to re-verify the token:
+ * have the Supabase user from `supabase.auth.getClaims()` or `getUser()`:
  *
- *   import { auth } from '@clerk/nextjs/server';
- *   import { enrichClerkAuth } from '@webflux/auth';
+ *   import { createClient } from '@/lib/supabase/server';
+ *   import { enrichSupabaseAuth } from '@webflux/auth';
  *
- *   const clerkAuth = await auth();
- *   const ctx = await enrichClerkAuth(clerkAuth, prisma);
+ *   const supabase = await createClient();
+ *   const { data: { claims } } = await supabase.auth.getClaims();
+ *   const ctx = await enrichSupabaseAuth(claims, prisma);
  *   if (!ctx) return redirect('/sign-in');
  */
-export async function enrichClerkAuth(
-  clerkAuth: { userId: string | null; sessionId?: string | null },
+export async function enrichSupabaseAuth(
+  claims: { sub?: string | null; session_id?: string | null } | null | undefined,
   db: PrismaClient,
+  firmSlug?: string,
 ): Promise<AuthContext | null> {
-  if (!clerkAuth.userId) return null;
-  return getAuthContext(clerkAuth.userId, clerkAuth.sessionId ?? '', db);
+  if (!claims?.sub) return null;
+  return getAuthContext(claims.sub, claims.session_id ?? '', db, firmSlug);
 }

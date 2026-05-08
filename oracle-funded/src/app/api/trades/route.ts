@@ -1,7 +1,7 @@
-import { auth } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 import { prisma } from '@webflux/db';
-import { enrichClerkAuth } from '@webflux/auth';
+import { enrichSupabaseAuth } from '@webflux/auth';
 
 function bigintJson(data: unknown, status = 200): Response {
   return new Response(
@@ -18,15 +18,13 @@ function bigintJson(data: unknown, status = 200): Response {
  * firm trades, or supply one to scope to a specific account.
  */
 export async function GET(req: Request) {
-  const clerkAuth = await auth();
-  if (!clerkAuth.userId) {
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getClaims();
+  if (!data?.claims?.sub) {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
 
-  const ctx = await enrichClerkAuth(
-    { userId: clerkAuth.userId, sessionId: clerkAuth.sessionId },
-    prisma,
-  );
+  const ctx = await enrichSupabaseAuth(data.claims, prisma);
   if (!ctx) {
     return NextResponse.json({ error: 'No firm membership found' }, { status: 403 });
   }

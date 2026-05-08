@@ -1,7 +1,7 @@
-import { auth } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 import { prisma } from '@webflux/db';
-import { enrichClerkAuth } from '@webflux/auth';
+import { enrichSupabaseAuth } from '@webflux/auth';
 import { validateOrder } from '@webflux/utils';
 import { fillMockOrder } from '@/lib/order-engine/fill-mock-order';
 
@@ -23,15 +23,13 @@ const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
  * firm orders, or supply one to scope to a specific account.
  */
 export async function GET(req: Request) {
-  const clerkAuth = await auth();
-  if (!clerkAuth.userId) {
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getClaims();
+  if (!data?.claims?.sub) {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
 
-  const ctx = await enrichClerkAuth(
-    { userId: clerkAuth.userId, sessionId: clerkAuth.sessionId },
-    prisma,
-  );
+  const ctx = await enrichSupabaseAuth(data.claims, prisma);
   if (!ctx) {
     return NextResponse.json({ error: 'No firm membership found' }, { status: 403 });
   }
@@ -91,15 +89,13 @@ export async function GET(req: Request) {
  * }
  */
 export async function POST(req: Request) {
-  const clerkAuth = await auth();
-  if (!clerkAuth.userId) {
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getClaims();
+  if (!data?.claims?.sub) {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
 
-  const ctx = await enrichClerkAuth(
-    { userId: clerkAuth.userId, sessionId: clerkAuth.sessionId },
-    prisma,
-  );
+  const ctx = await enrichSupabaseAuth(data.claims, prisma);
   if (!ctx) {
     return NextResponse.json({ error: 'No firm membership found' }, { status: 403 });
   }
@@ -282,6 +278,7 @@ export async function POST(req: Request) {
     await prisma.auditLog.create({
       data: {
         firmId: ctx.firmId,
+        actorUserId: ctx.userId,
         action: 'order.rejected',
         entityType: 'order',
         entityId: rejected.id,
@@ -294,7 +291,6 @@ export async function POST(req: Request) {
           sizeContracts,
           rejectedReason: validation.reason,
         },
-        metadata: { clerkUserId: clerkAuth.userId },
       },
     });
     return bigintJson({ ...rejected, validationError: validation.reason }, 422);
@@ -306,11 +302,11 @@ export async function POST(req: Request) {
   await prisma.auditLog.create({
     data: {
       firmId: ctx.firmId,
+      actorUserId: ctx.userId,
       action: 'order.submitted',
       entityType: 'order',
       entityId: order.id,
       afterState: { accountId, venue, externalMarketId, side, action, sizeContracts },
-      metadata: { clerkUserId: clerkAuth.userId },
     },
   });
 

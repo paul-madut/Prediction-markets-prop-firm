@@ -1,12 +1,9 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
+import { createServerClient } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
 
-const isPublicRoute = createRouteMatcher([
-  "/",
-  "/sign-in(.*)",
-  "/sign-up(.*)",
-  "/api/markets(.*)",
-]);
+// Routes that don't require an authenticated session.
+const PUBLIC_PREFIXES = ["/sign-in", "/sign-up", "/auth", "/api/markets"];
+const PUBLIC_EXACT = ["/"];
 
 // Subdomains that are never firm slugs.
 const RESERVED_SUBDOMAINS = new Set([
@@ -21,23 +18,62 @@ const TENANT_HEADERS = [
   "x-webflux-firm-slug",
 ] as const;
 
-export default clerkMiddleware(async (auth, request) => {
+function isPublicRoute(pathname: string): boolean {
+  if (PUBLIC_EXACT.includes(pathname)) return true;
+  return PUBLIC_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+}
+
+export async function middleware(request: NextRequest) {
   // Strip any client-supplied tenant headers before setting our own.
   const requestHeaders = new Headers(request.headers);
   for (const h of TENANT_HEADERS) {
     requestHeaders.delete(h);
   }
 
-  if (!isPublicRoute(request)) {
-    await auth.protect();
+  let supabaseResponse = NextResponse.next({ request: { headers: requestHeaders } });
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value),
+          );
+          supabaseResponse = NextResponse.next({
+            request: { headers: requestHeaders },
+          });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options),
+          );
+        },
+      },
+    },
+  );
+
+  // IMPORTANT: do not run code between createServerClient and getClaims —
+  // a mistake here can randomly log users out under SSR.
+  const { data } = await supabase.auth.getClaims();
+  const claims = data?.claims;
+
+  // Redirect unauthenticated users on protected routes.
+  if (!claims && !isPublicRoute(request.nextUrl.pathname)) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/sign-in";
+    url.searchParams.set("redirect_url", request.nextUrl.pathname);
+    return NextResponse.redirect(url);
   }
 
   // Forward verified identity as trusted headers so route handlers and server
-  // components can read userId/sessionId without re-calling auth().
-  const { userId, sessionId } = await auth();
-  if (userId) {
-    requestHeaders.set("x-webflux-user-id", userId);
-    if (sessionId) {
+  // components can read userId/sessionId without re-calling Supabase.
+  if (claims?.sub) {
+    requestHeaders.set("x-webflux-user-id", claims.sub);
+    const sessionId = (claims as Record<string, unknown>).session_id;
+    if (typeof sessionId === "string") {
       requestHeaders.set("x-webflux-session-id", sessionId);
     }
   }
@@ -57,8 +93,15 @@ export default clerkMiddleware(async (auth, request) => {
     );
   }
 
-  return NextResponse.next({ request: { headers: requestHeaders } });
-});
+  // Recreate the response so the new request headers are forwarded
+  // alongside the cookies set by Supabase. We must preserve any cookies
+  // already set on supabaseResponse (refreshed session tokens).
+  const finalResponse = NextResponse.next({ request: { headers: requestHeaders } });
+  supabaseResponse.cookies.getAll().forEach((c) => {
+    finalResponse.cookies.set(c.name, c.value);
+  });
+  return finalResponse;
+}
 
 export const config = {
   matcher: [
