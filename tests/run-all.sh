@@ -10,7 +10,7 @@ set -uo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 
-PHASES="1-db 2-auth 3-polymarket 4-order-engine 5-eval-engine 6-payments 7-admin 8-payouts-emails 9-observability"
+PHASES="1-db 2-auth 3-polymarket 4-order-engine 5-eval-engine 6-payments 7-admin 8-payouts-emails 9-observability 10-fe-buy"
 
 # Parallel arrays keyed by index instead of name (bash-3 friendly).
 PHASE_KEYS=()

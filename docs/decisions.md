@@ -1167,3 +1167,66 @@ Final state when Decision 28 landed: **9 phases / 129/129 assertions ✓**.
 - Frontend wiring for backend routes — pages are mock-data; backend
   contract is correct.
 - Domain-verified Resend sender.
+
+---
+
+## PHASE 10 — FRONTEND WIRING (BUY CHALLENGE)
+
+### Decision 29 — Build new wired routes alongside the mock UI rather than refactoring the 1300-line dashboard
+
+**Date:** 2026-05-08
+**Task:** Start FE wiring (Day 9 follow-on / pre-deploy polish).
+
+**Context:**
+The existing `/dashboard` page (1359 lines) is fully styled mock-data UI
+driven by `AppContext`. `AppContext` exposes a `UserAccount` shape with
+fields like `username`, `winRate`, `currentProfit` (as a percentage),
+`peakBalance`, `tradingDaysCompleted` — none of which map 1:1 to the API
+responses we ship. Refactoring `AppContext` to source from
+`/api/auth/me` + `/api/accounts` would touch every styled component in
+the dashboard and is not a single-turn change.
+
+**The wedge that's actually demo-impactful:**
+The Buy-Challenge flow. Trader picks a config, hits a button, lands in
+Stripe Checkout with the real session URL, completes payment, gets
+provisioned by the Phase-6 webhook. That single demo arc proves live
+data (`/api/configs`), real payment infrastructure (Stripe), and real
+provisioning (webhook → account row).
+
+**What shipped:**
+- `GET /api/configs` — firm-scoped list of active challenge_configs and
+  their phases; trader-facing (no admin guard).
+- `oracle-funded/src/lib/api-client.ts` — typed `api.{get,post,patch}`
+  with uniform error handling and an `ApiError` class.
+- `oracle-funded/src/app/dashboard/buy/page.tsx` — Buy-Challenge page
+  that renders configs using the existing `TextureCard` / `TextureButton`
+  design system. Click → POST `/api/checkout` → redirect to Stripe.
+- Visual style matches `/dashboard/new-challenge`: same typographic
+  rhythm; gradient-bordered card variants (evaluation = blue, instant =
+  emerald, static = neutral); single-button CTA pattern.
+
+**Why a new route, not a refactor of `/dashboard/new-challenge`:**
+The mock route consumes `useApp()` and renders plans with a totally
+different shape (`planId` / `accountSize` / `monthlyPrice` /
+`challengeTypeId`). Inverting it breaks the mock demo while leaving
+wiring partial. New route at `/dashboard/buy` keeps both paths runnable
+while frontend wiring continues incrementally. Once every flow is wired,
+`/dashboard/new-challenge` retires.
+
+**Light test (`tests/phase-10-fe-buy.sh`, 13/13 ✓):**
+- 4 active configs scoped to demo firm (Demo + PRO6 + PRO10 + Instant)
+- Each config carries its phases (FE renders first phase's profit target)
+- `/api/checkout` (production path via tsx helper) creates a real
+  Stripe Checkout session: `cs_test_*` id + `checkout.stripe.com` URL
+- `payments` row inserted with status=pending, amount matches config fee,
+  stripe_session_id back-references the new session
+
+**Suite total after Phase 10: 10/10 phases / 142/142 assertions ✓.**
+
+**Still mock data and needs wiring later:**
+- Dashboard home (account state, equity history, trade journal, P&L
+  calendar) — per-component context refactor work
+- Portfolio + history + analytics pages
+- Admin UI (traders list, payouts queue, audit log) — backend routes
+  exist; admin UI is one render layer away
+- Trader payouts request UI (backend `/api/payouts` ready)
