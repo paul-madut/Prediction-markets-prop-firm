@@ -26,6 +26,7 @@ import {
   planMarkToFloorClose,
   type PositionToClose,
 } from "./mark-to-floor";
+import { breachEmail, sendTransactional } from "../email";
 
 export type EvalTickOutcome =
   | { kind: "no_op"; reason: string }
@@ -61,7 +62,7 @@ const NEAR_BREACH_BPS = 200n; // 2% — used for snapshot-recording cadence late
  * Returns a summary that callers (test harness, API routes) can act on.
  */
 export async function evalTick(accountId: string): Promise<EvalTickOutcome> {
-  return prisma.$transaction(async (tx) => {
+  const outcome = await prisma.$transaction(async (tx) => {
     // FOR UPDATE serializes against fillOrder + concurrent ticks for this account.
     await tx.$executeRaw`
       SELECT 1 FROM accounts WHERE id = ${accountId}::uuid FOR UPDATE
@@ -365,4 +366,46 @@ export async function evalTick(accountId: string): Promise<EvalTickOutcome> {
       transition,
     };
   });
+
+  // Post-commit: notify the trader of a breach (fire-and-forget; email is
+  // never allowed to roll back the breach handling above).
+  if (outcome.kind === "ok" && outcome.isBreach) {
+    void sendBreachEmail(accountId, outcome.equityCents, outcome.effectiveFloorCents);
+  }
+
+  return outcome;
+}
+
+async function sendBreachEmail(
+  accountId: string,
+  equityCents: bigint,
+  floorCents: bigint,
+): Promise<void> {
+  try {
+    const account = await prisma.account.findUnique({
+      where: { id: accountId },
+      select: { userId: true, firm: { select: { name: true } } },
+    });
+    if (!account) return;
+
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const secret = process.env.SUPABASE_SECRET_KEY;
+    if (!url || !secret) return;
+    const r = await fetch(`${url}/auth/v1/admin/users/${account.userId}`, {
+      headers: { apikey: secret, Authorization: `Bearer ${secret}` },
+    });
+    if (!r.ok) return;
+    const u = (await r.json()) as { email?: string };
+    if (!u.email) return;
+
+    const tpl = breachEmail({
+      firmName: account.firm.name,
+      accountId,
+      equityCents,
+      floorCents,
+    });
+    await sendTransactional({ to: u.email, subject: tpl.subject, html: tpl.html });
+  } catch {
+    // swallow — already audit-logged in the breach tx
+  }
 }

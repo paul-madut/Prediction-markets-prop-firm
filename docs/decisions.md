@@ -955,3 +955,86 @@ NEVER set these in any deployed environment.
 - TOTP enrolment UI — Supabase Auth has built-in MFA factor management;
   the `/2fa-enrollment` page exists in mock form but isn't wired to
   Supabase's `mfa.enroll/challenge/verify` yet.
+
+---
+
+## PHASE 8 — PAYOUTS + EMAILS
+
+### Decision 26 — Payouts debit balance up-front; email delivery is fire-and-forget
+
+**Date:** 2026-05-08
+**Task:** be/payouts-real + Resend integration (Day 8 of MVP plan §11);
+Kalshi sub-task skipped per Decision 20 (no API credentials in hand) and
+news-events admin CRUD deferred (cooldown enforcement already in order
+validation; admin write surface is post-MVP).
+
+**Payout state machine:**
+```
+        request                        approve              mark-paid
+funded ────────► requested ─────────► approved ────────► paid
+                    │
+                    │  reject (with reason; balance refunded)
+                    ▼
+                rejected
+```
+
+**What shipped:**
+- `POST /api/payouts` (trader): account must be `funded`, requested ≤
+  current profit (`currentBalance − startingBalance`). On insert: balance
+  debited up-front so the same profit can't be double-requested; payouts
+  row written with `trader_amount = requested × profit_split_pct` (basis-
+  point math, matches eval engine).
+- `GET /api/payouts`: traders see their own; admins see all firm payouts;
+  optional `?status=` filter.
+- `POST /api/admin/payouts/[id]/approve` — `requested` → `approved`
+  with optional reviewer notes.
+- `POST /api/admin/payouts/[id]/reject` — `requested` → `rejected`,
+  required reason, REFUNDS the debited balance back to the account.
+- `POST /api/admin/payouts/[id]/mark-paid` — `approved` → `paid` with
+  `external_reference` (wire/Interac confirmation), sends payout-paid
+  email to trader.
+- All three admin routes wrap their tx in try/catch and translate
+  `bad_state:<status>` → 409, `not_found` → 404; everything else → 500.
+
+**Schema replacement (drift fix):**
+The original SQL `payouts` table was designed with a different financial
+model (`gross_profit_cents`, `firm_share_cents`, `trader_share_cents`,
+`processing_fee_cents`) than the Prisma schema, which uses
+`requested_cents` + `profit_split_pct` + `trader_amount_cents`. The two
+were never reconciled. Migration `20260508000005_payouts_align.sql`
+DROP+CREATEs the table from Prisma's shape since no production payouts
+exist yet; future production runs of this migration would need a
+`pg_dump` snapshot first.
+
+**Email integration (`oracle-funded/src/lib/email.ts`):**
+- Resend SDK wrapper `sendTransactional()` — fire-and-forget; catches
+  every failure mode and returns `{ ok: false, reason }` instead of
+  throwing. No email failure can roll back the parent transaction; the
+  state transition was already audit-logged before the send is attempted.
+- `EMAIL_DRY_RUN=true` env var short-circuits the Resend call so tests
+  exercise the template renderers without burning the daily quota.
+- Three templates: `welcomeEmail`, `breachEmail`, `payoutPaidEmail` —
+  bare HTML for the MVP, no React Email / MJML build tooling.
+- Wiring: register flow sends welcome; eval tick sends breach
+  post-commit; mark-paid sends payout-paid post-commit. Trader email is
+  resolved via `auth.users` admin API (no FK from Prisma into the auth
+  schema, so we look it up at send time).
+
+**Light test (`tests/phase-8-payouts-emails.sh`, 20/20 ✓):**
+- payout request math (trader_amount = 80% of requested for 80% split)
+- balance debit on request, refund on reject
+- approve + mark-paid happy path with external_reference recorded
+- bad-state guard returns 409 (e.g. approving an already-paid payout)
+- all 3 email templates render non-empty subject + html
+- breach template formats equity as `$45,000.00`; payout-paid template
+  echoes external_reference
+- EMAIL_DRY_RUN keeps sendTransactional non-throwing + ok
+
+**What did NOT ship:**
+- Kalshi WebSocket integration (no API credentials; Decision 20).
+- News events admin CRUD — cooldown enforcement is already in the order
+  validation chain (Phase 4); admin write surface is straightforward but
+  defers to post-MVP.
+- React Email / MJML templates — the MVP demo uses bare HTML.
+- Domain-verified Resend sender — using `onboarding@resend.dev` until a
+  custom domain is set up.

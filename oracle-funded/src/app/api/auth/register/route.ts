@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { prisma } from '@webflux/db';
 import { enrichSupabaseAuth } from '@webflux/auth';
+import { sendTransactional, welcomeEmail } from '@/lib/email';
 
 /**
  * POST /api/auth/register
@@ -92,5 +93,13 @@ export async function POST(req: Request) {
   });
 
   const ctx = await enrichSupabaseAuth(data.claims, prisma);
+
+  // Welcome email — fire-and-forget. Email lives in the JWT claims.
+  const email = (data.claims as Record<string, unknown>).email;
+  if (typeof email === 'string' && email) {
+    const tpl = welcomeEmail({ firmName: firm.name });
+    void sendTransactional({ to: email, subject: tpl.subject, html: tpl.html });
+  }
+
   return NextResponse.json(ctx, { status: 201 });
 }
