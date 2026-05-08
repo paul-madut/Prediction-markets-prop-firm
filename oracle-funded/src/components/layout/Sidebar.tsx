@@ -19,7 +19,7 @@ import {
 const wiredLinks = [
   { href: "/dashboard", label: "Dashboard", icon: HomeIcon },
   { href: "/dashboard/markets", label: "Markets", icon: ChartBarIcon },
-  { href: "/dashboard/new-challenge", label: "Buy challenge", icon: RocketLaunchIcon },
+  { href: "/dashboard/new-challenge", label: "Buy Challenge", icon: RocketLaunchIcon },
   { href: "/dashboard/payouts", label: "Payouts", icon: CurrencyDollarIcon },
 ];
 

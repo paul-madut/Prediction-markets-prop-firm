@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Geist } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { AppProvider } from "@/context/AppContext";
-import { cn } from "@/lib/utils";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const monaSans = localFont({
   src: "../fonts/MonaSans.woff2",
@@ -29,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
+    <html lang="en">
       <body
         className={`${monaSans.variable} ${geistMono.variable} antialiased`}
       >
