@@ -23,6 +23,7 @@ A script exits 0 on success, non-zero on any check failure.
 | `phase-4-order-engine.sh` | Real `fillOrder()` end-to-end: live Polymarket market → pending order → trade row written → position upserted → account balance updated, plus rate-limiter window math |
 | `phase-5-eval-engine.sh` | 5 property tests (static floor invariant, trailing floor monotonic, stored-PnL ≡ live-price equity, mark-to-floor lands exactly on the floor, EOD idempotent) + integration test that induces a real breach and verifies state transitions and synthetic close trades |
 | `phase-6-payments.sh` | Stripe webhook end-to-end: real signature verification (signed via SDK's `generateTestHeaderString`), `checkout.session.completed` provisions account + flips payment to paid, replay is idempotent (`already_processed`), bad signature returns 400, `charge.refunded` flips payment + disables account |
+| `phase-7-admin.sh` | Admin actions + audit + 2FA: trader denied (403), admin-without-aal2 denied with `mfa_required` code, `/override` + `/force-close` + `/force-breach` + `/reset` end-to-end against a real account, audit-log search returns + filters the resulting rows |
 
 These are intentionally narrow — they catch wiring/config breakage, not
 business-logic correctness. Domain-correctness tests (eval engine math,

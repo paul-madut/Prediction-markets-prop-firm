@@ -881,3 +881,77 @@ Coverage:
   no trader-facing button calls it yet (frontend Phase 8 wires it up).
 - Full Stripe Customer / saved-card flow — payment_method_types only
   accepts `card` for the MVP demo.
+
+---
+
+## PHASE 7 — ADMIN ACTIONS + AUDIT + 2FA
+
+### Decision 25 — Admin guard centralizes role + AAL2 enforcement; admin actions go through firm-scoped POST routes
+
+**Date:** 2026-05-08
+**Task:** be/admin-actions-real + be/audit-real (Day 7 of MVP plan §11)
+
+**What shipped:**
+
+Five new admin routes, each requiring `requireAdmin()`:
+- `POST /api/admin/accounts/[id]/override` — apply rule overrides
+  (totalDrawdownPct, dailyDrawdownPct, expiresAt). Merges into existing
+  ruleOverrides JSON; eval engine reads these in preference to config.
+- `POST /api/admin/accounts/[id]/force-breach` — manually mark an account
+  breached when an out-of-band rule violation is found. Runs the same
+  mark-to-floor close path as the eval tick; breach_type='rule_violation'.
+- `POST /api/admin/accounts/[id]/reset` — restart a challenge from scratch.
+  Zeros all positions, restores balance/HWM/equity to startingBalance,
+  clears breach state, resets tradingDaysCount.
+- `POST /api/admin/accounts/[id]/force-close` — close all open positions
+  at current bid (real fair-value close, not mark-to-floor). Account
+  status unchanged. Used for news-event stand-down or admin discipline.
+- `GET /api/admin/audit` — keyset-paginated audit-log search, always
+  firm-scoped, filterable by action / actorUserId / entityType / entityId
+  / since-until window. Returns nextCursor for the next page.
+
+Freeze/unfreeze (active ↔ disabled) was already covered by the existing
+PATCH `/api/accounts/[id]` route (Decision 14). Not duplicated.
+
+**Admin guard (`oracle-funded/src/lib/admin-guard.ts`):**
+
+`requireAdmin()` runs three checks in order:
+1. Authenticated session present (`claims.sub`)
+2. Resolved AuthContext has role admin or owner
+3. Session is at AAL2 (`claims.aal === 'aal2'`)
+
+The AAL2 check is what the MVP plan §9 calls "2FA enforcement". Supabase
+JWTs surface the session's authentication assurance level — `aal1` =
+password only, `aal2` = MFA factor presented in this session. Once a user
+enrols TOTP (`mfa.enroll → mfa.challenge → mfa.verify`), every subsequent
+login that includes the second factor lands on `aal2`. AAL1 admins get a
+403 with `code: 'mfa_required'` and a hint to elevate via TOTP.
+
+`NEXT_PUBLIC_DEMO_MODE=true` bypasses the AAL2 check for demo purposes.
+Role check is never bypassed.
+
+**Test override:**
+`ADMIN_GUARD_TEST_USER_ID` and `ADMIN_GUARD_TEST_AAL` env vars short-
+circuit the Supabase session lookup so smoke tests can invoke admin
+routes via tsx without a real cookie. The role + AAL2 logic still runs
+exactly as in production — this just substitutes how `claims` is sourced.
+NEVER set these in any deployed environment.
+
+**Light test (`tests/phase-7-admin.sh`, 24/24 ✓):**
+- Trader role on admin route → 403
+- Admin without aal2 → 403 `code: 'mfa_required'`
+- /override sets rule_overrides + override_set_by_user_id
+- /force-close zeroes positions, account stays active
+- /force-breach flips to breached + breach_event with breach_type=rule_violation
+- /reset clears breached state, restores starting balance, breach_at=null
+- /audit search returns the rows we just produced; action= filter works
+
+**What did NOT ship:**
+- Frontend admin UI wiring (the routes exist; existing admin pages are
+  mock-data; Phase 8 / post-MVP wires them up).
+- Refund-payment action — covered by existing Stripe webhook flow on
+  `charge.refunded`. Admin-initiated refund (button → POST /api/admin/...
+  → Stripe API → webhook fires) is a thin wrapper for post-MVP.
+- TOTP enrolment UI — Supabase Auth has built-in MFA factor management;
+  the `/2fa-enrollment` page exists in mock form but isn't wired to
+  Supabase's `mfa.enroll/challenge/verify` yet.
