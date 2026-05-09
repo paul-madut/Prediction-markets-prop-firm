@@ -95,13 +95,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const me = await api.get<UserClaims>("/api/auth/me");
       setUser(me);
       const accs = await api.get<AccountRow[]>("/api/accounts");
-      setAccounts(accs);
+      const safeAccs = Array.isArray(accs) ? accs : [];
+      setAccounts(safeAccs);
       const saved =
         typeof window !== "undefined"
           ? window.localStorage.getItem(ACTIVE_ACCOUNT_KEY)
           : null;
       const next =
-        (saved && accs.find((a) => a.id === saved)) || accs[0] || null;
+        (saved && safeAccs.find((a) => a.id === saved)) || safeAccs[0] || null;
       setActiveAccountIdState(next ? next.id : null);
     } catch (err) {
       // 401/403 are expected when signed-out / not yet onboarded.
@@ -111,6 +112,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setActiveAccountIdState(null);
       } else {
         setLoadError(err instanceof Error ? err.message : String(err));
+        setAccounts([]);
+        setActiveAccountIdState(null);
       }
     } finally {
       setLoading(false);
@@ -121,8 +124,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     void refresh();
   }, [refresh]);
 
-  const activeAccount =
-    accounts.find((a) => a.id === activeAccountId) ?? accounts[0] ?? null;
+  const activeAccount = Array.isArray(accounts)
+    ? (accounts.find((a) => a.id === activeAccountId) ?? accounts[0] ?? null)
+    : null;
 
   return (
     <AppContext.Provider

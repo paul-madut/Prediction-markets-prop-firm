@@ -29,6 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${monaSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
         <AppProvider>
           {children}
