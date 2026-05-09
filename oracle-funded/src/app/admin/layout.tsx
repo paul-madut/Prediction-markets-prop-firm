@@ -12,6 +12,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             OracleFunded · Admin
           </Link>
           <nav className="flex items-center gap-4 text-sm">
+            <Link href="/admin/traders" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100">Traders</Link>
+            <Link href="/admin/configs" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100">Configs</Link>
             <Link href="/admin/payouts" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100">Payouts</Link>
             <Link href="/admin/audit" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100">Audit</Link>
             <Link href="/dashboard" className="text-blue-600 hover:text-blue-700">Trader view →</Link>

@@ -95,18 +95,22 @@ export default function AdminHome() {
               </span>
               <span className="text-xs text-gray-500 dark:text-gray-400">Wired</span>
             </Link>
-            <span className="px-4 py-3 bg-gray-50 dark:bg-slate-950 rounded-lg flex items-center justify-between opacity-60">
+            <Link href="/admin/traders" className="px-4 py-3 bg-gray-50 dark:bg-slate-950 hover:bg-gray-100 dark:hover:bg-slate-900 rounded-lg flex items-center justify-between">
               <span className="font-medium text-gray-900 dark:text-gray-100">Traders</span>
-              <span className="text-xs text-gray-500 dark:text-gray-400">UI coming soon</span>
-            </span>
-            <span className="px-4 py-3 bg-gray-50 dark:bg-slate-950 rounded-lg flex items-center justify-between opacity-60">
+              <span className="text-xs text-gray-500 dark:text-gray-400">Wired</span>
+            </Link>
+            <Link href="/admin/configs" className="px-4 py-3 bg-gray-50 dark:bg-slate-950 hover:bg-gray-100 dark:hover:bg-slate-900 rounded-lg flex items-center justify-between">
               <span className="font-medium text-gray-900 dark:text-gray-100">Configs</span>
-              <span className="text-xs text-gray-500 dark:text-gray-400">UI coming soon</span>
-            </span>
-            <span className="px-4 py-3 bg-gray-50 dark:bg-slate-950 rounded-lg flex items-center justify-between opacity-60">
+              <span className="text-xs text-gray-500 dark:text-gray-400">Wired</span>
+            </Link>
+            <Link href="/admin/firm" className="px-4 py-3 bg-gray-50 dark:bg-slate-950 hover:bg-gray-100 dark:hover:bg-slate-900 rounded-lg flex items-center justify-between">
+              <span className="font-medium text-gray-900 dark:text-gray-100">Firm settings</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">Wired</span>
+            </Link>
+            <Link href="/admin/news" className="px-4 py-3 bg-gray-50 dark:bg-slate-950 hover:bg-gray-100 dark:hover:bg-slate-900 rounded-lg flex items-center justify-between">
               <span className="font-medium text-gray-900 dark:text-gray-100">News events</span>
-              <span className="text-xs text-gray-500 dark:text-gray-400">UI coming soon</span>
-            </span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">Wired</span>
+            </Link>
           </div>
         </TextureCardContent>
       </TextureCard>

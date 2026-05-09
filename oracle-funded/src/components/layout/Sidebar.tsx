@@ -1,7 +1,7 @@
 "use client";
 
-// Minimal trader sidebar — links to wired pages first, stubbed pages
-// after a divider. No context dependencies.
+// Minimal trader sidebar. Primary trading + account links above the divider;
+// account utilities (history, settings, help) below.
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,21 +11,27 @@ import {
   RocketLaunchIcon,
   CurrencyDollarIcon,
   ChartPieIcon,
+  PresentationChartLineIcon,
   ClockIcon,
   Cog6ToothIcon,
   QuestionMarkCircleIcon,
+  ShieldCheckIcon,
+  TrophyIcon,
 } from "@heroicons/react/24/outline";
 
 const wiredLinks = [
   { href: "/dashboard", label: "Dashboard", icon: HomeIcon },
   { href: "/dashboard/markets", label: "Markets", icon: ChartBarIcon },
+  { href: "/dashboard/portfolio", label: "Portfolio", icon: ChartPieIcon },
+  { href: "/dashboard/analytics", label: "Analytics", icon: PresentationChartLineIcon },
+  { href: "/dashboard/challenge", label: "Challenge", icon: TrophyIcon },
   { href: "/dashboard/new-challenge", label: "Buy Challenge", icon: RocketLaunchIcon },
   { href: "/dashboard/payouts", label: "Payouts", icon: CurrencyDollarIcon },
 ];
 
 const stubLinks = [
-  { href: "/dashboard/portfolio", label: "Portfolio", icon: ChartPieIcon },
   { href: "/dashboard/history", label: "History", icon: ClockIcon },
+  { href: "/dashboard/rules", label: "Rules", icon: ShieldCheckIcon },
   { href: "/dashboard/settings", label: "Settings", icon: Cog6ToothIcon },
   { href: "/dashboard/help", label: "Help", icon: QuestionMarkCircleIcon },
 ];
