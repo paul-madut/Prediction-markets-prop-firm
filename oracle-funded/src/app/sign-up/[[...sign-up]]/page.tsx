@@ -6,6 +6,7 @@ import { ArrowRightIcon, ArrowPathIcon, ExclamationTriangleIcon, EnvelopeIcon, C
 import { motion, AnimatePresence } from "framer-motion";
 import { AuthShell } from "@/components/auth/AuthShell";
 import { PasswordInput } from "@/components/auth/PasswordInput";
+import { GoogleAuthButton } from "@/components/auth/GoogleAuthButton";
 import { createClient } from "@/lib/supabase/client";
 
 export default function SignUpPage() {
@@ -81,7 +82,18 @@ export default function SignUpPage() {
         </p>
       </div>
 
-      <form onSubmit={onSubmit} className="mt-8 space-y-4">
+      <div className="mt-8 space-y-3">
+        <GoogleAuthButton label="Sign up with Google" onError={setError} />
+        <div className="flex items-center gap-3">
+          <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700" />
+          <span className="text-[11px] uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            or
+          </span>
+          <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700" />
+        </div>
+      </div>
+
+      <form onSubmit={onSubmit} className="mt-4 space-y-4">
         <div>
           <label
             htmlFor="email"
