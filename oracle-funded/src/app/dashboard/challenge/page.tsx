@@ -178,11 +178,7 @@ export default function ChallengeProgressPage() {
   }
 
   if (!account) {
-    return (
-      <div className="max-w-3xl mx-auto py-12 text-center text-sm text-gray-500 dark:text-gray-400">
-        Loading…
-      </div>
-    );
+    return <ChallengeSkeleton />;
   }
 
   const startingBalance = Number(account.startingBalanceCents);
@@ -390,6 +386,59 @@ export default function ChallengeProgressPage() {
           /dashboard/rules
         </Link>
         .
+      </div>
+    </div>
+  );
+}
+
+function ChallengeSkeleton() {
+  return (
+    <div className="space-y-6 max-w-5xl mx-auto animate-pulse" aria-hidden>
+      {/* Title + subtitle */}
+      <div className="space-y-2">
+        <div className="h-8 w-64 rounded-md bg-gray-200 dark:bg-slate-800" />
+        <div className="h-4 w-80 rounded-md bg-gray-100 dark:bg-slate-800/60" />
+      </div>
+
+      {/* 3-phase strip */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="h-28 rounded-2xl bg-gray-100 dark:bg-slate-800/60 border border-gray-200 dark:border-slate-800"
+          />
+        ))}
+      </div>
+
+      {/* Profit card */}
+      <div className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4">
+        <div className="h-5 w-56 rounded-md bg-gray-200 dark:bg-slate-800" />
+        <div className="flex items-baseline justify-between">
+          <div className="h-9 w-32 rounded-md bg-gray-200 dark:bg-slate-800" />
+          <div className="h-4 w-28 rounded-md bg-gray-100 dark:bg-slate-800/60" />
+        </div>
+        <div className="h-2 w-full rounded-full bg-gray-100 dark:bg-slate-800" />
+      </div>
+
+      {/* Trading days card */}
+      <div className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4">
+        <div className="h-5 w-48 rounded-md bg-gray-200 dark:bg-slate-800" />
+        <div className="flex items-baseline justify-between">
+          <div className="h-7 w-20 rounded-md bg-gray-200 dark:bg-slate-800" />
+          <div className="h-4 w-24 rounded-md bg-gray-100 dark:bg-slate-800/60" />
+        </div>
+        <div className="h-2 w-full rounded-full bg-gray-100 dark:bg-slate-800" />
+      </div>
+
+      {/* Drawdown room card */}
+      <div className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4">
+        <div className="h-5 w-44 rounded-md bg-gray-200 dark:bg-slate-800" />
+        <div className="flex items-baseline justify-between">
+          <div className="h-7 w-32 rounded-md bg-gray-200 dark:bg-slate-800" />
+          <div className="h-4 w-28 rounded-md bg-gray-100 dark:bg-slate-800/60" />
+        </div>
+        <div className="h-2 w-full rounded-full bg-gray-100 dark:bg-slate-800" />
+        <div className="h-3 w-72 rounded-md bg-gray-100 dark:bg-slate-800/60" />
       </div>
     </div>
   );

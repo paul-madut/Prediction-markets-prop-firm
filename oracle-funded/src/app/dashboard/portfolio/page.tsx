@@ -12,7 +12,12 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowPathIcon } from "@heroicons/react/16/solid";
+import {
+  ArrowPathIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  ArrowTopRightOnSquareIcon,
+} from "@heroicons/react/16/solid";
 import { TextureCard, TextureCardContent } from "@/components/ui/texture-card";
 import { useApp } from "@/context/AppContext";
 import { api, ApiError } from "@/lib/api-client";
@@ -234,9 +239,7 @@ export default function PortfolioPage() {
             </span>
           </div>
           {!account ? (
-            <div className="py-6 text-center text-sm text-gray-500 dark:text-gray-400">
-              Loading…
-            </div>
+            <PositionsSkeleton />
           ) : account.positions.length === 0 ? (
             <div className="py-6 text-center text-sm text-gray-500 dark:text-gray-400">
               No open positions. Browse{" "}
@@ -249,82 +252,16 @@ export default function PortfolioPage() {
               to place your first trade.
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                  <tr>
-                    <th className="text-left py-2 pr-4 font-semibold">Market</th>
-                    <th className="text-left py-2 pr-4 font-semibold">Side</th>
-                    <th className="text-right py-2 pr-4 font-semibold">Contracts</th>
-                    <th className="text-right py-2 pr-4 font-semibold">Avg entry</th>
-                    <th className="text-right py-2 pr-4 font-semibold">Exposure</th>
-                    <th className="text-right py-2 pr-4 font-semibold">Allocation</th>
-                    <th className="text-right py-2 pr-4 font-semibold">Unrealised</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
-                  {account.positions.map((p) => {
-                    const exposure = Math.abs(p.netContracts) * p.avgEntryPriceCents;
-                    const allocPct =
-                      totalExposureCents > 0
-                        ? (exposure / totalExposureCents) * 100
-                        : 0;
-                    const upnl = Number(p.unrealizedPnlCents);
-                    return (
-                      <tr key={p.id}>
-                        <td className="py-2 pr-4">
-                          <div className="font-mono text-xs text-gray-900 dark:text-gray-100">
-                            {p.externalMarketId}
-                          </div>
-                          <div className="text-[10px] text-gray-400 dark:text-gray-500 uppercase">
-                            {p.venue}
-                          </div>
-                        </td>
-                        <td className="py-2 pr-4 capitalize">{p.side}</td>
-                        <td className="py-2 pr-4 text-right tabular-nums">
-                          {p.netContracts}
-                        </td>
-                        <td className="py-2 pr-4 text-right tabular-nums">
-                          {p.avgEntryPriceCents}¢
-                        </td>
-                        <td className="py-2 pr-4 text-right tabular-nums">
-                          {formatCurrency(exposure)}
-                        </td>
-                        <td className="py-2 pr-4 text-right">
-                          <div className="inline-flex items-center gap-2">
-                            <span className="tabular-nums text-xs text-gray-600 dark:text-gray-300">
-                              {allocPct.toFixed(0)}%
-                            </span>
-                            <div className="w-16 h-1.5 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                              <div
-                                className="h-full bg-blue-500"
-                                style={{ width: `${Math.min(100, allocPct)}%` }}
-                              />
-                            </div>
-                          </div>
-                        </td>
-                        <td
-                          className={`py-2 pr-4 text-right tabular-nums ${
-                            upnl >= 0 ? "text-emerald-700" : "text-red-700"
-                          }`}
-                        >
-                          {upnl >= 0 ? "+" : ""}
-                          {formatCurrency(upnl)}
-                        </td>
-                        <td className="py-2 pr-4 text-right">
-                          <Link
-                            href={`/dashboard/markets/${encodeURIComponent(p.externalMarketId)}`}
-                            className="text-xs text-blue-600 hover:text-blue-700 font-medium"
-                          >
-                            Trade
-                          </Link>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+            <div className="space-y-2">
+              {account.positions.map((p) => (
+                <PositionRow
+                  key={p.id}
+                  position={p}
+                  accountId={account.id}
+                  totalExposureCents={totalExposureCents}
+                  onClosed={() => void load()}
+                />
+              ))}
             </div>
           )}
         </TextureCardContent>
@@ -411,6 +348,229 @@ export default function PortfolioPage() {
           )}
         </TextureCardContent>
       </TextureCard>
+    </div>
+  );
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// PositionRow — collapsed: side badge + market + value + chevron.
+//               expanded: entry/current/shares/P&L %, "View" link, "Close".
+// ────────────────────────────────────────────────────────────────────────────
+
+function PositionRow({
+  position: p,
+  accountId,
+  totalExposureCents,
+  onClosed,
+}: {
+  position: Position;
+  accountId: string;
+  totalExposureCents: number;
+  onClosed: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const [closeError, setCloseError] = useState<string | null>(null);
+
+  const upnl = Number(p.unrealizedPnlCents);
+  const exposure = Math.abs(p.netContracts) * p.avgEntryPriceCents;
+  const allocPct =
+    totalExposureCents > 0 ? (exposure / totalExposureCents) * 100 : 0;
+
+  // Imply current per-contract price from unrealised P&L. This avoids needing
+  // a separate live-price field on the Position model.
+  //   long  YES @ 30¢, +5¢/contract upnl → current ≈ 35¢
+  //   short YES @ 30¢, +5¢/contract upnl → current ≈ 25¢
+  const sign = p.netContracts >= 0 ? 1 : -1;
+  const currentCents =
+    Math.abs(p.netContracts) > 0
+      ? p.avgEntryPriceCents + sign * (upnl / Math.abs(p.netContracts))
+      : p.avgEntryPriceCents;
+
+  const pnlPct =
+    p.avgEntryPriceCents > 0 && Math.abs(p.netContracts) > 0
+      ? (upnl / (Math.abs(p.netContracts) * p.avgEntryPriceCents)) * 100
+      : 0;
+
+  const positionValueCents = Math.round(
+    Math.abs(p.netContracts) * currentCents,
+  );
+
+  const sideUpper = p.side.toUpperCase();
+  const sideBadge =
+    p.side.toLowerCase() === "yes"
+      ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300"
+      : "bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300";
+
+  async function close(): Promise<void> {
+    setClosing(true);
+    setCloseError(null);
+    try {
+      // Closing = opposite action on the same side.
+      // Long position (netContracts > 0) opened with action=buy → close with sell.
+      // Short position (netContracts < 0) opened with action=sell → close with buy.
+      const action = p.netContracts > 0 ? "sell" : "buy";
+      await api.post<{
+        id: string;
+        status: string;
+        fillError?: string;
+      }>("/api/orders", {
+        accountId,
+        venue: p.venue,
+        externalMarketId: p.externalMarketId,
+        externalMarketTicker: p.externalMarketId,
+        side: p.side,
+        action,
+        sizeContracts: Math.abs(p.netContracts),
+        idempotencyKey: crypto.randomUUID(),
+      }).then((r) => {
+        if (r.fillError) throw new Error(r.fillError);
+      });
+      onClosed();
+    } catch (err) {
+      setCloseError(err instanceof ApiError ? err.message : String(err));
+      setClosing(false);
+    }
+  }
+
+  return (
+    <div className="rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
+        aria-expanded={open}
+      >
+        <span
+          className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded ${sideBadge}`}
+        >
+          {sideUpper}
+        </span>
+        <div className="flex-1 min-w-0">
+          <div className="font-mono text-xs text-gray-900 dark:text-gray-100 truncate">
+            {p.externalMarketId}
+          </div>
+          <div className="text-[10px] uppercase text-gray-400 dark:text-gray-500">
+            {p.venue}
+          </div>
+        </div>
+        <div className="text-right shrink-0">
+          <div className="text-base font-bold tabular-nums text-gray-900 dark:text-gray-100">
+            {formatCurrency(positionValueCents)}
+          </div>
+          <div
+            className={`text-xs tabular-nums ${
+              upnl >= 0 ? "text-emerald-600" : "text-red-600"
+            }`}
+          >
+            {upnl >= 0 ? "+" : ""}
+            {formatCurrency(upnl)}
+          </div>
+        </div>
+        {open ? (
+          <ChevronUpIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
+        ) : (
+          <ChevronDownIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
+        )}
+      </button>
+
+      {open && (
+        <div className="border-t border-gray-100 dark:border-slate-800 px-4 py-3 bg-gray-50/40 dark:bg-slate-950/40">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="grid grid-cols-4 gap-6 text-sm">
+              <div>
+                <div className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                  Entry
+                </div>
+                <div className="font-medium tabular-nums text-gray-900 dark:text-gray-100">
+                  {p.avgEntryPriceCents.toFixed(1)}¢
+                </div>
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                  Current
+                </div>
+                <div className="font-medium tabular-nums text-gray-900 dark:text-gray-100">
+                  {currentCents.toFixed(1)}¢
+                </div>
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                  Shares
+                </div>
+                <div className="font-medium tabular-nums text-gray-900 dark:text-gray-100">
+                  {Math.abs(p.netContracts)}
+                </div>
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                  P&amp;L %
+                </div>
+                <div
+                  className={`font-medium tabular-nums ${
+                    pnlPct >= 0 ? "text-emerald-600" : "text-red-600"
+                  }`}
+                >
+                  {pnlPct >= 0 ? "+" : ""}
+                  {pnlPct.toFixed(1)}%
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <Link
+                href={`/dashboard/markets/${encodeURIComponent(p.externalMarketId)}`}
+                aria-label="View market"
+                className="inline-flex items-center justify-center h-9 w-9 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
+              >
+                <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+              </Link>
+              <button
+                type="button"
+                onClick={close}
+                disabled={closing}
+                className="inline-flex items-center justify-center h-9 px-4 rounded-lg text-sm font-semibold text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50 hover:bg-red-50 dark:hover:bg-red-950/30 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                {closing ? (
+                  <>
+                    <ArrowPathIcon className="w-3.5 h-3.5 animate-spin mr-1.5" />
+                    Closing…
+                  </>
+                ) : (
+                  "Close"
+                )}
+              </button>
+            </div>
+          </div>
+          {closeError && (
+            <div className="mt-3 text-xs text-red-600 dark:text-red-400">
+              Failed to close: {closeError}
+            </div>
+          )}
+          <div className="mt-3 flex items-center gap-2 text-[11px] text-gray-400 dark:text-gray-500">
+            <span>Allocation</span>
+            <div className="flex-1 max-w-[200px] h-1 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-blue-500"
+                style={{ width: `${Math.min(100, allocPct)}%` }}
+              />
+            </div>
+            <span className="tabular-nums">{allocPct.toFixed(0)}%</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PositionsSkeleton() {
+  return (
+    <div className="space-y-2 animate-pulse" aria-hidden>
+      {[0, 1].map((i) => (
+        <div
+          key={i}
+          className="h-14 rounded-xl border border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-slate-900"
+        />
+      ))}
     </div>
   );
 }
