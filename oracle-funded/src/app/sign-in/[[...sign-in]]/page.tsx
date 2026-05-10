@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRightIcon, ArrowPathIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,6 +18,16 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Surface OAuth callback errors that arrive as ?error=... in the URL.
+  // Without this, the callback route's redirects vanish silently.
+  useEffect(() => {
+    const e = searchParams.get("error");
+    if (e) {
+      console.error("[sign-in] error from callback URL:", e);
+      setError(e);
+    }
+  }, [searchParams]);
 
   async function onSubmit(e: React.FormEvent): Promise<void> {
     e.preventDefault();

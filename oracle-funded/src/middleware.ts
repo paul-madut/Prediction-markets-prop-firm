@@ -2,7 +2,19 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 // Routes that don't require an authenticated session.
-const PUBLIC_PREFIXES = ["/sign-in", "/sign-up", "/auth", "/api/markets"];
+// /api/stripe/webhook authenticates via the Stripe-Signature header (HMAC),
+// not session cookies — Stripe doesn't send any. Same for /api/cron/* which
+// auths via Bearer token. Keeping them out of the auth check stops the
+// middleware from redirecting them to /sign-in (which Stripe CLI sees as a
+// successful 307 and never retries).
+const PUBLIC_PREFIXES = [
+  "/sign-in",
+  "/sign-up",
+  "/auth",
+  "/api/markets",
+  "/api/stripe",
+  "/api/cron",
+];
 const PUBLIC_EXACT = ["/"];
 
 // Subdomains that are never firm slugs.

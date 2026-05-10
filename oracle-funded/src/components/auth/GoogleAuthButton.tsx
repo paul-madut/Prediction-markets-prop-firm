@@ -20,15 +20,45 @@ export function GoogleAuthButton({
     const supabase = createClient();
     const next = redirectTo ?? "/dashboard";
     const callbackUrl = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: { redirectTo: callbackUrl },
-    });
-    if (error) {
+    console.log("[GoogleAuth] starting", { callbackUrl, next });
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: callbackUrl },
+      });
+      console.log("[GoogleAuth] signInWithOAuth returned", {
+        hasUrl: !!data?.url,
+        url: data?.url,
+        provider: data?.provider,
+        error: error?.message ?? null,
+      });
+      if (error) {
+        setLoading(false);
+        onError?.(`signInWithOAuth: ${error.message}`);
+        return;
+      }
+      if (!data?.url) {
+        setLoading(false);
+        onError?.(
+          "Supabase returned no redirect URL. Google provider may not be enabled in the Supabase dashboard.",
+        );
+        return;
+      }
+      // The browser should auto-navigate to data.url. If we're still here in 2s,
+      // something blocked the navigation — make it loud.
+      setTimeout(() => {
+        if (document.visibilityState === "visible") {
+          console.warn(
+            "[GoogleAuth] still on the page 2s after signInWithOAuth — navigation may have been blocked",
+          );
+        }
+      }, 2000);
+    } catch (e) {
       setLoading(false);
-      onError?.(error.message);
+      const msg = e instanceof Error ? e.message : String(e);
+      console.error("[GoogleAuth] threw", e);
+      onError?.(`Unexpected: ${msg}`);
     }
-    // On success Supabase navigates the page away to Google — nothing else to do.
   }
 
   return (
