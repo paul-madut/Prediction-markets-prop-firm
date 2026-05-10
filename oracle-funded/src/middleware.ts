@@ -14,6 +14,7 @@ const PUBLIC_PREFIXES = [
   "/api/markets",
   "/api/stripe",
   "/api/cron",
+  "/api/health",
 ];
 const PUBLIC_EXACT = ["/"];
 
