@@ -24,12 +24,26 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-function userInitial(email: string | null | undefined): string {
-  if (!email) return "?";
-  return (email[0] ?? "?").toUpperCase();
+function userInitial(
+  fullName: string | null | undefined,
+  email: string | null | undefined,
+): string {
+  if (fullName) {
+    const parts = fullName.trim().split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    if (parts.length === 1) return parts[0][0].toUpperCase();
+  }
+  if (email) return (email[0] ?? "?").toUpperCase();
+  return "?";
 }
 
-function userDisplay(email: string | null | undefined): string {
+function userDisplay(
+  fullName: string | null | undefined,
+  email: string | null | undefined,
+): string {
+  if (fullName && fullName.trim()) return fullName.trim();
   if (!email) return "Account";
   const local = email.split("@")[0] ?? email;
   return local
@@ -104,9 +118,19 @@ export const Sidebar = () => {
                 : "h-10 w-10 mx-auto justify-center",
             )}
           >
-            <div className="h-7 w-7 flex-shrink-0 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-xs font-semibold">
-              {userInitial(user?.email)}
-            </div>
+            {user?.profile?.avatarUrl ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={user.profile.avatarUrl}
+                alt=""
+                referrerPolicy="no-referrer"
+                className="h-7 w-7 flex-shrink-0 rounded-full object-cover bg-gray-100 dark:bg-slate-800"
+              />
+            ) : (
+              <div className="h-7 w-7 flex-shrink-0 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-xs font-semibold">
+                {userInitial(user?.profile?.fullName, user?.email)}
+              </div>
+            )}
             <motion.span
               animate={{
                 opacity: open ? 1 : 0,
@@ -115,7 +139,7 @@ export const Sidebar = () => {
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
               className="text-base font-medium text-neutral-700 dark:text-gray-300 whitespace-nowrap overflow-hidden"
             >
-              {userDisplay(user?.email)}
+              {userDisplay(user?.profile?.fullName, user?.email)}
             </motion.span>
           </div>
         </div>

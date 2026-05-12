@@ -281,6 +281,12 @@ export async function POST(req: Request) {
 
   // ── Run validation chain ──────────────────────────────────────────────────
 
+  // Admin/owner orders on a firm account are allowed (the route-level check
+  // above already filtered out cross-user trader attempts). validateOrder
+  // itself doesn't know about roles — it does a direct userId equality check
+  // — so when isAdmin, we present the account's owner as the requester so
+  // the check trivially passes. The audit log still records the real actor
+  // (ctx.userId) so this isn't a forgery.
   const validation = validateOrder({
     action: action as 'buy' | 'sell',
     side: side as 'yes' | 'no',
@@ -288,7 +294,7 @@ export async function POST(req: Request) {
     sizeContracts,
     accountStatus: account.status,
     accountUserId: account.userId,
-    requestingUserId: ctx.userId,
+    requestingUserId: isAdmin ? account.userId : ctx.userId,
     enabledVenues: account.firm.enabledVenues,
     maxContractsPerOrder: account.config.maxContractsPerOrder,
     maxPositionsPerMarket: account.config.maxPositionsPerMarket,
@@ -335,7 +341,16 @@ export async function POST(req: Request) {
         },
       },
     });
-    return bigintJson({ ...rejected, validationError: validation.reason }, 422);
+    // Include `error` so api-client surfaces the rejection reason to the UI
+    // instead of the generic "Request failed: 422 Unprocessable Entity".
+    return bigintJson(
+      {
+        ...rejected,
+        validationError: validation.reason,
+        error: `Order rejected: ${validation.reason}`,
+      },
+      422,
+    );
   }
 
   const order = await prisma.order.create({

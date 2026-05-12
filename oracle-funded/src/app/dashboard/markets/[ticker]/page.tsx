@@ -71,15 +71,36 @@ export default function MarketDetailPage() {
       );
   }, []);
 
-  // Locate the market by ticker.
-  const { market, parentEvent } = useMemo(() => {
-    if (!events) return { market: null, parentEvent: null };
+  // Locate the parent event by ticker. The list page links via event.eventTicker,
+  // which equals the outcome ticker for binary events but not for multi-outcome
+  // events (e.g. an NBA game's event ticker differs from its per-team outcome
+  // tickers). Try outcome-match first to keep deep links working; fall back to
+  // event-ticker match.
+  const parentEvent = useMemo<Event | null>(() => {
+    if (!events) return null;
     for (const ev of events) {
-      const m = ev.outcomes.find((o) => o.ticker === ticker);
-      if (m) return { market: m, parentEvent: ev };
+      if (ev.outcomes.find((o) => o.ticker === ticker)) return ev;
     }
-    return { market: null, parentEvent: null };
+    return events.find((e) => e.eventTicker === ticker) ?? null;
   }, [events, ticker]);
+
+  // Track which outcome the trade panel is bound to. Default: the URL ticker
+  // if it matches an outcome, else the first outcome of the parent event.
+  const [selectedOutcomeTicker, setSelectedOutcomeTicker] = useState<string | null>(null);
+  useEffect(() => {
+    if (!parentEvent) return;
+    const matchByUrl = parentEvent.outcomes.find((o) => o.ticker === ticker);
+    setSelectedOutcomeTicker(matchByUrl?.ticker ?? parentEvent.outcomes[0]?.ticker ?? null);
+  }, [parentEvent, ticker]);
+
+  const market = useMemo<Market | null>(() => {
+    if (!parentEvent || !selectedOutcomeTicker) return null;
+    return (
+      parentEvent.outcomes.find((o) => o.ticker === selectedOutcomeTicker) ??
+      parentEvent.outcomes[0] ??
+      null
+    );
+  }, [parentEvent, selectedOutcomeTicker]);
 
   // Load trades for this account + market.
   async function loadTrades(): Promise<void> {
@@ -193,7 +214,9 @@ export default function MarketDetailPage() {
               )}
             </div>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {market.title}
+              {parentEvent && parentEvent.outcomes.length > 1
+                ? parentEvent.title
+                : market.title}
             </h1>
             {market.subtitle && (
               <p className="text-sm text-gray-600 dark:text-gray-300 max-w-3xl">
@@ -201,6 +224,118 @@ export default function MarketDetailPage() {
               </p>
             )}
           </div>
+
+          {/* Outcome list — Polymarket-style row per outcome with title +
+              % chance + two action buttons (Buy Yes / Buy No). Clicking any
+              button rebinds the trade panel to that outcome+side and
+              scrolls the panel into view. */}
+          {parentEvent && parentEvent.outcomes.length > 1 && (
+            <TextureCard interactive={false}>
+              <TextureCardContent className="p-0">
+                <div className="flex items-center justify-between px-4 sm:px-5 pt-4 pb-2">
+                  <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                    Outcomes
+                  </div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 tabular-nums">
+                    {parentEvent.outcomes.length} options
+                  </div>
+                </div>
+                <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto] gap-4 px-5 pb-1.5 text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold">
+                  <span>Outcome</span>
+                  <span className="text-right">% Chance</span>
+                  <span className="text-right pl-2">Buy Yes</span>
+                  <span className="text-right">Buy No</span>
+                </div>
+                <ul className="divide-y divide-gray-100 dark:divide-slate-800 border-t border-gray-100 dark:border-slate-800 max-h-[520px] overflow-y-auto">
+                  {[...parentEvent.outcomes]
+                    .sort((a, b) => b.yes_ask - a.yes_ask)
+                    .map((o) => {
+                      const active = o.ticker === selectedOutcomeTicker;
+                      // Button prices = ASK (what you actually pay to buy
+                      // the corresponding side). API guarantees both fields:
+                      //   yes_ask = best Polymarket offer to buy YES
+                      //   no_ask  = 100 - yes_bid (the binary complement, clamped ≤99)
+                      const yesAsk = o.yes_ask;
+                      const noAsk = o.no_ask;
+                      // Chance % = mid-market YES probability, distinct from
+                      // the ask price shown on the Yes button. Matches the
+                      // "implied probability" Polymarket displays prominently.
+                      const chancePct = Math.round((o.yes_bid + o.yes_ask) / 2);
+                      const pickOutcome = (side: "yes" | "no") => {
+                        setSelectedOutcomeTicker(o.ticker);
+                        setSide(side);
+                        setAction("buy");
+                        // Bring the trade panel into view on small screens.
+                        requestAnimationFrame(() => {
+                          document
+                            .getElementById("trade-panel")
+                            ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                        });
+                      };
+                      return (
+                        <li
+                          key={o.ticker}
+                          className={`grid grid-cols-[1fr_auto_auto] sm:grid-cols-[1fr_auto_auto_auto] items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3 transition-colors ${
+                            active
+                              ? "bg-blue-50/40 dark:bg-blue-950/20"
+                              : "hover:bg-gray-50/60 dark:hover:bg-slate-800/40"
+                          }`}
+                        >
+                          {/* Title */}
+                          <button
+                            type="button"
+                            onClick={() => setSelectedOutcomeTicker(o.ticker)}
+                            className="text-left min-w-0"
+                          >
+                            <div
+                              className={`text-sm font-medium line-clamp-2 ${
+                                active
+                                  ? "text-blue-700 dark:text-blue-300"
+                                  : "text-gray-900 dark:text-gray-100"
+                              }`}
+                              title={o.title}
+                            >
+                              {o.title.replace(/^Will\s+/i, "").replace(/\?$/, "")}
+                            </div>
+                            <div className="text-[10px] text-gray-400 dark:text-gray-500 mt-0.5 tabular-nums">
+                              {typeof o.volume === "number" && Number.isFinite(o.volume)
+                                ? `$${(o.volume / 100).toLocaleString(undefined, { maximumFractionDigits: 0 })} vol`
+                                : "no volume data"}
+                            </div>
+                          </button>
+
+                          {/* Chance % — mid-market YES probability,
+                              distinct from the ask price on the buttons. */}
+                          <div className="text-right shrink-0 hidden sm:block">
+                            <div className="text-lg font-bold tabular-nums text-gray-900 dark:text-gray-100 leading-none">
+                              {chancePct}%
+                            </div>
+                          </div>
+
+                          {/* Buy Yes */}
+                          <button
+                            type="button"
+                            onClick={() => pickOutcome("yes")}
+                            className="inline-flex items-center justify-center gap-1.5 h-9 px-3 sm:px-4 rounded-md bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-xs sm:text-sm font-semibold tabular-nums whitespace-nowrap transition-colors"
+                          >
+                            Yes <span className="text-[11px] sm:text-xs opacity-80">{yesAsk}¢</span>
+                          </button>
+
+                          {/* Buy No */}
+                          <button
+                            type="button"
+                            onClick={() => pickOutcome("no")}
+                            className="inline-flex items-center justify-center gap-1.5 h-9 px-3 sm:px-4 rounded-md bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-950/60 text-rose-700 dark:text-rose-300 text-xs sm:text-sm font-semibold tabular-nums whitespace-nowrap transition-colors"
+                          >
+                            No <span className="text-[11px] sm:text-xs opacity-80">{noAsk}¢</span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                </ul>
+              </TextureCardContent>
+            </TextureCard>
+          )}
 
           {/* Quote + trade panel grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -258,7 +393,7 @@ export default function MarketDetailPage() {
             </TextureCard>
 
             {/* Order entry */}
-            <TextureCard interactive={false}>
+            <TextureCard interactive={false} id="trade-panel">
               <TextureCardContent className="p-6 space-y-4">
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                   Place order

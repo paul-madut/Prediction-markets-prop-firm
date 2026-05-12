@@ -38,12 +38,30 @@ function pageTitle(pathname: string | null): string {
   return match ? pageTitles[match] : "";
 }
 
-function userInitial(email: string | null | undefined): string {
-  if (!email) return "?";
-  return (email[0] ?? "?").toUpperCase();
+// Initials from a full name ("Jane Doe" → "JD") or from an email local-part
+// when no name is available.
+function userInitial(
+  fullName: string | null | undefined,
+  email: string | null | undefined,
+): string {
+  if (fullName) {
+    const parts = fullName.trim().split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    if (parts.length === 1) return parts[0][0].toUpperCase();
+  }
+  if (email) return (email[0] ?? "?").toUpperCase();
+  return "?";
 }
 
-function userDisplay(email: string | null | undefined): string {
+// Display name. Prefer the Google-supplied full_name; fall back to an
+// email-local-part Title Case derivation.
+function userDisplay(
+  fullName: string | null | undefined,
+  email: string | null | undefined,
+): string {
+  if (fullName && fullName.trim()) return fullName.trim();
   if (!email) return "Account";
   const local = email.split("@")[0] ?? email;
   return local
@@ -163,12 +181,22 @@ export const TopBar = () => {
             onClick={() => setShowProfileMenu(!showProfileMenu)}
             className="flex items-center gap-2 sm:gap-3 hover:bg-gray-50 dark:hover:bg-slate-800/50 rounded-lg px-1.5 sm:px-2 py-1.5 transition-colors"
           >
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-semibold text-sm sm:text-base">
-              {userInitial(user?.email)}
-            </div>
+            {user?.profile?.avatarUrl ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={user.profile.avatarUrl}
+                alt=""
+                referrerPolicy="no-referrer"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover bg-gray-100 dark:bg-slate-800"
+              />
+            ) : (
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-semibold text-sm sm:text-base">
+                {userInitial(user?.profile?.fullName, user?.email)}
+              </div>
+            )}
             <div className="hidden sm:flex flex-col text-left">
               <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                {userDisplay(user?.email)}
+                {userDisplay(user?.profile?.fullName, user?.email)}
               </span>
               {phaseLabel && (
                 <span className="text-xs text-gray-500 dark:text-gray-400">

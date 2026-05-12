@@ -24,6 +24,7 @@ interface PatchBody {
   enabledVenues?: string[];
   priceHistorySampleIntervalSeconds?: number;
   status?: string;
+  oneSidedThresholdPct?: number;
 }
 
 export async function GET(): Promise<Response> {
@@ -105,6 +106,20 @@ export async function PATCH(req: Request): Promise<Response> {
     }
     data.status = body.status;
   }
+  if (body.oneSidedThresholdPct !== undefined) {
+    if (
+      typeof body.oneSidedThresholdPct !== "number" ||
+      !Number.isInteger(body.oneSidedThresholdPct) ||
+      body.oneSidedThresholdPct < 0 ||
+      body.oneSidedThresholdPct > 49
+    ) {
+      return NextResponse.json(
+        { error: "oneSidedThresholdPct must be an integer 0..49" },
+        { status: 400 },
+      );
+    }
+    data.oneSidedThresholdPct = body.oneSidedThresholdPct;
+  }
 
   const before = await prisma.firm.findUnique({
     where: { id: ctx.firmId },
@@ -114,6 +129,7 @@ export async function PATCH(req: Request): Promise<Response> {
       enabledVenues: true,
       priceHistorySampleIntervalSeconds: true,
       status: true,
+      oneSidedThresholdPct: true,
     },
   });
   if (!before) return NextResponse.json({ error: "Firm not found" }, { status: 404 });
@@ -137,6 +153,7 @@ export async function PATCH(req: Request): Promise<Response> {
         enabledVenues: updated.enabledVenues,
         priceHistorySampleIntervalSeconds: updated.priceHistorySampleIntervalSeconds,
         status: updated.status,
+        oneSidedThresholdPct: updated.oneSidedThresholdPct,
       } as Prisma.InputJsonValue,
     },
   });

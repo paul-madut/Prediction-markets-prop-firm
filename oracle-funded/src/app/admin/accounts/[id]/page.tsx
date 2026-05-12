@@ -87,13 +87,20 @@ type ActionKind =
   | "force-breach"
   | "reset"
   | "disable"
-  | "enable";
+  | "enable"
+  | "promote-phase"
+  | "reset-phase";
 
 interface ActionState {
   kind: ActionKind;
   reason: string;
   totalDrawdownPct?: string;
   dailyDrawdownPct?: string;
+  profitSplitPct?: string;
+  maxPositionsPerMarket?: string;
+  maxPositionsTotal?: string;
+  maxContractsPerOrder?: string;
+  minTradingDays?: string;
   submitting: boolean;
 }
 
@@ -187,12 +194,42 @@ export default function AdminAccountDetailPage() {
           const dailyPct = action.dailyDrawdownPct?.trim()
             ? Number(action.dailyDrawdownPct)
             : undefined;
-          if (totalPct === null && dailyPct === undefined) {
-            throw new Error("Provide totalDrawdownPct and/or dailyDrawdownPct");
+          const split = action.profitSplitPct?.trim()
+            ? Number(action.profitSplitPct)
+            : undefined;
+          const maxPerMkt = action.maxPositionsPerMarket?.trim()
+            ? Number(action.maxPositionsPerMarket)
+            : undefined;
+          const maxTotal = action.maxPositionsTotal?.trim()
+            ? Number(action.maxPositionsTotal)
+            : undefined;
+          const maxContracts = action.maxContractsPerOrder?.trim()
+            ? Number(action.maxContractsPerOrder)
+            : undefined;
+          const minDays = action.minTradingDays?.trim()
+            ? Number(action.minTradingDays)
+            : undefined;
+          const anyKey =
+            totalPct !== null ||
+            dailyPct !== undefined ||
+            split !== undefined ||
+            maxPerMkt !== undefined ||
+            maxTotal !== undefined ||
+            maxContracts !== undefined ||
+            minDays !== undefined;
+          if (!anyKey) {
+            throw new Error("Provide at least one override key");
           }
           await api.post(`/api/admin/accounts/${id}/override`, {
             ...(totalPct !== null && { totalDrawdownPct: totalPct }),
             ...(dailyPct !== undefined && { dailyDrawdownPct: dailyPct }),
+            ...(split !== undefined && { profitSplitPct: split }),
+            ...(maxPerMkt !== undefined && { maxPositionsPerMarket: maxPerMkt }),
+            ...(maxTotal !== undefined && { maxPositionsTotal: maxTotal }),
+            ...(maxContracts !== undefined && {
+              maxContractsPerOrder: maxContracts,
+            }),
+            ...(minDays !== undefined && { minTradingDays: minDays }),
             reason,
           });
           setToast("Override applied");
@@ -217,6 +254,14 @@ export default function AdminAccountDetailPage() {
         case "enable":
           await api.patch(`/api/accounts/${id}`, { status: "active", reason });
           setToast("Account re-enabled");
+          break;
+        case "promote-phase":
+          await api.post(`/api/admin/accounts/${id}/promote-phase`, { reason });
+          setToast("Phase promoted");
+          break;
+        case "reset-phase":
+          await api.post(`/api/admin/accounts/${id}/reset-phase`, { reason });
+          setToast("Phase reset to 1");
           break;
       }
       setAction(null);
@@ -567,6 +612,30 @@ export default function AdminAccountDetailPage() {
                 Reset challenge
               </TextureButton>
 
+              <TextureButton
+                variant="primary"
+                size="sm"
+                className="w-full"
+                onClick={() =>
+                  setAction({ kind: "promote-phase", reason: "", submitting: false })
+                }
+                disabled={isBreached || isDisabled || account.status === "funded"}
+              >
+                Promote to next phase
+              </TextureButton>
+
+              <TextureButton
+                variant="secondary"
+                size="sm"
+                className="w-full"
+                onClick={() =>
+                  setAction({ kind: "reset-phase", reason: "", submitting: false })
+                }
+                disabled={isBreached || isDisabled}
+              >
+                Reset to phase 1
+              </TextureButton>
+
               {isDisabled ? (
                 <TextureButton
                   variant="primary"
@@ -633,10 +702,12 @@ function ActionModal({
     reset: "Reset challenge to starting balance",
     disable: "Disable account",
     enable: "Re-enable account",
+    "promote-phase": "Promote to next phase",
+    "reset-phase": "Reset to phase 1",
   };
   const descriptions: Record<ActionKind, string> = {
     override:
-      "Shadow the config drawdown percentages for this account. Eval engine reads the override on next tick.",
+      "Shadow the config rules for this account. Eval engine reads the override on next tick. Drawdown keys are enforced today; the other keys are stored for the same JSON for forward-compat.",
     "force-close":
       "Closes every open position at the current bid. Account status is unchanged.",
     "force-breach":
@@ -645,6 +716,10 @@ function ActionModal({
       "Clears positions, resets balance to starting balance, restarts trading-day counter, clears breach.",
     disable: "Account becomes disabled — orders rejected, eval pauses.",
     enable: "Account returns to active — orders accepted, eval runs.",
+    "promote-phase":
+      "Advance currentPhaseId to the next phase on this config. If no next phase exists, flips status to funded. Resets trading-day counter for the new phase.",
+    "reset-phase":
+      "Send the trader back to phase 1 of this config. Resets trading-day counter; does NOT touch balance or positions.",
   };
 
   const isDanger = action.kind === "force-breach";
@@ -709,6 +784,104 @@ function ActionModal({
                   }
                   className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
                 />
+              </div>
+              <div className="border-t border-gray-100 dark:border-slate-800 pt-3 mt-3">
+                <div className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-2">
+                  Advanced — stored in rule_overrides JSON
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">
+                      Profit split (%)
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      max="100"
+                      value={action.profitSplitPct ?? ""}
+                      onChange={(e) =>
+                        onChange({ ...action, profitSplitPct: e.target.value })
+                      }
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">
+                      Min trading days
+                    </label>
+                    <input
+                      type="number"
+                      min="0"
+                      step="1"
+                      value={action.minTradingDays ?? ""}
+                      onChange={(e) =>
+                        onChange({ ...action, minTradingDays: e.target.value })
+                      }
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">
+                      Max positions per market
+                    </label>
+                    <input
+                      type="number"
+                      min="0"
+                      step="1"
+                      value={action.maxPositionsPerMarket ?? ""}
+                      onChange={(e) =>
+                        onChange({
+                          ...action,
+                          maxPositionsPerMarket: e.target.value,
+                        })
+                      }
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">
+                      Max positions total
+                    </label>
+                    <input
+                      type="number"
+                      min="0"
+                      step="1"
+                      value={action.maxPositionsTotal ?? ""}
+                      onChange={(e) =>
+                        onChange({
+                          ...action,
+                          maxPositionsTotal: e.target.value,
+                        })
+                      }
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">
+                      Max contracts per order
+                    </label>
+                    <input
+                      type="number"
+                      min="0"
+                      step="1"
+                      value={action.maxContractsPerOrder ?? ""}
+                      onChange={(e) =>
+                        onChange({
+                          ...action,
+                          maxContractsPerOrder: e.target.value,
+                        })
+                      }
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+                <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-2 italic">
+                  Drawdown keys are enforced by the eval engine today. The
+                  others are written to <code className="font-mono">rule_overrides</code>{" "}
+                  for forward-compat — they'll go live as the engine learns to
+                  read them.
+                </p>
               </div>
             </>
           )}

@@ -27,11 +27,27 @@ import { api, ApiError } from "@/lib/api-client";
 
 const ACTIVE_ACCOUNT_KEY = "oracle_active_account_id";
 
+export interface FirmSettings {
+  id: string;
+  name: string;
+  slug: string;
+  status: string;
+  oneSidedThresholdPct: number;
+  enabledVenues: string[];
+}
+
+export interface UserProfile {
+  fullName: string | null;
+  avatarUrl: string | null;
+}
+
 export interface UserClaims {
   userId: string;
   firmId: string;
   role: "trader" | "admin" | "owner";
   email?: string;
+  firm?: FirmSettings;
+  profile?: UserProfile;
 }
 
 export interface AccountRow {

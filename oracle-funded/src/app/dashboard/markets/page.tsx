@@ -10,6 +10,7 @@ import { MarketCardSkeleton } from "@/components/markets/MarketCardSkeleton";
 import { SortDropdown, SortOption } from "@/components/markets/SortDropdown";
 import { useTickEvery } from "@/hooks/useTickEvery";
 import { walkCents, seedFromString } from "@/lib/priceWalk";
+import { useApp } from "@/context/AppContext";
 
 type MarketSort = "trending" | "newest" | "volume" | "closing";
 const MARKET_SORT_OPTIONS: SortOption<MarketSort>[] = [
@@ -20,6 +21,13 @@ const MARKET_SORT_OPTIONS: SortOption<MarketSort>[] = [
 ];
 
 export default function MarketsPage() {
+  const { user } = useApp();
+  // Firm-wide sidedness threshold. With threshold N>0, outcomes whose
+  // yes_ask is <=N or >=100-N are hidden. N=0 disables the filter.
+  // Source of truth lives on firms.one_sided_threshold_pct; this UI
+  // hide is paired with a fillOrder backstop for security.
+  const threshold = user?.firm?.oneSidedThresholdPct ?? 0;
+
   // Live Polymarket data via /api/markets (Phase 3). The route returns
   // both the flat market list and the event envelopes; we use events.
   const [events, setEvents] = useState<Event[]>([]);
@@ -38,12 +46,16 @@ export default function MarketsPage() {
   const [sortKey, setSortKey] = useState<MarketSort>("trending");
   const [drift, setDrift] = useState<Record<string, number>>({});
 
-  // Trim outcomes to those priced between 10% and 90% (in either direction)
-  // and drop events left with zero outcomes after the trim.
+  // Apply firm sidedness threshold. threshold=0 → no filter (passes everything).
   const inRangeEvents = events
     .map((event) => ({
       ...event,
-      outcomes: event.outcomes.filter((o) => o.yes_ask >= 10 && o.yes_ask <= 90),
+      outcomes:
+        threshold > 0
+          ? event.outcomes.filter(
+              (o) => o.yes_ask > threshold && o.yes_ask < 100 - threshold,
+            )
+          : event.outcomes,
     }))
     .filter((event) => event.outcomes.length > 0);
 

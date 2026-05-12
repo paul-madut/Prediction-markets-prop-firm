@@ -102,7 +102,11 @@ interface DashboardAccountView {
   accountPhase: Phase;
 }
 
-function displayName(email: string | null | undefined): string {
+function displayName(
+  fullName: string | null | undefined,
+  email: string | null | undefined,
+): string {
+  if (fullName && fullName.trim()) return fullName.trim();
   if (!email) return "Trader";
   const local = email.split("@")[0] ?? email;
   return local
@@ -128,6 +132,7 @@ function deriveUserView(
   userId: string | undefined,
   email: string | undefined,
   account: AccountRow | null,
+  fullName?: string | null,
 ): DashboardUserView {
   const acct = account;
   const balance = acct ? Number(acct.currentBalanceCents) : 0;
@@ -148,7 +153,7 @@ function deriveUserView(
     peak > 0 ? Math.min(0, (balance - peak) / peak) : 0;
 
   return {
-    username: displayName(email),
+    username: displayName(fullName, email),
     userId: userId ?? "—",
     email: email ?? "",
     accountId: acct?.id ?? "—",
@@ -799,7 +804,13 @@ export default function Dashboard() {
   }, [accountSwitcherOpen]);
 
   const user = useMemo(
-    () => deriveUserView(authUser?.userId, authUser?.email, activeAccount),
+    () =>
+      deriveUserView(
+        authUser?.userId,
+        authUser?.email,
+        activeAccount,
+        authUser?.profile?.fullName,
+      ),
     [authUser, activeAccount],
   );
   const accounts = useMemo(() => deriveAccounts(rawAccounts), [rawAccounts]);

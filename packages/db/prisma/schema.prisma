@@ -19,6 +19,7 @@ model Firm {
   enabledVenues                         String[] @map("enabled_venues")
   status                                String   @default("active") @map("status")
   priceHistorySampleIntervalSeconds     Int      @default(30) @map("price_history_sample_interval_seconds")
+  oneSidedThresholdPct                  Int      @default(0) @map("one_sided_threshold_pct")
   createdAt                             DateTime @default(now()) @map("created_at")
 
   members           FirmMember[]

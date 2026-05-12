@@ -218,3 +218,34 @@ export async function POST(req: Request): Promise<Response> {
 
   return bigintJson(created, 201);
 }
+
+/**
+ * GET /api/admin/configs
+ *
+ * Lists ALL configs for the caller's firm — active and inactive both —
+ * because the admin "challenges for sale" page needs to toggle inactive
+ * ones back on. The trader-facing /api/configs only returns active rows.
+ */
+export async function GET(): Promise<Response> {
+  const guard = await requireAdmin();
+  if (!guard.ok) return guard.response;
+  const ctx = guard.ctx;
+
+  const configs = await prisma.challengeConfig.findMany({
+    where: { firmId: ctx.firmId },
+    orderBy: [{ isActive: "desc" }, { accountSizeCents: "asc" }],
+    include: {
+      phases: {
+        orderBy: { phaseNumber: "asc" },
+        select: {
+          phaseNumber: true,
+          name: true,
+          profitTargetPct: true,
+          minTradingDays: true,
+        },
+      },
+    },
+  });
+
+  return bigintJson(configs);
+}

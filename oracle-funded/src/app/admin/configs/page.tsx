@@ -1,9 +1,11 @@
 "use client";
 
-// /admin/configs — challenge config list.
-//
-// Reads active firm configs from GET /api/configs. Each row links to
-// /admin/configs/[id]/edit; "New config" links to /admin/configs/new.
+// /admin/configs — challenge config list. Shows ALL configs (active +
+// inactive) from GET /api/admin/configs so admins can flip the "for sale"
+// toggle. Each row links to /admin/configs/[id]/edit. "For sale" toggle
+// PATCHes /api/admin/configs/[id] with { isActive }. Stripe sync isn't
+// needed — checkout builds price_data dynamically per session, so flipping
+// is instant.
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -30,6 +32,7 @@ interface Config {
   totalDrawdownPct: string;
   dailyDrawdownPct: string | null;
   profitSplitPct: string;
+  isActive: boolean;
   phases: Phase[];
 }
 
@@ -37,18 +40,40 @@ export default function AdminConfigsPage() {
   const [rows, setRows] = useState<Config[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [toggling, setToggling] = useState<string | null>(null);
 
   async function load(): Promise<void> {
     setLoading(true);
     setError(null);
     try {
-      const data = await api.get<Config[]>("/api/configs");
+      // Admin variant — returns inactive configs too so we can re-list them.
+      const data = await api.get<Config[]>("/api/admin/configs");
       setRows(data);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : String(err));
       setRows([]);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function toggleActive(id: string, next: boolean): Promise<void> {
+    setToggling(id);
+    setError(null);
+    // Optimistic — flip locally first; revert on error.
+    setRows((cur) =>
+      cur ? cur.map((c) => (c.id === id ? { ...c, isActive: next } : c)) : cur,
+    );
+    try {
+      await api.patch(`/api/admin/configs/${id}`, { isActive: next });
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : String(err));
+      // Revert
+      setRows((cur) =>
+        cur ? cur.map((c) => (c.id === id ? { ...c, isActive: !next } : c)) : cur,
+      );
+    } finally {
+      setToggling(null);
     }
   }
 
@@ -115,6 +140,7 @@ export default function AdminConfigsPage() {
                     <th className="text-right py-3 px-4 font-semibold">Total / Daily</th>
                     <th className="text-right py-3 px-4 font-semibold">Split</th>
                     <th className="text-left py-3 px-4 font-semibold">Phases</th>
+                    <th className="text-center py-3 px-4 font-semibold">For sale</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -122,7 +148,9 @@ export default function AdminConfigsPage() {
                   {rows.map((c) => (
                     <tr
                       key={c.id}
-                      className="hover:bg-gray-50 dark:hover:bg-slate-900 transition-colors"
+                      className={`hover:bg-gray-50 dark:hover:bg-slate-900 transition-colors ${
+                        c.isActive ? "" : "opacity-50"
+                      }`}
                     >
                       <td className="py-3 px-4">
                         <div className="font-semibold text-gray-900 dark:text-gray-100">
@@ -153,6 +181,29 @@ export default function AdminConfigsPage() {
                         <span className="text-xs text-gray-400 dark:text-gray-500">
                           ({c.phases.map((p) => `${p.profitTargetPct}%`).join(" → ")})
                         </span>
+                      </td>
+                      <td className="py-3 px-4 text-center">
+                        <button
+                          type="button"
+                          role="switch"
+                          aria-checked={c.isActive}
+                          aria-label={c.isActive ? "Mark not for sale" : "Mark for sale"}
+                          disabled={toggling === c.id}
+                          onClick={() => void toggleActive(c.id, !c.isActive)}
+                          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                            c.isActive
+                              ? "bg-emerald-500"
+                              : "bg-gray-200 dark:bg-slate-700"
+                          } ${
+                            toggling === c.id ? "opacity-60 cursor-wait" : ""
+                          }`}
+                        >
+                          <span
+                            className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${
+                              c.isActive ? "translate-x-5" : "translate-x-0.5"
+                            }`}
+                          />
+                        </button>
                       </td>
                       <td className="py-3 px-4 text-right">
                         <Link

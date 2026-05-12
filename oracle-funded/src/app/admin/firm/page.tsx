@@ -19,6 +19,7 @@ interface FirmRow {
   enabledVenues: string[];
   status: string;
   priceHistorySampleIntervalSeconds: number;
+  oneSidedThresholdPct: number;
   createdAt: string;
 }
 
@@ -41,6 +42,7 @@ export default function AdminFirmPage() {
   const [venues, setVenues] = useState<string[]>([]);
   const [interval, setIntervalValue] = useState("30");
   const [status, setStatus] = useState<string>("active");
+  const [oneSidedThreshold, setOneSidedThreshold] = useState("0");
 
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -55,6 +57,7 @@ export default function AdminFirmPage() {
     setVenues(f.enabledVenues);
     setIntervalValue(String(f.priceHistorySampleIntervalSeconds));
     setStatus(f.status);
+    setOneSidedThreshold(String(f.oneSidedThresholdPct ?? 0));
   }
 
   async function load(): Promise<void> {
@@ -84,12 +87,21 @@ export default function AdminFirmPage() {
       if (venues.length === 0) {
         throw new Error("At least one venue must be enabled");
       }
+      const thresholdNum = Number(oneSidedThreshold);
+      if (
+        !Number.isInteger(thresholdNum) ||
+        thresholdNum < 0 ||
+        thresholdNum > 49
+      ) {
+        throw new Error("One-sided threshold must be an integer 0–49");
+      }
       const updated = await api.patch<FirmRow>("/api/admin/firm", {
         name: name.trim(),
         brandConfig: { primary, secondary, accent },
         enabledVenues: venues,
         priceHistorySampleIntervalSeconds: intervalNum,
         status,
+        oneSidedThresholdPct: thresholdNum,
       });
       setFirm(updated);
       applyToDraft(updated);
@@ -256,6 +268,33 @@ export default function AdminFirmPage() {
           <p className="text-xs text-gray-500 dark:text-gray-400">
             How often the worker writes a price snapshot per active market.
             Tighter = more disk + better detection backtests.
+          </p>
+        </TextureCardContent>
+      </TextureCard>
+
+      <TextureCard interactive={false}>
+        <TextureCardContent className="p-6 space-y-4">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            Market filters
+          </h2>
+          <Field label="One-sided threshold (cents from extreme)">
+            <input
+              type="number"
+              min={0}
+              max={49}
+              step={1}
+              value={oneSidedThreshold}
+              onChange={(e) => setOneSidedThreshold(e.target.value)}
+              className={inputCls}
+            />
+          </Field>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Hide and reject orders on markets where the YES price is at or
+            below N¢ or at or above (100 − N)¢. Setting{" "}
+            <code className="font-mono">5</code> blocks markets priced at 5¢
+            and 95¢ on either side. <code className="font-mono">0</code>{" "}
+            disables the filter entirely. Visibility is enforced in the
+            trader UI; orders are rejected at fill time.
           </p>
         </TextureCardContent>
       </TextureCard>

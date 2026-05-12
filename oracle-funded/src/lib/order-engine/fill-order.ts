@@ -64,6 +64,22 @@ export async function fillOrder(
     return { ok: false, reason: 'no_quote_for_side' };
   }
 
+  // Firm-wide one-sided market filter. The trader UI hides these, but a
+  // determined client could still POST to /api/orders directly. Check yes_ask
+  // — since no_ask ≈ 100 - yes_bid, the YES leg captures both directions of
+  // a one-sided market. threshold=0 disables the check.
+  const firm = await prisma.firm.findUnique({
+    where: { id: order.firmId },
+    select: { oneSidedThresholdPct: true },
+  });
+  const threshold = firm?.oneSidedThresholdPct ?? 0;
+  if (threshold > 0) {
+    const yesAsk = probeQuote.yesAsk;
+    if (yesAsk <= threshold || yesAsk >= 100 - threshold) {
+      return { ok: false, reason: 'one_sided_market_blocked' };
+    }
+  }
+
   // Latency-arb cushion: don't fill faster than 500ms after submission.
   // This is a per-order wait, not a rate limit. Tests pass 0 to skip.
   if (minAgeMs > 0) {

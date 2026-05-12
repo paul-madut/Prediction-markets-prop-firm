@@ -117,11 +117,24 @@ export async function GET(request: Request) {
     const polyEvents: PolymarketEvent[] = await response.json();
 
     // Build paired markets + events arrays from the same source.
+    // Drop outcomes whose Polymarket status is closed, OR whose close_time
+    // has already passed — Gamma's active=true filter is not consistently
+    // honored and returns stale outcomes whose fillOrder calls then fail
+    // with no_quote_for_market. Defense in depth: filter both flags.
+    const nowMs = Date.now();
     const eventEnvelopes: Event[] = [];
     const allMarkets: Market[] = [];
 
     for (const pe of polyEvents) {
-      const outcomes = transformToMarket(pe);
+      const allOutcomes = transformToMarket(pe);
+      const outcomes = allOutcomes.filter((o) => {
+        if (o.status === "closed") return false;
+        if (o.close_time) {
+          const ms = Date.parse(o.close_time);
+          if (!Number.isNaN(ms) && ms <= nowMs) return false;
+        }
+        return true;
+      });
       if (outcomes.length === 0) continue;
       const cat = mapTagToCategory(pe.tags || []);
       const evt: Event = {
