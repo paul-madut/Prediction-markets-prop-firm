@@ -174,3 +174,80 @@ No mock data files exist anywhere in the repo.
 - Sentry alerts: `webflux-oz.sentry.io`
 - The smoke tests (`tests/run-all.sh`) are the fastest way to verify nothing
   regressed during the demo. Re-run if you smell trouble.
+
+## Production deploy env checklist
+
+Set these in **Vercel project settings → Environment Variables** (Production
+scope). Do NOT copy `.env.local` straight up — `NEXT_PUBLIC_DEMO_MODE` must
+flip. `next.config.ts` will refuse to build if it doesn't.
+
+### Critical security flags (must be correct)
+
+| Var | Prod value | Why |
+|---|---|---|
+| `NEXT_PUBLIC_DEMO_MODE` | **unset** or `false` | `true` disables AAL2/MFA enforcement on every admin endpoint. Build fails if set to `true` in production. |
+| `NODE_ENV` | `production` (set by Vercel automatically) | Triggers Sentry sample-rate drop + Pino JSON output |
+
+### Supabase
+
+| Var | Source | Notes |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase → Settings → API → Project URL | Safe to expose |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase → Settings → API → publishable | Safe to expose; the old "anon" key |
+| `SUPABASE_SECRET_KEY` | Supabase → Settings → API → secret | **Server-only**. Never `NEXT_PUBLIC_*`. |
+| `SUPABASE_PROJECT_REF` | Supabase → Settings → General → Reference ID | Used by edge runtimes / debug logs |
+| `SUPABASE_JWT_JWKS_URL` | `https://<ref>.supabase.co/auth/v1/.well-known/jwks.json` | Public endpoint, fine to commit |
+| `DATABASE_URL` | Supabase → Database → Connection pooler (Transaction mode, port 6543) | **Different from dev** — use the pooler in serverless |
+| `DIRECT_URL` | Same project → Connection string (port 5432) | For Prisma migrate / non-pooled connections |
+
+### Stripe (LIVE mode for prod)
+
+| Var | Source |
+|---|---|
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe → Developers → API keys → Live publishable (`pk_live_*`) |
+| `STRIPE_SECRET_KEY` | Stripe → Developers → API keys → Live secret (`sk_live_*`) |
+| `STRIPE_WEBHOOK_SECRET` | Stripe → Developers → Webhooks → your prod endpoint → Signing secret (`whsec_*`) |
+
+Webhook endpoint config in the Stripe dashboard: `https://<your-prod-domain>/api/stripe/webhook` listening for `checkout.session.completed`, `charge.refunded`, `charge.dispute.created`.
+
+### Infrastructure
+
+| Var | Source |
+|---|---|
+| `UPSTASH_REDIS_REST_URL` | Upstash → DB → REST API → URL |
+| `UPSTASH_REDIS_REST_TOKEN` | Upstash → DB → REST API → Token |
+| `CRON_SECRET` | Generate fresh per env: `openssl rand -hex 32`. Vercel Cron sends this automatically as `Authorization: Bearer …` |
+| `RESEND_API_KEY` | Resend → API Keys |
+| `RESEND_FROM_EMAIL` | Verified domain sender (NOT `onboarding@resend.dev` in prod) |
+
+### Observability
+
+| Var | Source |
+|---|---|
+| `NEXT_PUBLIC_SENTRY_DSN` | Sentry → Project Settings → Client Keys (DSN) |
+| `SENTRY_AUTH_TOKEN` | Sentry → Org Settings → Auth Tokens (build-time; scopes `project:write project:read project:releases`) |
+| `SENTRY_ORG`, `SENTRY_PROJECT` | Slugs from the dashboard URL |
+| `BETTERSTACK_LOGS_SOURCE_TOKEN` | Better Stack → Sources → your HTTP source |
+| `LOG_LEVEL` | `info` for prod (`debug` floods Sentry quota) |
+
+### App
+
+| Var | Source |
+|---|---|
+| `NEXT_PUBLIC_APP_URL` | Your prod URL, e.g. `https://app.webflux.ca`. Used in Stripe success/cancel URLs and OAuth `redirectTo` |
+| `POLYMARKET_GAMMA_BASE_URL` | `https://gamma-api.polymarket.com` (same as dev) |
+| `KALSHI_API_BASE_URL` | Same as dev until Kalshi credentials land |
+| `KALSHI_KEY_ID`, `KALSHI_PRIVATE_KEY` | Leave blank until Kalshi access is granted |
+
+### Pre-deploy validation
+
+Before flipping the prod DNS:
+
+1. `pnpm --filter oracle-funded build` against the prod env file — confirms `next.config.ts` guard passes (i.e. DEMO_MODE is OFF).
+2. Sign in as `admin@oraclefunded.test` (or the real owner) — should be redirected to `/2fa-enrollment?next=/admin` on first admin hit.
+3. Complete TOTP enrollment with an authenticator app (1Password, Authy, Google Authenticator). Session now at AAL2; admin pages load.
+4. Sign out, sign back in — Supabase should challenge for the second factor. Confirm.
+5. Hit `/api/health` from outside — expect 200 with `db.ok && redis.ok`.
+6. Send one webhook test from the Stripe dashboard (Webhooks → your endpoint → Send test event → `checkout.session.completed`) — confirm 200 in logs.
+7. Trigger `tick-all` manually: `curl -H "Authorization: Bearer $CRON_SECRET" https://<prod>/api/cron/tick-all` — expect 200.
+8. Tail Sentry for any startup errors in the first 60 seconds.

@@ -1,0 +1,47 @@
+name: CI
+
+# Runs on every pull request and on pushes to the main lines of dev.
+# Block-on-fail. Keep this lean — slow CI = ignored CI.
+
+on:
+  pull_request:
+    branches: [main, mvp]
+  push:
+    branches: [main, mvp]
+
+jobs:
+  test:
+    name: typecheck + unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      # Tests should not need real services. If a future test does, it
+      # should mock or use a local Postgres set up explicitly in its job.
+      NEXT_PUBLIC_DEMO_MODE: "true"
+      # Stub envs so module-load (next.config.ts guard, etc.) doesn't trip.
+      NODE_ENV: "test"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck (all packages)
+        run: pnpm -r --if-present type-check
+
+      - name: Unit tests (vitest)
+        run: pnpm -w run test

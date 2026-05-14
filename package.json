@@ -8,7 +8,9 @@
     "dev:worker": "pnpm --filter @webflux/worker dev",
     "build": "pnpm --filter oracle-funded build",
     "lint": "pnpm -r lint",
-    "type-check": "pnpm -r type-check"
+    "type-check": "pnpm -r type-check",
+    "test": "pnpm -r --if-present test",
+    "test:coverage": "pnpm -r --if-present test:coverage"
   },
   "devDependencies": {
     "typescript": "^5.4.5"

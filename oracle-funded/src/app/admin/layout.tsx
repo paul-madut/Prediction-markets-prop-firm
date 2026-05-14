@@ -1,18 +1,22 @@
-// Admin layout — server-side role gate.
+// Admin layout — server-side role + AAL2 gate.
 //
 // Defense in depth: middleware already redirects unauthenticated users to
-// /sign-in, but it does NOT check role (role would require a DB lookup on
-// every request). This layout runs server-side before any /admin/* page
-// renders and enforces:
+// /sign-in, but it does NOT check role or AAL (role/AAL would require a DB
+// lookup on every request). This layout runs server-side before any /admin/*
+// page renders and enforces:
 //
 //   1. Session present       → otherwise /sign-in
 //   2. Firm membership exists → otherwise /sign-in?error=no_firm
 //   3. Role ∈ {admin, owner}  → otherwise /dashboard?error=admin_only
+//   4. Session at AAL2         → otherwise /2fa-enrollment?next=/admin
+//                               (skipped when NEXT_PUBLIC_DEMO_MODE=true,
+//                                matching the bypass in requireAdmin())
 //
 // The API routes under /api/admin/* are independently guarded by
-// requireAdmin() (which also enforces AAL2/MFA). This layout is the UI
-// half of that protection — it stops a trader from seeing the admin UI
-// chrome and getting a broken-looking page where every fetch 403s.
+// requireAdmin(). This layout is the UI half of that protection — it stops
+// an admin from seeing the admin chrome and watching every API call 403 with
+// `mfa_required`, and stops a trader from getting a broken-looking admin
+// page where every fetch 403s.
 
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -40,6 +44,15 @@ export default async function AdminLayout({
 
   if (ctx.role !== "admin" && ctx.role !== "owner") {
     redirect("/dashboard?error=admin_only");
+  }
+
+  // AAL2 / MFA gate. Same dev-bypass convention as requireAdmin().
+  const demoBypass = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+  if (!demoBypass) {
+    const aal = (claims as Record<string, unknown>).aal;
+    if (aal !== "aal2") {
+      redirect("/2fa-enrollment?next=/admin");
+    }
   }
 
   return (
