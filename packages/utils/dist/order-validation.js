@@ -32,8 +32,14 @@ function validateOrder(input) {
         return { ok: false, reason: 'size_exceeds_limit' };
     }
     if (input.action === 'buy') {
-        // 8. Opening a new position: check total position count limit
+        // 8a. Opening a new side on this market: respect maxPositionsPerMarket.
+        // Topping up the same side (existingPositionContracts > 0) doesn't add a
+        // new position row, so it bypasses this check.
         if (input.existingPositionContracts === 0) {
+            if (input.openPositionsInMarketCount >= input.maxPositionsPerMarket) {
+                return { ok: false, reason: 'position_market_limit_exceeded' };
+            }
+            // 8b. Opening a new position anywhere: check total position count limit
             if (input.openPositionsCount >= input.maxPositionsTotal) {
                 return { ok: false, reason: 'position_limit_exceeded' };
             }

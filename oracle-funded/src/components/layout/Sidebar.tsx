@@ -14,6 +14,8 @@ import {
   WalletIcon,
   Bars3Icon,
   TrophyIcon,
+  ClockIcon,
+  BookOpenIcon,
 } from "@heroicons/react/24/outline";
 import { useApp } from "@/context/AppContext";
 import { cn } from "@/lib/utils";
@@ -62,7 +64,9 @@ export const Sidebar = () => {
     { label: "Challenge", href: "/dashboard/challenge", icon: <TrophyIcon /> },
     { label: "Markets", href: "/dashboard/markets", icon: <ArrowTrendingUpIcon /> },
     { label: "Portfolio", href: "/dashboard/portfolio", icon: <BriefcaseIcon /> },
+    { label: "History", href: "/dashboard/history", icon: <ClockIcon /> },
     { label: "Analytics", href: "/dashboard/analytics", icon: <ChartBarIcon /> },
+    { label: "Rules", href: "/dashboard/rules", icon: <BookOpenIcon /> },
     { label: "Payouts", href: "/dashboard/payouts", icon: <WalletIcon /> },
   ];
 

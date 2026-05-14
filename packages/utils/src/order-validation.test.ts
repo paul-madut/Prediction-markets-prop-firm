@@ -27,6 +27,7 @@ function baseInput(): OrderValidationInput {
     maxPositionsTotal: 5,
     existingPositionContracts: 0,
     openPositionsCount: 0,
+    openPositionsInMarketCount: 0,
     newsCooldownActiveUntil: null,
   };
 }
@@ -142,6 +143,62 @@ describe("validateOrder — rejection reasons (one per axis)", () => {
       maxPositionsTotal: 5,
     });
     expect(r.ok).toBe(true);
+  });
+
+  it("position_market_limit_exceeded when opening a new side on a market at the per-market cap", () => {
+    // Trader holds YES on market m1; attempts to open NO on same market.
+    // maxPositionsPerMarket=1, market already has one open side → reject.
+    const r = validateOrder({
+      ...baseInput(),
+      action: "buy",
+      side: "no",
+      existingPositionContracts: 0, // no NO position yet
+      openPositionsInMarketCount: 1, // YES side already counts
+      maxPositionsPerMarket: 1,
+    });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.reason).toBe("position_market_limit_exceeded");
+  });
+
+  it("opening a second side passes when maxPositionsPerMarket allows it", () => {
+    const r = validateOrder({
+      ...baseInput(),
+      action: "buy",
+      side: "no",
+      existingPositionContracts: 0,
+      openPositionsInMarketCount: 1,
+      maxPositionsPerMarket: 2, // explicitly permits both sides
+    });
+    expect(r.ok).toBe(true);
+  });
+
+  it("topping up the same side does NOT trip the per-market cap", () => {
+    // Already at the per-market cap because we hold this side; adding more
+    // contracts to the same side row doesn't open a new row.
+    const r = validateOrder({
+      ...baseInput(),
+      action: "buy",
+      side: "yes",
+      existingPositionContracts: 10, // same-side top-up
+      openPositionsInMarketCount: 1,
+      maxPositionsPerMarket: 1,
+    });
+    expect(r.ok).toBe(true);
+  });
+
+  it("per-market cap fires before total cap when both would reject", () => {
+    // Defense-in-depth ordering: per-market check is more specific.
+    const r = validateOrder({
+      ...baseInput(),
+      action: "buy",
+      existingPositionContracts: 0,
+      openPositionsInMarketCount: 1,
+      openPositionsCount: 5,
+      maxPositionsPerMarket: 1,
+      maxPositionsTotal: 5,
+    });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.reason).toBe("position_market_limit_exceeded");
   });
 
   it("position_not_found when selling without an open position", () => {

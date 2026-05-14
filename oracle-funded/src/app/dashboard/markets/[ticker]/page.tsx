@@ -23,7 +23,7 @@ import { TextureButton } from "@/components/ui/texture-button";
 import { useApp } from "@/context/AppContext";
 import { api, ApiError } from "@/lib/api-client";
 import type { Market, Event } from "@/types";
-import { formatCurrency } from "@/lib/formatters";
+import { formatCurrency, formatDate } from "@/lib/formatters";
 
 interface TradeRow {
   id: string;
@@ -342,9 +342,14 @@ export default function MarketDetailPage() {
             {/* Quote card */}
             <TextureCard interactive={false} className="lg:col-span-2">
               <TextureCardContent className="p-6 space-y-5">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Current quote
-                </h2>
+                <div>
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    Current quote
+                  </h2>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate" title={market.title}>
+                    {market.title}
+                  </p>
+                </div>
                 <div className="grid grid-cols-2 gap-4">
                   <QuoteTile
                     label="Yes"
@@ -383,9 +388,7 @@ export default function MarketDetailPage() {
                       Closes
                     </div>
                     <div className="font-semibold text-gray-900 dark:text-gray-100 mt-0.5">
-                      {market.close_time
-                        ? new Date(market.close_time).toLocaleDateString()
-                        : "—"}
+                      {market.close_time ? formatDate(market.close_time) : "—"}
                     </div>
                   </div>
                 </div>
@@ -410,10 +413,18 @@ export default function MarketDetailPage() {
                   </div>
                 )}
 
+                {(() => {
+                  // When the trader has no active account the order ticket
+                  // can't fire — gray it out so it doesn't look interactive.
+                  const ticketDisabled = !signedIn || !activeAccount;
+                  return (
+                <fieldset disabled={ticketDisabled} className={ticketDisabled ? "opacity-50 cursor-not-allowed space-y-4" : "space-y-4"}>
                 <div className="grid grid-cols-2 gap-2">
                   <button
+                    type="button"
                     onClick={() => setSide("yes")}
-                    className={`py-2 rounded-lg text-sm font-semibold border-2 transition-colors ${
+                    disabled={ticketDisabled}
+                    className={`py-2 rounded-lg text-sm font-semibold border-2 transition-colors disabled:pointer-events-none ${
                       side === "yes"
                         ? "bg-emerald-50 border-emerald-500 text-emerald-700"
                         : "bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 text-gray-600 dark:text-gray-300"
@@ -422,8 +433,10 @@ export default function MarketDetailPage() {
                     Yes · {market.yes_ask}¢
                   </button>
                   <button
+                    type="button"
                     onClick={() => setSide("no")}
-                    className={`py-2 rounded-lg text-sm font-semibold border-2 transition-colors ${
+                    disabled={ticketDisabled}
+                    className={`py-2 rounded-lg text-sm font-semibold border-2 transition-colors disabled:pointer-events-none ${
                       side === "no"
                         ? "bg-red-50 border-red-500 text-red-700"
                         : "bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 text-gray-600 dark:text-gray-300"
@@ -435,8 +448,10 @@ export default function MarketDetailPage() {
 
                 <div className="grid grid-cols-2 gap-2">
                   <button
+                    type="button"
                     onClick={() => setAction("buy")}
-                    className={`py-2 rounded-lg text-xs font-semibold border transition-colors ${
+                    disabled={ticketDisabled}
+                    className={`py-2 rounded-lg text-xs font-semibold border transition-colors disabled:pointer-events-none ${
                       action === "buy"
                         ? "bg-blue-600 border-blue-600 text-white"
                         : "bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 text-gray-600 dark:text-gray-300"
@@ -445,8 +460,10 @@ export default function MarketDetailPage() {
                     Buy (open)
                   </button>
                   <button
+                    type="button"
                     onClick={() => setAction("sell")}
-                    className={`py-2 rounded-lg text-xs font-semibold border transition-colors ${
+                    disabled={ticketDisabled}
+                    className={`py-2 rounded-lg text-xs font-semibold border transition-colors disabled:pointer-events-none ${
                       action === "sell"
                         ? "bg-blue-600 border-blue-600 text-white"
                         : "bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 text-gray-600 dark:text-gray-300"
@@ -465,9 +482,13 @@ export default function MarketDetailPage() {
                     min={1}
                     value={size}
                     onChange={(e) => setSize(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
+                    disabled={ticketDisabled}
+                    className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 disabled:cursor-not-allowed"
                   />
                 </div>
+                </fieldset>
+                  );
+                })()}
 
                 <div className="text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-slate-950 rounded-lg px-3 py-2 space-y-1">
                   <div className="flex justify-between">

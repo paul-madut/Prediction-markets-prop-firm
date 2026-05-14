@@ -132,9 +132,32 @@ export const ChallengeTypeCard = ({
           </div>
         )}
 
-        {/* Features List */}
+        {/* Features List — first bullet is the dynamic profit-target %
+            derived from the currently selected plan so trader copy never
+            disagrees with the dollar figure shown above. Static bullets
+            for the rest. */}
         <div className="space-y-2.5">
-          {challengeType.features.slice(0, 4).map((feature, idx) => (
+          {currentPlan && (() => {
+            const pct = currentPlan.accountSize > 0
+              ? Math.round((currentPlan.profitTarget / currentPlan.accountSize) * 100)
+              : null;
+            const label =
+              pct !== null
+                ? `${pct}% profit target${challengeType.phases > 1 ? " per phase" : ""}`
+                : null;
+            return label ? (
+              <div className="flex items-start gap-2.5">
+                <div className={cn(
+                  "w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5",
+                  isSelected ? colors.bg : "bg-gray-100 dark:bg-slate-800"
+                )}>
+                  <CheckIcon className={cn(isSelected ? colors.text : "text-gray-500 dark:text-gray-400")} />
+                </div>
+                <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>
+              </div>
+            ) : null;
+          })()}
+          {challengeType.features.slice(0, 3).map((feature, idx) => (
             <div key={idx} className="flex items-start gap-2.5">
               <div className={cn(
                 "w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5",

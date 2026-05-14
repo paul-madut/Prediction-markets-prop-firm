@@ -14,6 +14,7 @@ export interface OrderValidationInput {
     maxPositionsTotal: number;
     existingPositionContracts: number;
     openPositionsCount: number;
+    openPositionsInMarketCount: number;
     newsCooldownActiveUntil: Date | null;
 }
 export type OrderValidationResult = {

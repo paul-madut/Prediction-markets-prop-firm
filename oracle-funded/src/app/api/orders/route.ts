@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { prisma } from '@webflux/db';
 import { enrichSupabaseAuth } from '@webflux/auth';
-import { checkRateLimit, validateOrder } from '@webflux/utils';
+import { checkRateLimit, effectiveRules, validateOrder } from '@webflux/utils';
 import { fillOrder } from '@/lib/order-engine/fill-order';
 import { evalTick } from '@/lib/eval-engine/tick';
 
@@ -224,11 +224,17 @@ export async function POST(req: Request) {
       id: true,
       userId: true,
       status: true,
+      ruleOverrides: true,
+      overrideExpiresAt: true,
       config: {
         select: {
           maxContractsPerOrder: true,
           maxPositionsPerMarket: true,
           maxPositionsTotal: true,
+          totalDrawdownPct: true,
+          dailyDrawdownPct: true,
+          profitSplitPct: true,
+          minTradingDays: true,
         },
       },
       firm: {
@@ -239,6 +245,25 @@ export async function POST(req: Request) {
   if (!account) {
     return NextResponse.json({ error: 'Account not found' }, { status: 404 });
   }
+
+  // Merge per-account overrides over the config so admin-applied caps actually
+  // take effect on order validation (B2 fix).
+  const rules = effectiveRules({
+    config: {
+      totalDrawdownPct: Number(account.config.totalDrawdownPct),
+      dailyDrawdownPct:
+        account.config.dailyDrawdownPct != null
+          ? Number(account.config.dailyDrawdownPct)
+          : null,
+      profitSplitPct: Number(account.config.profitSplitPct),
+      maxPositionsPerMarket: account.config.maxPositionsPerMarket,
+      maxPositionsTotal: account.config.maxPositionsTotal,
+      maxContractsPerOrder: account.config.maxContractsPerOrder,
+      minTradingDays: account.config.minTradingDays,
+    },
+    ruleOverrides: account.ruleOverrides as Record<string, unknown> | null,
+    overrideExpiresAt: account.overrideExpiresAt,
+  });
 
   // Traders can only submit orders for their own accounts
   const isAdmin = ctx.role === 'admin' || ctx.role === 'owner';
@@ -251,15 +276,19 @@ export async function POST(req: Request) {
 
   // ── Gather position state ─────────────────────────────────────────────────
 
-  const [existingPosition, openPositionsCount] = await Promise.all([
-    prisma.position.findFirst({
-      where: { accountId, venue, externalMarketId, side },
-      select: { netContracts: true },
-    }),
-    prisma.position.count({
-      where: { accountId, netContracts: { gt: 0 } },
-    }),
-  ]);
+  const [existingPosition, openPositionsCount, openPositionsInMarketCount] =
+    await Promise.all([
+      prisma.position.findFirst({
+        where: { accountId, venue, externalMarketId, side },
+        select: { netContracts: true },
+      }),
+      prisma.position.count({
+        where: { accountId, netContracts: { gt: 0 } },
+      }),
+      prisma.position.count({
+        where: { accountId, venue, externalMarketId, netContracts: { gt: 0 } },
+      }),
+    ]);
 
   // ── Check news cooldown ───────────────────────────────────────────────────
 
@@ -296,11 +325,12 @@ export async function POST(req: Request) {
     accountUserId: account.userId,
     requestingUserId: isAdmin ? account.userId : ctx.userId,
     enabledVenues: account.firm.enabledVenues,
-    maxContractsPerOrder: account.config.maxContractsPerOrder,
-    maxPositionsPerMarket: account.config.maxPositionsPerMarket,
-    maxPositionsTotal: account.config.maxPositionsTotal,
+    maxContractsPerOrder: rules.maxContractsPerOrder,
+    maxPositionsPerMarket: rules.maxPositionsPerMarket,
+    maxPositionsTotal: rules.maxPositionsTotal,
     existingPositionContracts: existingPosition?.netContracts ?? 0,
     openPositionsCount,
+    openPositionsInMarketCount,
     newsCooldownActiveUntil: cooldownEndsAt,
   });
 

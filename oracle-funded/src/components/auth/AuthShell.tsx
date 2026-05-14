@@ -193,11 +193,11 @@ export function AuthShell({
             Protected by Supabase Auth. Encrypted in transit and at rest.
             <br />
             By continuing you agree to our{" "}
-            <Link href="/" className="underline underline-offset-2 hover:text-slate-600 dark:hover:text-slate-300">
+            <Link href="/terms" className="underline underline-offset-2 hover:text-slate-600 dark:hover:text-slate-300">
               Terms
             </Link>{" "}
             and{" "}
-            <Link href="/" className="underline underline-offset-2 hover:text-slate-600 dark:hover:text-slate-300">
+            <Link href="/privacy" className="underline underline-offset-2 hover:text-slate-600 dark:hover:text-slate-300">
               Privacy Policy
             </Link>.
           </p>

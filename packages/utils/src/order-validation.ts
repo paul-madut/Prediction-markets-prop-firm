@@ -27,6 +27,10 @@ export interface OrderValidationInput {
   existingPositionContracts: number;
   // Count of all positions with net_contracts > 0 for this account
   openPositionsCount: number;
+  // Count of positions with net_contracts > 0 for this (account, venue, externalMarketId)
+  // across ALL sides. Lets us enforce maxPositionsPerMarket when a buy opens a
+  // new side on a market that already has another side open.
+  openPositionsInMarketCount: number;
   // Null = no active cooldown; Date = cooldown window ends at this time
   newsCooldownActiveUntil: Date | null;
 }
@@ -67,8 +71,14 @@ export function validateOrder(input: OrderValidationInput): OrderValidationResul
   }
 
   if (input.action === 'buy') {
-    // 8. Opening a new position: check total position count limit
+    // 8a. Opening a new side on this market: respect maxPositionsPerMarket.
+    // Topping up the same side (existingPositionContracts > 0) doesn't add a
+    // new position row, so it bypasses this check.
     if (input.existingPositionContracts === 0) {
+      if (input.openPositionsInMarketCount >= input.maxPositionsPerMarket) {
+        return { ok: false, reason: 'position_market_limit_exceeded' };
+      }
+      // 8b. Opening a new position anywhere: check total position count limit
       if (input.openPositionsCount >= input.maxPositionsTotal) {
         return { ok: false, reason: 'position_limit_exceeded' };
       }

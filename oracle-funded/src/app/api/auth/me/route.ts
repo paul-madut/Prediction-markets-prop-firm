@@ -49,6 +49,7 @@ export async function GET() {
   // are absent and the UI falls back to email-derived display.
   const { data: userResp } = await supabase.auth.getUser();
   const meta = (userResp?.user?.user_metadata ?? {}) as Record<string, unknown>;
+  const email = userResp?.user?.email ?? null;
   const profile = {
     fullName:
       (typeof meta.full_name === "string" && meta.full_name) ||
@@ -60,5 +61,5 @@ export async function GET() {
       null,
   };
 
-  return NextResponse.json({ ...ctx, firm, profile });
+  return NextResponse.json({ ...ctx, email, firm, profile });
 }

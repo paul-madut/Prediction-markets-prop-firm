@@ -107,7 +107,7 @@ export async function GET(request: Request) {
       headers: {
         "Accept": "application/json",
       },
-      next: { revalidate: 60 }, // Cache for 60 seconds
+      next: { revalidate: 10 }, // Cache for 10s so list + detail stay in sync
     });
 
     if (!response.ok) {
@@ -137,6 +137,22 @@ export async function GET(request: Request) {
       });
       if (outcomes.length === 0) continue;
       const cat = mapTagToCategory(pe.tags || []);
+      // Polymarket's event-level endDate is sometimes stale (a past date)
+      // even when individual outcomes still trade with future end dates.
+      // Derive the event close_time from the max of the outcomes' close_time
+      // so the trader-facing "Closes: …" label matches reality.
+      const outcomeCloseMs = outcomes
+        .map((o) => (o.close_time ? Date.parse(o.close_time) : NaN))
+        .filter((n) => !Number.isNaN(n));
+      const eventEndIso = pe.endDate || "";
+      const eventEndMs = eventEndIso ? Date.parse(eventEndIso) : NaN;
+      const maxOutcomeMs = outcomeCloseMs.length ? Math.max(...outcomeCloseMs) : NaN;
+      const effectiveCloseMs = !Number.isNaN(maxOutcomeMs) && (Number.isNaN(eventEndMs) || maxOutcomeMs > eventEndMs)
+        ? maxOutcomeMs
+        : eventEndMs;
+      const effectiveCloseIso = !Number.isNaN(effectiveCloseMs)
+        ? new Date(effectiveCloseMs).toISOString()
+        : eventEndIso;
       const evt: Event = {
         eventTicker: pe.ticker || pe.slug || `EVT-${pe.id}`,
         title: pe.title,
@@ -146,8 +162,8 @@ export async function GET(request: Request) {
         volume_total: outcomes.reduce((s, o) => s + o.volume, 0),
         volume_24h_total: outcomes.reduce((s, o) => s + o.volume_24h, 0),
         open_time: pe.startDate || pe.createdAt,
-        close_time: pe.endDate || "",
-        expiration_time: pe.endDate || "",
+        close_time: effectiveCloseIso,
+        expiration_time: effectiveCloseIso,
         featured: pe.featured || false,
         outcomes,
         resolution_criteria: pe.description,

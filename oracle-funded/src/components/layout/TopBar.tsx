@@ -125,9 +125,13 @@ export const TopBar = () => {
 
   return (
     <div className="h-14 sm:h-16 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 px-3 sm:px-6 flex items-center justify-between">
-      <h1 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100 truncate">
+      <div
+        role="presentation"
+        aria-hidden="true"
+        className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100 truncate"
+      >
         {title}
-      </h1>
+      </div>
 
       <div className="flex items-center gap-2 sm:gap-3">
         <div className="relative" ref={notificationRef}>

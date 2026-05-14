@@ -146,6 +146,7 @@ export type OrderRejectionReason =
   | 'position_not_found'
   | 'order_too_large'
   | 'position_limit_exceeded'
+  | 'position_market_limit_exceeded'
   | 'news_cooldown'
   | 'limit_orders_not_supported';
 

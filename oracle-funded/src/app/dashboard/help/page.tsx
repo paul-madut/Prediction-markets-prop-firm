@@ -174,11 +174,11 @@ export default function HelpPage() {
             </p>
           </div>
           <a
-            href="mailto:support@oraclefunded.dev"
+            href="mailto:support@oraclefunded.com"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium"
           >
             <EnvelopeIcon className="w-4 h-4" />
-            support@oraclefunded.dev
+            support@oraclefunded.com
           </a>
         </TextureCardContent>
       </TextureCard>

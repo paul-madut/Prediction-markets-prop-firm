@@ -290,7 +290,12 @@ describe("POST /api/orders — validateOrder rejections", () => {
   });
 
   it("422 on position-limit when adding a new market past the cap", async () => {
-    mockPrisma.position.count.mockResolvedValue(5);
+    // Order matters: route does total-count THEN per-market count via Promise.all.
+    // Set total=5 (at cap) and per-market=0 (new market) so the total cap is
+    // the one that fires.
+    mockPrisma.position.count
+      .mockResolvedValueOnce(5) // openPositionsCount (total)
+      .mockResolvedValueOnce(0); // openPositionsInMarketCount (this market)
     mockPrisma.account.findFirst.mockResolvedValue(
       stubTraderAccount({
         config: {
@@ -303,6 +308,28 @@ describe("POST /api/orders — validateOrder rejections", () => {
     const res = await POST(req(validBody()));
     expect(res.status).toBe(422);
     expect((await res.json()).validationError).toBe("position_limit_exceeded");
+  });
+
+  it("422 on per-market limit when opening a second side on the same market", async () => {
+    // Total cap not hit (1 of 5), but this market already has one side open
+    // and maxPositionsPerMarket=1.
+    mockPrisma.position.count
+      .mockResolvedValueOnce(1) // openPositionsCount (total)
+      .mockResolvedValueOnce(1); // openPositionsInMarketCount (this market)
+    mockPrisma.account.findFirst.mockResolvedValue(
+      stubTraderAccount({
+        config: {
+          maxContractsPerOrder: 100,
+          maxPositionsPerMarket: 1,
+          maxPositionsTotal: 5,
+        },
+      }),
+    );
+    const res = await POST(req(validBody({ side: "no" })));
+    expect(res.status).toBe(422);
+    expect((await res.json()).validationError).toBe(
+      "position_market_limit_exceeded",
+    );
   });
 });
 

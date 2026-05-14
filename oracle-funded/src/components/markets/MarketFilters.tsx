@@ -10,7 +10,7 @@ interface MarketFiltersProps {
   onSearchChange: (query: string) => void;
 }
 
-const categories = ["All", "Crypto", "Politics", "Sports", "Economics", "Tech", "Culture"];
+const categories = ["All", "Crypto", "Politics", "Sports", "Economics", "Tech", "Culture", "Other"];
 
 export const MarketFilters = ({
   selectedCategory,
