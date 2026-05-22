@@ -30,23 +30,23 @@ export const MarketCard = ({ event, onClick }: MarketCardProps) => {
   return (
     <div
       onClick={onClick}
-      className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-4 sm:p-6 hover:shadow-md transition-shadow cursor-pointer h-full flex flex-col"
+      className="bg-[#180630] rounded-lg shadow-sm border border-gray-200 dark:border-white/10 p-4 sm:p-6 hover:shadow-md transition-shadow cursor-pointer h-full flex flex-col"
     >
       <div className="flex flex-col gap-3 sm:gap-4 flex-1">
         {/* Header: image + category + featured */}
         <div className="flex items-start gap-3">
-          <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-slate-800">
+          <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-[#1f0a3d]">
             {event.image ? (
               <Image src={event.image} alt={event.title} fill className="object-cover" unoptimized />
             ) : (
-              <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+              <div className="w-full h-full bg-gradient-to-br from-[#A769FF] to-[#7F24FF] flex items-center justify-center">
                 <ChartBarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             )}
           </div>
 
           <div className="flex-1 flex items-center justify-between">
-            <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800">
+            <span className="px-2 py-1 text-xs font-semibold rounded bg-[#7F24FF]/15 text-blue-800">
               {event.category}
             </span>
             {event.featured && (
@@ -59,7 +59,7 @@ export const MarketCard = ({ event, onClick }: MarketCardProps) => {
         </div>
 
         {/* Title — fixed 2-line height so cards align even when titles are short */}
-        <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100 line-clamp-2 min-h-[3rem] sm:min-h-[3.5rem]">
+        <h3 className="text-base sm:text-lg font-semibold text-white line-clamp-2 min-h-[3rem] sm:min-h-[3.5rem]">
           {event.title}
         </h3>
 
@@ -71,14 +71,14 @@ export const MarketCard = ({ event, onClick }: MarketCardProps) => {
                 <div key={o.ticker} className="flex items-center gap-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="font-medium text-gray-900 dark:text-gray-100 truncate pr-2">
+                      <span className="font-medium text-white truncate pr-2">
                         {o.outcome_label || o.title}
                       </span>
-                      <span className="font-bold text-blue-600 tabular-nums">{o.yes_ask}%</span>
+                      <span className="font-bold text-[#A769FF] tabular-nums">{o.yes_ask}%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
                       <div
-                        className="bg-blue-600 h-1.5 rounded-full transition-all"
+                        className="bg-[#7F24FF] h-1.5 rounded-full transition-all"
                         style={{ width: `${o.yes_ask}%` }}
                       />
                     </div>
@@ -86,17 +86,17 @@ export const MarketCard = ({ event, onClick }: MarketCardProps) => {
                 </div>
               ))}
               {remaining > 0 && (
-                <div className="text-xs text-gray-500 dark:text-gray-400 pt-1">+ {remaining} more outcomes</div>
+                <div className="text-xs text-white/55 pt-1">+ {remaining} more outcomes</div>
               )}
             </div>
           ) : (
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2">
+              <div className="text-2xl sm:text-3xl font-bold text-[#A769FF] mb-2">
                 YES: {primary.yes_ask}%
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div
-                  className="bg-blue-600 h-2 rounded-full transition-all"
+                  className="bg-[#7F24FF] h-2 rounded-full transition-all"
                   style={{ width: `${primary.yes_ask}%` }}
                 />
               </div>
@@ -105,7 +105,7 @@ export const MarketCard = ({ event, onClick }: MarketCardProps) => {
         </div>
 
         {/* Footer — pushed to bottom by flex-1 on body wrapper */}
-        <div className="mt-auto space-y-1 text-sm text-gray-600 dark:text-gray-300">
+        <div className="mt-auto space-y-1 text-sm text-white/75">
           <div className="flex justify-between">
             <span>Volume:</span>
             <span className="font-semibold">{formatVolume(event.volume_total)}</span>
@@ -156,16 +156,16 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.15 }}
-      className="w-full max-w-2xl max-h-[90vh] flex flex-col bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl overflow-y-auto shadow-2xl"
+      className="w-full max-w-2xl max-h-[90vh] flex flex-col bg-[#180630] rounded-2xl sm:rounded-3xl overflow-y-auto shadow-2xl"
     >
       {/* Header */}
-      <div className="p-4 sm:p-6 border-b border-gray-200 dark:border-slate-800">
+      <div className="p-4 sm:p-6 border-b border-gray-200 dark:border-white/10">
         <div className="flex items-start gap-3 sm:gap-4 mb-4">
-          <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-slate-800">
+          <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-[#1f0a3d]">
             {event.image ? (
               <Image src={event.image} alt={event.title} fill className="object-cover" unoptimized />
             ) : (
-              <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+              <div className="w-full h-full bg-gradient-to-br from-[#A769FF] to-[#7F24FF] flex items-center justify-center">
                 <ChartBarIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
             )}
@@ -173,7 +173,7 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between mb-2">
-              <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800">
+              <span className="px-2 py-1 text-xs font-semibold rounded bg-[#7F24FF]/15 text-blue-800">
                 {event.category}
               </span>
               {event.featured && (
@@ -184,9 +184,9 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
               )}
             </div>
 
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100">{event.title}</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-white">{event.title}</h2>
             {isMulti && (
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              <p className="text-sm text-white/55 mt-1">
                 {event.outcomes.length} outcomes · pick one to trade
               </p>
             )}
@@ -194,7 +194,7 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
         </div>
 
         {!isMulti && (
-          <div className="text-3xl sm:text-4xl font-bold text-blue-600 mt-4">
+          <div className="text-3xl sm:text-4xl font-bold text-[#A769FF] mt-4">
             YES: {market.yes_ask}%
           </div>
         )}
@@ -204,7 +204,7 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 sm:space-y-6">
         {isMulti && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Outcome</label>
+            <label className="block text-sm font-medium text-white/85 mb-2">Outcome</label>
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {event.outcomes.map((o) => {
                 const active = o.ticker === selectedTicker;
@@ -215,17 +215,17 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
                     className={cn(
                       "w-full text-left p-3 rounded-lg border transition-colors",
                       active
-                        ? "border-blue-600 bg-blue-50"
-                        : "border-gray-200 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800/50",
+                        ? "border-[#7F24FF] bg-[#7F24FF]/10"
+                        : "border-gray-200 dark:border-white/10 hover:bg-[#0C0319] dark:hover:bg-[#1f0a3d]/50",
                     )}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-medium text-gray-900 dark:text-gray-100">
+                      <span className="font-medium text-white">
                         {o.outcome_label || o.title}
                       </span>
                       <div className="flex items-center gap-3 tabular-nums">
-                        <span className="text-xs text-gray-500 dark:text-gray-400">{o.yes_ask}¢</span>
-                        <span className="font-bold text-blue-600">{o.yes_ask}%</span>
+                        <span className="text-xs text-white/55">{o.yes_ask}¢</span>
+                        <span className="font-bold text-[#A769FF]">{o.yes_ask}%</span>
                       </div>
                     </div>
                   </button>
@@ -249,13 +249,13 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
 
         {/* Side */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Side</label>
+          <label className="block text-sm font-medium text-white/85 mb-2">Select Side</label>
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => setSide("yes")}
               className={cn(
                 "p-4 rounded-lg font-semibold transition-colors",
-                side === "yes" ? "bg-green-600 text-white" : "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200",
+                side === "yes" ? "bg-green-600 text-white" : "bg-gray-100 dark:bg-[#1f0a3d] text-white/85 hover:bg-gray-200",
               )}
             >
               BUY YES
@@ -264,7 +264,7 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
               onClick={() => setSide("no")}
               className={cn(
                 "p-4 rounded-lg font-semibold transition-colors",
-                side === "no" ? "bg-red-600 text-white" : "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200",
+                side === "no" ? "bg-red-600 text-white" : "bg-gray-100 dark:bg-[#1f0a3d] text-white/85 hover:bg-gray-200",
               )}
             >
               BUY NO
@@ -274,14 +274,14 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
 
         {/* Stake */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Stake Amount</label>
+          <label className="block text-sm font-medium text-white/85 mb-2">Stake Amount</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">$</span>
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/55">$</span>
             <input
               type="number"
               value={stakeAmount}
               onChange={(e) => setStakeAmount(e.target.value)}
-              className="w-full pl-8 pr-4 py-3 border border-gray-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-8 pr-4 py-3 border border-gray-300 dark:border-white/15 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7F24FF]"
               placeholder="100"
               min="1"
               max={user?.accountBalance ? (user?.accountBalance ?? 0) / 100 : undefined}
@@ -292,7 +292,7 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
               <button
                 key={amount}
                 onClick={() => setStakeAmount(amount.toString())}
-                className="px-3 py-1 text-sm bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 rounded transition-colors"
+                className="px-3 py-1 text-sm bg-gray-100 dark:bg-[#1f0a3d] hover:bg-gray-200 rounded transition-colors"
               >
                 ${amount}
               </button>
@@ -301,26 +301,26 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
         </div>
 
         {/* Summary */}
-        <div className="bg-gray-50 dark:bg-slate-950 rounded-lg p-4 space-y-2">
+        <div className="bg-[#0C0319] dark:bg-[#0C0319] rounded-lg p-4 space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600 dark:text-gray-300">Shares</span>
-            <span className="font-semibold text-gray-900 dark:text-gray-100">{shares}</span>
+            <span className="text-white/75">Shares</span>
+            <span className="font-semibold text-white">{shares}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600 dark:text-gray-300">Price per share</span>
-            <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(price)}</span>
+            <span className="text-white/75">Price per share</span>
+            <span className="font-semibold text-white">{formatCurrency(price)}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600 dark:text-gray-300">Total cost (incl. fees)</span>
-            <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(totalCost)}</span>
+            <span className="text-white/75">Total cost (incl. fees)</span>
+            <span className="font-semibold text-white">{formatCurrency(totalCost)}</span>
           </div>
-          <div className="border-t border-gray-200 dark:border-slate-800 pt-2 mt-2">
+          <div className="border-t border-gray-200 dark:border-white/10 pt-2 mt-2">
             <div className="flex justify-between text-sm">
-              <span className="text-gray-600 dark:text-gray-300">Potential profit</span>
+              <span className="text-white/75">Potential profit</span>
               <span className="font-semibold text-green-600">+{formatCurrency(potentialProfit)}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-gray-600 dark:text-gray-300">Potential loss</span>
+              <span className="text-white/75">Potential loss</span>
               <span className="font-semibold text-red-600">{formatCurrency(potentialLoss)}</span>
             </div>
           </div>
@@ -336,18 +336,18 @@ export const MarketModal = ({ event, onClose }: MarketModalProps) => {
             : `Place Trade - ${formatCurrency(totalCost)}`}
         </StatefulButton>
 
-        <div className="pt-4 border-t border-gray-200 dark:border-slate-800">
-          <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Market Details</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-300">
+        <div className="pt-4 border-t border-gray-200 dark:border-white/10">
+          <h3 className="font-semibold text-white mb-2">Market Details</h3>
+          <p className="text-sm text-white/75">
             {event.resolution_criteria || event.subtitle || event.title}
           </p>
           <div className="mt-3 grid grid-cols-2 gap-4 text-sm">
             <div>
-              <span className="text-gray-500 dark:text-gray-400">Volume:</span>
+              <span className="text-white/55">Volume:</span>
               <span className="ml-2 font-semibold">{formatVolume(event.volume_total)}</span>
             </div>
             <div>
-              <span className="text-gray-500 dark:text-gray-400">Status:</span>
+              <span className="text-white/55">Status:</span>
               <span className="ml-2 font-semibold capitalize">{market.status}</span>
             </div>
           </div>

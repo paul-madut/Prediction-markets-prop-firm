@@ -61,9 +61,9 @@ function ProgressBar({
       ? "bg-emerald-500"
       : tone === "amber"
         ? "bg-amber-500"
-        : "bg-blue-500";
+        : "bg-[#A769FF]";
   return (
-    <div className="h-2 w-full bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
+    <div className="h-2 w-full bg-gray-100 dark:bg-[#1f0a3d] rounded-full overflow-hidden">
       <div
         className={`h-full ${cls} transition-all duration-500`}
         style={{ width: `${Math.max(0, Math.min(100, pct))}%` }}
@@ -91,30 +91,30 @@ function PhaseCard({
     <div
       className={`rounded-xl border-2 p-4 ${
         active
-          ? "border-blue-500 bg-blue-50 dark:bg-blue-950/30"
+          ? "border-[#A769FF] bg-[#7F24FF]/10 bg-[#1f0a3d]/30"
           : passed
             ? "border-emerald-200 bg-emerald-50 dark:bg-emerald-950/20"
-            : "border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900"
+            : "border-gray-200 dark:border-white/10 bg-[#180630]"
       }`}
     >
       <div className="flex items-center justify-between mb-2">
         <span
           className={`text-xs font-semibold uppercase tracking-wider ${
             active
-              ? "text-blue-700 dark:text-blue-300"
+              ? "text-[#7F24FF] text-[#A769FF]"
               : passed
                 ? "text-emerald-700 dark:text-emerald-400"
-                : "text-gray-500 dark:text-gray-400"
+                : "text-white/55"
           }`}
         >
           Phase {phaseNumber}
         </span>
         {passed && <CheckCircleIcon className="w-4 h-4 text-emerald-600" />}
       </div>
-      <div className="text-sm font-bold text-gray-900 dark:text-gray-100">
+      <div className="text-sm font-bold text-white">
         {name}
       </div>
-      <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+      <div className="text-xs text-white/55 mt-2">
         Target {profitTargetPct}% · {minTradingDays}-day minimum
       </div>
     </div>
@@ -144,7 +144,7 @@ export default function ChallengeProgressPage() {
 
   if (!signedIn) {
     return (
-      <div className="max-w-3xl mx-auto py-12 text-center text-sm text-gray-500 dark:text-gray-400">
+      <div className="max-w-3xl mx-auto py-12 text-center text-sm text-white/55">
         Sign in to see your challenge progress.
       </div>
     );
@@ -153,15 +153,15 @@ export default function ChallengeProgressPage() {
   if (!activeAccount) {
     return (
       <div className="max-w-3xl mx-auto py-12 text-center space-y-3">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="text-2xl font-bold text-white">
           Challenge Progress
         </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-sm text-white/55">
           Buy a challenge to see your progress.
         </p>
         <Link
           href="/dashboard/new-challenge"
-          className="inline-block px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium"
+          className="inline-block px-4 py-2 rounded-lg bg-[#7F24FF] text-white text-sm font-medium"
         >
           Browse challenges
         </Link>
@@ -210,10 +210,10 @@ export default function ChallengeProgressPage() {
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="text-3xl font-bold text-white">
           Challenge Progress
         </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-sm text-white/55 mt-1">
           {account.config.name} — current status:{" "}
           <span className="capitalize font-medium">
             {account.status.replace("_", " ")}
@@ -299,17 +299,17 @@ export default function ChallengeProgressPage() {
       <TextureCard interactive={false}>
         <TextureCardContent className="p-6 space-y-4">
           <div className="flex items-center gap-2">
-            <ChartBarIcon className="w-5 h-5 text-blue-600" />
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <ChartBarIcon className="w-5 h-5 text-[#A769FF]" />
+            <h2 className="text-lg font-semibold text-white">
               Profit toward {account.currentPhase.name}
             </h2>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-3xl font-bold tabular-nums text-gray-900 dark:text-gray-100">
+            <span className="text-3xl font-bold tabular-nums text-white">
               {profitCents >= 0 ? "+" : ""}
               {formatCurrency(profitCents)}
             </span>
-            <span className="text-sm text-gray-500 dark:text-gray-400 tabular-nums">
+            <span className="text-sm text-white/55 tabular-nums">
               of {formatCurrency(phaseTargetCents)} target
             </span>
           </div>
@@ -317,7 +317,7 @@ export default function ChallengeProgressPage() {
             pct={profitProgressPct}
             tone={profitProgressPct >= 100 ? "green" : "blue"}
           />
-          <div className="text-xs text-gray-500 dark:text-gray-400 tabular-nums">
+          <div className="text-xs text-white/55 tabular-nums">
             {profitPct >= 0 ? "+" : ""}
             {profitPct.toFixed(2)}% · {profitProgressPct.toFixed(0)}% to target
           </div>
@@ -329,15 +329,15 @@ export default function ChallengeProgressPage() {
         <TextureCardContent className="p-6 space-y-4">
           <div className="flex items-center gap-2">
             <ClockIcon className="w-5 h-5 text-violet-600" />
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <h2 className="text-lg font-semibold text-white">
               Trading days
             </h2>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-3xl font-bold tabular-nums text-gray-900 dark:text-gray-100">
+            <span className="text-3xl font-bold tabular-nums text-white">
               {account.tradingDaysCount}
             </span>
-            <span className="text-sm text-gray-500 dark:text-gray-400 tabular-nums">
+            <span className="text-sm text-white/55 tabular-nums">
               of {account.currentPhase.minTradingDays} required
             </span>
           </div>
@@ -345,7 +345,7 @@ export default function ChallengeProgressPage() {
             pct={tradingDaysProgressPct}
             tone={tradingDaysProgressPct >= 100 ? "green" : "blue"}
           />
-          <div className="text-xs text-gray-500 dark:text-gray-400">
+          <div className="text-xs text-white/55">
             {account.firstTradeAt
               ? `First trade ${new Date(account.firstTradeAt).toLocaleDateString()}`
               : "No trades yet."}
@@ -358,15 +358,15 @@ export default function ChallengeProgressPage() {
         <TextureCardContent className="p-6 space-y-4">
           <div className="flex items-center gap-2">
             <ShieldCheckIcon className="w-5 h-5 text-emerald-600" />
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <h2 className="text-lg font-semibold text-white">
               Drawdown room
             </h2>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-3xl font-bold tabular-nums text-gray-900 dark:text-gray-100">
+            <span className="text-3xl font-bold tabular-nums text-white">
               {formatCurrency(Math.max(0, floorRoom))}
             </span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
+            <span className="text-sm text-white/55">
               {floorRoomPct.toFixed(0)}% of starting bank remaining
             </span>
           </div>
@@ -374,15 +374,15 @@ export default function ChallengeProgressPage() {
             pct={floorRoomPct}
             tone={floorRoomPct < 25 ? "amber" : "green"}
           />
-          <div className="text-xs text-gray-500 dark:text-gray-400 tabular-nums">
+          <div className="text-xs text-white/55 tabular-nums">
             Floor {formatCurrency(floor)} · Equity {formatCurrency(equityCents)}
           </div>
         </TextureCardContent>
       </TextureCard>
 
-      <div className="text-xs text-gray-500 dark:text-gray-400 text-center pb-4">
+      <div className="text-xs text-white/55 text-center pb-4">
         See full rules at{" "}
-        <Link href="/dashboard/rules" className="text-blue-600 hover:text-blue-700">
+        <Link href="/dashboard/rules" className="text-[#A769FF] hover:text-[#A769FF]">
           /dashboard/rules
         </Link>
         .
@@ -396,8 +396,8 @@ function ChallengeSkeleton() {
     <div className="space-y-6 max-w-5xl mx-auto animate-pulse" aria-hidden>
       {/* Title + subtitle */}
       <div className="space-y-2">
-        <div className="h-8 w-64 rounded-md bg-gray-200 dark:bg-slate-800" />
-        <div className="h-4 w-80 rounded-md bg-gray-100 dark:bg-slate-800/60" />
+        <div className="h-8 w-64 rounded-md bg-gray-200 dark:bg-[#1f0a3d]" />
+        <div className="h-4 w-80 rounded-md bg-gray-100 dark:bg-[#1f0a3d]/60" />
       </div>
 
       {/* 3-phase strip */}
@@ -405,40 +405,40 @@ function ChallengeSkeleton() {
         {[0, 1, 2].map((i) => (
           <div
             key={i}
-            className="h-28 rounded-2xl bg-gray-100 dark:bg-slate-800/60 border border-gray-200 dark:border-slate-800"
+            className="h-28 rounded-2xl bg-gray-100 dark:bg-[#1f0a3d]/60 border border-gray-200 dark:border-white/10"
           />
         ))}
       </div>
 
       {/* Profit card */}
-      <div className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4">
-        <div className="h-5 w-56 rounded-md bg-gray-200 dark:bg-slate-800" />
+      <div className="rounded-2xl border border-gray-200 dark:border-white/10 bg-[#180630] p-6 space-y-4">
+        <div className="h-5 w-56 rounded-md bg-gray-200 dark:bg-[#1f0a3d]" />
         <div className="flex items-baseline justify-between">
-          <div className="h-9 w-32 rounded-md bg-gray-200 dark:bg-slate-800" />
-          <div className="h-4 w-28 rounded-md bg-gray-100 dark:bg-slate-800/60" />
+          <div className="h-9 w-32 rounded-md bg-gray-200 dark:bg-[#1f0a3d]" />
+          <div className="h-4 w-28 rounded-md bg-gray-100 dark:bg-[#1f0a3d]/60" />
         </div>
-        <div className="h-2 w-full rounded-full bg-gray-100 dark:bg-slate-800" />
+        <div className="h-2 w-full rounded-full bg-gray-100 dark:bg-[#1f0a3d]" />
       </div>
 
       {/* Trading days card */}
-      <div className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4">
-        <div className="h-5 w-48 rounded-md bg-gray-200 dark:bg-slate-800" />
+      <div className="rounded-2xl border border-gray-200 dark:border-white/10 bg-[#180630] p-6 space-y-4">
+        <div className="h-5 w-48 rounded-md bg-gray-200 dark:bg-[#1f0a3d]" />
         <div className="flex items-baseline justify-between">
-          <div className="h-7 w-20 rounded-md bg-gray-200 dark:bg-slate-800" />
-          <div className="h-4 w-24 rounded-md bg-gray-100 dark:bg-slate-800/60" />
+          <div className="h-7 w-20 rounded-md bg-gray-200 dark:bg-[#1f0a3d]" />
+          <div className="h-4 w-24 rounded-md bg-gray-100 dark:bg-[#1f0a3d]/60" />
         </div>
-        <div className="h-2 w-full rounded-full bg-gray-100 dark:bg-slate-800" />
+        <div className="h-2 w-full rounded-full bg-gray-100 dark:bg-[#1f0a3d]" />
       </div>
 
       {/* Drawdown room card */}
-      <div className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4">
-        <div className="h-5 w-44 rounded-md bg-gray-200 dark:bg-slate-800" />
+      <div className="rounded-2xl border border-gray-200 dark:border-white/10 bg-[#180630] p-6 space-y-4">
+        <div className="h-5 w-44 rounded-md bg-gray-200 dark:bg-[#1f0a3d]" />
         <div className="flex items-baseline justify-between">
-          <div className="h-7 w-32 rounded-md bg-gray-200 dark:bg-slate-800" />
-          <div className="h-4 w-28 rounded-md bg-gray-100 dark:bg-slate-800/60" />
+          <div className="h-7 w-32 rounded-md bg-gray-200 dark:bg-[#1f0a3d]" />
+          <div className="h-4 w-28 rounded-md bg-gray-100 dark:bg-[#1f0a3d]/60" />
         </div>
-        <div className="h-2 w-full rounded-full bg-gray-100 dark:bg-slate-800" />
-        <div className="h-3 w-72 rounded-md bg-gray-100 dark:bg-slate-800/60" />
+        <div className="h-2 w-full rounded-full bg-gray-100 dark:bg-[#1f0a3d]" />
+        <div className="h-3 w-72 rounded-md bg-gray-100 dark:bg-[#1f0a3d]/60" />
       </div>
     </div>
   );

@@ -90,7 +90,7 @@ export default function SignInPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            className="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+            className="w-full px-3.5 py-2.5 bg-[#180630] border border-slate-200 dark:border-white/15 rounded-lg text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#7F24FF]/30 focus:border-[#7F24FF] transition-all"
           />
         </div>
 
@@ -104,7 +104,7 @@ export default function SignInPage() {
             </label>
             <button
               type="button"
-              className="text-xs text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400"
+              className="text-xs text-slate-500 dark:text-slate-400 hover:text-[#A769FF] dark:hover:text-[#A769FF]"
               onClick={() => setError("Password reset is coming soon. Email hello@oraclefunded.dev for help.")}
             >
               Forgot?
@@ -137,7 +137,7 @@ export default function SignInPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-lg bg-gradient-to-b from-blue-500 to-blue-600 text-white text-sm font-semibold shadow-lg shadow-blue-500/20 hover:from-blue-600 hover:to-blue-700 hover:shadow-xl hover:shadow-blue-500/25 active:translate-y-[0.5px] disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+          className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-lg bg-gradient-to-b from-[#A769FF] to-[#7F24FF] text-white text-sm font-semibold shadow-lg shadow-blue-500/20 hover:from-[#7F24FF] hover:to-[#6c14ee] hover:shadow-xl hover:shadow-blue-500/25 active:translate-y-[0.5px] disabled:opacity-60 disabled:cursor-not-allowed transition-all"
         >
           {loading ? (
             <>

@@ -66,7 +66,7 @@ export function GoogleAuthButton({
       type="button"
       onClick={start}
       disabled={loading}
-      className="w-full inline-flex items-center justify-center gap-2.5 h-11 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 text-sm font-semibold border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+      className="w-full inline-flex items-center justify-center gap-2.5 h-11 rounded-lg bg-[#180630] text-slate-900 dark:text-slate-100 text-sm font-semibold border border-slate-200 dark:border-white/15 shadow-sm hover:bg-slate-50 dark:hover:bg-[#1f0a3d] disabled:opacity-60 disabled:cursor-not-allowed transition-all"
     >
       {loading ? (
         <ArrowPathIcon className="w-4 h-4 animate-spin" />

@@ -1,0 +1,604 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - paragraph [ref=e7]: PRIME40 - 40% OFF ON ALL PRIME CHALLENGES
+        - generic [ref=e10]:
+          - link "Blueberry Funded" [ref=e13] [cursor=pointer]:
+            - /url: https://blueberryfunded.com/
+            - img "Blueberry Funded" [ref=e14]
+          - generic [ref=e16]:
+            - link "Forex" [ref=e17] [cursor=pointer]:
+              - /url: https://blueberryfunded.com/
+            - link "Futures" [ref=e18] [cursor=pointer]:
+              - /url: https://blueberryfutures.com/
+          - navigation [ref=e20]:
+            - list [ref=e21]:
+              - listitem [ref=e22]:
+                - link "Challenges" [ref=e23] [cursor=pointer]:
+                  - /url: /#pricing
+              - listitem [ref=e24]:
+                - link "About" [ref=e25] [cursor=pointer]:
+                  - /url: https://blueberryfunded.com/about/
+              - listitem [ref=e26]:
+                - link "FAQ" [ref=e27] [cursor=pointer]:
+                  - /url: https://help.blueberryfunded.com/en/
+              - listitem [ref=e28]:
+                - link "Affiliate" [ref=e29] [cursor=pointer]:
+                  - /url: https://blueberryfunded.com/affiliate/
+              - listitem [ref=e30]:
+                - link "Contact" [ref=e31] [cursor=pointer]:
+                  - /url: https://blueberryfunded.com/contact/
+              - listitem [ref=e32]:
+                - link "Login" [ref=e33] [cursor=pointer]:
+                  - /url: https://dashboard.blueberryfunded.com/sign-in
+          - link "Get Funded" [ref=e36] [cursor=pointer]:
+            - /url: "#pricing"
+    - generic:
+      - generic:
+        - main:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Your browser does not support the video tag.
+                - generic:
+                  - generic:
+                    - heading "Broker backed, Industry leading" [level=1]:
+                      - text: Broker backed,
+                      - text: Industry leading
+                    - paragraph: Broker backed - No time limit - Leading platforms - Up to $2,000,000 in Sim.
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - heading "Up to $2,000,000" [level=3]
+                              - paragraph: in simulated capital
+                          - generic:
+                            - generic:
+                              - heading "No time limit" [level=3]
+                              - paragraph: trading evaluations
+                          - generic:
+                            - generic:
+                              - heading "Instant Access Sim Accounts" [level=3]
+                              - paragraph: skip the evaluation
+                    - generic:
+                      - link "Get Funded":
+                        - /url: "#pricing"
+                        - text: Get Funded
+                      - link "Join Discord":
+                        - /url: https://discord.gg/blueberryfunded
+          - generic:
+            - generic:
+              - generic:
+                - link "Most Popular Broker-Backed Prop Firm Prop Firm Match Awards 2025 Propfirmmatch.com":
+                  - /url: https://propfirmmatch.com/w/event/handle/blueberryfunded-popular
+                  - generic:
+                    - generic:
+                      - paragraph: Most Popular Broker-Backed Prop Firm
+                      - paragraph: Prop Firm Match Awards 2025
+                    - generic:
+                      - img
+                      - generic: Propfirmmatch.com
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - img "Blueberry"
+                - generic:
+                  - generic:
+                    - img "logo"
+                - generic:
+                  - generic:
+                    - link "Trusted Prop":
+                      - /url: https://thetrustedprop.com/prop-firms/blueberry-funded
+                      - img "Trusted Prop"
+                - generic:
+                  - generic:
+                    - img "Best Propfirms"
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - heading "Best Broker Backed Firm" [level=3]:
+                      - text: Best Broker
+                      - text: Backed Firm
+                    - paragraph: PropFirmMatch
+                - generic:
+                  - generic:
+                    - heading "15k+" [level=3]
+                    - paragraph: Active Traders
+                - generic:
+                  - generic:
+                    - heading "$7M +" [level=3]
+                    - paragraph: Total Payouts
+          - generic:
+            - generic:
+              - generic:
+                - heading "Choose Your Path to Funding" [level=2]:
+                  - text: Choose Your Path
+                  - text: to Funding
+                - paragraph: Broker backed · No time limit · Up to $2,000,000 in sim capital
+              - generic:
+                - generic:
+                  - button "Evaluation Model 3 Plans"
+                  - button "Instant Model Funded Now"
+              - generic:
+                - generic: Account Size
+                - generic:
+                  - button "$2.5K"
+                  - button "$5K"
+                  - button "$10K"
+                  - button "$25K"
+                  - button "$50K"
+                  - button "$100K"
+                  - button "$200K"
+              - generic:
+                - generic:
+                  - generic:
+                    - heading "1-Step" [level=3]
+                    - paragraph: One evaluation. Prove it once, get funded.
+                    - generic:
+                      - text: $275
+                      - generic: one-time fee
+                    - generic:
+                      - generic: Max Drawdown
+                      - generic: 6%
+                    - generic:
+                      - generic: Daily Drawdown
+                      - generic: 4%
+                    - generic:
+                      - generic: Profit Target
+                      - generic: 10%
+                    - generic:
+                      - generic: Consistency
+                      - generic: None
+                    - generic:
+                      - generic: Max Risk/Trade
+                      - generic: 1.5% (Funded)
+                    - generic:
+                      - generic: Min Days
+                      - generic: 3 days / phase
+                    - generic:
+                      - generic: Profit Split
+                      - generic: 80%
+                    - generic:
+                      - button "Select"
+                    - paragraph: "Avg. Payout: $974"
+                  - generic:
+                    - generic:
+                      - generic: Elite
+                    - heading "Prime 2-Step" [level=3]
+                    - paragraph: Premium challenge with the tightest drawdown control.
+                    - generic:
+                      - generic: $325
+                      - text: $195
+                      - generic: one-time fee 40% OFF
+                    - generic:
+                      - generic: Max Drawdown
+                      - generic: 10%
+                    - generic:
+                      - generic: Daily Drawdown
+                      - generic: 4%
+                    - generic:
+                      - generic: Profit Target
+                      - generic: "P1: 8% / P2: 6%"
+                    - generic:
+                      - generic: Consistency
+                      - generic: None
+                    - generic:
+                      - generic: Max Risk/Trade
+                      - generic: None
+                    - generic:
+                      - generic: Min Days
+                      - generic: 3 or 5 Days / Phase
+                    - generic:
+                      - generic: Profit Split
+                      - generic: 80%
+                    - generic:
+                      - link "Get Funded →":
+                        - /url: /checkout/?add-to-cart=400401&coupon-apply=PRIME40
+                    - paragraph: "Avg. Payout: $1,654"
+                  - generic:
+                    - heading "2-Step" [level=3]
+                    - paragraph: Two phases. Lower targets. Broad account range.
+                    - generic:
+                      - text: $315
+                      - generic: one-time fee
+                    - generic:
+                      - generic: Max Drawdown
+                      - generic: 10%
+                    - generic:
+                      - generic: Daily Drawdown
+                      - generic: 5%
+                    - generic:
+                      - generic: Profit Target
+                      - generic: "P1: 10% / P2: 5%"
+                    - generic:
+                      - generic: Consistency
+                      - generic: None
+                    - generic:
+                      - generic: Max Risk/Trade
+                      - generic: 1.5% (Funded)
+                    - generic:
+                      - generic: Min Days
+                      - generic: 3 days / phase
+                    - generic:
+                      - generic: Profit Split
+                      - generic: 80%
+                    - generic:
+                      - button "Select"
+                    - paragraph: "Avg. Payout: $1,044"
+              - generic:
+                - generic:
+                  - img
+                - generic:
+                  - paragraph: Important Information
+                  - paragraph: All Instant Accounts operate under continuous performance validation. Eligibility for payouts is contingent on demonstrating consistent trading behavior over multiple trading days.
+                  - paragraph: Fees are charged for access to a simulated trading environment and evaluation framework. No real capital is allocated and no investment services are provided.
+              - generic:
+                - button "View Full Comparison ↓"
+              - generic:
+                - generic:
+                  - generic: 15,000+
+                  - generic: Funded Traders
+                - generic:
+                  - generic: $7M+
+                  - generic: Payouts Made
+                - generic:
+                  - generic: 24/7
+                  - generic: Support
+          - generic:
+            - generic:
+              - generic:
+                - heading "Start earning in only 3 steps" [level=2]:
+                  - text: Start earning in
+                  - text: only 3 steps
+                - paragraph: Broker backed - No time limit - Leading platforms - Up to $2.000.000 in Sim.
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - heading "Step 1" [level=3]
+                      - paragraph: Select the evaluation you feel comfortable with, and start your trading!
+                - generic:
+                  - generic:
+                    - generic:
+                      - heading "Step 2" [level=3]
+                      - paragraph: Successfully complete the evaluation by showcasing consistency and effective risk management.
+                - generic:
+                  - generic:
+                    - generic:
+                      - heading "Step 3" [level=3]
+                      - paragraph: Sign your trader contract and complete the KYC process to become a Blueberry Funded trader to start trading towards your performance fee!
+          - generic:
+            - generic:
+              - img "shape"
+            - generic:
+              - generic:
+                - heading "Trade on industry leading platforms" [level=2]:
+                  - text: Trade on industry
+                  - text: leading platforms
+                - paragraph: Broker backed - No time limit - Leading platforms - Up to $2,000,000 in Sim.
+              - generic:
+                - generic:
+                  - generic:
+                    - img "Platform Logo"
+                - generic:
+                  - generic:
+                    - img "Platform Logo"
+          - generic:
+            - generic:
+              - generic:
+                - heading "The Story Behind Blueberry Funded" [level=2]:
+                  - text: The Story Behind
+                  - text: Blueberry Funded
+                - paragraph: Broker backed - No time limit - Leading platforms - Up to $2.000.000 in Sim.
+                - generic:
+                  - link "Get Funded":
+                    - /url: "#pricing"
+                    - text: Get Funded
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - heading "Smallest spread on XAU/USD in the industry" [level=3]
+                    - generic:
+                      - heading "Broker-backed" [level=3]
+                      - paragraph: Select the evaluation you feel comfortable with, and start your trading!
+                    - generic:
+                      - heading "Instant Access Sim. Accounts" [level=3]:
+                        - text: Instant Access
+                        - text: Sim. Accounts
+                    - generic:
+                      - heading "Simulated capital up to $2M" [level=3]:
+                        - text: Simulated capital
+                        - text: up to $2M
+          - generic:
+            - generic:
+              - generic:
+                - heading "Verified Trader Payouts" [level=2]:
+                  - text: Verified
+                  - text: Trader Payouts
+                - paragraph: Broker backed - No time limit - Leading platforms - Up to $2.000.000 in Sim.
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                    - tabpanel:
+                      - generic:
+                        - img "certificate"
+                    - tabpanel:
+                      - generic:
+                        - img "certificate"
+                    - tabpanel:
+                      - generic:
+                        - img "certificate"
+                    - tabpanel:
+                      - generic:
+                        - img "certificate"
+                    - tabpanel:
+                      - generic:
+                        - img
+                    - tabpanel:
+                      - generic:
+                        - img
+                    - tabpanel:
+                      - generic:
+                        - img
+                    - tabpanel:
+                      - generic:
+                        - img
+                    - tabpanel:
+                      - generic:
+                        - img
+                    - tabpanel:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                - tablist:
+                  - tab "1 of 3" [selected]: "1"
+                  - tab "2 of 3": "2"
+                  - tab "3 of 3": "3"
+                  - tab "4 of 3": "4"
+                  - tab "5 of 3": "5"
+          - generic:
+            - generic:
+              - generic:
+                - heading "Scaling plan" [level=2]
+                - paragraph: At Blueberry Funded we believe that a traders' development is an ongoing journey, which is why we give our earning account traders the ability to further scale their trading over time. Simulated capital increments on the Blueberry Funded Account can occur every 3 months. To qualify for a capital increase, the trader must at least 10% net profit over 3 consecutive months. Additionally, the trader must process at least 4 payouts within the 3-month period.
+              - generic:
+                - generic:
+                  - heading "Scaling plan overview" [level=3]
+                  - generic:
+                    - generic:
+                      - list:
+                        - listitem: Upgraded Profit Split of up to 90%
+                        - listitem: Balance Scale up of 25% every 3 months
+                        - listitem: Ongoing Increases every 3 months if objectives are met
+                        - listitem: Trading Objectives remain the same as your original plan on increased balance
+                        - listitem: Maximum Allocation per trader of $2 million
+                  - generic:
+                    - link "Get Funded":
+                      - /url: "#pricing"
+                      - text: Get Funded
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic: Elapsed Time
+                        - generic: Initial Balance
+                      - generic:
+                        - list:
+                          - listitem:
+                            - generic: 0 months
+                            - generic: $200,000
+                          - listitem:
+                            - generic: 3 months
+                            - generic: $250,000
+                          - listitem:
+                            - generic: 6 months
+                            - generic: $300,000
+                          - listitem:
+                            - generic: 9 months
+                            - generic: $350,000
+                          - listitem:
+                            - generic: 12 months
+                            - generic: $400,000
+                          - listitem:
+                            - generic: 15 months
+                            - generic: $450,000
+                          - listitem:
+                            - generic: 18 months
+                            - generic: $500,000
+                          - listitem:
+                            - generic: 21 months
+                            - generic: $550,000
+                          - listitem:
+                            - generic: 24 months
+                            - generic: $600,000
+              - generic:
+                - heading "See Our Live Payout Stats" [level=2]:
+                  - text: See Our Live
+                  - text: Payout Stats
+                - generic:
+                  - generic:
+                    - generic:
+                      - link "All-time Payouts $7,768,101 11.4K Traders $323,605 (last 30 days) Jul 2024 Dec 2024 Jun 2025 Nov 2025 Apr 2026 $8M $5M $3M $2K Updated 2 minutes ago Verified by":
+                        - /url: https://propfirmmatch.com/w/event/handle/d6bza3unnhk0ajw0d9m4mq8f
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: All-time Payouts
+                                - paragraph: $7,768,101
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - img
+                                    - generic: 11.4K
+                                  - generic: Traders
+                                - generic:
+                                  - generic:
+                                    - img
+                                    - generic: $323,605
+                                  - generic: (last 30 days)
+                            - generic:
+                              - generic:
+                                - generic: Jul 2024
+                                - generic: Dec 2024
+                                - generic: Jun 2025
+                                - generic: Nov 2025
+                                - generic: Apr 2026
+                              - generic:
+                                - generic: $8M
+                                - generic: $5M
+                                - generic: $3M
+                                - generic: $2K
+                          - generic:
+                            - generic:
+                              - generic:
+                                - img
+                                - text: Updated 2 minutes ago
+                              - generic:
+                                - generic: Verified by
+                                - img
+        - contentinfo:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - link "Blueberry Funded":
+                      - /url: https://blueberryfunded.com/
+                      - img "Blueberry Funded"
+                  - paragraph: Blueberry Funded is a prop firm backed by the globally recognized broker Blueberry Markets. At Blueberry Funded we aim to take on the prop trading space by providing sustainable trading challenges that empower traders with top tier customer service, industry leading technology, and efficient payouts, all managed by a team of CFD professionals with 20+ years of combined industry experience.
+                  - generic:
+                    - paragraph: Join Socials
+                    - generic:
+                      - link "twitter":
+                        - /url: https://x.com/BlueberryFunded
+                      - link "instagram":
+                        - /url: https://www.instagram.com/blueberryfunded
+                      - link "linkedin":
+                        - /url: https://www.linkedin.com/company/blueberry-funded/
+                      - link "discord":
+                        - /url: https://discord.gg/blueberryfunded
+                      - link "facebook":
+                        - /url: https://www.facebook.com/profile.php?id=61561353454301
+              - generic:
+                - generic:
+                  - generic:
+                    - heading "Trade Sharper. Join Our Newsletter." [level=4]:
+                      - text: Trade Sharper.
+                      - text: Join Our Newsletter.
+                    - generic:
+                      - generic:
+                        - generic:
+                          - status
+                          - list
+                        - form "Contact form":
+                          - paragraph:
+                            - generic:
+                              - textbox "Enter your email"
+                            - button "Subscribe"
+                  - generic:
+                    - generic:
+                      - heading "Main Home" [level=4]
+                      - generic:
+                        - list:
+                          - listitem:
+                            - link "Home":
+                              - /url: /
+                          - listitem:
+                            - link "About":
+                              - /url: /about
+                          - listitem:
+                            - link "FAQ":
+                              - /url: https://help.blueberryfunded.com/en/
+                          - listitem:
+                            - link "Affiliate":
+                              - /url: /affiliate
+                          - listitem:
+                            - link "Blog":
+                              - /url: /blog
+                    - generic:
+                      - heading "Legal" [level=4]
+                      - generic:
+                        - list:
+                          - listitem:
+                            - link "Privacy Policy":
+                              - /url: https://blueberryfunded.com/wp-content/uploads/2024/08/BBF-Privacy-Policy.pdf
+                          - listitem:
+                            - link "Terms and conditions":
+                              - /url: https://blueberryfunded.com/wp-content/uploads/2024/08/BBF-Technology-Access-and-Trader-Assessment-Program-Terms-and-Conditions.pdf
+                          - listitem:
+                            - link "Outline & Fees":
+                              - /url: https://blueberryfunded.com/wp-content/uploads/2026/03/BBF-Trading-Evaluation-Outline-and-Fees-11.pdf-6.pdf
+          - generic:
+            - generic:
+              - paragraph: BlueberryFunded is owned and operated by Blueberry Markets (SVG) LLC (2090 LLC 2022), Euro House, Richmond Hill Road, P.O Box 2897, Kingstown, Saint Vincent and the Grenadines VC0100 . Treasury services are facilitated by BBF Treasury Pty Ltd. The content of this website is not intended for residents of any country where its distribution would contravene local laws. BlueberryFunded offers only virtual accounts to all users within its challenges. Funds paid to BlueberryFunded do not constitute client money and are a subscription paid to BlueberryFunded to participate in trading challenges. Trading on Margin Carries High Risk.
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - paragraph: © 2026 Blueberry.Funded. All rights reserved.
+                - generic:
+                  - generic:
+                    - list:
+                      - listitem:
+                        - link "Privacy Policy":
+                          - /url: https://blueberryfunded.com/wp-content/uploads/2024/08/BBF-Privacy-Policy.pdf
+                      - listitem:
+                        - link "Terms and conditions":
+                          - /url: https://blueberryfunded.com/wp-content/uploads/2024/08/BBF-Technology-Access-and-Trader-Assessment-Program-Terms-and-Conditions.pdf
+  - 'complementary "Language selected: English" [ref=e38]':
+    - generic [ref=e40] [cursor=pointer]: English
+  - status [ref=e41]

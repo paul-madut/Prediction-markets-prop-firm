@@ -55,18 +55,18 @@ function StatTile({
       ? "text-emerald-700"
       : tone === "bad"
         ? "text-red-700"
-        : "text-gray-900 dark:text-gray-100";
+        : "text-white";
   return (
     <TextureCard interactive={false}>
       <TextureCardContent className="p-4">
-        <div className="text-xs uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium">
+        <div className="text-xs uppercase tracking-wider text-white/45 font-medium">
           {label}
         </div>
         <div className={`mt-1 text-2xl font-bold tabular-nums ${valueCls}`}>
           {value}
         </div>
         {hint && (
-          <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">{hint}</div>
+          <div className="mt-1 text-xs text-white/55">{hint}</div>
         )}
       </TextureCardContent>
     </TextureCard>
@@ -78,7 +78,7 @@ function StatTile({
 function PnlSparkline({ values }: { values: number[] }) {
   if (values.length < 2) {
     return (
-      <div className="h-32 flex items-center justify-center text-xs text-gray-500 dark:text-gray-400">
+      <div className="h-32 flex items-center justify-center text-xs text-white/55">
         Need ≥2 closing fills to draw a curve.
       </div>
     );
@@ -244,7 +244,7 @@ export default function AnalyticsPage() {
 
   if (!signedIn) {
     return (
-      <div className="max-w-3xl mx-auto py-12 text-center text-sm text-gray-500 dark:text-gray-400">
+      <div className="max-w-3xl mx-auto py-12 text-center text-sm text-white/55">
         Sign in to view analytics.
       </div>
     );
@@ -253,15 +253,15 @@ export default function AnalyticsPage() {
   if (!activeAccount) {
     return (
       <div className="max-w-3xl mx-auto py-12 text-center space-y-3">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="text-2xl font-bold text-white">
           Analytics
         </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-sm text-white/55">
           You don&apos;t have an active challenge account yet.
         </p>
         <Link
           href="/dashboard/new-challenge"
-          className="inline-block px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium"
+          className="inline-block px-4 py-2 rounded-lg bg-[#7F24FF] text-white text-sm font-medium"
         >
           Buy a challenge
         </Link>
@@ -273,17 +273,17 @@ export default function AnalyticsPage() {
     <div className="space-y-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+          <h1 className="text-3xl font-bold text-white">
             Analytics
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-white/55 mt-1">
             Realised P&amp;L distribution and win-rate stats for the active account.
           </p>
         </div>
         <button
           onClick={() => void load()}
           disabled={loading}
-          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 hover:border-blue-300 disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-white/85 bg-[#180630] border border-gray-200 dark:border-white/10 hover:border-[#A769FF] disabled:opacity-50"
         >
           <ArrowPathIcon className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
           Refresh
@@ -297,22 +297,22 @@ export default function AnalyticsPage() {
       )}
 
       {!trades || !stats ? (
-        <div className="py-12 text-center text-sm text-gray-500 dark:text-gray-400">
+        <div className="py-12 text-center text-sm text-white/55">
           Loading…
         </div>
       ) : stats.totalCloses === 0 ? (
         <TextureCard interactive={false}>
           <TextureCardContent className="p-12 text-center space-y-2">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <h2 className="text-lg font-semibold text-white">
               No closed trades yet
             </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-white/55">
               Open and close at least one position to see your analytics. Opens
               are recorded but only carry realised P&amp;L when closed.
             </p>
             <Link
               href="/dashboard/markets"
-              className="inline-block mt-2 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium"
+              className="inline-block mt-2 px-4 py-2 rounded-lg bg-[#7F24FF] text-white text-sm font-medium"
             >
               Browse markets
             </Link>
@@ -360,10 +360,10 @@ export default function AnalyticsPage() {
           <TextureCard interactive={false}>
             <TextureCardContent className="p-6 space-y-3">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h2 className="text-lg font-semibold text-white">
                   Cumulative realised P&amp;L
                 </h2>
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+                <span className="text-xs text-white/55">
                   oldest → newest close
                 </span>
               </div>
@@ -409,7 +409,7 @@ export default function AnalyticsPage() {
 
           {/* Footnote */}
           {account && (
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-white/55">
               Analytics are based on the most recent 100 fills returned by{" "}
               <code className="font-mono">/api/trades</code>. Account starting
               balance: {formatCurrency(Number(account.startingBalanceCents))}.
@@ -424,8 +424,8 @@ export default function AnalyticsPage() {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between text-sm">
-      <span className="text-gray-500 dark:text-gray-400">{label}</span>
-      <span className="font-semibold text-gray-900 dark:text-gray-100 tabular-nums">
+      <span className="text-white/55">{label}</span>
+      <span className="font-semibold text-white tabular-nums">
         {value}
       </span>
     </div>

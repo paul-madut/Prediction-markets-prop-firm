@@ -80,18 +80,18 @@ function StatTile({
       ? "text-emerald-700"
       : tone === "bad"
         ? "text-red-700"
-        : "text-gray-900 dark:text-gray-100";
+        : "text-white";
   return (
     <TextureCard interactive={false}>
       <TextureCardContent className="p-4">
-        <div className="text-xs uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium">
+        <div className="text-xs uppercase tracking-wider text-white/45 font-medium">
           {label}
         </div>
         <div className={`mt-1 text-2xl font-bold tabular-nums ${valueCls}`}>
           {value}
         </div>
         {hint && (
-          <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">{hint}</div>
+          <div className="mt-1 text-xs text-white/55">{hint}</div>
         )}
       </TextureCardContent>
     </TextureCard>
@@ -143,7 +143,7 @@ export default function PortfolioPage() {
   if (!signedIn) {
     return (
       <div className="max-w-3xl mx-auto py-12 text-center">
-        <div className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="text-sm text-white/55">
           Sign in to view your portfolio.
         </div>
       </div>
@@ -153,15 +153,15 @@ export default function PortfolioPage() {
   if (!activeAccount) {
     return (
       <div className="max-w-3xl mx-auto py-12 text-center space-y-3">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="text-2xl font-bold text-white">
           Portfolio
         </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-sm text-white/55">
           You don&apos;t have an active challenge account yet.
         </p>
         <Link
           href="/dashboard/new-challenge"
-          className="inline-block px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium"
+          className="inline-block px-4 py-2 rounded-lg bg-[#7F24FF] text-white text-sm font-medium"
         >
           Buy a challenge
         </Link>
@@ -182,17 +182,17 @@ export default function PortfolioPage() {
     <div className="space-y-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+          <h1 className="text-3xl font-bold text-white">
             Portfolio
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-white/55 mt-1">
             Open positions, realised history, and live equity for the active challenge account.
           </p>
         </div>
         <button
           onClick={() => void load()}
           disabled={loading}
-          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 hover:border-blue-300 disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-white/85 bg-[#180630] border border-gray-200 dark:border-white/10 hover:border-[#A769FF] disabled:opacity-50"
         >
           <ArrowPathIcon className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
           Refresh
@@ -230,10 +230,10 @@ export default function PortfolioPage() {
       <TextureCard interactive={false}>
         <TextureCardContent className="p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <h2 className="text-lg font-semibold text-white">
               Open positions
             </h2>
-            <span className="text-xs text-gray-500 dark:text-gray-400">
+            <span className="text-xs text-white/55">
               {account?.positions.length ?? 0} open · exposure{" "}
               {formatCurrency(totalExposureCents)}
             </span>
@@ -241,11 +241,11 @@ export default function PortfolioPage() {
           {!account ? (
             <PositionsSkeleton />
           ) : account.positions.length === 0 ? (
-            <div className="py-6 text-center text-sm text-gray-500 dark:text-gray-400">
+            <div className="py-6 text-center text-sm text-white/55">
               No open positions. Browse{" "}
               <Link
                 href="/dashboard/markets"
-                className="text-blue-600 hover:text-blue-700 font-medium"
+                className="text-[#A769FF] hover:text-[#A769FF] font-medium"
               >
                 markets
               </Link>{" "}
@@ -271,28 +271,28 @@ export default function PortfolioPage() {
       <TextureCard interactive={false}>
         <TextureCardContent className="p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <h2 className="text-lg font-semibold text-white">
               Recent fills
             </h2>
             <Link
               href="/dashboard/history"
-              className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+              className="text-xs text-[#A769FF] hover:text-[#A769FF] font-medium"
             >
               Full history →
             </Link>
           </div>
           {!trades ? (
-            <div className="py-6 text-center text-sm text-gray-500 dark:text-gray-400">
+            <div className="py-6 text-center text-sm text-white/55">
               Loading…
             </div>
           ) : trades.length === 0 ? (
-            <div className="py-6 text-center text-sm text-gray-500 dark:text-gray-400">
+            <div className="py-6 text-center text-sm text-white/55">
               No fills yet.
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <thead className="text-xs uppercase tracking-wider text-white/55">
                   <tr>
                     <th className="text-left py-2 pr-4 font-semibold">Time</th>
                     <th className="text-left py-2 pr-4 font-semibold">Market</th>
@@ -308,20 +308,20 @@ export default function PortfolioPage() {
                     const pnl = t.realizedPnlCents ? Number(t.realizedPnlCents) : null;
                     return (
                       <tr key={t.id}>
-                        <td className="py-2 pr-4 text-xs text-gray-500 dark:text-gray-400">
+                        <td className="py-2 pr-4 text-xs text-white/55">
                           {new Date(t.executedAt).toLocaleString()}
                         </td>
                         <td className="py-2 pr-4 font-mono text-xs">
                           <Link
                             href={`/dashboard/markets/${encodeURIComponent(t.externalMarketId)}`}
-                            className="text-gray-900 dark:text-gray-100 hover:text-blue-600"
+                            className="text-white hover:text-[#A769FF]"
                           >
                             {t.externalMarketId.slice(0, 14)}
                             {t.externalMarketId.length > 14 ? "…" : ""}
                           </Link>
                         </td>
                         <td className="py-2 pr-4 capitalize">{t.side}</td>
-                        <td className="py-2 pr-4 capitalize text-xs text-gray-500 dark:text-gray-400">
+                        <td className="py-2 pr-4 capitalize text-xs text-white/55">
                           {t.isOpening ? "Open" : "Close"}
                         </td>
                         <td className="py-2 pr-4 text-right tabular-nums">
@@ -434,11 +434,11 @@ function PositionRow({
   }
 
   return (
-    <div className="rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
+    <div className="rounded-xl border border-gray-200 dark:border-white/10 bg-[#180630] overflow-hidden">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
+        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-[#0C0319] dark:hover:bg-[#1f0a3d]/50 transition-colors"
         aria-expanded={open}
       >
         <span
@@ -447,15 +447,15 @@ function PositionRow({
           {sideUpper}
         </span>
         <div className="flex-1 min-w-0">
-          <div className="font-mono text-xs text-gray-900 dark:text-gray-100 truncate">
+          <div className="font-mono text-xs text-white truncate">
             {p.externalMarketId}
           </div>
-          <div className="text-[10px] uppercase text-gray-400 dark:text-gray-500">
+          <div className="text-[10px] uppercase text-white/45">
             {p.venue}
           </div>
         </div>
         <div className="text-right shrink-0">
-          <div className="text-base font-bold tabular-nums text-gray-900 dark:text-gray-100">
+          <div className="text-base font-bold tabular-nums text-white">
             {formatCurrency(positionValueCents)}
           </div>
           <div
@@ -468,42 +468,42 @@ function PositionRow({
           </div>
         </div>
         {open ? (
-          <ChevronUpIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
+          <ChevronUpIcon className="w-4 h-4 text-white/45 shrink-0" />
         ) : (
-          <ChevronDownIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
+          <ChevronDownIcon className="w-4 h-4 text-white/45 shrink-0" />
         )}
       </button>
 
       {open && (
-        <div className="border-t border-gray-100 dark:border-slate-800 px-4 py-3 bg-gray-50/40 dark:bg-slate-950/40">
+        <div className="border-t border-gray-100 dark:border-white/10 px-4 py-3 bg-[#0C0319]/40 dark:bg-[#0C0319]/40">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="grid grid-cols-4 gap-6 text-sm">
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                <div className="text-[10px] uppercase tracking-wider text-white/45">
                   Entry
                 </div>
-                <div className="font-medium tabular-nums text-gray-900 dark:text-gray-100">
+                <div className="font-medium tabular-nums text-white">
                   {p.avgEntryPriceCents.toFixed(1)}¢
                 </div>
               </div>
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                <div className="text-[10px] uppercase tracking-wider text-white/45">
                   Current
                 </div>
-                <div className="font-medium tabular-nums text-gray-900 dark:text-gray-100">
+                <div className="font-medium tabular-nums text-white">
                   {currentCents.toFixed(1)}¢
                 </div>
               </div>
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                <div className="text-[10px] uppercase tracking-wider text-white/45">
                   Shares
                 </div>
-                <div className="font-medium tabular-nums text-gray-900 dark:text-gray-100">
+                <div className="font-medium tabular-nums text-white">
                   {Math.abs(p.netContracts)}
                 </div>
               </div>
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                <div className="text-[10px] uppercase tracking-wider text-white/45">
                   P&amp;L %
                 </div>
                 <div
@@ -520,7 +520,7 @@ function PositionRow({
               <Link
                 href={`/dashboard/markets/${encodeURIComponent(p.externalMarketId)}`}
                 aria-label="View market"
-                className="inline-flex items-center justify-center h-9 w-9 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
+                className="inline-flex items-center justify-center h-9 w-9 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-[#1f0a3d]"
               >
                 <ArrowTopRightOnSquareIcon className="w-4 h-4" />
               </Link>
@@ -546,11 +546,11 @@ function PositionRow({
               Failed to close: {closeError}
             </div>
           )}
-          <div className="mt-3 flex items-center gap-2 text-[11px] text-gray-400 dark:text-gray-500">
+          <div className="mt-3 flex items-center gap-2 text-[11px] text-white/45">
             <span>Allocation</span>
-            <div className="flex-1 max-w-[200px] h-1 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
+            <div className="flex-1 max-w-[200px] h-1 bg-gray-100 dark:bg-[#1f0a3d] rounded-full overflow-hidden">
               <div
-                className="h-full bg-blue-500"
+                className="h-full bg-[#A769FF]"
                 style={{ width: `${Math.min(100, allocPct)}%` }}
               />
             </div>
@@ -568,7 +568,7 @@ function PositionsSkeleton() {
       {[0, 1].map((i) => (
         <div
           key={i}
-          className="h-14 rounded-xl border border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-slate-900"
+          className="h-14 rounded-xl border border-gray-200 dark:border-white/10 bg-[#0C0319] dark:bg-[#180630]"
         />
       ))}
     </div>

@@ -89,7 +89,7 @@ export default function TwoFAEnrollmentPage() {
     setError(null);
     const { data, error: enrollErr } = await supabase.auth.mfa.enroll({
       factorType: "totp",
-      friendlyName: `OracleFunded · ${new Date().toISOString().slice(0, 10)}`,
+      friendlyName: `Blueberry Funded · ${new Date().toISOString().slice(0, 10)}`,
     });
     setSubmitting(false);
     if (enrollErr || !data) {

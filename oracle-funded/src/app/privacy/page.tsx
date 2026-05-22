@@ -1,4 +1,4 @@
-export const metadata = { title: "Privacy Policy · OracleFunded" };
+export const metadata = { title: "Privacy Policy · Blueberry Funded" };
 
 export default function PrivacyPage() {
   return (

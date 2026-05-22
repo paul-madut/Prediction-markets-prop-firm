@@ -17,11 +17,11 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
   return (
     <button
       onClick={onClick}
-      className="w-full bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 p-6 hover:shadow-lg hover:border-blue-200 hover:scale-[1.02] transition-all duration-200 text-left"
+      className="w-full bg-[#180630] rounded-lg shadow-sm border border-gray-200 dark:border-white/10 p-6 hover:shadow-lg hover:border-[#A769FF]/30 hover:scale-[1.02] transition-all duration-200 text-left"
     >
       {/* Category Badge */}
       <div className="flex items-center justify-between mb-3">
-        <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800">
+        <span className="px-2 py-1 text-xs font-semibold rounded bg-[#7F24FF]/15 text-blue-800">
           {market.category}
         </span>
         {market.featured && (
@@ -33,26 +33,26 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
       </div>
 
       {/* Market Question */}
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 line-clamp-2">
+      <h3 className="text-lg font-semibold text-white mb-4 line-clamp-2">
         {market.title}
       </h3>
 
       {/* YES Probability */}
       <div className="mb-2">
-        <div className="text-3xl font-bold text-blue-600 mb-2">
+        <div className="text-3xl font-bold text-[#A769FF] mb-2">
           YES: {yesPercentage}%
         </div>
         {/* Progress Bar */}
         <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
           <div
-            className="bg-blue-600 h-2 rounded-full transition-all"
+            className="bg-[#7F24FF] h-2 rounded-full transition-all"
             style={{ width: `${yesPercentage}%` }}
           />
         </div>
       </div>
 
       {/* Market Info */}
-      <div className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
+      <div className="space-y-1 text-sm text-white/75">
         <div className="flex justify-between">
           <span>Volume:</span>
           <span className="font-semibold">{formatVolume(market.volume)}</span>

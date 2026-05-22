@@ -1,0 +1,83 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "Blueberry Funded" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e8]: Blueberry Funded
+      - generic [ref=e9]:
+        - heading "Trade live markets, with our capital." [level=1] [ref=e10]:
+          - text: Trade live markets,
+          - text: with our capital.
+        - paragraph [ref=e11]: Broker-backed evaluations with no time limit. Pass once, get funded, and keep up to 90% of your profits.
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - img [ref=e15]
+            - generic [ref=e17]:
+              - generic [ref=e18]: Broker backed, real capital
+              - generic [ref=e19]: Live execution against tier-1 broker liquidity from the first trade. No simulators.
+          - listitem [ref=e20]:
+            - img [ref=e22]
+            - generic [ref=e24]:
+              - generic [ref=e25]: Up to 90% profit split
+              - generic [ref=e26]: Static or trailing drawdown. Scale to higher allocations as you stay consistent.
+          - listitem [ref=e27]:
+            - img [ref=e29]
+            - generic [ref=e31]:
+              - generic [ref=e32]: No time limit
+              - generic [ref=e33]: Pass the evaluation at your own pace. One challenge fee, lifetime access until you breach.
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - generic [ref=e36]: Account size
+          - generic [ref=e37]: $5K – $200K
+        - generic [ref=e39]:
+          - generic [ref=e40]: Profit split
+          - generic [ref=e41]: Up to 90%
+        - generic [ref=e43]:
+          - generic [ref=e44]: Time limit
+          - generic [ref=e45]: None
+    - main [ref=e46]:
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - heading "Welcome back" [level=2] [ref=e49]
+          - paragraph [ref=e50]: Sign in to continue trading.
+        - generic [ref=e51]:
+          - button "Continue with Google" [ref=e52]:
+            - img [ref=e53]
+            - text: Continue with Google
+          - generic [ref=e60]: or
+        - generic [ref=e62]:
+          - generic [ref=e63]:
+            - generic [ref=e64]: Email
+            - textbox "Email" [ref=e65]:
+              - /placeholder: you@example.com
+          - generic [ref=e66]:
+            - generic [ref=e67]:
+              - generic [ref=e68]: Password
+              - button "Forgot?" [ref=e69]
+            - generic [ref=e70]:
+              - textbox "Password" [ref=e71]:
+                - /placeholder: ••••••••
+              - button "Show password" [ref=e72]:
+                - img [ref=e73]
+          - generic [ref=e95]:
+            - img [ref=e96]
+            - generic [ref=e98]: missing email or phone
+          - button "Sign in" [ref=e76]:
+            - text: Sign in
+            - img [ref=e99]
+        - paragraph [ref=e80]:
+          - text: Don't have an account?
+          - link "Create one" [ref=e81] [cursor=pointer]:
+            - /url: /sign-up
+        - paragraph [ref=e82]:
+          - text: Protected by Supabase Auth. Encrypted in transit and at rest.
+          - text: By continuing you agree to our
+          - link "Terms" [ref=e83] [cursor=pointer]:
+            - /url: /terms
+          - text: and
+          - link "Privacy Policy" [ref=e84] [cursor=pointer]:
+            - /url: /privacy
+          - text: .
+  - button "Open Next.js Dev Tools" [ref=e90] [cursor=pointer]:
+    - img [ref=e91]
+  - alert [ref=e94]

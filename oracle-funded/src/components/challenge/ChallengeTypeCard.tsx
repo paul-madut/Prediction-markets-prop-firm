@@ -42,11 +42,11 @@ export const ChallengeTypeCard = ({
       gradientTo: "rgb(251, 146, 60)",
     },
     blue: {
-      bg: "bg-blue-50",
+      bg: "bg-[#7F24FF]/10",
       border: "border-blue-300",
-      text: "text-blue-600",
-      accent: "bg-blue-600",
-      accentHover: "hover:bg-blue-700",
+      text: "text-[#A769FF]",
+      accent: "bg-[#7F24FF]",
+      accentHover: "hover:bg-[#6c14ee]",
       glowColor: "rgba(37, 99, 235, 0.4)",
       gradientFrom: "rgb(37, 99, 235)",
       gradientTo: "rgb(59, 130, 246)",
@@ -77,10 +77,10 @@ export const ChallengeTypeCard = ({
       rotateDepth={8}
       translateDepth={10}
       className={cn(
-        "rounded-2xl overflow-hidden border-2 transition-all duration-300 bg-white dark:bg-slate-900",
+        "rounded-2xl overflow-hidden border-2 transition-all duration-300 bg-[#180630]",
         isSelected
           ? `${colors.border} shadow-xl`
-          : "border-gray-200 dark:border-slate-800 shadow-md hover:border-gray-300"
+          : "border-gray-200 dark:border-white/10 shadow-md hover:border-gray-300"
       )}
     >
       <div className="p-6 space-y-5">
@@ -99,10 +99,10 @@ export const ChallengeTypeCard = ({
             </span>
           </div>
 
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+          <h3 className="text-2xl font-bold text-white">
             {challengeType.name}
           </h3>
-          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{challengeType.description}</p>
+          <p className="text-white/75 text-sm leading-relaxed">{challengeType.description}</p>
         </div>
 
         {/* Pricing Display */}
@@ -111,22 +111,22 @@ export const ChallengeTypeCard = ({
             "text-center py-5 rounded-xl border transition-colors",
             isSelected
               ? `${colors.bg} ${colors.border}`
-              : "bg-gray-50 dark:bg-slate-950 border-gray-200 dark:border-slate-800"
+              : "bg-[#0C0319] dark:bg-[#0C0319] border-gray-200 dark:border-white/10"
           )}>
-            <div className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+            <div className="text-4xl font-bold text-white">
               {formatCurrency(currentPlan.monthlyPrice)}
             </div>
-            <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">one-time fee</div>
+            <div className="text-sm text-white/55 mt-1">one-time fee</div>
             <div className={cn(
               "text-sm font-medium mt-2",
-              isSelected ? colors.text : "text-gray-600 dark:text-gray-300"
+              isSelected ? colors.text : "text-white/75"
             )}>
               Profit Target: {formatCurrency(currentPlan.profitTarget)}
             </div>
           </div>
         ) : (
-          <div className="text-center py-5 rounded-xl bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-800">
-            <div className="text-lg font-medium text-gray-400 dark:text-gray-500">
+          <div className="text-center py-5 rounded-xl bg-gray-100 dark:bg-[#1f0a3d] border border-gray-200 dark:border-white/10">
+            <div className="text-lg font-medium text-white/45">
               Not available at this size
             </div>
           </div>
@@ -149,11 +149,11 @@ export const ChallengeTypeCard = ({
               <div className="flex items-start gap-2.5">
                 <div className={cn(
                   "w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5",
-                  isSelected ? colors.bg : "bg-gray-100 dark:bg-slate-800"
+                  isSelected ? colors.bg : "bg-gray-100 dark:bg-[#1f0a3d]"
                 )}>
-                  <CheckIcon className={cn(isSelected ? colors.text : "text-gray-500 dark:text-gray-400")} />
+                  <CheckIcon className={cn(isSelected ? colors.text : "text-white/55")} />
                 </div>
-                <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>
+                <span className="text-sm text-white/85">{label}</span>
               </div>
             ) : null;
           })()}
@@ -161,11 +161,11 @@ export const ChallengeTypeCard = ({
             <div key={idx} className="flex items-start gap-2.5">
               <div className={cn(
                 "w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5",
-                isSelected ? colors.bg : "bg-gray-100 dark:bg-slate-800"
+                isSelected ? colors.bg : "bg-gray-100 dark:bg-[#1f0a3d]"
               )}>
-                <CheckIcon className={cn(isSelected ? colors.text : "text-gray-500 dark:text-gray-400")} />
+                <CheckIcon className={cn(isSelected ? colors.text : "text-white/55")} />
               </div>
-              <span className="text-sm text-gray-700 dark:text-gray-300">{feature}</span>
+              <span className="text-sm text-white/85">{feature}</span>
             </div>
           ))}
         </div>
@@ -180,7 +180,7 @@ export const ChallengeTypeCard = ({
               ? `${colors.accent} text-white shadow-lg hover:shadow-xl ${colors.accentHover}`
               : currentPlan
                 ? "bg-gray-900 text-white hover:bg-gray-800 hover:shadow-md"
-                : "bg-gray-200 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+                : "bg-gray-200 text-white/45 cursor-not-allowed"
           )}
         >
           {isSelected ? "Selected" : currentPlan ? "Select Plan" : "Unavailable"}

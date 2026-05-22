@@ -141,7 +141,7 @@ export default function MarketsPage() {
               <Link
                 key={event.eventTicker}
                 href={`/dashboard/markets/${event.eventTicker}`}
-                className="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg"
+                className="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7F24FF] rounded-lg"
               >
                 <MarketCard event={event} onClick={() => {}} />
               </Link>
@@ -150,7 +150,7 @@ export default function MarketsPage() {
 
           {filteredEvents.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500 dark:text-gray-400">No markets found matching your criteria</p>
+              <p className="text-white/55">No markets found matching your criteria</p>
             </div>
           )}
         </>

@@ -117,7 +117,7 @@ export default function HistoryPage() {
 
   if (!signedIn) {
     return (
-      <div className="max-w-3xl mx-auto py-12 text-center text-sm text-gray-500 dark:text-gray-400">
+      <div className="max-w-3xl mx-auto py-12 text-center text-sm text-white/55">
         Sign in to view trade history.
       </div>
     );
@@ -126,13 +126,13 @@ export default function HistoryPage() {
   if (!activeAccount) {
     return (
       <div className="max-w-3xl mx-auto py-12 text-center space-y-3">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">History</h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <h1 className="text-2xl font-bold text-white">History</h1>
+        <p className="text-sm text-white/55">
           You don&apos;t have an active challenge account.
         </p>
         <Link
           href="/dashboard/new-challenge"
-          className="inline-block px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium"
+          className="inline-block px-4 py-2 rounded-lg bg-[#7F24FF] text-white text-sm font-medium"
         >
           Buy a challenge
         </Link>
@@ -144,8 +144,8 @@ export default function HistoryPage() {
     <div className="space-y-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">History</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <h1 className="text-3xl font-bold text-white">History</h1>
+          <p className="text-sm text-white/55 mt-1">
             Every fill on this account, newest first. Most recent 100 fills.
           </p>
         </div>
@@ -153,7 +153,7 @@ export default function HistoryPage() {
           <button
             onClick={() => void load()}
             disabled={loading}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 hover:border-blue-300 disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-white/85 bg-[#180630] border border-gray-200 dark:border-white/10 hover:border-[#A769FF] disabled:opacity-50"
           >
             <ArrowPathIcon className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
             Refresh
@@ -161,7 +161,7 @@ export default function HistoryPage() {
           <button
             onClick={exportCsv}
             disabled={filtered.length === 0}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 hover:border-blue-300 disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-white/85 bg-[#180630] border border-gray-200 dark:border-white/10 hover:border-[#A769FF] disabled:opacity-50"
           >
             <ArrowDownTrayIcon className="w-4 h-4" />
             Export CSV
@@ -178,8 +178,8 @@ export default function HistoryPage() {
               onClick={() => setSideFilter(f)}
               className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                 sideFilter === f
-                  ? "bg-blue-600 text-white"
-                  : "bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-slate-800"
+                  ? "bg-[#7F24FF] text-white"
+                  : "bg-[#180630] text-white/85 border border-gray-200 dark:border-white/10"
               }`}
             >
               {f === "all" ? "All sides" : f.toUpperCase()}
@@ -193,8 +193,8 @@ export default function HistoryPage() {
               onClick={() => setResultFilter(r)}
               className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors capitalize ${
                 resultFilter === r
-                  ? "bg-blue-600 text-white"
-                  : "bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-slate-800"
+                  ? "bg-[#7F24FF] text-white"
+                  : "bg-[#180630] text-white/85 border border-gray-200 dark:border-white/10"
               }`}
             >
               {r === "all" ? "All results" : r}
@@ -208,7 +208,7 @@ export default function HistoryPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search market"
-            className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
+            className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-[#180630] text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-[#7F24FF]"
           />
         </div>
       </div>
@@ -222,11 +222,11 @@ export default function HistoryPage() {
       <TextureCard interactive={false}>
         <TextureCardContent className="p-0">
           {trades === null && !error ? (
-            <div className="p-12 text-center text-sm text-gray-500 dark:text-gray-400">
+            <div className="p-12 text-center text-sm text-white/55">
               Loading…
             </div>
           ) : filtered.length === 0 ? (
-            <div className="p-12 text-center text-sm text-gray-500 dark:text-gray-400">
+            <div className="p-12 text-center text-sm text-white/55">
               {trades && trades.length === 0
                 ? "No trades yet — place your first market order."
                 : "No trades match the current filter."}
@@ -234,7 +234,7 @@ export default function HistoryPage() {
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead className="bg-gray-50 dark:bg-slate-950 text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <thead className="bg-[#0C0319] dark:bg-[#0C0319] text-xs uppercase tracking-wider text-white/55">
                   <tr>
                     <th className="text-left py-3 px-4 font-semibold">Time</th>
                     <th className="text-left py-3 px-4 font-semibold">Market</th>
@@ -253,20 +253,20 @@ export default function HistoryPage() {
                     return (
                       <tr
                         key={t.id}
-                        className="hover:bg-gray-50 dark:hover:bg-slate-900 transition-colors"
+                        className="hover:bg-[#0C0319] dark:hover:bg-[#180630] transition-colors"
                       >
-                        <td className="py-2 px-4 text-xs text-gray-500 dark:text-gray-400">
+                        <td className="py-2 px-4 text-xs text-white/55">
                           {new Date(t.executedAt).toLocaleString()}
                         </td>
                         <td className="py-2 px-4">
                           <Link
                             href={`/dashboard/markets/${encodeURIComponent(t.externalMarketId)}`}
-                            className="font-mono text-xs text-gray-900 dark:text-gray-100 hover:text-blue-600"
+                            className="font-mono text-xs text-white hover:text-[#A769FF]"
                           >
                             {t.externalMarketId.slice(0, 18)}
                             {t.externalMarketId.length > 18 ? "…" : ""}
                           </Link>
-                          <div className="text-[10px] text-gray-400 dark:text-gray-500 uppercase">
+                          <div className="text-[10px] text-white/45 uppercase">
                             {t.venue}
                           </div>
                         </td>
@@ -275,7 +275,7 @@ export default function HistoryPage() {
                           <span
                             className={`inline-block px-2 py-0.5 rounded-full text-[10px] uppercase font-semibold ${
                               t.isOpening
-                                ? "bg-blue-50 text-blue-700"
+                                ? "bg-[#7F24FF]/10 text-[#7F24FF]"
                                 : result === "win"
                                   ? "bg-emerald-50 text-emerald-700"
                                   : result === "loss"
@@ -292,7 +292,7 @@ export default function HistoryPage() {
                         <td className="py-2 px-4 text-right tabular-nums">
                           {t.priceCents}¢
                         </td>
-                        <td className="py-2 px-4 text-right tabular-nums text-gray-500 dark:text-gray-400">
+                        <td className="py-2 px-4 text-right tabular-nums text-white/55">
                           {t.feesCents > 0 ? formatCurrency(t.feesCents) : "—"}
                         </td>
                         <td

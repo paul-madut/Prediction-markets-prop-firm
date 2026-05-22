@@ -30,17 +30,17 @@ export function StubPage({
               In development
             </span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">{title}</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">{title}</h1>
           {subtitle && (
-            <p className="text-gray-600 dark:text-gray-300 max-w-xl mx-auto">{subtitle}</p>
+            <p className="text-white/75 max-w-xl mx-auto">{subtitle}</p>
           )}
           {hint && (
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 max-w-xl mx-auto italic">{hint}</p>
+            <p className="text-sm text-white/55 mt-4 max-w-xl mx-auto italic">{hint}</p>
           )}
           {ctaHref && ctaLabel && (
             <Link
               href={ctaHref}
-              className="inline-flex items-center gap-1.5 mt-8 px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium text-sm"
+              className="inline-flex items-center gap-1.5 mt-8 px-5 py-2.5 bg-[#7F24FF] text-white rounded-lg hover:bg-[#6c14ee] font-medium text-sm"
             >
               {ctaLabel}
               <ArrowRightIcon className="w-4 h-4" />

@@ -17,9 +17,9 @@ interface CardSpotlightProps {
 export const CardSpotlight = ({
   children,
   className,
-  color = "rgba(59, 130, 246, 0.15)", // blue-500 with low opacity
+  color = "rgba(127, 36, 255, 0.22)", // Blueberry purple, low opacity
   spotlightSize = 250,
-  borderColor = "rgba(96, 165, 250, 0.4)", // blue-400
+  borderColor = "rgba(167, 105, 255, 0.5)", // accent purple
   gradientOpacity = 0.8,
   variant = "dark",
 }: CardSpotlightProps) => {

@@ -111,7 +111,7 @@ export default function SignUpPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full pl-9 pr-3.5 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+              className="w-full pl-9 pr-3.5 py-2.5 bg-[#180630] border border-slate-200 dark:border-white/15 rounded-lg text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#7F24FF]/30 focus:border-[#7F24FF] transition-all"
             />
           </div>
         </div>
@@ -146,7 +146,7 @@ export default function SignUpPage() {
                           : strength === 3
                             ? "bg-blue-400"
                             : "bg-emerald-400"
-                      : "bg-slate-200 dark:bg-slate-800"
+                      : "bg-slate-200 dark:bg-[#1f0a3d]"
                   }`}
                 />
               ))}
@@ -178,7 +178,7 @@ export default function SignUpPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="flex items-start gap-2 px-3 py-2 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900 rounded-lg text-sm text-blue-700 dark:text-blue-300"
+              className="flex items-start gap-2 px-3 py-2 bg-[#7F24FF]/10 bg-[#1f0a3d]/40 border border-[#A769FF]/30 dark:border-blue-900 rounded-lg text-sm text-[#7F24FF] text-[#A769FF]"
             >
               <CheckCircleIcon className="w-4 h-4 mt-0.5 shrink-0" />
               <span>{info}</span>
@@ -189,7 +189,7 @@ export default function SignUpPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-lg bg-gradient-to-b from-blue-500 to-blue-600 text-white text-sm font-semibold shadow-lg shadow-blue-500/20 hover:from-blue-600 hover:to-blue-700 hover:shadow-xl hover:shadow-blue-500/25 active:translate-y-[0.5px] disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+          className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-lg bg-gradient-to-b from-[#A769FF] to-[#7F24FF] text-white text-sm font-semibold shadow-lg shadow-blue-500/20 hover:from-[#7F24FF] hover:to-[#6c14ee] hover:shadow-xl hover:shadow-blue-500/25 active:translate-y-[0.5px] disabled:opacity-60 disabled:cursor-not-allowed transition-all"
         >
           {loading ? (
             <>

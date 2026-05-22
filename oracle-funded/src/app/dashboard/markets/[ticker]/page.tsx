@@ -172,7 +172,7 @@ export default function MarketDetailPage() {
       <div>
         <Link
           href="/dashboard/markets"
-          className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+          className="inline-flex items-center gap-1 text-sm text-white/55 hover:text-gray-900 dark:hover:text-gray-100"
         >
           <ArrowLeftIcon className="w-4 h-4" />
           All markets
@@ -186,7 +186,7 @@ export default function MarketDetailPage() {
       )}
 
       {events === null && !eventsError && (
-        <div className="text-sm text-gray-500 dark:text-gray-400 py-8 text-center">
+        <div className="text-sm text-white/55 py-8 text-center">
           Loading market…
         </div>
       )}
@@ -202,7 +202,7 @@ export default function MarketDetailPage() {
         <>
           {/* Market header */}
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-xs text-white/55 uppercase tracking-wider">
               <span>{market.category}</span>
               <span>·</span>
               <span className="font-mono">{market.ticker}</span>
@@ -213,13 +213,13 @@ export default function MarketDetailPage() {
                 </>
               )}
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+            <h1 className="text-2xl font-bold text-white">
               {parentEvent && parentEvent.outcomes.length > 1
                 ? parentEvent.title
                 : market.title}
             </h1>
             {market.subtitle && (
-              <p className="text-sm text-gray-600 dark:text-gray-300 max-w-3xl">
+              <p className="text-sm text-white/75 max-w-3xl">
                 {market.subtitle}
               </p>
             )}
@@ -233,20 +233,20 @@ export default function MarketDetailPage() {
             <TextureCard interactive={false}>
               <TextureCardContent className="p-0">
                 <div className="flex items-center justify-between px-4 sm:px-5 pt-4 pb-2">
-                  <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                  <div className="text-sm font-semibold text-white">
                     Outcomes
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400 tabular-nums">
+                  <div className="text-xs text-white/55 tabular-nums">
                     {parentEvent.outcomes.length} options
                   </div>
                 </div>
-                <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto] gap-4 px-5 pb-1.5 text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold">
+                <div className="hidden sm:grid grid-cols-[1fr_auto_auto_auto] gap-4 px-5 pb-1.5 text-[10px] uppercase tracking-wider text-white/45 font-semibold">
                   <span>Outcome</span>
                   <span className="text-right">% Chance</span>
                   <span className="text-right pl-2">Buy Yes</span>
                   <span className="text-right">Buy No</span>
                 </div>
-                <ul className="divide-y divide-gray-100 dark:divide-slate-800 border-t border-gray-100 dark:border-slate-800 max-h-[520px] overflow-y-auto">
+                <ul className="divide-y divide-gray-100 dark:divide-slate-800 border-t border-gray-100 dark:border-white/10 max-h-[520px] overflow-y-auto">
                   {[...parentEvent.outcomes]
                     .sort((a, b) => b.yes_ask - a.yes_ask)
                     .map((o) => {
@@ -277,8 +277,8 @@ export default function MarketDetailPage() {
                           key={o.ticker}
                           className={`grid grid-cols-[1fr_auto_auto] sm:grid-cols-[1fr_auto_auto_auto] items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3 transition-colors ${
                             active
-                              ? "bg-blue-50/40 dark:bg-blue-950/20"
-                              : "hover:bg-gray-50/60 dark:hover:bg-slate-800/40"
+                              ? "bg-[#7F24FF]/10/40 bg-[#1f0a3d]/20"
+                              : "hover:bg-[#0C0319]/60 dark:hover:bg-[#1f0a3d]/40"
                           }`}
                         >
                           {/* Title */}
@@ -290,14 +290,14 @@ export default function MarketDetailPage() {
                             <div
                               className={`text-sm font-medium line-clamp-2 ${
                                 active
-                                  ? "text-blue-700 dark:text-blue-300"
-                                  : "text-gray-900 dark:text-gray-100"
+                                  ? "text-[#7F24FF] text-[#A769FF]"
+                                  : "text-white"
                               }`}
                               title={o.title}
                             >
                               {o.title.replace(/^Will\s+/i, "").replace(/\?$/, "")}
                             </div>
-                            <div className="text-[10px] text-gray-400 dark:text-gray-500 mt-0.5 tabular-nums">
+                            <div className="text-[10px] text-white/45 mt-0.5 tabular-nums">
                               {typeof o.volume === "number" && Number.isFinite(o.volume)
                                 ? `$${(o.volume / 100).toLocaleString(undefined, { maximumFractionDigits: 0 })} vol`
                                 : "no volume data"}
@@ -307,7 +307,7 @@ export default function MarketDetailPage() {
                           {/* Chance % — mid-market YES probability,
                               distinct from the ask price on the buttons. */}
                           <div className="text-right shrink-0 hidden sm:block">
-                            <div className="text-lg font-bold tabular-nums text-gray-900 dark:text-gray-100 leading-none">
+                            <div className="text-lg font-bold tabular-nums text-white leading-none">
                               {chancePct}%
                             </div>
                           </div>
@@ -343,10 +343,10 @@ export default function MarketDetailPage() {
             <TextureCard interactive={false} className="lg:col-span-2">
               <TextureCardContent className="p-6 space-y-5">
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                  <h2 className="text-lg font-semibold text-white">
                     Current quote
                   </h2>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate" title={market.title}>
+                  <p className="text-xs text-white/55 mt-0.5 truncate" title={market.title}>
                     {market.title}
                   </p>
                 </div>
@@ -367,27 +367,27 @@ export default function MarketDetailPage() {
                   />
                 </div>
                 <div className="grid grid-cols-3 gap-3 text-xs">
-                  <div className="bg-gray-50 dark:bg-slate-950 rounded-lg px-3 py-2">
-                    <div className="text-gray-400 dark:text-gray-500 uppercase">
+                  <div className="bg-[#0C0319] dark:bg-[#0C0319] rounded-lg px-3 py-2">
+                    <div className="text-white/45 uppercase">
                       Last
                     </div>
-                    <div className="font-semibold text-gray-900 dark:text-gray-100 mt-0.5">
+                    <div className="font-semibold text-white mt-0.5">
                       {market.last_price}¢
                     </div>
                   </div>
-                  <div className="bg-gray-50 dark:bg-slate-950 rounded-lg px-3 py-2">
-                    <div className="text-gray-400 dark:text-gray-500 uppercase">
+                  <div className="bg-[#0C0319] dark:bg-[#0C0319] rounded-lg px-3 py-2">
+                    <div className="text-white/45 uppercase">
                       24h vol
                     </div>
-                    <div className="font-semibold text-gray-900 dark:text-gray-100 mt-0.5">
+                    <div className="font-semibold text-white mt-0.5">
                       {formatCurrency(market.volume_24h)}
                     </div>
                   </div>
-                  <div className="bg-gray-50 dark:bg-slate-950 rounded-lg px-3 py-2">
-                    <div className="text-gray-400 dark:text-gray-500 uppercase">
+                  <div className="bg-[#0C0319] dark:bg-[#0C0319] rounded-lg px-3 py-2">
+                    <div className="text-white/45 uppercase">
                       Closes
                     </div>
-                    <div className="font-semibold text-gray-900 dark:text-gray-100 mt-0.5">
+                    <div className="font-semibold text-white mt-0.5">
                       {market.close_time ? formatDate(market.close_time) : "—"}
                     </div>
                   </div>
@@ -398,12 +398,12 @@ export default function MarketDetailPage() {
             {/* Order entry */}
             <TextureCard interactive={false} id="trade-panel">
               <TextureCardContent className="p-6 space-y-4">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h2 className="text-lg font-semibold text-white">
                   Place order
                 </h2>
 
                 {!signedIn && (
-                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                  <div className="text-xs text-white/55">
                     Sign in to trade.
                   </div>
                 )}
@@ -427,7 +427,7 @@ export default function MarketDetailPage() {
                     className={`py-2 rounded-lg text-sm font-semibold border-2 transition-colors disabled:pointer-events-none ${
                       side === "yes"
                         ? "bg-emerald-50 border-emerald-500 text-emerald-700"
-                        : "bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 text-gray-600 dark:text-gray-300"
+                        : "bg-[#180630] border-gray-200 dark:border-white/10 text-white/75"
                     }`}
                   >
                     Yes · {market.yes_ask}¢
@@ -439,7 +439,7 @@ export default function MarketDetailPage() {
                     className={`py-2 rounded-lg text-sm font-semibold border-2 transition-colors disabled:pointer-events-none ${
                       side === "no"
                         ? "bg-red-50 border-red-500 text-red-700"
-                        : "bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 text-gray-600 dark:text-gray-300"
+                        : "bg-[#180630] border-gray-200 dark:border-white/10 text-white/75"
                     }`}
                   >
                     No · {market.no_ask}¢
@@ -453,8 +453,8 @@ export default function MarketDetailPage() {
                     disabled={ticketDisabled}
                     className={`py-2 rounded-lg text-xs font-semibold border transition-colors disabled:pointer-events-none ${
                       action === "buy"
-                        ? "bg-blue-600 border-blue-600 text-white"
-                        : "bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 text-gray-600 dark:text-gray-300"
+                        ? "bg-[#7F24FF] border-[#7F24FF] text-white"
+                        : "bg-[#180630] border-gray-200 dark:border-white/10 text-white/75"
                     }`}
                   >
                     Buy (open)
@@ -465,8 +465,8 @@ export default function MarketDetailPage() {
                     disabled={ticketDisabled}
                     className={`py-2 rounded-lg text-xs font-semibold border transition-colors disabled:pointer-events-none ${
                       action === "sell"
-                        ? "bg-blue-600 border-blue-600 text-white"
-                        : "bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 text-gray-600 dark:text-gray-300"
+                        ? "bg-[#7F24FF] border-[#7F24FF] text-white"
+                        : "bg-[#180630] border-gray-200 dark:border-white/10 text-white/75"
                     }`}
                   >
                     Sell (close)
@@ -474,7 +474,7 @@ export default function MarketDetailPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">
+                  <label className="block text-xs font-medium text-white/75 mb-1">
                     Contracts
                   </label>
                   <input
@@ -483,14 +483,14 @@ export default function MarketDetailPage() {
                     value={size}
                     onChange={(e) => setSize(e.target.value)}
                     disabled={ticketDisabled}
-                    className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 disabled:cursor-not-allowed"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-[#0C0319] text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-[#7F24FF] disabled:cursor-not-allowed"
                   />
                 </div>
                 </fieldset>
                   );
                 })()}
 
-                <div className="text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-slate-950 rounded-lg px-3 py-2 space-y-1">
+                <div className="text-xs text-white/55 bg-[#0C0319] dark:bg-[#0C0319] rounded-lg px-3 py-2 space-y-1">
                   <div className="flex justify-between">
                     <span>Side</span>
                     <span className="font-semibold uppercase">{side}</span>
@@ -545,29 +545,29 @@ export default function MarketDetailPage() {
           <TextureCard interactive={false}>
             <TextureCardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h2 className="text-lg font-semibold text-white">
                   Your fills on this market
                 </h2>
                 <button
                   onClick={() => void loadTrades()}
-                  className="inline-flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+                  className="inline-flex items-center gap-1 text-xs text-white/55 hover:text-gray-900 dark:hover:text-gray-100"
                 >
                   <ArrowPathIcon className="w-3.5 h-3.5" />
                   Refresh
                 </button>
               </div>
               {trades === null ? (
-                <div className="py-6 text-center text-sm text-gray-500 dark:text-gray-400">
+                <div className="py-6 text-center text-sm text-white/55">
                   Loading…
                 </div>
               ) : trades.length === 0 ? (
-                <div className="py-6 text-center text-sm text-gray-500 dark:text-gray-400">
+                <div className="py-6 text-center text-sm text-white/55">
                   No fills on this market yet.
                 </div>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
-                    <thead className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs uppercase tracking-wider text-white/55">
                       <tr>
                         <th className="text-left py-2 pr-4 font-semibold">Time</th>
                         <th className="text-left py-2 pr-4 font-semibold">Side</th>
@@ -582,11 +582,11 @@ export default function MarketDetailPage() {
                         const pnl = t.realizedPnlCents ? Number(t.realizedPnlCents) : null;
                         return (
                           <tr key={t.id}>
-                            <td className="py-2 pr-4 text-gray-700 dark:text-gray-300 text-xs">
+                            <td className="py-2 pr-4 text-white/85 text-xs">
                               {new Date(t.executedAt).toLocaleString()}
                             </td>
                             <td className="py-2 pr-4 capitalize">{t.side}</td>
-                            <td className="py-2 pr-4 capitalize text-xs text-gray-500 dark:text-gray-400">
+                            <td className="py-2 pr-4 capitalize text-xs text-white/55">
                               {t.isOpening ? "Open" : "Close"}
                             </td>
                             <td className="py-2 pr-4 text-right tabular-nums">

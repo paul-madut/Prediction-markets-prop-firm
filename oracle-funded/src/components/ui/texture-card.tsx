@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
+// Blueberry-themed glass card. Dark, translucent, subtle purple inset glow.
 const TextureCard = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { interactive?: boolean }
@@ -8,14 +9,14 @@ const TextureCard = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-xl border border-gray-200 dark:border-slate-800 bg-gradient-to-b from-white to-gray-50/80 shadow-sm transition-all duration-300 ease-out",
-      interactive && "hover:shadow-md hover:border-gray-300/80 hover:-translate-y-0.5",
-      className
+      "rounded-2xl border border-white/10 bg-[#180630]/85 backdrop-blur-md shadow-[inset_0_-8px_12px_0_rgba(127,36,255,0.10)] transition-all duration-300 ease-out",
+      interactive && "hover:border-[#A769FF]/35 hover:-translate-y-0.5 hover:shadow-[inset_0_-8px_12px_0_rgba(127,36,255,0.18),0_18px_38px_-12px_rgba(127,36,255,0.45)]",
+      className,
     )}
     {...props}
   >
-    <div className="rounded-[11px] border border-gray-100/60 transition-colors duration-300">
-      <div className="rounded-[10px] border border-gray-100/40 transition-colors duration-300">
+    <div className="rounded-[15px] border border-white/[0.05] transition-colors duration-300">
+      <div className="rounded-[14px] border border-white/[0.03] transition-colors duration-300">
         {props.children}
       </div>
     </div>
@@ -41,7 +42,11 @@ const TextureCardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("text-lg font-semibold leading-none tracking-tight text-gray-900 dark:text-gray-100", className)}
+    className={cn(
+      "text-lg font-semibold leading-none tracking-tight text-white",
+      className,
+    )}
+    style={{ fontFamily: "var(--font-heading)" }}
     {...props}
   />
 ));
@@ -73,7 +78,10 @@ const TextureSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent mx-6", className)}
+    className={cn(
+      "h-px bg-gradient-to-r from-transparent via-white/15 to-transparent mx-6",
+      className,
+    )}
     {...props}
   />
 ));

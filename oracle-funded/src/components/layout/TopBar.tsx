@@ -124,11 +124,12 @@ export const TopBar = () => {
     (user?.role ? user.role[0].toUpperCase() + user.role.slice(1) : "");
 
   return (
-    <div className="h-14 sm:h-16 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 px-3 sm:px-6 flex items-center justify-between">
+    <div className="h-14 sm:h-16 bg-[#0C0319]/80 backdrop-blur-md border-b border-white/10 px-3 sm:px-6 flex items-center justify-between">
       <div
         role="presentation"
         aria-hidden="true"
-        className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100 truncate"
+        className="text-base sm:text-lg font-semibold text-white tracking-tight truncate"
+        style={{ fontFamily: "var(--font-heading)" }}
       >
         {title}
       </div>
@@ -137,12 +138,12 @@ export const TopBar = () => {
         <div className="relative" ref={notificationRef}>
           <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 hover:scale-110 rounded-lg transition-all duration-200 relative"
+            className="p-2 hover:bg-white/[0.06] hover:scale-110 rounded-lg transition-all duration-200 relative"
             aria-label="Notifications"
           >
-            <BellIcon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+            <BellIcon className="h-5 w-5 text-white/75" />
             {notificationCount > 0 && (
-              <span className="absolute top-1 right-1 h-4 w-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center font-semibold">
+              <span className="absolute top-1 right-1 h-4 w-4 bg-[#7F24FF] rounded-full text-white text-xs flex items-center justify-center font-semibold shadow-[0_0_0_2px_#0C0319]">
                 {notificationCount}
               </span>
             )}
@@ -154,14 +155,12 @@ export const TopBar = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute right-0 mt-2 w-72 sm:w-80 bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-gray-200 dark:border-slate-800 z-50"
+                className="absolute right-0 mt-2 w-72 sm:w-80 bg-[#180630] rounded-xl shadow-xl border border-white/10 z-50"
               >
-                <div className="p-4 border-b border-gray-200 dark:border-slate-800">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">
-                    Notifications
-                  </h3>
+                <div className="p-4 border-b border-white/10">
+                  <h3 className="font-semibold text-white">Notifications</h3>
                 </div>
-                <div className="p-6 text-center text-sm text-gray-500 dark:text-gray-400">
+                <div className="p-6 text-center text-sm text-white/60">
                   You&apos;re all caught up.
                 </div>
               </motion.div>
@@ -171,19 +170,19 @@ export const TopBar = () => {
 
         <Link
           href="/dashboard/settings"
-          className="hidden sm:flex p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+          className="hidden sm:flex p-2 hover:bg-white/[0.06] rounded-lg transition-colors"
           aria-label="Settings"
         >
-          <Cog6ToothIcon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+          <Cog6ToothIcon className="h-5 w-5 text-white/75" />
         </Link>
 
         <div
-          className="relative pl-2 sm:pl-3 border-l border-gray-200 dark:border-slate-800"
+          className="relative pl-2 sm:pl-3 border-l border-white/10"
           ref={profileRef}
         >
           <button
             onClick={() => setShowProfileMenu(!showProfileMenu)}
-            className="flex items-center gap-2 sm:gap-3 hover:bg-gray-50 dark:hover:bg-slate-800/50 rounded-lg px-1.5 sm:px-2 py-1.5 transition-colors"
+            className="flex items-center gap-2 sm:gap-3 hover:bg-white/[0.06] rounded-lg px-1.5 sm:px-2 py-1.5 transition-colors"
           >
             {user?.profile?.avatarUrl ? (
               /* eslint-disable-next-line @next/next/no-img-element */
@@ -191,26 +190,24 @@ export const TopBar = () => {
                 src={user.profile.avatarUrl}
                 alt=""
                 referrerPolicy="no-referrer"
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover bg-gray-100 dark:bg-slate-800"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover bg-white/[0.06]"
               />
             ) : (
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-semibold text-sm sm:text-base">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-[#7F24FF] to-[#A769FF] flex items-center justify-center text-white font-semibold text-sm sm:text-base shadow-[0_4px_14px_-2px_rgba(127,36,255,0.5)]">
                 {userInitial(user?.profile?.fullName, user?.email)}
               </div>
             )}
             <div className="hidden sm:flex flex-col text-left">
-              <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+              <span className="text-sm font-semibold text-white">
                 {userDisplay(user?.profile?.fullName, user?.email)}
               </span>
               {phaseLabel && (
-                <span className="text-xs text-gray-500 dark:text-gray-400">
-                  {phaseLabel}
-                </span>
+                <span className="text-xs text-white/55">{phaseLabel}</span>
               )}
             </div>
             <ChevronDownIcon
               className={cn(
-                "h-4 w-4 hidden sm:block text-gray-400 dark:text-gray-500 transition-transform duration-200",
+                "h-4 w-4 hidden sm:block text-white/50 transition-transform duration-200",
                 showProfileMenu && "rotate-180",
               )}
             />
@@ -222,20 +219,20 @@ export const TopBar = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-gray-200 dark:border-slate-800 z-50 py-1"
+                className="absolute right-0 mt-2 w-56 bg-[#180630] rounded-xl shadow-xl border border-white/10 z-50 py-1"
               >
                 <Link
                   href="/dashboard/settings"
                   onClick={() => setShowProfileMenu(false)}
-                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
+                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-white/85 hover:bg-white/[0.06] transition-colors"
                 >
                   <UserIcon className="w-4 h-4" />
                   Profile & Settings
                 </Link>
-                <div className="border-t border-gray-200 dark:border-slate-800 my-1" />
+                <div className="border-t border-white/10 my-1" />
                 <button
                   onClick={signOut}
-                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors w-full"
+                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#FF6B6B] hover:bg-[#FF1C1C]/10 transition-colors w-full"
                 >
                   <ArrowRightStartOnRectangleIcon className="w-4 h-4" />
                   Sign Out

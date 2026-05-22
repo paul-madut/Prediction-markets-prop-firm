@@ -36,7 +36,7 @@ export default function SettingsPage() {
 
   if (!signedIn || !user) {
     return (
-      <div className="max-w-3xl mx-auto py-12 text-center text-sm text-gray-500 dark:text-gray-400">
+      <div className="max-w-3xl mx-auto py-12 text-center text-sm text-white/55">
         Not signed in.
       </div>
     );
@@ -70,8 +70,8 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Settings</h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        <h1 className="text-3xl font-bold text-white">Settings</h1>
+        <p className="text-sm text-white/55 mt-1">
           Profile and account preferences.
         </p>
       </div>
@@ -79,7 +79,7 @@ export default function SettingsPage() {
       {/* Profile */}
       <TextureCard interactive={false}>
         <TextureCardContent className="p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          <h2 className="text-lg font-semibold text-white">
             Profile
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -98,11 +98,11 @@ export default function SettingsPage() {
       {/* Accounts */}
       <TextureCard interactive={false}>
         <TextureCardContent className="p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          <h2 className="text-lg font-semibold text-white">
             Challenge accounts
           </h2>
           {accounts.length === 0 ? (
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-white/55">
               You don&apos;t have any challenge accounts yet.
             </p>
           ) : (
@@ -115,28 +115,28 @@ export default function SettingsPage() {
                     onClick={() => setActiveAccount(a.id)}
                     className={`w-full text-left px-4 py-3 rounded-xl border transition-colors flex items-center justify-between gap-4 ${
                       isActive
-                        ? "border-blue-500 bg-blue-50 dark:bg-blue-950/40"
-                        : "border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-blue-300"
+                        ? "border-[#A769FF] bg-[#7F24FF]/10 bg-[#1f0a3d]/40"
+                        : "border-gray-200 dark:border-white/10 bg-[#180630] hover:border-[#A769FF]"
                     }`}
                   >
                     <div>
-                      <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                      <div className="text-sm font-semibold text-white">
                         {a.config.name}
                       </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400 font-mono mt-0.5">
+                      <div className="text-xs text-white/55 font-mono mt-0.5">
                         {a.id}
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-sm tabular-nums font-semibold text-gray-900 dark:text-gray-100">
+                      <div className="text-sm tabular-nums font-semibold text-white">
                         {formatCurrency(Number(a.currentBalanceCents))}
                       </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400 capitalize">
+                      <div className="text-xs text-white/55 capitalize">
                         {a.status.replace("_", " ")}
                       </div>
                     </div>
                     {isActive && (
-                      <CheckCircleIcon className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                      <CheckCircleIcon className="w-5 h-5 text-[#A769FF] flex-shrink-0" />
                     )}
                   </button>
                 );
@@ -149,16 +149,16 @@ export default function SettingsPage() {
       {/* Security */}
       <TextureCard interactive={false}>
         <TextureCardContent className="p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          <h2 className="text-lg font-semibold text-white">
             Security
           </h2>
           <div className="flex items-center justify-between gap-4 flex-wrap">
             <div>
-              <div className="text-sm font-medium text-gray-900 dark:text-gray-100 inline-flex items-center gap-1.5">
+              <div className="text-sm font-medium text-white inline-flex items-center gap-1.5">
                 <KeyIcon className="w-4 h-4 text-gray-500" />
                 Password
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+              <p className="text-xs text-white/55 mt-0.5">
                 We send a reset link to {user.email}. Sign in with the new password
                 you choose.
               </p>
@@ -188,12 +188,12 @@ export default function SettingsPage() {
           )}
 
           {(user.role === "admin" || user.role === "owner") && (
-            <div className="flex items-center justify-between gap-4 flex-wrap pt-3 border-t border-gray-100 dark:border-slate-800">
+            <div className="flex items-center justify-between gap-4 flex-wrap pt-3 border-t border-gray-100 dark:border-white/10">
               <div>
-                <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                <div className="text-sm font-medium text-white">
                   Two-factor authentication
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                <p className="text-xs text-white/55 mt-0.5">
                   Required for admin actions in production.
                 </p>
               </div>
@@ -209,10 +209,10 @@ export default function SettingsPage() {
       <TextureCard interactive={false}>
         <TextureCardContent className="p-6 flex items-center justify-between gap-4 flex-wrap">
           <div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <h2 className="text-lg font-semibold text-white">
               Sign out
             </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-white/55">
               Ends this browser session. You can sign back in any time.
             </p>
           </div>
@@ -244,12 +244,12 @@ function Field({
 }) {
   return (
     <div>
-      <div className="text-xs uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium inline-flex items-center gap-1.5">
+      <div className="text-xs uppercase tracking-wider text-white/45 font-medium inline-flex items-center gap-1.5">
         {icon}
         {label}
       </div>
       <div
-        className={`mt-1 text-sm text-gray-900 dark:text-gray-100 ${mono ? "font-mono break-all" : ""}`}
+        className={`mt-1 text-sm text-white ${mono ? "font-mono break-all" : ""}`}
       >
         {value}
       </div>

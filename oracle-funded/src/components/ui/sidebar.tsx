@@ -90,7 +90,7 @@ export const DesktopSidebar = ({
   return (
     <motion.div
       className={cn(
-        "h-full py-4 hidden md:flex md:flex-col bg-white dark:bg-slate-900 flex-shrink-0 border-r border-gray-200 dark:border-slate-800 relative",
+        "h-full py-4 hidden md:flex md:flex-col bg-[#0C0319] flex-shrink-0 border-r border-white/10 relative",
         className
       )}
       animate={{
@@ -120,15 +120,15 @@ export const MobileSidebar = ({
       {/* Mobile top bar with hamburger */}
       <div
         className={cn(
-          "h-12 px-4 flex flex-row md:hidden items-center bg-white dark:bg-slate-900 w-full border-b border-gray-200 dark:border-slate-800"
+          "h-12 px-4 flex flex-row md:hidden items-center bg-[#0C0319] w-full border-b border-white/10"
         )}
         {...props}
       >
         <button
-          className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+          className="p-1.5 rounded-lg hover:bg-white/[0.06] transition-colors"
           onClick={() => setOpen(!open)}
         >
-          <Bars3Icon className="text-neutral-800 w-5 h-5" />
+          <Bars3Icon className="text-white/85 w-5 h-5" />
         </button>
       </div>
 
@@ -150,12 +150,12 @@ export const MobileSidebar = ({
               exit={{ x: "-100%" }}
               transition={{ duration: 0.25, ease: "easeOut" }}
               className={cn(
-                "fixed h-full w-72 inset-y-0 left-0 bg-white dark:bg-slate-900 p-6 z-[100] flex flex-col justify-between shadow-xl md:hidden",
+                "fixed h-full w-72 inset-y-0 left-0 bg-[#0C0319] p-6 z-[100] flex flex-col justify-between shadow-xl md:hidden",
                 className
               )}
             >
               <button
-                className="absolute right-4 top-4 p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors text-neutral-800"
+                className="absolute right-4 top-4 p-1.5 rounded-lg hover:bg-white/[0.06] transition-colors text-white/85"
                 onClick={() => setOpen(false)}
               >
                 <XMarkIcon className="w-5 h-5" />
@@ -195,14 +195,14 @@ export const SidebarLink = ({
       }}
       className={cn(
         "flex items-center group/sidebar rounded-lg relative",
-        "hover:bg-gray-100 dark:hover:bg-slate-800",
+        "hover:bg-white/[0.06]",
         // Open: full-width row with gap, padding, optional active border
         open && "gap-3 justify-start px-3 py-3 w-full",
-        open && isActive && "bg-blue-50 border-l-4 border-blue-600",
+        open && isActive && "bg-[rgba(127,36,255,0.14)] border-l-4 border-[#A769FF]",
         open && !isActive && "border-l-4 border-transparent",
         // Closed: fixed square so hover/active highlight is centered
         !open && "h-10 w-10 mx-auto justify-center",
-        !open && isActive && "bg-blue-50",
+        !open && isActive && "bg-[rgba(127,36,255,0.14)]",
         className
       )}
       {...props}
@@ -210,7 +210,7 @@ export const SidebarLink = ({
       <motion.div
         className={cn(
           "h-5 w-5 flex-shrink-0",
-          isActive ? "text-blue-600" : "text-neutral-700 dark:text-gray-300 group-hover/sidebar:text-blue-600"
+          isActive ? "text-[#A769FF]" : "text-white/70 group-hover/sidebar:text-[#A769FF]"
         )}
         transition={{ duration: 0.2 }}
       >
@@ -228,7 +228,7 @@ export const SidebarLink = ({
         }}
         className={cn(
           "text-base font-medium whitespace-pre !p-0 !m-0 overflow-hidden",
-          isActive ? "text-blue-600" : "text-neutral-700 dark:text-gray-300 group-hover/sidebar:text-blue-600"
+          isActive ? "text-white" : "text-white/75 group-hover/sidebar:text-white"
         )}
       >
         {link.label}

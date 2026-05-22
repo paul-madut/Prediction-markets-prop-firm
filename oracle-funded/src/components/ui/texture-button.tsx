@@ -4,25 +4,25 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const textureButtonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-lg",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold tracking-tight transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0319] disabled:pointer-events-none disabled:opacity-50 rounded-[10px]",
   {
     variants: {
       variant: {
         primary:
-          "bg-gradient-to-b from-blue-500 to-blue-600 text-white shadow-md border border-blue-600/50 hover:from-blue-600 hover:to-blue-700 hover:shadow-lg focus-visible:ring-blue-500",
+          "text-white shadow-[0_8px_24px_-6px_rgba(127,36,255,0.55)] hover:shadow-[0_12px_28px_-6px_rgba(127,36,255,0.7)] hover:-translate-y-px focus-visible:ring-[#7F24FF] bg-[#7F24FF] hover:bg-[#A769FF]",
         accent:
-          "bg-gradient-to-b from-indigo-500 to-indigo-600 text-white shadow-md border border-indigo-600/50 hover:from-indigo-600 hover:to-indigo-700 hover:shadow-lg focus-visible:ring-indigo-500",
+          "text-white shadow-[0_8px_24px_-6px_rgba(167,105,255,0.55)] hover:shadow-[0_12px_28px_-6px_rgba(167,105,255,0.7)] hover:-translate-y-px focus-visible:ring-[#A769FF] bg-[#A769FF] hover:bg-[#7F24FF]",
         secondary:
-          "bg-gradient-to-b from-white to-gray-50 text-gray-700 dark:text-gray-300 shadow-sm border border-gray-200 dark:border-slate-800 hover:from-gray-50 hover:to-gray-100 hover:shadow-md focus-visible:ring-gray-400",
+          "bg-white/[0.06] text-white border border-white/15 hover:bg-white/[0.10] hover:border-white/25 focus-visible:ring-white/30",
         minimal:
-          "bg-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-gray-900 focus-visible:ring-gray-400",
+          "bg-transparent text-white/80 hover:bg-white/[0.06] hover:text-white focus-visible:ring-white/20",
         destructive:
-          "bg-gradient-to-b from-red-500 to-red-600 text-white shadow-md border border-red-600/50 hover:from-red-600 hover:to-red-700 hover:shadow-lg focus-visible:ring-red-500",
+          "text-white shadow-[0_8px_24px_-6px_rgba(255,28,28,0.5)] hover:shadow-[0_12px_28px_-6px_rgba(255,28,28,0.65)] hover:-translate-y-px focus-visible:ring-[#FF1C1C] bg-[#FF1C1C] hover:bg-[#d51111]",
       },
       size: {
-        default: "h-10 px-5 py-2",
-        sm: "h-8 px-3 text-xs",
-        lg: "h-12 px-8 text-base",
+        default: "h-11 px-5 py-2.5",
+        sm: "h-9 px-3.5 text-xs",
+        lg: "h-12 px-7 text-base",
         icon: "h-10 w-10",
       },
     },

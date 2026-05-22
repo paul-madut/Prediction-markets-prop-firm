@@ -267,51 +267,51 @@ const CredentialsModal = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 10 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden"
+          className="relative bg-[#180630] rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden"
         >
-          <div className="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between">
+          <div className="px-6 py-5 border-b border-gray-100 dark:border-white/10 flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              <h3 className="text-lg font-semibold text-white">
                 Account Credentials
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+              <p className="text-sm text-white/55 mt-0.5">
                 Your trading account access details
               </p>
             </div>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-[#1f0a3d] rounded-lg transition-colors"
             >
-              <XMarkIcon className="w-5 h-5 text-gray-400 dark:text-gray-500" />
+              <XMarkIcon className="w-5 h-5 text-white/45" />
             </button>
           </div>
           <div className="p-6 space-y-4">
             {credentials.map((cred) => (
               <div
                 key={cred.label}
-                className="bg-gray-50 dark:bg-slate-950 rounded-xl p-4"
+                className="bg-[#0C0319] dark:bg-[#0C0319] rounded-xl p-4"
               >
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wide">
+                  <span className="text-xs font-medium text-white/45 uppercase tracking-wide">
                     {cred.label}
                   </span>
                   <button
                     onClick={() => copyToClipboard(cred.label, cred.value)}
-                    className="p-1.5 hover:bg-gray-200 dark:hover:bg-slate-800 rounded-md transition-colors"
+                    className="p-1.5 hover:bg-gray-200 dark:hover:bg-[#1f0a3d] rounded-md transition-colors"
                   >
                     {copiedField === cred.label ? (
                       <CheckIcon className="w-3.5 h-3.5 text-green-500" />
                     ) : (
-                      <DocumentDuplicateIcon className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500" />
+                      <DocumentDuplicateIcon className="w-3.5 h-3.5 text-white/45" />
                     )}
                   </button>
                 </div>
-                <div className="font-mono text-sm font-medium text-gray-900 dark:text-gray-100 break-all">
+                <div className="font-mono text-sm font-medium text-white break-all">
                   {cred.value}
                 </div>
               </div>
             ))}
-            <div className="bg-blue-50 dark:bg-blue-950/40 rounded-xl p-4 text-xs text-blue-700 dark:text-blue-300 flex items-start gap-2">
+            <div className="bg-[#7F24FF]/10 bg-[#1f0a3d]/40 rounded-xl p-4 text-xs text-[#7F24FF] text-[#A769FF] flex items-start gap-2">
               <KeyIcon className="w-4 h-4 flex-shrink-0 mt-0.5" />
               <span>
                 Reset your password from the{" "}
@@ -410,7 +410,7 @@ const ShareMetricsModal = ({
     `Trading Days: ${user.tradingDaysCompleted}`,
     `Status: ${phaseLabel}`,
     ``,
-    `Powered by OracleFunded`,
+    `Powered by Blueberry Funded`,
   ].join("\n");
 
   const handleCopy = () => {
@@ -453,62 +453,62 @@ const ShareMetricsModal = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 10 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden"
+          className="relative bg-[#180630] rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden"
         >
-          <div className="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between">
+          <div className="px-6 py-5 border-b border-gray-100 dark:border-white/10 flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              <h3 className="text-lg font-semibold text-white">
                 Share Metrics
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+              <p className="text-sm text-white/55 mt-0.5">
                 Share your trading performance
               </p>
             </div>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-[#1f0a3d] rounded-lg transition-colors"
             >
-              <XMarkIcon className="w-5 h-5 text-gray-400 dark:text-gray-500" />
+              <XMarkIcon className="w-5 h-5 text-white/45" />
             </button>
           </div>
 
           <div className="p-6">
             <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-xl p-6 text-white">
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#A769FF] to-[#7F24FF] flex items-center justify-center text-white font-bold text-lg shadow-[0_4px_14px_-2px_rgba(127,36,255,0.5)]">
                   {user.username.charAt(0).toUpperCase()}
                 </div>
                 <div>
                   <div className="font-semibold">{user.username}</div>
-                  <div className="text-xs text-gray-400 dark:text-gray-500">
+                  <div className="text-xs text-white/45">
                     {phaseLabel}
                   </div>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <div className="text-xs text-gray-400 dark:text-gray-500 mb-1">Balance</div>
+                  <div className="text-xs text-white/45 mb-1">Balance</div>
                   <div className="text-lg font-bold">{formatCurrency(user.accountBalance)}</div>
                 </div>
                 <div>
-                  <div className="text-xs text-gray-400 dark:text-gray-500 mb-1">Total P&L</div>
+                  <div className="text-xs text-white/45 mb-1">Total P&L</div>
                   <div className={`text-lg font-bold ${totalPnL >= 0 ? "text-green-400" : "text-red-400"}`}>
                     {totalPnL >= 0 ? "+" : ""}{formatCurrency(totalPnL)}
                   </div>
                 </div>
                 <div>
-                  <div className="text-xs text-gray-400 dark:text-gray-500 mb-1">Win Rate</div>
+                  <div className="text-xs text-white/45 mb-1">Win Rate</div>
                   <div className="text-lg font-bold">{formatPercent(user.winRate, 0)}</div>
                 </div>
                 <div>
-                  <div className="text-xs text-gray-400 dark:text-gray-500 mb-1">ROI</div>
+                  <div className="text-xs text-white/45 mb-1">ROI</div>
                   <div className={`text-lg font-bold ${Number(profitPercent) >= 0 ? "text-green-400" : "text-red-400"}`}>
                     {Number(profitPercent) >= 0 ? "+" : ""}{profitPercent}%
                   </div>
                 </div>
               </div>
-              <div className="mt-4 pt-4 border-t border-gray-700 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-                <span>OracleFunded</span>
+              <div className="mt-4 pt-4 border-t border-gray-700 flex items-center justify-between text-xs text-white/55">
+                <span>Blueberry Funded</span>
                 <span>{user.tradingDaysCompleted} trading days</span>
               </div>
             </div>
@@ -533,7 +533,7 @@ const ShareMetricsModal = ({
             </button>
             <button
               onClick={handleDownload}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium text-sm"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#7F24FF] text-white rounded-xl hover:bg-[#6c14ee] transition-colors font-medium text-sm"
             >
               {downloading ? (
                 <>
@@ -628,28 +628,28 @@ const TimeSinceCounter = ({ startDate }: { startDate: string }) => {
   return (
     <div className="flex justify-between text-center">
       <div className="flex-1">
-        <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <div className="text-2xl font-bold text-white">
           {String(t.days).padStart(2, "0")}
         </div>
-        <div className="text-xs text-gray-500 dark:text-gray-400">DAY</div>
+        <div className="text-xs text-white/55">DAY</div>
       </div>
       <div className="flex-1">
-        <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <div className="text-2xl font-bold text-white">
           {String(t.hours).padStart(2, "0")}
         </div>
-        <div className="text-xs text-gray-500 dark:text-gray-400">HR</div>
+        <div className="text-xs text-white/55">HR</div>
       </div>
       <div className="flex-1">
-        <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <div className="text-2xl font-bold text-white">
           {String(t.minutes).padStart(2, "0")}
         </div>
-        <div className="text-xs text-gray-500 dark:text-gray-400">MIN</div>
+        <div className="text-xs text-white/55">MIN</div>
       </div>
       <div className="flex-1">
-        <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <div className="text-2xl font-bold text-white">
           {String(t.seconds).padStart(2, "0")}
         </div>
-        <div className="text-xs text-gray-500 dark:text-gray-400">SEC</div>
+        <div className="text-xs text-white/55">SEC</div>
       </div>
     </div>
   );
@@ -670,19 +670,19 @@ const PnLCalendar = () => {
   const paddingDays = Array(startDay).fill(null);
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 p-3 sm:p-6">
+    <div className="bg-[#180630] rounded-lg border border-gray-200 dark:border-white/10 p-3 sm:p-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-        <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100">
+        <h3 className="text-base sm:text-lg font-semibold text-white">
           P&amp;L Calendar
         </h3>
         <div className="flex items-center gap-2 sm:gap-4">
-          <div className="flex bg-gray-100 dark:bg-slate-800 rounded-lg p-1">
+          <div className="flex bg-gray-100 dark:bg-[#1f0a3d] rounded-lg p-1">
             <button
               onClick={() => setViewMode("month")}
               className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md transition ${
                 viewMode === "month"
-                  ? "bg-white dark:bg-slate-900 shadow text-gray-900 dark:text-gray-100"
-                  : "text-gray-500 dark:text-gray-400"
+                  ? "bg-[#180630] shadow text-white"
+                  : "text-white/55"
               }`}
             >
               Month
@@ -691,8 +691,8 @@ const PnLCalendar = () => {
               onClick={() => setViewMode("year")}
               className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md transition ${
                 viewMode === "year"
-                  ? "bg-white dark:bg-slate-900 shadow text-gray-900 dark:text-gray-100"
-                  : "text-gray-500 dark:text-gray-400"
+                  ? "bg-[#180630] shadow text-white"
+                  : "text-white/55"
               }`}
             >
               Year
@@ -701,18 +701,18 @@ const PnLCalendar = () => {
           <div className="flex items-center gap-1 sm:gap-2">
             <button
               onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-              className="p-1 hover:bg-gray-100 dark:hover:bg-slate-800 rounded"
+              className="p-1 hover:bg-gray-100 dark:hover:bg-[#1f0a3d] rounded"
             >
-              <ChevronLeftIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400" />
+              <ChevronLeftIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white/55" />
             </button>
-            <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 min-w-[80px] sm:min-w-[100px] text-center">
+            <span className="text-xs sm:text-sm font-medium text-white/85 min-w-[80px] sm:min-w-[100px] text-center">
               {format(currentMonth, "yyyy-MM")}
             </span>
             <button
               onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-              className="p-1 hover:bg-gray-100 dark:hover:bg-slate-800 rounded"
+              className="p-1 hover:bg-gray-100 dark:hover:bg-[#1f0a3d] rounded"
             >
-              <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400" />
+              <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white/55" />
             </button>
           </div>
         </div>
@@ -722,7 +722,7 @@ const PnLCalendar = () => {
         {["S", "M", "T", "W", "T", "F", "S"].map((day, i) => (
           <div
             key={`${day}-${i}`}
-            className="text-center text-[10px] sm:text-sm font-medium text-gray-500 dark:text-gray-400 py-1 sm:py-2"
+            className="text-center text-[10px] sm:text-sm font-medium text-white/55 py-1 sm:py-2"
           >
             <span className="hidden sm:inline">
               {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][i]}
@@ -736,7 +736,7 @@ const PnLCalendar = () => {
         {paddingDays.map((_, index) => (
           <div
             key={`padding-${index}`}
-            className="h-12 sm:h-20 bg-gray-50/50 dark:bg-slate-950 rounded-md sm:rounded-lg"
+            className="h-12 sm:h-20 bg-[#0C0319]/50 dark:bg-[#0C0319] rounded-md sm:rounded-lg"
           />
         ))}
         {days.map((day) => {
@@ -746,18 +746,18 @@ const PnLCalendar = () => {
               key={format(day, "yyyy-MM-dd")}
               className={`h-12 sm:h-20 rounded-md sm:rounded-lg border p-1 sm:p-1.5 relative ${
                 isToday
-                  ? "border-blue-500 border-2"
-                  : "border-gray-100 dark:border-slate-800"
-              } bg-white dark:bg-slate-900`}
+                  ? "border-[#A769FF] border-2"
+                  : "border-gray-100 dark:border-white/10"
+              } bg-[#180630]`}
             >
-              <div className="text-[10px] sm:text-xs text-gray-400 dark:text-gray-500 mb-0.5">
+              <div className="text-[10px] sm:text-xs text-white/45 mb-0.5">
                 {format(day, "d")}
               </div>
             </div>
           );
         })}
       </div>
-      <p className="text-xs text-gray-400 dark:text-gray-500 mt-3 text-center">
+      <p className="text-xs text-white/45 mt-3 text-center">
         Trade activity will appear here once you place your first order.
       </p>
     </div>
@@ -824,7 +824,7 @@ export default function Dashboard() {
   if (!signedIn) {
     return (
       <div className="max-w-2xl mx-auto py-16 text-center">
-        <p className="text-gray-500 dark:text-gray-400">
+        <p className="text-white/55">
           Not signed in. Redirecting…
         </p>
       </div>
@@ -836,11 +836,11 @@ export default function Dashboard() {
       <div className="max-w-2xl mx-auto py-12">
         <TextureCard interactive={false}>
           <TextureCardContent className="p-10 text-center">
-            <RocketLaunchIcon className="w-10 h-10 text-blue-500 mx-auto mb-3" />
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            <RocketLaunchIcon className="w-10 h-10 text-[#A769FF] mx-auto mb-3" />
+            <h2 className="text-2xl font-bold text-white mb-2">
               Welcome, {user.username}
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-white/75 mb-6">
               You don&apos;t have a challenge account yet. Pick one to get
               started.
             </p>
@@ -901,16 +901,16 @@ export default function Dashboard() {
                     onClick={() => setAccountSwitcherOpen((v) => !v)}
                     aria-haspopup="listbox"
                     aria-expanded={accountSwitcherOpen}
-                    className="flex items-center gap-2 sm:gap-3 group rounded-lg -m-1 p-1 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
+                    className="flex items-center gap-2 sm:gap-3 group rounded-lg -m-1 p-1 hover:bg-[#0C0319] dark:hover:bg-[#1f0a3d]/50 transition-colors"
                   >
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-[#A769FF] to-[#7F24FF] flex items-center justify-center shadow-sm">
                       <CurrencyDollarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                     </div>
                     <div className="text-left">
-                      <div className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium">
+                      <div className="text-[10px] uppercase tracking-wider text-white/45 font-medium">
                         Account Size
                       </div>
-                      <div className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">
+                      <div className="text-lg sm:text-xl font-bold text-white">
                         <AnimatedNumber
                           value={user.accountSize / 100}
                           format={(v) => `$${v.toLocaleString()}`}
@@ -918,8 +918,8 @@ export default function Dashboard() {
                       </div>
                     </div>
                     <ChevronDownIcon
-                      className={`w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-blue-500 transition-all ${
-                        accountSwitcherOpen ? "rotate-180 text-blue-500" : ""
+                      className={`w-4 h-4 text-white/45 group-hover:text-[#A769FF] transition-all ${
+                        accountSwitcherOpen ? "rotate-180 text-[#A769FF]" : ""
                       }`}
                     />
                   </button>
@@ -931,11 +931,11 @@ export default function Dashboard() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -4 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute left-0 top-full mt-2 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-gray-200 dark:border-slate-800 overflow-hidden z-[100]"
+                        className="absolute left-0 top-full mt-2 w-80 bg-[#180630] rounded-xl shadow-xl border border-gray-200 dark:border-white/10 overflow-hidden z-[100]"
                         role="listbox"
                       >
-                        <div className="px-4 py-2 border-b border-gray-100 dark:border-slate-800">
-                          <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold">
+                        <div className="px-4 py-2 border-b border-gray-100 dark:border-white/10">
+                          <p className="text-[10px] uppercase tracking-wider text-white/45 font-semibold">
                             Switch account
                           </p>
                         </div>
@@ -958,7 +958,7 @@ export default function Dashboard() {
                               a.accountPhase === "funded"
                                 ? "bg-green-100 text-green-800"
                                 : a.accountPhase === "evaluation_2"
-                                  ? "bg-blue-100 text-blue-800"
+                                  ? "bg-[#7F24FF]/15 text-blue-800"
                                   : "bg-amber-100 text-amber-800";
                             return (
                               <button
@@ -969,8 +969,8 @@ export default function Dashboard() {
                                 }}
                                 role="option"
                                 aria-selected={isActive}
-                                className={`w-full text-left px-3 py-2.5 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors ${
-                                  isActive ? "bg-blue-50 hover:bg-blue-50" : ""
+                                className={`w-full text-left px-3 py-2.5 rounded-lg hover:bg-[#0C0319] dark:hover:bg-[#1f0a3d]/50 transition-colors ${
+                                  isActive ? "bg-[#7F24FF]/10 hover:bg-[#7F24FF]/10" : ""
                                 }`}
                               >
                                 <div className="flex items-center gap-2 mb-1">
@@ -979,18 +979,18 @@ export default function Dashboard() {
                                   >
                                     {phaseLabel}
                                   </span>
-                                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                                  <span className="text-xs text-white/55">
                                     ${(a.accountSize / 100000).toFixed(0)}K
                                   </span>
                                   {isActive && (
-                                    <span className="ml-auto text-[10px] font-semibold text-blue-600 inline-flex items-center gap-1">
+                                    <span className="ml-auto text-[10px] font-semibold text-[#A769FF] inline-flex items-center gap-1">
                                       <CheckCircleIcon className="w-3 h-3" />
                                       ACTIVE
                                     </span>
                                   )}
                                 </div>
                                 <div className="flex items-baseline gap-2">
-                                  <span className="font-bold text-gray-900 dark:text-gray-100 tabular-nums text-sm">
+                                  <span className="font-bold text-white tabular-nums text-sm">
                                     {formatCurrency(a.accountBalance)}
                                   </span>
                                   <span
@@ -1009,7 +1009,7 @@ export default function Dashboard() {
                         <Link
                           href="/dashboard/new-challenge"
                           onClick={() => setAccountSwitcherOpen(false)}
-                          className="flex items-center gap-2 px-4 py-3 border-t border-gray-100 dark:border-slate-800 text-blue-600 font-semibold text-sm hover:bg-gray-50 dark:hover:bg-slate-800/50"
+                          className="flex items-center gap-2 px-4 py-3 border-t border-gray-100 dark:border-white/10 text-[#A769FF] font-semibold text-sm hover:bg-[#0C0319] dark:hover:bg-[#1f0a3d]/50"
                         >
                           <RocketLaunchIcon className="w-4 h-4" />
                           Start New Challenge
@@ -1023,8 +1023,8 @@ export default function Dashboard() {
 
                 <div className="hidden sm:flex items-center gap-4 text-sm">
                   <div className="flex items-center gap-1.5">
-                    <CalendarIcon className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500" />
-                    <span className="text-gray-500 dark:text-gray-400">
+                    <CalendarIcon className="w-3.5 h-3.5 text-white/45" />
+                    <span className="text-white/55">
                       {formatDate(user.challengeStartDate, "MMM dd, yyyy")}
                     </span>
                   </div>
@@ -1033,7 +1033,7 @@ export default function Dashboard() {
 
                   <div className="flex items-center gap-1.5">
                     <ArrowTrendingUpIcon className="w-3.5 h-3.5 text-purple-400" />
-                    <span className="text-gray-500 dark:text-gray-400">
+                    <span className="text-white/55">
                       {Math.round(
                         Number(activeAccount.config.profitSplitPct ?? 90),
                       )}
@@ -1048,14 +1048,14 @@ export default function Dashboard() {
                       className={`w-2 h-2 rounded-full ${
                         user.accountPhase === "funded"
                           ? "bg-green-500"
-                          : "bg-blue-500"
+                          : "bg-[#A769FF]"
                       } animate-pulse`}
                     />
                     <span
                       className={`font-medium ${
                         user.accountPhase === "funded"
                           ? "text-green-600"
-                          : "text-blue-600"
+                          : "text-[#A769FF]"
                       }`}
                     >
                       {user.accountPhase === "evaluation_1"
@@ -1074,14 +1074,14 @@ export default function Dashboard() {
                     className={`w-2 h-2 rounded-full ${
                       user.accountPhase === "funded"
                         ? "bg-green-500"
-                        : "bg-blue-500"
+                        : "bg-[#A769FF]"
                     } animate-pulse`}
                   />
                   <span
                     className={`font-medium ${
                       user.accountPhase === "funded"
                         ? "text-green-600"
-                        : "text-blue-600"
+                        : "text-[#A769FF]"
                     }`}
                   >
                     {user.accountPhase === "evaluation_1"
@@ -1092,12 +1092,12 @@ export default function Dashboard() {
                   </span>
                 </div>
                 <span className="text-gray-300 dark:text-gray-600">|</span>
-                <code className="font-mono text-gray-400 dark:text-gray-500">
+                <code className="font-mono text-white/45">
                   {shortAccountId(user.accountId)}
                 </code>
               </div>
 
-              <code className="hidden sm:block text-xs font-mono text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-slate-950 px-3 py-1.5 rounded-md border border-gray-100 dark:border-slate-800">
+              <code className="hidden sm:block text-xs font-mono text-white/45 bg-[#0C0319] dark:bg-[#0C0319] px-3 py-1.5 rounded-md border border-gray-100 dark:border-white/10">
                 {shortAccountId(user.accountId)}
               </code>
             </div>
@@ -1112,7 +1112,7 @@ export default function Dashboard() {
             <div className="flex-1 p-8 relative">
               <div className="absolute -left-16 -bottom-16 w-56 h-56 bg-gradient-to-tr from-blue-100/30 to-transparent rounded-full blur-3xl pointer-events-none" />
               <div className="relative z-10">
-                <h1 className="text-lg font-medium text-gray-400 dark:text-gray-500 mb-0.5">
+                <h1 className="text-lg font-medium text-white/45 mb-0.5">
                   Welcome back,
                 </h1>
                 <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-gray-100 dark:via-gray-200 dark:to-gray-100 bg-clip-text text-transparent mb-5">
@@ -1143,10 +1143,10 @@ export default function Dashboard() {
             <div className="flex-1 p-8 flex items-center">
               <div className="grid grid-cols-3 gap-6 w-full text-center">
                 <div>
-                  <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  <div className="text-2xl font-bold text-white">
                     {formatPercent(user.winRate, 0)}
                   </div>
-                  <div className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium mt-1">
+                  <div className="text-[10px] uppercase tracking-wider text-white/45 font-medium mt-1">
                     Win Rate
                   </div>
                 </div>
@@ -1161,18 +1161,18 @@ export default function Dashboard() {
                     {user.currentProfit >= 0 ? "+" : ""}
                     {formatPercent(user.currentProfit)}
                   </div>
-                  <div className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium mt-1">
+                  <div className="text-[10px] uppercase tracking-wider text-white/45 font-medium mt-1">
                     Profit
                   </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  <div className="text-2xl font-bold text-white">
                     {user.tradingDaysCompleted}
                     <span className="text-gray-300 dark:text-gray-600 font-normal">
                       /{user.tradingDaysRequired}
                     </span>
                   </div>
-                  <div className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium mt-1">
+                  <div className="text-[10px] uppercase tracking-wider text-white/45 font-medium mt-1">
                     Trading Days
                   </div>
                 </div>
@@ -1193,14 +1193,14 @@ export default function Dashboard() {
                 <div className="text-xs text-green-600 font-medium mb-2">
                   Account Balance
                 </div>
-                <div className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                <div className="text-xl font-bold text-white">
                   {formatCurrency(user.accountBalance)}
                 </div>
               </TextureCardContent>
             </TextureCard>
             <TextureCard>
               <TextureCardContent className="px-4 py-5">
-                <div className="text-xs text-blue-600 font-medium mb-2">
+                <div className="text-xs text-[#A769FF] font-medium mb-2">
                   Today&apos;s P&amp;L
                 </div>
                 <div
@@ -1218,7 +1218,7 @@ export default function Dashboard() {
                 <div className="text-xs text-purple-600 font-medium mb-2">
                   Open Positions
                 </div>
-                <div className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                <div className="text-xl font-bold text-white">
                   {positions.length}
                 </div>
               </TextureCardContent>
@@ -1228,7 +1228,7 @@ export default function Dashboard() {
                 <div className="text-xs text-amber-600 font-medium mb-2">
                   Total Trades
                 </div>
-                <div className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                <div className="text-xl font-bold text-white">
                   {trades.length}
                 </div>
               </TextureCardContent>
@@ -1239,7 +1239,7 @@ export default function Dashboard() {
           <TextureCard interactive={false}>
             <TextureCardContent>
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h3 className="text-lg font-semibold text-white">
                   Account Performance
                 </h3>
                 <span
@@ -1299,12 +1299,12 @@ export default function Dashboard() {
           <TextureCard interactive={false}>
             <TextureCardContent>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h3 className="text-lg font-semibold text-white">
                   Objectives
                 </h3>
                 <Link
                   href="/dashboard/rules"
-                  className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+                  className="text-sm text-[#A769FF] hover:text-[#A769FF] font-medium flex items-center gap-1"
                 >
                   View Rules
                   <ChevronRightIcon className="w-4 h-4" />
@@ -1328,18 +1328,18 @@ export default function Dashboard() {
                         color="#22c55e"
                       />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-xs font-bold text-gray-900 dark:text-gray-100">
+                        <span className="text-xs font-bold text-white">
                           {Math.round(profitProgress)}%
                         </span>
                       </div>
                     </div>
                     <div className="min-w-0">
-                      <div className="text-lg font-bold text-gray-900 dark:text-gray-100 truncate">
+                      <div className="text-lg font-bold text-white truncate">
                         {formatCurrency(
                           user.currentProfit * user.startingBalance,
                         )}
                       </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                      <div className="text-xs text-white/55">
                         of{" "}
                         {formatCurrency(
                           user.profitTarget * user.startingBalance,
@@ -1382,18 +1382,18 @@ export default function Dashboard() {
                         color={dailyDDProgress > 80 ? "#ef4444" : "#22c55e"}
                       />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-xs font-bold text-gray-900 dark:text-gray-100">
+                        <span className="text-xs font-bold text-white">
                           {Math.round(dailyDDProgress)}%
                         </span>
                       </div>
                     </div>
                     <div className="min-w-0">
-                      <div className="text-lg font-bold text-gray-900 dark:text-gray-100 truncate">
+                      <div className="text-lg font-bold text-white truncate">
                         {formatCurrency(
                           Math.abs(user.currentDailyDrawdown) * user.peakBalance,
                         )}
                       </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                      <div className="text-xs text-white/55">
                         of{" "}
                         {formatCurrency(
                           user.dailyDrawdownLimit * user.peakBalance,
@@ -1436,19 +1436,19 @@ export default function Dashboard() {
                         color={maxDDProgress > 80 ? "#ef4444" : "#22c55e"}
                       />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-xs font-bold text-gray-900 dark:text-gray-100">
+                        <span className="text-xs font-bold text-white">
                           {Math.round(maxDDProgress)}%
                         </span>
                       </div>
                     </div>
                     <div className="min-w-0">
-                      <div className="text-lg font-bold text-gray-900 dark:text-gray-100 truncate">
+                      <div className="text-lg font-bold text-white truncate">
                         {formatCurrency(
                           Math.abs(user.currentMaxDrawdown) *
                             user.startingBalance,
                         )}
                       </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                      <div className="text-xs text-white/55">
                         of{" "}
                         {formatCurrency(
                           user.maxDrawdownLimit * user.startingBalance,
@@ -1459,12 +1459,12 @@ export default function Dashboard() {
                 </div>
 
                 {/* Trading Days */}
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-xl p-4 border border-blue-100 dark:border-blue-900">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-xl p-4 border border-[#A769FF]/20 dark:border-blue-900">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-semibold text-blue-700 dark:text-blue-300 uppercase tracking-wide">
+                    <span className="text-xs font-semibold text-[#7F24FF] text-[#A769FF] uppercase tracking-wide">
                       Trading Days
                     </span>
-                    <CheckCircleIcon className="w-4 h-4 text-blue-500" />
+                    <CheckCircleIcon className="w-4 h-4 text-[#A769FF]" />
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="relative flex-shrink-0">
@@ -1475,19 +1475,19 @@ export default function Dashboard() {
                         color="#2563eb"
                       />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-xs font-bold text-gray-900 dark:text-gray-100">
+                        <span className="text-xs font-bold text-white">
                           {Math.round(tradingDaysProgress)}%
                         </span>
                       </div>
                     </div>
                     <div className="min-w-0">
-                      <div className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                      <div className="text-lg font-bold text-white">
                         {user.tradingDaysCompleted}{" "}
-                        <span className="text-gray-400 dark:text-gray-500 font-normal">
+                        <span className="text-white/45 font-normal">
                           / {user.tradingDaysRequired}
                         </span>
                       </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                      <div className="text-xs text-white/55">
                         days completed
                       </div>
                     </div>
@@ -1503,30 +1503,30 @@ export default function Dashboard() {
           {/* Account Data */}
           <TextureCard>
             <TextureCardContent className="p-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Account Data
               </h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center gap-2 text-white/55">
                     <div className="w-2 h-2 rounded-full bg-green-500"></div>
                     Login
                   </div>
-                  <div className="font-medium text-gray-900 dark:text-gray-100 font-mono text-sm">
+                  <div className="font-medium text-white font-mono text-sm">
                     {shortAccountId(user.userId)}
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-                    <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                  <div className="flex items-center gap-2 text-white/55">
+                    <div className="w-2 h-2 rounded-full bg-[#A769FF]"></div>
                     Start
                   </div>
-                  <div className="font-medium text-gray-900 dark:text-gray-100">
+                  <div className="font-medium text-white">
                     {formatDate(user.challengeStartDate, "MM/dd/yyyy")}
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center gap-2 text-white/55">
                     <div className="w-2 h-2 rounded-full bg-amber-500"></div>
                     Result
                   </div>
@@ -1535,7 +1535,7 @@ export default function Dashboard() {
                       user.status === "active" || user.status === "funded"
                         ? "text-green-600"
                         : user.status === "passed"
-                          ? "text-blue-600"
+                          ? "text-[#A769FF]"
                           : "text-red-600"
                     }`}
                   >
@@ -1549,14 +1549,14 @@ export default function Dashboard() {
               <div className="space-y-2.5">
                 <button
                   onClick={() => setShowCredentials(true)}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-950/60 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#7F24FF]/10 bg-[#1f0a3d]/40 text-[#A769FF] text-[#A769FF] rounded-lg hover:bg-[#7F24FF]/15 dark:hover:bg-blue-950/60 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium"
                 >
                   <KeyIcon className="w-4 h-4" />
                   Credentials
                 </button>
                 <button
                   onClick={() => setShowShareMetrics(true)}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 dark:bg-slate-950 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#0C0319] dark:bg-[#0C0319] text-white/85 rounded-lg hover:bg-gray-100 dark:hover:bg-[#1f0a3d] hover:shadow-md hover:scale-[1.02] transition-all duration-200 font-medium"
                 >
                   <ShareIcon className="w-4 h-4" />
                   Share Metrics
@@ -1576,25 +1576,25 @@ export default function Dashboard() {
           <TextureCard>
             <TextureCardContent className="p-6">
               <div className="flex items-center gap-2 mb-3">
-                <ArrowTrendingUpIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                <ArrowTrendingUpIcon className="w-5 h-5 text-white/55" />
+                <h3 className="text-sm font-medium text-white/55">
                   Volume
                 </h3>
               </div>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-500 dark:text-gray-400">
+                  <span className="text-white/55">
                     Highest volume
                   </span>
-                  <span className="font-bold text-gray-900 dark:text-gray-100">
+                  <span className="font-bold text-white">
                     {formatCurrency(highestVolume)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-500 dark:text-gray-400">
+                  <span className="text-white/55">
                     Lowest volume
                   </span>
-                  <span className="font-bold text-gray-900 dark:text-gray-100">
+                  <span className="font-bold text-white">
                     {formatCurrency(lowestVolume)}
                   </span>
                 </div>
@@ -1606,8 +1606,8 @@ export default function Dashboard() {
           <TextureCard>
             <TextureCardContent className="p-6">
               <div className="flex items-center gap-2 mb-3">
-                <ClockIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                <ClockIcon className="w-5 h-5 text-white/55" />
+                <h3 className="text-sm font-medium text-white/55">
                   Time since challenge start
                 </h3>
               </div>
@@ -1621,28 +1621,28 @@ export default function Dashboard() {
       {/* Tabs */}
       <TextureCard interactive={false}>
         <Tabs.Root defaultValue="calendar">
-          <Tabs.List className="flex border-b border-gray-200 dark:border-slate-800 px-2 sm:px-4 overflow-x-auto">
+          <Tabs.List className="flex border-b border-gray-200 dark:border-white/10 px-2 sm:px-4 overflow-x-auto">
             <Tabs.Trigger
               value="statistics"
-              className="px-2.5 sm:px-4 py-3 text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-300 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600 whitespace-nowrap"
+              className="px-2.5 sm:px-4 py-3 text-xs sm:text-sm font-medium text-white/55 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-300 data-[state=active]:text-[#A769FF] data-[state=active]:border-[#7F24FF] whitespace-nowrap"
             >
               Statistics
             </Tabs.Trigger>
             <Tabs.Trigger
               value="journal"
-              className="px-2.5 sm:px-4 py-3 text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-300 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600 whitespace-nowrap"
+              className="px-2.5 sm:px-4 py-3 text-xs sm:text-sm font-medium text-white/55 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-300 data-[state=active]:text-[#A769FF] data-[state=active]:border-[#7F24FF] whitespace-nowrap"
             >
               Journal
             </Tabs.Trigger>
             <Tabs.Trigger
               value="calendar"
-              className="px-2.5 sm:px-4 py-3 text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-300 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600 whitespace-nowrap"
+              className="px-2.5 sm:px-4 py-3 text-xs sm:text-sm font-medium text-white/55 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-300 data-[state=active]:text-[#A769FF] data-[state=active]:border-[#7F24FF] whitespace-nowrap"
             >
               Calendar
             </Tabs.Trigger>
             <Tabs.Trigger
               value="rules"
-              className="px-2.5 sm:px-4 py-3 text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-300 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600 whitespace-nowrap"
+              className="px-2.5 sm:px-4 py-3 text-xs sm:text-sm font-medium text-white/55 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-300 data-[state=active]:text-[#A769FF] data-[state=active]:border-[#7F24FF] whitespace-nowrap"
             >
               Rules
             </Tabs.Trigger>
@@ -1651,30 +1651,30 @@ export default function Dashboard() {
           <Tabs.Content value="statistics" className="p-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                <div className="text-2xl font-bold text-white">
                   {trades.length}
                 </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
+                <div className="text-sm text-white/55">
                   Total Trades
                 </div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-600">0</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
+                <div className="text-sm text-white/55">
                   Winning Trades
                 </div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-red-600">0</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
+                <div className="text-sm text-white/55">
                   Losing Trades
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">
+                <div className="text-2xl font-bold text-[#A769FF]">
                   {formatPercent(user.winRate, 0)}
                 </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
+                <div className="text-sm text-white/55">
                   Win Rate
                 </div>
               </div>
@@ -1682,7 +1682,7 @@ export default function Dashboard() {
           </Tabs.Content>
 
           <Tabs.Content value="journal" className="p-6">
-            <div className="text-center text-sm text-gray-500 dark:text-gray-400 py-12">
+            <div className="text-center text-sm text-white/55 py-12">
               Trades will appear here once you place your first order.
             </div>
           </Tabs.Content>
@@ -1696,10 +1696,10 @@ export default function Dashboard() {
               <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-950/40 rounded-lg">
                 <CheckCircleIcon className="w-5 h-5 text-green-500" />
                 <div>
-                  <div className="font-medium text-gray-900 dark:text-gray-100">
+                  <div className="font-medium text-white">
                     Profit Target: {formatPercent(user.profitTarget, 0)}
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                  <div className="text-sm text-white/55">
                     Reach{" "}
                     {formatCurrency(user.profitTarget * user.startingBalance)}{" "}
                     in profit
@@ -1709,10 +1709,10 @@ export default function Dashboard() {
               <div className="flex items-center gap-3 p-3 bg-amber-50 dark:bg-amber-950/40 rounded-lg">
                 <ClockIcon className="w-5 h-5 text-amber-500" />
                 <div>
-                  <div className="font-medium text-gray-900 dark:text-gray-100">
+                  <div className="font-medium text-white">
                     Min. Trading Days: {user.tradingDaysRequired}
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                  <div className="text-sm text-white/55">
                     Trade on at least {user.tradingDaysRequired} different days
                   </div>
                 </div>
@@ -1721,11 +1721,11 @@ export default function Dashboard() {
                 <div className="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-950/40 rounded-lg">
                   <XCircleIcon className="w-5 h-5 text-red-500" />
                   <div>
-                    <div className="font-medium text-gray-900 dark:text-gray-100">
+                    <div className="font-medium text-white">
                       Daily Loss Limit:{" "}
                       {formatPercent(user.dailyDrawdownLimit, 0)}
                     </div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                    <div className="text-sm text-white/55">
                       Do not lose more than{" "}
                       {formatCurrency(
                         user.dailyDrawdownLimit * user.peakBalance,
@@ -1738,10 +1738,10 @@ export default function Dashboard() {
               <div className="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-950/40 rounded-lg">
                 <XCircleIcon className="w-5 h-5 text-red-500" />
                 <div>
-                  <div className="font-medium text-gray-900 dark:text-gray-100">
+                  <div className="font-medium text-white">
                     Max Drawdown: {formatPercent(user.maxDrawdownLimit, 0)}
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                  <div className="text-sm text-white/55">
                     Do not draw down more than{" "}
                     {formatCurrency(user.maxDrawdownLimit * user.startingBalance)}{" "}
                     total
@@ -1775,12 +1775,12 @@ export default function Dashboard() {
 function DashboardSkeleton() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
-      <div className="h-10 w-48 bg-gray-200 dark:bg-slate-800 rounded animate-pulse" />
-      <div className="h-44 bg-gray-100 dark:bg-slate-800 rounded-2xl animate-pulse" />
+      <div className="h-10 w-48 bg-gray-200 dark:bg-[#1f0a3d] rounded animate-pulse" />
+      <div className="h-44 bg-gray-100 dark:bg-[#1f0a3d] rounded-2xl animate-pulse" />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="h-28 bg-gray-100 dark:bg-slate-800 rounded-2xl animate-pulse" />
-        <div className="h-28 bg-gray-100 dark:bg-slate-800 rounded-2xl animate-pulse" />
-        <div className="h-28 bg-gray-100 dark:bg-slate-800 rounded-2xl animate-pulse" />
+        <div className="h-28 bg-gray-100 dark:bg-[#1f0a3d] rounded-2xl animate-pulse" />
+        <div className="h-28 bg-gray-100 dark:bg-[#1f0a3d] rounded-2xl animate-pulse" />
+        <div className="h-28 bg-gray-100 dark:bg-[#1f0a3d] rounded-2xl animate-pulse" />
       </div>
     </div>
   );

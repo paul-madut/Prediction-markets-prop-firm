@@ -60,11 +60,11 @@ function Section({
   return (
     <TextureCard interactive={false}>
       <TextureCardContent className="p-6 space-y-3">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 inline-flex items-center gap-2">
+        <h2 className="text-lg font-semibold text-white inline-flex items-center gap-2">
           {icon}
           {title}
         </h2>
-        <div className="text-sm text-gray-700 dark:text-gray-300 space-y-2">
+        <div className="text-sm text-white/85 space-y-2">
           {children}
         </div>
       </TextureCardContent>
@@ -114,7 +114,7 @@ export default function RulesPage() {
 
   if (!signedIn) {
     return (
-      <div className="max-w-3xl mx-auto py-12 text-center text-sm text-gray-500 dark:text-gray-400">
+      <div className="max-w-3xl mx-auto py-12 text-center text-sm text-white/55">
         Sign in to view your rules.
       </div>
     );
@@ -123,15 +123,15 @@ export default function RulesPage() {
   if (!activeAccount) {
     return (
       <div className="max-w-3xl mx-auto py-12 text-center space-y-3">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="text-2xl font-bold text-white">
           Trading Rules
         </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-sm text-white/55">
           Buy a challenge to see the rules that apply to your account.
         </p>
         <Link
           href="/dashboard/new-challenge"
-          className="inline-block px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium"
+          className="inline-block px-4 py-2 rounded-lg bg-[#7F24FF] text-white text-sm font-medium"
         >
           Browse challenges
         </Link>
@@ -149,7 +149,7 @@ export default function RulesPage() {
 
   if (!account) {
     return (
-      <div className="max-w-3xl mx-auto py-12 text-center text-sm text-gray-500 dark:text-gray-400">
+      <div className="max-w-3xl mx-auto py-12 text-center text-sm text-white/55">
         Loading rules…
       </div>
     );
@@ -172,10 +172,10 @@ export default function RulesPage() {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="text-3xl font-bold text-white">
           Trading Rules
         </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-sm text-white/55 mt-1">
           The rules that apply to your <strong>{c.name}</strong> account ({formatCurrency(accountSize)}).
         </p>
       </div>
@@ -193,14 +193,14 @@ export default function RulesPage() {
         </div>
       )}
 
-      <Section title="Current phase" icon={<ChartBarIcon className="w-5 h-5 text-blue-600" />}>
+      <Section title="Current phase" icon={<ChartBarIcon className="w-5 h-5 text-[#A769FF]" />}>
         <p>
           You are on <strong>{account.currentPhase.name}</strong> (phase{" "}
           {account.currentPhase.phaseNumber}). Pass this phase by reaching{" "}
           <strong>{phaseTargetPct}% profit</strong> ({formatCurrency(phaseTargetDollars)})
           and trading at least <strong>{account.currentPhase.minTradingDays} day{account.currentPhase.minTradingDays === 1 ? "" : "s"}</strong>.
         </p>
-        <p className="text-xs text-gray-500 dark:text-gray-400">
+        <p className="text-xs text-white/55">
           A trading day counts whenever you open or close at least one position.
         </p>
       </Section>
@@ -218,7 +218,7 @@ export default function RulesPage() {
             </li>
           )}
         </ul>
-        <p className="text-xs text-gray-500 dark:text-gray-400 italic">
+        <p className="text-xs text-white/55 italic">
           {describeBreach(c)}
         </p>
       </Section>

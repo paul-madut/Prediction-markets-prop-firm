@@ -26,7 +26,7 @@ const FAQ: QA[] = [
         Buy a challenge from the{" "}
         <Link
           href="/dashboard/new-challenge"
-          className="text-blue-600 hover:text-blue-700"
+          className="text-[#A769FF] hover:text-[#A769FF]"
         >
           Buy Challenge
         </Link>{" "}
@@ -55,7 +55,7 @@ const FAQ: QA[] = [
             or whichever is higher — your config decides).
           </li>
         </ul>
-        Your <Link href="/dashboard/rules" className="text-blue-600 hover:text-blue-700">Rules</Link>{" "}
+        Your <Link href="/dashboard/rules" className="text-[#A769FF] hover:text-[#A769FF]">Rules</Link>{" "}
         page shows what applies to your account.
       </>
     ),
@@ -75,7 +75,7 @@ const FAQ: QA[] = [
         Once you&apos;re funded, request payouts from the{" "}
         <Link
           href="/dashboard/payouts"
-          className="text-blue-600 hover:text-blue-700"
+          className="text-[#A769FF] hover:text-[#A769FF]"
         >
           Payouts
         </Link>{" "}
@@ -130,10 +130,10 @@ function FaqItem({ qa, idx }: { qa: QA; idx: number }) {
   return (
     <button
       onClick={() => setOpen((o) => !o)}
-      className="w-full text-left bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-xl px-5 py-4 hover:border-blue-300 transition-colors"
+      className="w-full text-left bg-[#180630] border border-gray-200 dark:border-white/10 rounded-xl px-5 py-4 hover:border-[#A769FF] transition-colors"
     >
       <div className="flex items-center justify-between gap-3">
-        <span className="font-semibold text-gray-900 dark:text-gray-100 text-sm">
+        <span className="font-semibold text-white text-sm">
           {qa.q}
         </span>
         <ChevronDownIcon
@@ -141,7 +141,7 @@ function FaqItem({ qa, idx }: { qa: QA; idx: number }) {
         />
       </div>
       {open && (
-        <div className="mt-3 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+        <div className="mt-3 text-sm text-white/85 leading-relaxed">
           {qa.a}
         </div>
       )}
@@ -153,11 +153,11 @@ export default function HelpPage() {
   return (
     <div className="space-y-6 max-w-3xl mx-auto">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 inline-flex items-center gap-2">
-          <QuestionMarkCircleIcon className="w-7 h-7 text-blue-600" />
+        <h1 className="text-3xl font-bold text-white inline-flex items-center gap-2">
+          <QuestionMarkCircleIcon className="w-7 h-7 text-[#A769FF]" />
           Help
         </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-sm text-white/55 mt-1">
           Quick answers about challenges, drawdown, fills, and payouts. For
           anything else, email support.
         </p>
@@ -166,16 +166,16 @@ export default function HelpPage() {
       <TextureCard interactive={false}>
         <TextureCardContent className="p-6 flex items-center justify-between gap-4 flex-wrap">
           <div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <h2 className="text-lg font-semibold text-white">
               Email support
             </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-white/55">
               We answer within 24 hours on business days.
             </p>
           </div>
           <a
             href="mailto:support@oraclefunded.com"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#7F24FF] hover:bg-[#6c14ee] text-white text-sm font-medium"
           >
             <EnvelopeIcon className="w-4 h-4" />
             support@oraclefunded.com
@@ -184,7 +184,7 @@ export default function HelpPage() {
       </TextureCard>
 
       <div className="space-y-2">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-2">
+        <h2 className="text-lg font-semibold text-white mt-2">
           FAQ
         </h2>
         {FAQ.map((qa, idx) => (
@@ -192,10 +192,10 @@ export default function HelpPage() {
         ))}
       </div>
 
-      <div className="text-xs text-center text-gray-500 dark:text-gray-400 pb-4">
-        See also: <Link href="/dashboard/rules" className="text-blue-600 hover:text-blue-700">Rules</Link>
+      <div className="text-xs text-center text-white/55 pb-4">
+        See also: <Link href="/dashboard/rules" className="text-[#A769FF] hover:text-[#A769FF]">Rules</Link>
         {" · "}
-        <Link href="/dashboard/challenge" className="text-blue-600 hover:text-blue-700">Challenge progress</Link>
+        <Link href="/dashboard/challenge" className="text-[#A769FF] hover:text-[#A769FF]">Challenge progress</Link>
       </div>
     </div>
   );

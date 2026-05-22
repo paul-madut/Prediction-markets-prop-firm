@@ -192,8 +192,8 @@ export default function PayoutsLivePage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Payouts</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <h1 className="text-3xl font-bold text-white">Payouts</h1>
+          <p className="text-sm text-white/55 mt-1">
             Request a payout from a funded account; track every request through to paid.
           </p>
         </div>
@@ -216,10 +216,10 @@ export default function PayoutsLivePage() {
         <TextureCard>
           <TextureCardContent className="px-5 py-5">
             <div className="text-xs font-medium text-emerald-600 mb-2">Available Profit</div>
-            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100 tabular-nums">
+            <div className="text-2xl font-bold text-white tabular-nums">
               {formatCurrency(Number(stats.totalAvailableCents))}
             </div>
-            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <div className="text-xs text-white/55 mt-1">
               Across all funded accounts
             </div>
           </TextureCardContent>
@@ -227,21 +227,21 @@ export default function PayoutsLivePage() {
         <TextureCard>
           <TextureCardContent className="px-5 py-5">
             <div className="text-xs font-medium text-amber-600 mb-2">Pending</div>
-            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100 tabular-nums">
+            <div className="text-2xl font-bold text-white tabular-nums">
               {formatCurrency(Number(stats.pendingCents))}
             </div>
-            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <div className="text-xs text-white/55 mt-1">
               Awaiting review or processing
             </div>
           </TextureCardContent>
         </TextureCard>
         <TextureCard>
           <TextureCardContent className="px-5 py-5">
-            <div className="text-xs font-medium text-blue-600 mb-2">Lifetime Paid</div>
-            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100 tabular-nums">
+            <div className="text-xs font-medium text-[#A769FF] mb-2">Lifetime Paid</div>
+            <div className="text-2xl font-bold text-white tabular-nums">
               {formatCurrency(Number(stats.lifetimePaidCents))}
             </div>
-            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <div className="text-xs text-white/55 mt-1">
               Trader take after profit split
             </div>
           </TextureCardContent>
@@ -251,16 +251,16 @@ export default function PayoutsLivePage() {
       {/* Request form OR no-funded-account empty state */}
       <TextureCard interactive={false}>
         <TextureCardContent className="p-6">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+          <h2 className="text-lg font-semibold text-white mb-4">
             Request a payout
           </h2>
 
           {accounts === null && (
-            <div className="text-sm text-gray-500 dark:text-gray-400">Loading accounts…</div>
+            <div className="text-sm text-white/55">Loading accounts…</div>
           )}
 
           {accounts !== null && fundedAccounts.length === 0 && (
-            <div className="text-sm text-gray-500 dark:text-gray-400">
+            <div className="text-sm text-white/55">
               You don&apos;t have any funded accounts yet. Pass a challenge first to unlock payouts.
             </div>
           )}
@@ -270,13 +270,13 @@ export default function PayoutsLivePage() {
               {/* Account selector — hide if only one funded account */}
               {fundedAccounts.length > 1 && (
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
+                  <label className="block text-xs font-medium text-white/75 mb-1.5">
                     Account
                   </label>
                   <select
                     value={selectedAccount.id}
                     onChange={(e) => setSelectedAccountId(e.target.value)}
-                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-[#180630] border border-gray-200 dark:border-white/15 rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#7F24FF]"
                   >
                     {fundedAccounts.map((a) => {
                       const profit = BigInt(a.currentBalanceCents) - BigInt(a.startingBalanceCents);
@@ -292,11 +292,11 @@ export default function PayoutsLivePage() {
 
               {/* Amount */}
               <div>
-                <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
+                <label className="block text-xs font-medium text-white/75 mb-1.5">
                   Amount to request (USD)
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">$</span>
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/45">$</span>
                   <input
                     type="number"
                     inputMode="decimal"
@@ -305,11 +305,11 @@ export default function PayoutsLivePage() {
                     placeholder="0.00"
                     value={requestedDollars}
                     onChange={(e) => setRequestedDollars(e.target.value)}
-                    className="w-full pl-7 pr-3 py-2 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 tabular-nums focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full pl-7 pr-3 py-2 bg-[#180630] border border-gray-200 dark:border-white/15 rounded-lg text-sm text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#7F24FF]"
                   />
                 </div>
                 <div className="flex items-center justify-between mt-1.5 text-xs">
-                  <span className={`${exceedsProfit ? "text-red-600" : "text-gray-500 dark:text-gray-400"}`}>
+                  <span className={`${exceedsProfit ? "text-red-600" : "text-white/55"}`}>
                     {exceedsProfit
                       ? `Exceeds available profit (${formatCurrency(Number(availableProfitCents))})`
                       : `Available profit: ${formatCurrency(Number(availableProfitCents))}`}
@@ -325,24 +325,24 @@ export default function PayoutsLivePage() {
               {/* Method + destination */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
+                  <label className="block text-xs font-medium text-white/75 mb-1.5">
                     Payment method
                   </label>
                   <select
                     value={paymentMethod}
                     onChange={(e) => setPaymentMethod(e.target.value as PaymentMethodId)}
-                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-[#180630] border border-gray-200 dark:border-white/15 rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#7F24FF]"
                   >
                     {PAYMENT_METHODS.map((m) => (
                       <option key={m.id} value={m.id}>{m.label}</option>
                     ))}
                   </select>
-                  <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                  <div className="text-xs text-white/45 mt-1">
                     {PAYMENT_METHODS.find((m) => m.id === paymentMethod)?.hint}
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
+                  <label className="block text-xs font-medium text-white/75 mb-1.5">
                     Destination
                   </label>
                   <input
@@ -356,7 +356,7 @@ export default function PayoutsLivePage() {
                     }
                     value={paymentDestination}
                     onChange={(e) => setPaymentDestination(e.target.value)}
-                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-[#180630] border border-gray-200 dark:border-white/15 rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#7F24FF]"
                   />
                 </div>
               </div>
@@ -394,13 +394,13 @@ export default function PayoutsLivePage() {
       {/* History */}
       <TextureCard interactive={false}>
         <TextureCardContent className="p-0">
-          <div className="px-6 py-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          <div className="px-6 py-4 border-b border-gray-100 dark:border-white/10 flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-white">
               History
             </h2>
             <button
               onClick={() => void loadAll()}
-              className="inline-flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+              className="inline-flex items-center gap-1.5 text-xs text-white/55 hover:text-gray-900 dark:hover:text-gray-100"
             >
               <ArrowPathIcon className="w-3.5 h-3.5" />
               Refresh
@@ -408,12 +408,12 @@ export default function PayoutsLivePage() {
           </div>
 
           {payouts === null && (
-            <div className="px-6 py-8 text-sm text-gray-500 dark:text-gray-400">Loading…</div>
+            <div className="px-6 py-8 text-sm text-white/55">Loading…</div>
           )}
           {payouts !== null && payouts.length === 0 && (
             <div className="px-6 py-12 text-center">
               <CheckCircleIcon className="w-10 h-10 text-gray-300 dark:text-gray-600 mx-auto mb-2" />
-              <div className="text-sm text-gray-500 dark:text-gray-400">
+              <div className="text-sm text-white/55">
                 No payout requests yet.
               </div>
             </div>
@@ -428,30 +428,30 @@ export default function PayoutsLivePage() {
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <PayoutStatusBadge status={p.status} />
-                        <span className="text-xs text-gray-400 dark:text-gray-500">
+                        <span className="text-xs text-white/45">
                           {formatDate(p.requestedAt, "MMM dd, yyyy 'at' HH:mm")}
                         </span>
                       </div>
-                      <div className="text-sm font-medium text-gray-900 dark:text-gray-100 tabular-nums">
+                      <div className="text-sm font-medium text-white tabular-nums">
                         {formatCurrency(requested)} requested → {formatCurrency(trader)} to you
                       </div>
                       {p.paymentMethod && (
-                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                        <div className="text-xs text-white/55 mt-0.5">
                           {p.paymentMethod} · {p.paymentDestination ?? "—"}
                         </div>
                       )}
                       {p.reviewerNotes && (
-                        <div className="text-xs text-gray-600 dark:text-gray-300 mt-1 italic">
+                        <div className="text-xs text-white/75 mt-1 italic">
                           Note: {p.reviewerNotes}
                         </div>
                       )}
                     </div>
-                    <div className="text-right text-xs text-gray-500 dark:text-gray-400 shrink-0">
+                    <div className="text-right text-xs text-white/55 shrink-0">
                       {p.paidAt ? (
                         <span className="text-green-700 dark:text-green-400 font-medium">
                           Paid {formatDate(p.paidAt, "MMM dd")}
                           {p.externalReference && (
-                            <div className="font-mono text-gray-400 dark:text-gray-500">
+                            <div className="font-mono text-white/45">
                               {p.externalReference}
                             </div>
                           )}
