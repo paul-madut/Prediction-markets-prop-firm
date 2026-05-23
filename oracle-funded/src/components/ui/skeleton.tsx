@@ -1,12 +1,25 @@
 import { cn } from "@/lib/utils";
 
+// Blueberry skeleton spec (DESIGN.md):
+// - Base bg-white/[0.04] with bg-white/[0.08] highlight sweep.
+// - 1500ms linear shimmer, wrapped in motion-safe so reduced-motion users
+//   see a static placeholder.
+// - The keyframes (`bb-shimmer`) live in globals.css.
+
 export const Skeleton = ({
  className,
  ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
  return (
  <div
- className={cn("animate-pulse rounded-md bg-white/10", className)}
+ className={cn(
+ "relative overflow-hidden rounded-md bg-white/[0.04]",
+ "motion-safe:before:absolute motion-safe:before:inset-0",
+ "motion-safe:before:-translate-x-full",
+ "motion-safe:before:bg-gradient-to-r motion-safe:before:from-transparent motion-safe:before:via-white/[0.08] motion-safe:before:to-transparent",
+ "motion-safe:before:animate-[bb-shimmer_1500ms_linear_infinite]",
+ className,
+ )}
  {...props}
  />
  );

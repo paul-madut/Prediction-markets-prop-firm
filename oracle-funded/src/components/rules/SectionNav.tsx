@@ -1,185 +1,195 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronUpIcon, QueueListIcon } from "@heroicons/react/16/solid";
+import { cn } from "@/lib/utils";
+
+// Blueberry SectionNav (DESIGN.md):
+// - Sticky on desktop (XL+), right column.
+// - Active link gets a 2px #7F24FF left-edge bar that animates between
+//   items via Framer `layoutId`.
+// - Mobile uses a floating button that opens a compact list panel.
+
+const GENTLE = { type: "spring" as const, stiffness: 150, damping: 20 };
+const SNAPPY = { type: "spring" as const, stiffness: 500, damping: 35 };
 
 interface Section {
- id: string;
- label: string;
+  id: string;
+  label: string;
 }
 
 interface SectionNavProps {
- sections: Section[];
+  sections: Section[];
 }
 
 export const SectionNav = ({ sections }: SectionNavProps) => {
- const [activeSection, setActiveSection] = useState<string>("");
- const [isVisible, setIsVisible] = useState(false);
- const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>(sections[0]?.id ?? "");
+  const [isVisible, setIsVisible] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
- useEffect(() => {
- const handleScroll = () => {
- // Show nav after scrolling 300px
- setIsVisible(window.scrollY > 300);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsVisible(window.scrollY > 300);
 
- // Determine active section
- const sectionElements = sections.map((s) => ({
- id: s.id,
- element: document.getElementById(s.id),
- }));
+      const current = sections
+        .map((s) => ({ id: s.id, el: document.getElementById(s.id) }))
+        .find(({ el }) => {
+          if (!el) return false;
+          const r = el.getBoundingClientRect();
+          return r.top <= 150 && r.bottom > 150;
+        });
+      if (current) setActiveSection(current.id);
+    };
 
- const currentSection = sectionElements.find((s) => {
- if (!s.element) return false;
- const rect = s.element.getBoundingClientRect();
- return rect.top <= 150 && rect.bottom > 150;
- });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [sections]);
 
- if (currentSection) {
- setActiveSection(currentSection.id);
- }
- };
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+    setIsMobileOpen(false);
+  };
 
- window.addEventListener("scroll", handleScroll, { passive: true });
- handleScroll(); // Initial check
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
- return () => window.removeEventListener("scroll", handleScroll);
- }, [sections]);
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <>
+          {/* Desktop — fixed right-side panel */}
+          <motion.nav
+            initial={{ opacity: 0, x: 12 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 12 }}
+            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+            className="hidden xl:flex fixed right-6 top-1/2 -translate-y-1/2 z-40 flex-col"
+          >
+            <div className="bg-[#180630] border border-white/10 rounded-xl p-2 min-w-[200px]">
+              <div className="relative">
+                {sections.map((section) => {
+                  const isActive = activeSection === section.id;
+                  return (
+                    <button
+                      key={section.id}
+                      onClick={() => scrollToSection(section.id)}
+                      className={cn(
+                        "group relative flex items-center w-full pl-4 pr-3 py-2 rounded-md transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]",
+                        isActive
+                          ? "text-white bg-white/[0.06]"
+                          : "text-white/55 hover:text-white hover:bg-white/[0.03]",
+                      )}
+                    >
+                      {/* Animated 2px left-edge bar — moves with layoutId */}
+                      {isActive && (
+                        <motion.span
+                          layoutId="bb-section-nav-bar"
+                          aria-hidden
+                          className="absolute left-0 top-1.5 bottom-1.5 w-[2px] rounded-full bg-[#7F24FF]"
+                          transition={GENTLE}
+                        />
+                      )}
+                      <span className="text-sm font-medium whitespace-nowrap">
+                        {section.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
 
- const scrollToSection = (id: string) => {
- const element = document.getElementById(id);
- if (element) {
- const offset = 100;
- const top = element.getBoundingClientRect().top + window.scrollY - offset;
- window.scrollTo({ top, behavior: "smooth" });
- }
- setIsMobileOpen(false);
- };
+              <div className="h-px bg-white/10 my-2" />
 
- const scrollToTop = () => {
- window.scrollTo({ top: 0, behavior: "smooth" });
- };
+              <button
+                onClick={scrollToTop}
+                className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-white/55 hover:text-white hover:bg-white/[0.03] transition-colors duration-150"
+              >
+                <ChevronUpIcon className="w-4 h-4" />
+                <span className="text-sm font-medium">Back to top</span>
+              </button>
+            </div>
+          </motion.nav>
 
- return (
- <AnimatePresence>
- {isVisible && (
- <>
- {/* Desktop Navigation - Fixed on right side */}
- <motion.nav
- initial={{ opacity: 0, x: 20 }}
- animate={{ opacity: 1, x: 0 }}
- exit={{ opacity: 0, x: 20 }}
- transition={{ duration: 0.3 }}
- className="hidden xl:flex fixed right-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-2"
- >
- <div className="bg-gray-900/90 backdrop-blur-sm border border-gray-700/50 rounded-xl p-2 shadow-xl">
- {sections.map((section) => (
- <button
- key={section.id}
- onClick={() => scrollToSection(section.id)}
- className={cn(
- "group flex items-center gap-3 w-full px-3 py-2 rounded-lg transition-all duration-200",
- activeSection === section.id
- ? "bg-blue-500/20 text-blue-400"
- : "text-white/45 hover:bg-gray-800 hover:text-white"
- )}
- >
- <span
- className={cn(
- "w-2 h-2 rounded-full transition-all duration-200",
- activeSection === section.id
- ? "bg-blue-500"
- : "bg-gray-600 group-hover:bg-gray-400"
- )}
- />
- <span className="text-sm font-medium whitespace-nowrap">
- {section.label}
- </span>
- </button>
- ))}
+          {/* Mobile — floating button + panel */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.97 }}
+            transition={SNAPPY}
+            className="xl:hidden fixed bottom-6 right-6 z-40"
+          >
+            <AnimatePresence>
+              {isMobileOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                  transition={GENTLE}
+                  className="absolute bottom-16 right-0 bg-[#1f0a3d] border border-white/[0.18] rounded-xl p-2 min-w-[200px] shadow-[0_24px_48px_-12px_rgba(0,0,0,0.6)]"
+                >
+                  <div className="relative">
+                    {sections.map((section) => {
+                      const isActive = activeSection === section.id;
+                      return (
+                        <button
+                          key={section.id}
+                          onClick={() => scrollToSection(section.id)}
+                          className={cn(
+                            "relative flex items-center w-full pl-4 pr-3 py-2 rounded-md transition-colors duration-150",
+                            isActive
+                              ? "text-white bg-white/[0.06]"
+                              : "text-white/55 hover:text-white hover:bg-white/[0.03]",
+                          )}
+                        >
+                          {isActive && (
+                            <motion.span
+                              layoutId="bb-section-nav-bar-mobile"
+                              aria-hidden
+                              className="absolute left-0 top-1.5 bottom-1.5 w-[2px] rounded-full bg-[#7F24FF]"
+                              transition={GENTLE}
+                            />
+                          )}
+                          <span className="text-sm font-medium">
+                            {section.label}
+                          </span>
+                        </button>
+                      );
+                    })}
 
- {/* Divider */}
- <div className="h-px bg-gray-700/50 my-2" />
+                    <div className="h-px bg-white/10 my-2" />
 
- {/* Back to top */}
- <button
- onClick={scrollToTop}
- className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-white/45 hover:bg-gray-800 hover:text-white transition-all duration-200"
- >
- <ChevronUpIcon className="w-4 h-4" />
- <span className="text-sm font-medium">Back to top</span>
- </button>
- </div>
- </motion.nav>
+                    <button
+                      onClick={scrollToTop}
+                      className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-white/55 hover:text-white hover:bg-white/[0.03] transition-colors duration-150"
+                    >
+                      <ChevronUpIcon className="w-4 h-4" />
+                      <span className="text-sm font-medium">Back to top</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
- {/* Mobile Navigation - Floating button */}
- <motion.div
- initial={{ opacity: 0, scale: 0.8 }}
- animate={{ opacity: 1, scale: 1 }}
- exit={{ opacity: 0, scale: 0.8 }}
- transition={{ duration: 0.3 }}
- className="xl:hidden fixed bottom-6 right-6 z-40"
- >
- <AnimatePresence>
- {isMobileOpen && (
- <motion.div
- initial={{ opacity: 0, y: 20, scale: 0.95 }}
- animate={{ opacity: 1, y: 0, scale: 1 }}
- exit={{ opacity: 0, y: 20, scale: 0.95 }}
- transition={{ duration: 0.2 }}
- className="absolute bottom-16 right-0 bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 rounded-xl p-2 shadow-xl min-w-[180px]"
- >
- {sections.map((section) => (
- <button
- key={section.id}
- onClick={() => scrollToSection(section.id)}
- className={cn(
- "flex items-center gap-3 w-full px-3 py-2 rounded-lg transition-all duration-200 text-left",
- activeSection === section.id
- ? "bg-blue-500/20 text-blue-400"
- : "text-white/45 hover:bg-gray-800 hover:text-white"
- )}
- >
- <span
- className={cn(
- "w-2 h-2 rounded-full flex-shrink-0",
- activeSection === section.id
- ? "bg-blue-500"
- : "bg-gray-600"
- )}
- />
- <span className="text-sm font-medium">{section.label}</span>
- </button>
- ))}
-
- <div className="h-px bg-gray-700/50 my-2" />
-
- <button
- onClick={scrollToTop}
- className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-white/45 hover:bg-gray-800 hover:text-white transition-all duration-200"
- >
- <ChevronUpIcon className="w-4 h-4" />
- <span className="text-sm font-medium">Back to top</span>
- </button>
- </motion.div>
- )}
- </AnimatePresence>
-
- <button
- onClick={() => setIsMobileOpen(!isMobileOpen)}
- className={cn(
- "w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300",
- isMobileOpen
- ? "bg-blue-500 text-white"
- : "bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 text-white/45 hover:text-white"
- )}
- >
- <QueueListIcon className="w-5 h-5" />
- </button>
- </motion.div>
- </>
- )}
- </AnimatePresence>
- );
+            <motion.button
+              onClick={() => setIsMobileOpen(!isMobileOpen)}
+              whileTap={{ scale: 0.97 }}
+              transition={SNAPPY}
+              className={cn(
+                "w-12 h-12 rounded-full inline-flex items-center justify-center border transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]",
+                isMobileOpen
+                  ? "bg-[#7F24FF] border-[#7F24FF] text-white"
+                  : "bg-[#180630] border-white/10 text-white/55 hover:text-white hover:bg-[#1f0a3d]",
+              )}
+            >
+              <QueueListIcon className="w-5 h-5" />
+            </motion.button>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
 };

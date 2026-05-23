@@ -63,6 +63,9 @@ import { TextureButton } from "@/components/ui/texture-button";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { AnimatePresence, motion } from "framer-motion";
 import { DemoBanner } from "@/components/DemoBanner";
+import { MetricCard } from "@/components/dashboard/MetricCard";
+import { ProgressBar } from "@/components/dashboard/ProgressBar";
+import { RecentActivity, type ActivityItem } from "@/components/dashboard/RecentActivity";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Adapter: map AccountRow + UserClaims → the shape the gold-standard JSX wants
@@ -487,29 +490,29 @@ const ShareMetricsModal = ({
  </div>
  <div className="grid grid-cols-2 gap-4">
  <div>
- <div className="text-xs text-white/45 mb-1">Balance</div>
- <div className="text-lg font-bold">{formatCurrency(user.accountBalance)}</div>
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] mb-1">Balance</div>
+ <div className="font-mono text-lg font-bold text-white tabular-nums">{formatCurrency(user.accountBalance)}</div>
  </div>
  <div>
- <div className="text-xs text-white/45 mb-1">Total P&L</div>
- <div className={`text-lg font-bold ${totalPnL >= 0 ? "text-[#12DFBA]" : "text-red-400"}`}>
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] mb-1">Total P&L</div>
+ <div className={`font-mono text-lg font-bold tabular-nums ${totalPnL > 0 ? "text-[#12DFBA]" : totalPnL < 0 ? "text-[#FF1C1C]" : "text-white"}`}>
  {totalPnL >= 0 ? "+" : ""}{formatCurrency(totalPnL)}
  </div>
  </div>
  <div>
- <div className="text-xs text-white/45 mb-1">Win Rate</div>
- <div className="text-lg font-bold">{formatPercent(user.winRate, 0)}</div>
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] mb-1">Win Rate</div>
+ <div className="font-mono text-lg font-bold text-white tabular-nums">{formatPercent(user.winRate, 0)}</div>
  </div>
  <div>
- <div className="text-xs text-white/45 mb-1">ROI</div>
- <div className={`text-lg font-bold ${Number(profitPercent) >= 0 ? "text-[#12DFBA]" : "text-red-400"}`}>
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] mb-1">ROI</div>
+ <div className={`font-mono text-lg font-bold tabular-nums ${Number(profitPercent) > 0 ? "text-[#12DFBA]" : Number(profitPercent) < 0 ? "text-[#FF1C1C]" : "text-white"}`}>
  {Number(profitPercent) >= 0 ? "+" : ""}{profitPercent}%
  </div>
  </div>
  </div>
  <div className="mt-4 pt-4 border-t border-white/15 flex items-center justify-between text-xs text-white/55">
  <span>Blueberry Funded</span>
- <span>{user.tradingDaysCompleted} trading days</span>
+ <span className="font-mono tabular-nums">{user.tradingDaysCompleted} trading days</span>
  </div>
  </div>
  </div>
@@ -628,28 +631,28 @@ const TimeSinceCounter = ({ startDate }: { startDate: string }) => {
  return (
  <div className="flex justify-between text-center">
  <div className="flex-1">
- <div className="text-2xl font-bold text-white">
+ <div className="font-mono text-2xl font-bold text-white tabular-nums">
  {String(t.days).padStart(2, "0")}
  </div>
- <div className="text-xs text-white/55">DAY</div>
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] mt-1">DAY</div>
  </div>
  <div className="flex-1">
- <div className="text-2xl font-bold text-white">
+ <div className="font-mono text-2xl font-bold text-white tabular-nums">
  {String(t.hours).padStart(2, "0")}
  </div>
- <div className="text-xs text-white/55">HR</div>
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] mt-1">HR</div>
  </div>
  <div className="flex-1">
- <div className="text-2xl font-bold text-white">
+ <div className="font-mono text-2xl font-bold text-white tabular-nums">
  {String(t.minutes).padStart(2, "0")}
  </div>
- <div className="text-xs text-white/55">MIN</div>
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] mt-1">MIN</div>
  </div>
  <div className="flex-1">
- <div className="text-2xl font-bold text-white">
+ <div className="font-mono text-2xl font-bold text-white tabular-nums">
  {String(t.seconds).padStart(2, "0")}
  </div>
- <div className="text-xs text-white/55">SEC</div>
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] mt-1">SEC</div>
  </div>
  </div>
  );
@@ -768,6 +771,41 @@ const PnLCalendar = () => {
  </div>
  );
 };
+
+// ────────────────────────────────────────────────────────────────────────────
+// Objective row (label, value/target, progress bar)
+// ────────────────────────────────────────────────────────────────────────────
+
+function ObjectiveRow({
+ label,
+ currentCents,
+ targetCents,
+ progress,
+ tone,
+}: {
+ label: string;
+ currentCents: number;
+ targetCents: number;
+ progress: number;
+ tone: "brand" | "good" | "warn" | "bad";
+}) {
+ return (
+ <div className="space-y-2">
+ <div className="flex items-center justify-between">
+ <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] font-medium">
+ {label}
+ </span>
+ <span className="font-mono text-sm font-semibold text-white tabular-nums">
+ {formatCurrency(currentCents)}
+ <span className="text-[#5A6476] font-normal">
+ {" "}/ {formatCurrency(targetCents)}
+ </span>
+ </span>
+ </div>
+ <ProgressBar value={progress} tone={tone} />
+ </div>
+ );
+}
 
 // ────────────────────────────────────────────────────────────────────────────
 // Main page
@@ -912,10 +950,10 @@ export default function Dashboard() {
  <CurrencyDollarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
  </div>
  <div className="text-left">
- <div className="text-[10px] uppercase tracking-wider text-white/45 font-medium">
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] font-medium">
  Account Size
  </div>
- <div className="text-lg sm:text-xl font-bold text-white">
+ <div className="font-mono text-lg sm:text-xl font-bold text-white tabular-nums">
  <AnimatedNumber
  value={user.accountSize / 100}
  format={(v) => `$${v.toLocaleString()}`}
@@ -984,7 +1022,7 @@ export default function Dashboard() {
  >
  {phaseLabel}
  </span>
- <span className="text-xs text-white/55">
+ <span className="font-mono text-xs text-[#ADADAD] tabular-nums">
  ${(a.accountSize / 100000).toFixed(0)}K
  </span>
  {isActive && (
@@ -995,12 +1033,12 @@ export default function Dashboard() {
  )}
  </div>
  <div className="flex items-baseline gap-2">
- <span className="font-bold text-white tabular-nums text-sm">
+ <span className="font-mono font-bold text-white tabular-nums text-sm">
  {formatCurrency(a.accountBalance)}
  </span>
  <span
- className={`text-xs font-semibold tabular-nums ${
- pct >= 0 ? "text-[#12DFBA]" : "text-[#FF6B6B]"
+ className={`font-mono text-xs font-semibold tabular-nums ${
+ pct > 0 ? "text-[#12DFBA]" : pct < 0 ? "text-[#FF1C1C]" : "text-white"
  }`}
  >
  {pct >= 0 ? "+" : ""}
@@ -1028,17 +1066,17 @@ export default function Dashboard() {
 
  <div className="hidden sm:flex items-center gap-4 text-sm">
  <div className="flex items-center gap-1.5">
- <CalendarIcon className="w-3.5 h-3.5 text-white/45" />
- <span className="text-white/55">
- {formatDate(user.challengeStartDate, "MMM dd, yyyy")}
+ <CalendarIcon className="w-3.5 h-3.5 text-[#5A6476]" />
+ <span className="font-mono text-xs text-[#ADADAD] tabular-nums">
+ {formatDate(user.challengeStartDate, "yyyy-MM-dd")}
  </span>
  </div>
 
  <div className="h-4 w-px bg-white/10 dark:bg-slate-700" />
 
  <div className="flex items-center gap-1.5">
- <ArrowTrendingUpIcon className="w-3.5 h-3.5 text-purple-400" />
- <span className="text-white/55">
+ <ArrowTrendingUpIcon className="w-3.5 h-3.5 text-[#A769FF]" />
+ <span className="font-mono text-xs text-[#ADADAD] tabular-nums">
  {Math.round(
  Number(activeAccount.config.profitSplitPct ?? 90),
  )}
@@ -1148,36 +1186,38 @@ export default function Dashboard() {
  <div className="flex-1 p-8 flex items-center">
  <div className="grid grid-cols-3 gap-6 w-full text-center">
  <div>
- <div className="text-2xl font-bold text-white">
+ <div className="font-mono text-2xl font-bold text-white tabular-nums">
  {formatPercent(user.winRate, 0)}
  </div>
- <div className="text-[10px] uppercase tracking-wider text-white/45 font-medium mt-1">
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] font-medium mt-2">
  Win Rate
  </div>
  </div>
  <div>
  <div
- className={`text-2xl font-bold ${
- user.currentProfit >= 0
+ className={`font-mono text-2xl font-bold tabular-nums ${
+ user.currentProfit > 0
  ? "text-[#12DFBA]"
- : "text-[#FF6B6B]"
+ : user.currentProfit < 0
+ ? "text-[#FF1C1C]"
+ : "text-white"
  }`}
  >
  {user.currentProfit >= 0 ? "+" : ""}
  {formatPercent(user.currentProfit)}
  </div>
- <div className="text-[10px] uppercase tracking-wider text-white/45 font-medium mt-1">
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] font-medium mt-2">
  Profit
  </div>
  </div>
  <div>
- <div className="text-2xl font-bold text-white">
+ <div className="font-mono text-2xl font-bold text-white tabular-nums">
  {user.tradingDaysCompleted}
- <span className="text-white/35 dark:text-white/70 font-normal">
+ <span className="text-[#5A6476] font-normal">
  /{user.tradingDaysRequired}
  </span>
  </div>
- <div className="text-[10px] uppercase tracking-wider text-white/45 font-medium mt-1">
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] font-medium mt-2">
  Trading Days
  </div>
  </div>
@@ -1193,51 +1233,42 @@ export default function Dashboard() {
  <div className="lg:col-span-2 space-y-6">
  {/* KPI Row */}
  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
- <TextureCard>
- <TextureCardContent className="px-4 py-5">
- <div className="text-xs text-[#12DFBA] font-medium mb-2">
- Account Balance
- </div>
- <div className="text-xl font-bold text-white">
- {formatCurrency(user.accountBalance)}
- </div>
- </TextureCardContent>
- </TextureCard>
- <TextureCard>
- <TextureCardContent className="px-4 py-5">
- <div className="text-xs text-[#A769FF] font-medium mb-2">
- Today&apos;s P&amp;L
- </div>
- <div
- className={`text-xl font-bold ${
- todaysProfit >= 0 ? "text-[#12DFBA]" : "text-[#FF6B6B]"
- }`}
- >
- {todaysProfit >= 0 ? "+" : ""}
- {formatCurrency(todaysProfit)}
- </div>
- </TextureCardContent>
- </TextureCard>
- <TextureCard>
- <TextureCardContent className="px-4 py-5">
- <div className="text-xs text-purple-600 font-medium mb-2">
- Open Positions
- </div>
- <div className="text-xl font-bold text-white">
- {positions.length}
- </div>
- </TextureCardContent>
- </TextureCard>
- <TextureCard>
- <TextureCardContent className="px-4 py-5">
- <div className="text-xs text-[#FFB539] font-medium mb-2">
- Total Trades
- </div>
- <div className="text-xl font-bold text-white">
- {trades.length}
- </div>
- </TextureCardContent>
- </TextureCard>
+ <MetricCard
+ label="Account Balance"
+ value={user.accountBalance / 100}
+ format={(v) =>
+ `$${v.toLocaleString("en-US", { maximumFractionDigits: 0 })}`
+ }
+ hint={`Drawdown floor ${formatCurrency(
+ Math.max(
+ 0,
+ user.peakBalance -
+ user.maxDrawdownLimit * user.startingBalance,
+ ),
+ )}`}
+ />
+ <MetricCard
+ label="Today's P&L"
+ value={todaysProfit / 100}
+ format={(v) =>
+ `${v >= 0 ? "+" : ""}$${Math.abs(v).toLocaleString("en-US", { maximumFractionDigits: 2 })}`
+ }
+ tone={
+ todaysProfit > 0 ? "good" : todaysProfit < 0 ? "bad" : "default"
+ }
+ />
+ <MetricCard
+ label="Open Positions"
+ value={positions.length}
+ format={(v) => v.toString()}
+ hint="Active markets you hold"
+ />
+ <MetricCard
+ label="Total Trades"
+ value={trades.length}
+ format={(v) => v.toString()}
+ hint={`${formatPercent(user.winRate, 0)} win rate`}
+ />
  </div>
 
  {/* Performance Chart */}
@@ -1279,12 +1310,15 @@ export default function Dashboard() {
  />
  <Tooltip
  contentStyle={{
- backgroundColor: "#180630",
- border: "1px solid rgba(255,255,255,0.15)",
- borderRadius: "10px",
+ backgroundColor: "#1f0a3d",
+ border: "1px solid rgba(255,255,255,0.18)",
+ borderRadius: "12px",
  color: "#ffffff",
+ padding: "12px",
+ fontFamily: "var(--font-mono)",
+ fontSize: 12,
  }}
- labelStyle={{ color: "rgba(255,255,255,0.65)" }}
+ labelStyle={{ color: "#ADADAD", fontFamily: "var(--font-mono)" }}
  itemStyle={{ color: "#A769FF" }}
  formatter={(value) => [
  `$${(typeof value === "number" ? value : Number(value) || 0).toFixed(2)}`,
@@ -1312,194 +1346,66 @@ export default function Dashboard() {
  </h3>
  <Link
  href="/dashboard/rules"
- className="text-sm text-[#A769FF] hover:text-[#A769FF] font-medium flex items-center gap-1"
+ className="text-sm text-[#A769FF] hover:text-white font-medium flex items-center gap-1 transition-colors"
  >
  View Rules
  <ChevronRightIcon className="w-4 h-4" />
  </Link>
  </div>
- <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
- {/* Profit Target */}
- <div className="bg-[#12DFBA]/10 rounded-xl p-4 border border-[#12DFBA]/25">
- <div className="flex items-center justify-between mb-3">
- <span className="text-xs font-semibold text-[#12DFBA] dark:text-green-300 uppercase tracking-wide">
- Profit Target
- </span>
- <CheckCircleIcon className="w-4 h-4 text-[#12DFBA]" />
- </div>
- <div className="flex items-center gap-4">
- <div className="relative flex-shrink-0">
- <CircularProgress
+ <div className="space-y-5">
+ <ObjectiveRow
+ label="Profit Target"
+ currentCents={user.currentProfit * user.startingBalance}
+ targetCents={user.profitTarget * user.startingBalance}
  progress={Math.min(profitProgress, 100)}
- size={56}
- strokeWidth={6}
- color="#22c55e"
+ tone={profitProgress >= 100 ? "good" : "brand"}
  />
- <div className="absolute inset-0 flex items-center justify-center">
- <span className="text-xs font-bold text-white">
- {Math.round(profitProgress)}%
- </span>
- </div>
- </div>
- <div className="min-w-0">
- <div className="text-lg font-bold text-white truncate">
- {formatCurrency(
- user.currentProfit * user.startingBalance,
- )}
- </div>
- <div className="text-xs text-white/55">
- of{" "}
- {formatCurrency(
- user.profitTarget * user.startingBalance,
- )}
- </div>
- </div>
- </div>
- </div>
-
- {/* Daily Drawdown */}
- <div
- className={`rounded-xl p-4 border ${
- dailyDDProgress > 80
- ? "bg-[#FF1C1C]/10 border-[#FF1C1C]/25"
- : "bg-[#12DFBA]/10 border-[#12DFBA]/25"
- }`}
- >
- <div className="flex items-center justify-between mb-3">
- <span
- className={`text-xs font-semibold uppercase tracking-wide ${
- dailyDDProgress > 80
- ? "text-[#FF6B6B] dark:text-red-300"
- : "text-[#12DFBA] dark:text-green-300"
- }`}
- >
- Daily Drawdown
- </span>
- {dailyDDProgress > 80 ? (
- <XCircleIcon className="w-4 h-4 text-[#FF6B6B]" />
- ) : (
- <CheckCircleIcon className="w-4 h-4 text-[#12DFBA]" />
- )}
- </div>
- <div className="flex items-center gap-4">
- <div className="relative flex-shrink-0">
- <CircularProgress
+ <ObjectiveRow
+ label="Daily Drawdown"
+ currentCents={
+ Math.abs(user.currentDailyDrawdown) * user.peakBalance
+ }
+ targetCents={user.dailyDrawdownLimit * user.peakBalance}
  progress={Math.min(dailyDDProgress, 100)}
- size={56}
- strokeWidth={6}
- color={dailyDDProgress > 80 ? "#ef4444" : "#22c55e"}
+ tone={
+ dailyDDProgress > 80
+ ? "bad"
+ : dailyDDProgress > 60
+ ? "warn"
+ : "good"
+ }
  />
- <div className="absolute inset-0 flex items-center justify-center">
- <span className="text-xs font-bold text-white">
- {Math.round(dailyDDProgress)}%
- </span>
- </div>
- </div>
- <div className="min-w-0">
- <div className="text-lg font-bold text-white truncate">
- {formatCurrency(
- Math.abs(user.currentDailyDrawdown) * user.peakBalance,
- )}
- </div>
- <div className="text-xs text-white/55">
- of{" "}
- {formatCurrency(
- user.dailyDrawdownLimit * user.peakBalance,
- )}
- </div>
- </div>
- </div>
- </div>
-
- {/* Max Drawdown */}
- <div
- className={`rounded-xl p-4 border ${
- maxDDProgress > 80
- ? "bg-[#FF1C1C]/10 border-[#FF1C1C]/25"
- : "bg-[#12DFBA]/10 border-[#12DFBA]/25"
- }`}
- >
- <div className="flex items-center justify-between mb-3">
- <span
- className={`text-xs font-semibold uppercase tracking-wide ${
- maxDDProgress > 80
- ? "text-[#FF6B6B] dark:text-red-300"
- : "text-[#12DFBA] dark:text-green-300"
- }`}
- >
- Max Drawdown
- </span>
- {maxDDProgress > 80 ? (
- <XCircleIcon className="w-4 h-4 text-[#FF6B6B]" />
- ) : (
- <CheckCircleIcon className="w-4 h-4 text-[#12DFBA]" />
- )}
- </div>
- <div className="flex items-center gap-4">
- <div className="relative flex-shrink-0">
- <CircularProgress
+ <ObjectiveRow
+ label="Max Drawdown"
+ currentCents={
+ Math.abs(user.currentMaxDrawdown) * user.startingBalance
+ }
+ targetCents={user.maxDrawdownLimit * user.startingBalance}
  progress={Math.min(maxDDProgress, 100)}
- size={56}
- strokeWidth={6}
- color={maxDDProgress > 80 ? "#ef4444" : "#22c55e"}
+ tone={
+ maxDDProgress > 80
+ ? "bad"
+ : maxDDProgress > 60
+ ? "warn"
+ : "good"
+ }
  />
- <div className="absolute inset-0 flex items-center justify-center">
- <span className="text-xs font-bold text-white">
- {Math.round(maxDDProgress)}%
- </span>
- </div>
- </div>
- <div className="min-w-0">
- <div className="text-lg font-bold text-white truncate">
- {formatCurrency(
- Math.abs(user.currentMaxDrawdown) *
- user.startingBalance,
- )}
- </div>
- <div className="text-xs text-white/55">
- of{" "}
- {formatCurrency(
- user.maxDrawdownLimit * user.startingBalance,
- )}
- </div>
- </div>
- </div>
- </div>
-
- {/* Trading Days */}
- <div className="bg-[#7F24FF]/10 rounded-xl p-4 border border-[#A769FF]/20 dark:border-blue-900">
- <div className="flex items-center justify-between mb-3">
- <span className="text-xs font-semibold text-[#7F24FF] text-[#A769FF] uppercase tracking-wide">
+ <div className="space-y-2">
+ <div className="flex items-center justify-between">
+ <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] font-medium">
  Trading Days
  </span>
- <CheckCircleIcon className="w-4 h-4 text-[#A769FF]" />
+ <span className="font-mono text-sm font-semibold text-white tabular-nums">
+ {user.tradingDaysCompleted}
+ <span className="text-[#5A6476] font-normal">
+ {" "}/ {user.tradingDaysRequired}
+ </span>
+ </span>
  </div>
- <div className="flex items-center gap-4">
- <div className="relative flex-shrink-0">
- <CircularProgress
- progress={Math.min(tradingDaysProgress, 100)}
- size={56}
- strokeWidth={6}
- color="#7F24FF"
+ <ProgressBar
+ value={Math.min(tradingDaysProgress, 100)}
+ tone="brand"
  />
- <div className="absolute inset-0 flex items-center justify-center">
- <span className="text-xs font-bold text-white">
- {Math.round(tradingDaysProgress)}%
- </span>
- </div>
- </div>
- <div className="min-w-0">
- <div className="text-lg font-bold text-white">
- {user.tradingDaysCompleted}{" "}
- <span className="text-white/45 font-normal">
- / {user.tradingDaysRequired}
- </span>
- </div>
- <div className="text-xs text-white/55">
- days completed
- </div>
- </div>
- </div>
  </div>
  </div>
  </TextureCardContent>
@@ -1529,8 +1435,8 @@ export default function Dashboard() {
  <div className="w-2 h-2 rounded-full bg-[#A769FF]"></div>
  Start
  </div>
- <div className="font-medium text-white">
- {formatDate(user.challengeStartDate, "MM/dd/yyyy")}
+ <div className="font-mono text-sm font-medium text-white tabular-nums">
+ {formatDate(user.challengeStartDate, "yyyy-MM-dd")}
  </div>
  </div>
  <div className="flex items-center justify-between">
@@ -1594,7 +1500,7 @@ export default function Dashboard() {
  <span className="text-white/55">
  Highest volume
  </span>
- <span className="font-bold text-white">
+ <span className="font-mono text-sm font-semibold text-white tabular-nums">
  {formatCurrency(highestVolume)}
  </span>
  </div>
@@ -1602,7 +1508,7 @@ export default function Dashboard() {
  <span className="text-white/55">
  Lowest volume
  </span>
- <span className="font-bold text-white">
+ <span className="font-mono text-sm font-semibold text-white tabular-nums">
  {formatCurrency(lowestVolume)}
  </span>
  </div>
@@ -1659,30 +1565,30 @@ export default function Dashboard() {
  <Tabs.Content value="statistics" className="p-6">
  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
  <div className="text-center">
- <div className="text-2xl font-bold text-white">
+ <div className="font-mono text-2xl font-bold text-white tabular-nums">
  {trades.length}
  </div>
- <div className="text-sm text-white/55">
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] mt-2">
  Total Trades
  </div>
  </div>
  <div className="text-center">
- <div className="text-2xl font-bold text-[#12DFBA]">0</div>
- <div className="text-sm text-white/55">
+ <div className="font-mono text-2xl font-bold text-[#12DFBA] tabular-nums">0</div>
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] mt-2">
  Winning Trades
  </div>
  </div>
  <div className="text-center">
- <div className="text-2xl font-bold text-[#FF6B6B]">0</div>
- <div className="text-sm text-white/55">
+ <div className="font-mono text-2xl font-bold text-[#FF1C1C] tabular-nums">0</div>
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] mt-2">
  Losing Trades
  </div>
  </div>
  <div className="text-center">
- <div className="text-2xl font-bold text-[#A769FF]">
+ <div className="font-mono text-2xl font-bold text-[#A769FF] tabular-nums">
  {formatPercent(user.winRate, 0)}
  </div>
- <div className="text-sm text-white/55">
+ <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#ADADAD] mt-2">
  Win Rate
  </div>
  </div>
@@ -1690,9 +1596,17 @@ export default function Dashboard() {
  </Tabs.Content>
 
  <Tabs.Content value="journal" className="p-6">
- <div className="text-center text-sm text-white/55 py-12">
- Trades will appear here once you place your first order.
- </div>
+ <RecentActivity
+ items={trades.slice(0, 8).map((t, i) => {
+ const item: ActivityItem = {
+ id: `trade-${i}`,
+ title: "Recent fill",
+ subtitle: undefined,
+ pnlCents: t.pnl,
+ };
+ return item;
+ })}
+ />
  </Tabs.Content>
 
  <Tabs.Content value="calendar" className="p-6">
@@ -1782,13 +1696,16 @@ export default function Dashboard() {
 
 function DashboardSkeleton() {
  return (
- <div className="space-y-6 max-w-7xl mx-auto">
- <div className="h-10 w-48 bg-white/10 dark:bg-[#1f0a3d] rounded animate-pulse" />
- <div className="h-44 bg-gray-100 dark:bg-[#1f0a3d] rounded-2xl animate-pulse" />
- <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
- <div className="h-28 bg-gray-100 dark:bg-[#1f0a3d] rounded-2xl animate-pulse" />
- <div className="h-28 bg-gray-100 dark:bg-[#1f0a3d] rounded-2xl animate-pulse" />
- <div className="h-28 bg-gray-100 dark:bg-[#1f0a3d] rounded-2xl animate-pulse" />
+ <div className="space-y-6 max-w-7xl mx-auto" aria-hidden>
+ <div className="h-10 w-48 rounded bg-white/[0.06] animate-pulse" />
+ <div className="h-44 rounded-xl border border-white/10 bg-[#180630] animate-pulse" />
+ <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+ {[0, 1, 2, 3].map((i) => (
+ <div
+ key={i}
+ className="h-[120px] rounded-xl border border-white/10 bg-[#180630] animate-pulse"
+ />
+ ))}
  </div>
  </div>
  );

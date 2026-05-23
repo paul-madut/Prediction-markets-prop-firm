@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDownIcon, CheckIcon } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
+import { springs } from "./motion";
 
 export interface SortOption<T extends string> {
   value: T;
@@ -15,7 +17,11 @@ interface SortDropdownProps<T extends string> {
   onChange: (next: T) => void;
 }
 
-export function SortDropdown<T extends string>({ options, value, onChange }: SortDropdownProps<T>) {
+export function SortDropdown<T extends string>({
+  options,
+  value,
+  onChange,
+}: SortDropdownProps<T>) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -31,34 +37,52 @@ export function SortDropdown<T extends string>({ options, value, onChange }: Sor
 
   return (
     <div className="relative" ref={ref}>
-      <button
+      <motion.button
+        type="button"
+        whileTap={{ scale: 0.97 }}
+        transition={springs.snappy}
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold border border-gray-200 dark:border-white/10 rounded-lg bg-[#180630] hover:bg-[#0C0319] dark:hover:bg-[#1f0a3d]/50 transition-colors"
+        className="inline-flex items-center gap-2 h-11 px-3.5 text-[13px] font-semibold border border-white/10 rounded-lg bg-[#180630] hover:bg-[#1f0a3d] hover:border-white/[0.18] transition-colors"
       >
-        <span className="text-white/85">{active.label}</span>
-        <ChevronDownIcon className={cn("w-4 h-4 text-white/45 transition-transform", open && "rotate-180")} />
-      </button>
+        <span className="text-white">{active.label}</span>
+        <motion.span
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={springs.snappy}
+          className="inline-flex"
+        >
+          <ChevronDownIcon className="w-4 h-4 text-white/55" />
+        </motion.span>
+      </motion.button>
 
-      {open && (
-        <div className="absolute right-0 top-full mt-2 min-w-[200px] bg-[#180630] rounded-lg shadow-lg border border-gray-200 dark:border-white/10 p-1 z-50">
-          {options.map((o) => (
-            <button
-              key={o.value}
-              onClick={() => {
-                onChange(o.value);
-                setOpen(false);
-              }}
-              className={cn(
-                "w-full text-left px-3 py-2 rounded-md text-sm hover:bg-[#0C0319] dark:hover:bg-[#1f0a3d]/50 flex items-center justify-between",
-                o.value === value && "bg-[#7F24FF]/10 text-[#7F24FF]",
-              )}
-            >
-              {o.label}
-              {o.value === value && <CheckIcon className="w-4 h-4" />}
-            </button>
-          ))}
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -4, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -4, scale: 0.98 }}
+            transition={springs.snappy}
+            className="absolute right-0 top-full mt-2 min-w-[200px] bg-[#1f0a3d] rounded-xl border border-white/10 p-1 z-50"
+            style={{ boxShadow: "0 24px 48px -12px rgba(0,0,0,0.6)" }}
+          >
+            {options.map((o) => (
+              <button
+                key={o.value}
+                onClick={() => {
+                  onChange(o.value);
+                  setOpen(false);
+                }}
+                className={cn(
+                  "w-full text-left px-3 h-9 rounded-md text-[13px] hover:bg-white/[0.06] flex items-center justify-between transition-colors",
+                  o.value === value ? "text-[#A769FF] font-semibold" : "text-white/85",
+                )}
+              >
+                {o.label}
+                {o.value === value && <CheckIcon className="w-4 h-4" />}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

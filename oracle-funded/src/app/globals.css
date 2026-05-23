@@ -378,6 +378,17 @@ textarea {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
 }
+/* Skeleton shimmer — moves a 1-row highlight horizontally across the placeholder. */
+@keyframes bb-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+/* Stage marker pulse — a 2s ring that grows around the active phase dot. */
+@keyframes bb-stage-pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(127, 36, 255, 0.55); }
+  70%  { box-shadow: 0 0 0 10px rgba(127, 36, 255, 0);    }
+  100% { box-shadow: 0 0 0 0   rgba(127, 36, 255, 0);    }
+}
 
 /* Purple aurora drift on the auth/hero background */
 @keyframes aurora-drift {

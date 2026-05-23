@@ -1,67 +1,86 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import { Market } from "@/types";
 import { formatVolume, formatDate } from "@/lib/formatters";
 import { ArrowTrendingUpIcon } from "@heroicons/react/24/outline";
+import { springs } from "./motion";
 
 interface MarketCardProps {
- market: Market;
- onClick: () => void;
+  market: Market;
+  onClick: () => void;
 }
 
 export const MarketCard = ({ market, onClick }: MarketCardProps) => {
- const yesPercentage = market.yes_ask;
- const noPercentage = 100 - market.yes_ask;
+  const yesPercentage = market.yes_ask;
 
- return (
- <button
- onClick={onClick}
- className="w-full bg-[#180630] rounded-lg shadow-sm border border-gray-200 dark:border-white/10 p-6 hover:shadow-lg hover:border-[#A769FF]/30 hover:scale-[1.02] transition-all duration-200 text-left"
- >
- {/* Category Badge */}
- <div className="flex items-center justify-between mb-3">
- <span className="px-2 py-1 text-xs font-semibold rounded bg-[#7F24FF]/15 text-blue-800">
- {market.category}
- </span>
- {market.featured && (
- <span className="flex items-center gap-1 text-xs text-[#FFB539]">
- <ArrowTrendingUpIcon className="w-3.5 h-3.5" />
- Featured
- </span>
- )}
- </div>
+  return (
+    <motion.button
+      onClick={onClick}
+      whileHover={{ y: -1 }}
+      whileTap={{ scale: 0.99 }}
+      transition={springs.responsive}
+      className="group w-full text-left bg-[#180630] hover:bg-[#1f0a3d] border border-white/10 hover:border-white/[0.18] rounded-xl p-6 transition-colors"
+    >
+      {/* Header: ticker + featured flag */}
+      <div className="flex items-center justify-between mb-3">
+        <span className="font-mono text-[11px] uppercase tracking-wider text-white/85">
+          {market.ticker}
+        </span>
+        {market.featured && (
+          <span className="inline-flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider text-[#FFB539]">
+            <ArrowTrendingUpIcon className="w-3.5 h-3.5" />
+            Featured
+          </span>
+        )}
+      </div>
 
- {/* Market Question */}
- <h3 className="text-lg font-semibold text-white mb-4 line-clamp-2">
- {market.title}
- </h3>
+      {/* Category pill */}
+      <div className="mb-3">
+        <span className="inline-flex items-center px-2.5 h-[22px] rounded-full text-[12px] font-semibold tracking-wide bg-white/[0.06] text-white/85">
+          {market.category}
+        </span>
+      </div>
 
- {/* YES Probability */}
- <div className="mb-2">
- <div className="text-3xl font-bold text-[#A769FF] mb-2">
- YES: {yesPercentage}%
- </div>
- {/* Progress Bar */}
- <div className="w-full bg-white/10 rounded-full h-2 mb-4">
- <div
- className="bg-[#7F24FF] h-2 rounded-full transition-all"
- style={{ width: `${yesPercentage}%` }}
- />
- </div>
- </div>
+      {/* Market title */}
+      <h3 className="text-[14px] leading-5 font-medium text-white/85 mb-4 line-clamp-2 min-h-[2.5rem]">
+        {market.title}
+      </h3>
 
- {/* Market Info */}
- <div className="space-y-1 text-sm text-white/75">
- <div className="flex justify-between">
- <span>Volume:</span>
- <span className="font-semibold">{formatVolume(market.volume)}</span>
- </div>
- <div className="flex justify-between">
- <span>Closes:</span>
- <span className="font-semibold">{formatDate(market.close_time)}</span>
- </div>
- </div>
- </button>
- );
+      {/* YES probability */}
+      <div className="mb-4">
+        <div className="flex items-baseline justify-between mb-2">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-white/55">
+            Yes
+          </span>
+          <span className="text-2xl font-mono font-semibold text-white tabular-nums">
+            {yesPercentage}%
+          </span>
+        </div>
+        <div className="w-full bg-white/[0.06] rounded-full h-1.5 overflow-hidden">
+          <div
+            className="bg-[#7F24FF] h-1.5 rounded-full transition-[width] duration-200"
+            style={{ width: `${yesPercentage}%` }}
+          />
+        </div>
+      </div>
+
+      {/* Market info */}
+      <div className="space-y-1.5 text-[13px]">
+        <div className="flex justify-between">
+          <span className="text-white/55">Volume</span>
+          <span className="font-mono tabular-nums text-white/85">
+            {formatVolume(market.volume)}
+          </span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-white/55">Closes</span>
+          <span className="font-mono tabular-nums text-white/85">
+            {formatDate(market.close_time)}
+          </span>
+        </div>
+      </div>
+    </motion.button>
+  );
 };

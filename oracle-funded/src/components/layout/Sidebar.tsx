@@ -27,6 +27,10 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
+// Motion presets per DESIGN.md
+const SPRING_SNAPPY = { type: "spring" as const, stiffness: 500, damping: 35 };
+const EASE_OUT: [number, number, number, number] = [0, 0, 0.2, 1];
+
 function userInitial(
   fullName: string | null | undefined,
   email: string | null | undefined,
@@ -84,9 +88,9 @@ export const Sidebar = () => {
 
           <div className="h-px bg-white/10 w-full mb-6" />
 
-          <div className="flex flex-col gap-2">
-            {mainLinks.map((link, idx) => (
-              <SidebarLink key={idx} link={link} />
+          <div className="flex flex-col gap-1">
+            {mainLinks.map((link) => (
+              <SidebarLink key={link.href} link={link} />
             ))}
           </div>
         </div>
@@ -94,34 +98,49 @@ export const Sidebar = () => {
         <div className="flex flex-col gap-3">
           <div className="h-px bg-white/10 w-full" />
 
-          <div className={cn("px-3", !open && "flex justify-center px-0")}>
-            <Link
-              href="/dashboard/new-challenge"
-              className={cn(
-                "flex items-center justify-center rounded-[10px] font-semibold text-white bg-[#7F24FF] hover:bg-[#A769FF] transition-all duration-300 shadow-[0_8px_24px_-6px_rgba(127,36,255,0.55)] hover:shadow-[0_12px_28px_-6px_rgba(127,36,255,0.7)] hover:-translate-y-px",
-                open ? "w-full py-3 px-4 gap-2" : "h-10 w-10",
-              )}
+          {/* "Get Funded" carries the brand glow — the one and only primary
+              CTA in this shell (DESIGN.md: one glow per viewport). */}
+          <div className={cn("px-1", !open && "flex justify-center px-0")}>
+            <motion.div
+              whileTap={{ scale: 0.97 }}
+              transition={SPRING_SNAPPY}
+              className={open ? "w-full" : undefined}
             >
-              <RocketLaunchIcon className="h-5 w-5 flex-shrink-0" />
-              {open && (
-                <span className="text-sm whitespace-nowrap">Get Funded</span>
-              )}
-            </Link>
+              <Link
+                href="/dashboard/new-challenge"
+                className={cn(
+                  "flex items-center justify-center rounded-lg font-semibold text-white bg-[#7F24FF] hover:bg-[#A769FF] transition-colors duration-150",
+                  "shadow-[0_8px_24px_-6px_rgba(127,36,255,0.55)] hover:shadow-[0_12px_28px_-6px_rgba(127,36,255,0.7)]",
+                  open ? "w-full py-2.5 px-4 gap-2 h-10" : "h-10 w-10",
+                )}
+                style={{
+                  transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+                }}
+              >
+                <RocketLaunchIcon className="h-5 w-5 flex-shrink-0" />
+                {open && (
+                  <span className="text-sm whitespace-nowrap">Get Funded</span>
+                )}
+              </Link>
+            </motion.div>
           </div>
 
-          <div className="flex flex-col gap-2">
-            {bottomLinks.map((link, idx) => (
-              <SidebarLink key={idx} link={link} />
+          <div className="flex flex-col gap-1">
+            {bottomLinks.map((link) => (
+              <SidebarLink key={link.href} link={link} />
             ))}
           </div>
 
-          <div
+          <motion.div
+            whileTap={{ scale: 0.97 }}
+            transition={SPRING_SNAPPY}
             className={cn(
-              "flex items-center gap-3 rounded-lg hover:bg-white/[0.06] transition-colors cursor-pointer",
+              "flex items-center gap-3 rounded-lg hover:bg-white/[0.06] transition-colors duration-150 cursor-pointer",
               open
                 ? "py-2 px-3 justify-start"
                 : "h-10 w-10 mx-auto justify-center",
             )}
+            style={{ transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)" }}
           >
             {user?.profile?.avatarUrl ? (
               /* eslint-disable-next-line @next/next/no-img-element */
@@ -141,12 +160,12 @@ export const Sidebar = () => {
                 opacity: open ? 1 : 0,
                 width: open ? "auto" : 0,
               }}
-              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-              className="text-base font-medium text-white/85 whitespace-nowrap overflow-hidden"
+              transition={{ duration: 0.3, ease: EASE_OUT }}
+              className="text-sm font-medium text-white/85 whitespace-nowrap overflow-hidden"
             >
               {userDisplay(user?.profile?.fullName, user?.email)}
             </motion.span>
-          </div>
+          </motion.div>
         </div>
       </SidebarBody>
     </AceternitySidebar>
@@ -162,19 +181,22 @@ const SidebarHeader = () => {
         open ? "pl-1" : "justify-center",
       )}
     >
-      <button
+      <motion.button
+        whileTap={{ scale: 0.97 }}
+        transition={SPRING_SNAPPY}
         onClick={() => setOpen(!open)}
         aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
-        className="p-1.5 rounded-lg hover:bg-white/[0.06] transition-colors flex-shrink-0 text-white/80"
+        className="p-1.5 rounded-lg hover:bg-white/[0.06] transition-colors duration-150 flex-shrink-0 text-white/80"
+        style={{ transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)" }}
       >
         <Bars3Icon className="h-5 w-5" />
-      </button>
+      </motion.button>
       <motion.div
         animate={{
           opacity: open ? 1 : 0,
           width: open ? "auto" : 0,
         }}
-        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+        transition={{ duration: 0.3, ease: EASE_OUT }}
         className="flex items-center whitespace-pre overflow-hidden"
       >
         <Image

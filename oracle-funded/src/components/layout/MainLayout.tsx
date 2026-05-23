@@ -1,6 +1,7 @@
 "use client";
 
 import React, { ReactNode } from "react";
+import { MotionConfig } from "framer-motion";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
 import { PageTransition } from "./PageTransition";
@@ -11,16 +12,22 @@ interface MainLayoutProps {
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-[#180630]">
-      <Sidebar />
+    // MotionConfig at the shell boundary collapses all framer-motion
+    // animations to a 50ms cross-fade when the OS reports
+    // prefers-reduced-motion: reduce. Individual components do not
+    // need to re-implement reduced-motion handling.
+    <MotionConfig reducedMotion="user">
+      <div className="flex flex-col md:flex-row h-screen bg-[#180630]">
+        <Sidebar />
 
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <TopBar />
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <TopBar />
 
-        <main className="flex-1 overflow-y-auto bg-[#0C0319] dark:bg-[#0C0319] p-4 pb-16 md:p-6 md:pb-20">
-          <PageTransition>{children}</PageTransition>
-        </main>
+          <main className="flex-1 overflow-y-auto bg-[#0C0319] dark:bg-[#0C0319] p-4 pb-16 md:p-6 md:pb-20">
+            <PageTransition>{children}</PageTransition>
+          </main>
+        </div>
       </div>
-    </div>
+    </MotionConfig>
   );
 };

@@ -4,105 +4,75 @@ import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+// Blueberry section header (DESIGN.md):
+// - Display headlines use Plus Jakarta Sans, weight 700, tight tracking.
+// - No gradient text (DESIGN.md keeps text in the three white tiers).
+// - Optional small overline + dot in the accent colour to give the section
+//   a visual anchor without inventing a new palette.
+
 interface SectionHeaderProps {
- title: string;
- subtitle?: string;
- accentColor?: "blue" | "purple" | "green";
- id?: string;
- centered?: boolean;
+  title: string;
+  subtitle?: string;
+  accentColor?: "blue" | "purple" | "green";
+  id?: string;
+  centered?: boolean;
 }
 
+const ACCENT: Record<
+  NonNullable<SectionHeaderProps["accentColor"]>,
+  { dot: string; text: string }
+> = {
+  blue: { dot: "bg-[#7F24FF]", text: "text-[#A769FF]" },
+  purple: { dot: "bg-[#A769FF]", text: "text-[#A769FF]" },
+  green: { dot: "bg-[#12DFBA]", text: "text-[#12DFBA]" },
+};
+
 export const SectionHeader = ({
- title,
- subtitle,
- accentColor = "blue",
- id,
- centered = true,
+  title,
+  subtitle,
+  accentColor = "blue",
+  id,
+  centered = true,
 }: SectionHeaderProps) => {
- const gradients = {
- blue: "from-blue-500 via-blue-400 to-cyan-400",
- purple: "from-purple-500 via-purple-400 to-pink-400",
- green: "from-green-500 via-emerald-400 to-teal-400",
- };
+  const colors = ACCENT[accentColor];
 
- const glowColors = {
- blue: "bg-blue-500/20",
- purple: "bg-purple-500/20",
- green: "bg-[#12DFBA]/20",
- };
-
- return (
- <motion.div
- id={id}
- initial={{ opacity: 0, y: 20 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true, margin: "-50px" }}
- transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
- className={cn("relative scroll-mt-24", centered && "text-center")}
- >
- {/* Decorative glow behind */}
- <div
- className={cn(
- "absolute -inset-x-4 -inset-y-2 blur-3xl opacity-30 rounded-full",
- glowColors[accentColor]
- )}
- />
-
- {/* Decorative line elements */}
- <div className={cn("flex items-center gap-4 mb-4", centered && "justify-center")}>
- <motion.div
- initial={{ width: 0 }}
- whileInView={{ width: "3rem" }}
- viewport={{ once: true }}
- transition={{ duration: 0.6, delay: 0.2 }}
- className={cn(
- "h-px bg-gradient-to-r",
- gradients[accentColor],
- "opacity-60"
- )}
- />
- <div
- className={cn(
- "w-2 h-2 rounded-full bg-gradient-to-r",
- gradients[accentColor]
- )}
- />
- <motion.div
- initial={{ width: 0 }}
- whileInView={{ width: "3rem" }}
- viewport={{ once: true }}
- transition={{ duration: 0.6, delay: 0.2 }}
- className={cn(
- "h-px bg-gradient-to-l",
- gradients[accentColor],
- "opacity-60"
- )}
- />
- </div>
-
- {/* Title with gradient */}
- <h2
- className={cn(
- "relative text-2xl md:text-3xl font-bold",
- "bg-gradient-to-r bg-clip-text text-transparent",
- gradients[accentColor]
- )}
- >
- {title}
- </h2>
-
- {/* Subtitle */}
- {subtitle && (
- <motion.p
- initial={{ opacity: 0 }}
- whileInView={{ opacity: 1 }}
- viewport={{ once: true }}
- transition={{ duration: 0.5, delay: 0.3 }}
- className="mt-2 text-white/75 text-sm md:text-base"
- >
- {subtitle}
- </motion.p>
- )}
- </motion.div>
- );
+  return (
+    <motion.div
+      id={id}
+      initial={{ opacity: 0, y: 8 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      className={cn("scroll-mt-24", centered && "text-center")}
+    >
+      <div
+        className={cn(
+          "inline-flex items-center gap-2 mb-3",
+          centered && "justify-center",
+        )}
+      >
+        <span className={cn("w-1.5 h-1.5 rounded-full", colors.dot)} />
+        <span
+          className={cn(
+            "text-[11px] font-medium uppercase tracking-[0.08em]",
+            colors.text,
+          )}
+          style={{ fontFamily: "var(--font-mono)" }}
+        >
+          Section
+        </span>
+      </div>
+      <h2
+        className="text-[24px] leading-[30px] md:text-[32px] md:leading-[38px] font-bold text-white tracking-[-0.02em]"
+        style={{ fontFamily: "var(--font-heading)" }}
+      >
+        {title}
+      </h2>
+      {subtitle && (
+        <p className="mt-2 text-sm md:text-base text-white/65 leading-relaxed">
+          {subtitle}
+        </p>
+      )}
+    </motion.div>
+  );
 };

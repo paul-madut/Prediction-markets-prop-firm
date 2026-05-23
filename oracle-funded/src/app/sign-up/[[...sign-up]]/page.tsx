@@ -2,12 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRightIcon, ArrowPathIcon, ExclamationTriangleIcon, EnvelopeIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
-import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRightIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
+import { AnimatePresence, motion } from "framer-motion";
 import { AuthShell } from "@/components/auth/AuthShell";
 import { PasswordInput } from "@/components/auth/PasswordInput";
 import { GoogleAuthButton } from "@/components/auth/GoogleAuthButton";
+import { Loader } from "@/components/ui/loader";
 import { createClient } from "@/lib/supabase/client";
+
+const SNAPPY = { type: "spring" as const, stiffness: 500, damping: 35 };
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -63,6 +66,14 @@ export default function SignUpPage() {
     return s;
   })();
 
+  // Strength bars use semantic colours from the design palette only.
+  const strengthColor = (() => {
+    if (strength === 4) return "bg-[#12DFBA]";
+    if (strength === 3) return "bg-[#A769FF]";
+    if (strength === 2) return "bg-[#FFB539]";
+    return "bg-[#FF1C1C]";
+  })();
+
   return (
     <AuthShell
       side="up"
@@ -72,37 +83,40 @@ export default function SignUpPage() {
     >
       <div className="space-y-1.5">
         <h2
-          className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
-          style={{ fontFamily: "var(--font-mona-sans, var(--font-sans))" }}
+          className="text-[28px] leading-9 font-bold tracking-tight text-white"
+          style={{ fontFamily: "var(--font-heading)" }}
         >
           Create your account
         </h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400">
-          Free to start — challenge fees apply when you buy your first evaluation.
+        <p className="text-sm text-white/65">
+          Free to start. Challenge fees apply when you buy your first evaluation.
         </p>
       </div>
 
       <div className="mt-8 space-y-3">
-        <GoogleAuthButton label="Sign up with Google" onError={setError} />
+        <GoogleAuthButton label="Continue with Google" onError={setError} />
         <div className="flex items-center gap-3">
-          <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700" />
-          <span className="text-[11px] uppercase tracking-wider text-slate-400 dark:text-slate-500">
+          <div className="flex-1 h-px bg-white/10" />
+          <span
+            className="text-[11px] uppercase tracking-[0.08em] text-white/45"
+            style={{ fontFamily: "var(--font-mono)" }}
+          >
             or
           </span>
-          <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700" />
+          <div className="flex-1 h-px bg-white/10" />
         </div>
       </div>
 
-      <form onSubmit={onSubmit} className="mt-4 space-y-4">
+      <form onSubmit={onSubmit} className="mt-4 space-y-4" noValidate>
         <div>
           <label
             htmlFor="email"
-            className="block text-[11px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5"
+            className="block text-[12px] leading-4 font-semibold tracking-[0.02em] text-white/70 mb-2"
           >
             Email
           </label>
           <div className="relative">
-            <EnvelopeIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500 pointer-events-none" />
+            <EnvelopeIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/45 pointer-events-none" />
             <input
               id="email"
               type="email"
@@ -111,7 +125,10 @@ export default function SignUpPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full pl-9 pr-3.5 py-2.5 bg-[#180630] border border-slate-200 dark:border-white/15 rounded-lg text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#7F24FF]/30 focus:border-[#7F24FF] transition-all"
+              className="w-full h-11 pl-9 pr-3.5 py-3 bg-white/[0.04] border border-white/10 rounded-lg text-sm text-white placeholder:text-white/40
+                         transition-[background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]
+                         focus:outline-none focus:bg-white/[0.06]
+                         focus-visible:ring-2 focus-visible:ring-[#7F24FF]/45 focus-visible:border-white/15"
             />
           </div>
         </div>
@@ -119,7 +136,7 @@ export default function SignUpPage() {
         <div>
           <label
             htmlFor="password"
-            className="block text-[11px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5"
+            className="block text-[12px] leading-4 font-semibold tracking-[0.02em] text-white/70 mb-2"
           >
             Password
           </label>
@@ -131,78 +148,88 @@ export default function SignUpPage() {
             minLength={8}
             placeholder="At least 8 characters"
           />
-          {/* Subtle strength meter. Doesn't gate submit — backend minLength is the source of truth. */}
+          {/* Strength meter doesn't gate submit — backend minLength is the source of truth. */}
           {password.length > 0 && (
             <div className="mt-2 flex items-center gap-1.5">
               {[0, 1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className={`h-1 flex-1 rounded-full transition-colors ${
-                    strength > i
-                      ? strength === 1
-                        ? "bg-rose-400"
-                        : strength === 2
-                          ? "bg-amber-400"
-                          : strength === 3
-                            ? "bg-blue-400"
-                            : "bg-emerald-400"
-                      : "bg-slate-200 dark:bg-[#1f0a3d]"
+                  className={`h-1 flex-1 rounded-full transition-colors duration-150 ${
+                    strength > i ? strengthColor : "bg-white/10"
                   }`}
                 />
               ))}
-              <span className="text-[10px] uppercase tracking-wider text-slate-400 dark:text-slate-500 ml-2">
-                {strength === 0 ? "" : strength === 1 ? "weak" : strength === 2 ? "fair" : strength === 3 ? "good" : "strong"}
+              <span
+                className="text-[10px] uppercase tracking-[0.08em] text-white/45 ml-2"
+                style={{ fontFamily: "var(--font-mono)" }}
+              >
+                {strength === 0
+                  ? ""
+                  : strength === 1
+                    ? "weak"
+                    : strength === 2
+                      ? "fair"
+                      : strength === 3
+                        ? "good"
+                        : "strong"}
               </span>
             </div>
           )}
+          {/* Inline status line — error replaces helper text per DESIGN.md. */}
+          <div className="min-h-[18px] mt-1.5">
+            <AnimatePresence mode="wait" initial={false}>
+              {error ? (
+                <motion.p
+                  key={`err-${error}`}
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
+                  className="text-[12px] leading-4 text-[#FF1C1C]"
+                  role="alert"
+                  aria-live="polite"
+                >
+                  {error}
+                </motion.p>
+              ) : info ? (
+                <motion.p
+                  key={`info-${info}`}
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
+                  className="text-[12px] leading-4 text-[#12DFBA]"
+                  role="status"
+                  aria-live="polite"
+                >
+                  {info}
+                </motion.p>
+              ) : null}
+            </AnimatePresence>
+          </div>
         </div>
 
-        <AnimatePresence mode="wait">
-          {error && (
-            <motion.div
-              key="err"
-              initial={{ opacity: 0, y: -4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="flex items-start gap-2 px-3 py-2 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded-lg text-sm text-red-700 dark:text-red-300"
-            >
-              <ExclamationTriangleIcon className="w-4 h-4 mt-0.5 shrink-0" />
-              <span>{error}</span>
-            </motion.div>
-          )}
-          {info && (
-            <motion.div
-              key="info"
-              initial={{ opacity: 0, y: -4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="flex items-start gap-2 px-3 py-2 bg-[#7F24FF]/10 bg-[#1f0a3d]/40 border border-[#A769FF]/30 dark:border-blue-900 rounded-lg text-sm text-[#7F24FF] text-[#A769FF]"
-            >
-              <CheckCircleIcon className="w-4 h-4 mt-0.5 shrink-0" />
-              <span>{info}</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <button
+        <motion.button
           type="submit"
           disabled={loading}
-          className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-lg bg-gradient-to-b from-[#A769FF] to-[#7F24FF] text-white text-sm font-semibold shadow-lg shadow-blue-500/20 hover:from-[#7F24FF] hover:to-[#6c14ee] hover:shadow-xl hover:shadow-blue-500/25 active:translate-y-[0.5px] disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+          whileTap={loading ? undefined : { scale: 0.97 }}
+          transition={SNAPPY}
+          className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-lg
+                     bg-[#7F24FF] hover:bg-[#A769FF] text-white text-sm font-semibold
+                     shadow-[0_8px_24px_-6px_rgba(127,36,255,0.55)]
+                     transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7F24FF]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0C0319]
+                     disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {loading ? (
-            <>
-              <ArrowPathIcon className="w-4 h-4 animate-spin" />
-              Creating account…
-            </>
+            <Loader size="sm" className="w-4 h-4" />
           ) : (
             <>
               Create account
               <ArrowRightIcon className="w-4 h-4" />
             </>
           )}
-        </button>
+        </motion.button>
       </form>
     </AuthShell>
   );

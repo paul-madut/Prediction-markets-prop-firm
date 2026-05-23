@@ -1,15 +1,20 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import {
   motion,
   useAnimationFrame,
   useMotionTemplate,
   useMotionValue,
+  useReducedMotion,
   useTransform,
 } from "framer-motion";
-import { useRef } from "react";
 import { cn } from "@/lib/utils";
+
+// Aceternity moving-border primitive, retuned for Blueberry.
+// - Glow uses only #7F24FF / #A769FF (no third purple).
+// - Animation only runs when prefers-reduced-motion is unset; otherwise the
+//   border sits static so reduced-motion users get a calm UI.
 
 export function Button({
   borderRadius = "1.75rem",
@@ -34,11 +39,9 @@ export function Button({
     <Component
       className={cn(
         "bg-transparent relative text-xl p-[1px] overflow-hidden",
-        containerClassName
+        containerClassName,
       )}
-      style={{
-        borderRadius: borderRadius,
-      }}
+      style={{ borderRadius }}
       {...otherProps}
     >
       <div
@@ -48,8 +51,8 @@ export function Button({
         <MovingBorder duration={duration} rx="30%" ry="30%">
           <div
             className={cn(
-              "h-20 w-20 opacity-[0.8] bg-[radial-gradient(var(--blue-500)_40%,transparent_60%)]",
-              borderClassName
+              "h-20 w-20 opacity-[0.8] bg-[radial-gradient(#7F24FF_40%,transparent_60%)]",
+              borderClassName,
             )}
           />
         </MovingBorder>
@@ -57,12 +60,10 @@ export function Button({
 
       <div
         className={cn(
-          "relative bg-slate-900/[0.8] border border-slate-800 backdrop-blur-xl text-white flex items-center justify-center w-full h-full text-sm antialiased",
-          className
+          "relative bg-[#180630] border border-white/10 backdrop-blur-xl text-white flex items-center justify-center w-full h-full text-sm antialiased",
+          className,
         )}
-        style={{
-          borderRadius: `calc(${borderRadius} * 0.96)`,
-        }}
+        style={{ borderRadius: `calc(${borderRadius} * 0.96)` }}
       >
         {children}
       </div>
@@ -85,8 +86,10 @@ export function MovingBorder({
 }) {
   const pathRef = useRef<SVGRectElement>(null);
   const progress = useMotionValue<number>(0);
+  const reduced = useReducedMotion();
 
   useAnimationFrame((time) => {
+    if (reduced) return;
     const length = pathRef.current?.getTotalLength();
     if (length) {
       const pxPerMillisecond = length / duration;
@@ -96,11 +99,11 @@ export function MovingBorder({
 
   const x = useTransform(
     progress,
-    (val) => pathRef.current?.getPointAtLength(val).x ?? 0
+    (val) => pathRef.current?.getPointAtLength(val).x ?? 0,
   );
   const y = useTransform(
     progress,
-    (val) => pathRef.current?.getPointAtLength(val).y ?? 0
+    (val) => pathRef.current?.getPointAtLength(val).y ?? 0,
   );
 
   const transform = useMotionTemplate`translateX(${x}px) translateY(${y}px) translateX(-50%) translateY(-50%)`;
@@ -139,7 +142,7 @@ export function MovingBorder({
   );
 }
 
-// Card variant for larger containers like the Welcome section
+// Card variant for larger containers (Welcome / hero panels).
 export function MovingBorderCard({
   borderRadius = "1rem",
   children,
@@ -159,11 +162,9 @@ export function MovingBorderCard({
     <div
       className={cn(
         "bg-transparent relative p-[2px] overflow-hidden",
-        containerClassName
+        containerClassName,
       )}
-      style={{
-        borderRadius: borderRadius,
-      }}
+      style={{ borderRadius }}
     >
       <div
         className="absolute inset-0"
@@ -173,7 +174,7 @@ export function MovingBorderCard({
           <div
             className={cn(
               "h-48 w-48 opacity-[0.85] bg-[radial-gradient(#A769FF_40%,transparent_60%)]",
-              borderClassName
+              borderClassName,
             )}
           />
         </MovingBorder>
@@ -181,12 +182,10 @@ export function MovingBorderCard({
 
       <div
         className={cn(
-          "relative bg-[#180630] border border-[#A769FF]/25 backdrop-blur-xl w-full h-full antialiased",
-          className
+          "relative bg-[#180630] border border-[#7F24FF]/25 backdrop-blur-xl w-full h-full antialiased",
+          className,
         )}
-        style={{
-          borderRadius: `calc(${borderRadius} * 0.96)`,
-        }}
+        style={{ borderRadius: `calc(${borderRadius} * 0.96)` }}
       >
         {children}
       </div>

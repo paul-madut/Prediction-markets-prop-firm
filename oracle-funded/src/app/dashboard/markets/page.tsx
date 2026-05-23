@@ -2,12 +2,14 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 import { Event, Market } from "@/types";
 import { api, ApiError } from "@/lib/api-client";
 import { MarketFilters } from "@/components/markets/MarketFilters";
 import { MarketCard } from "@/components/markets/ExpandableMarketCard";
 import { MarketCardSkeleton } from "@/components/markets/MarketCardSkeleton";
 import { SortDropdown, SortOption } from "@/components/markets/SortDropdown";
+import { springs } from "@/components/markets/motion";
 import { useTickEvery } from "@/hooks/useTickEvery";
 import { walkCents, seedFromString } from "@/lib/priceWalk";
 import { useApp } from "@/context/AppContext";
@@ -128,33 +130,69 @@ export default function MarketsPage() {
         <SortDropdown options={MARKET_SORT_OPTIONS} value={sortKey} onChange={setSortKey} />
       </div>
 
-      {marketsLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {Array.from({ length: 9 }).map((_, i) => (
-            <MarketCardSkeleton key={i} />
-          ))}
+      {marketsError && (
+        <div className="bg-[#FF1C1C]/[0.14] border border-[#FF1C1C]/30 rounded-xl px-4 py-3 text-[13px] text-[#FF1C1C]">
+          Failed to load markets: {marketsError}
         </div>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {eventsWithDrift.map((event) => (
-              <Link
-                key={event.eventTicker}
-                href={`/dashboard/markets/${event.eventTicker}`}
-                className="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7F24FF] rounded-lg"
-              >
-                <MarketCard event={event} onClick={() => {}} />
-              </Link>
-            ))}
-          </div>
-
-          {filteredEvents.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-white/55">No markets found matching your criteria</p>
-            </div>
-          )}
-        </>
       )}
+
+      {/* Skeleton → content cross-fade per DESIGN.md › Skeleton → content.
+          Skeleton fades out 200ms; real content fades in 250ms with y:4→0. */}
+      <AnimatePresence mode="wait">
+        {marketsLoading ? (
+          <motion.div
+            key="skeleton-grid"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
+          >
+            {Array.from({ length: 9 }).map((_, i) => (
+              <MarketCardSkeleton key={i} />
+            ))}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="markets-grid"
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: [0, 0, 0.2, 1] }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              <AnimatePresence mode="popLayout">
+                {eventsWithDrift.map((event, i) => (
+                  <motion.div
+                    key={event.eventTicker}
+                    layout
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{
+                      ...springs.responsive,
+                      // Cap stagger at 8 cards (DESIGN.md › List stagger).
+                      delay: Math.min(i * 0.03, 0.24),
+                    }}
+                  >
+                    <Link
+                      href={`/dashboard/markets/${event.eventTicker}`}
+                      className="block h-full rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7F24FF]/45"
+                    >
+                      <MarketCard event={event} onClick={() => {}} />
+                    </Link>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+
+            {filteredEvents.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-white/55 text-[14px]">
+                  No markets found matching your criteria
+                </p>
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

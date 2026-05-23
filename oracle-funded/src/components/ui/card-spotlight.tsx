@@ -67,10 +67,13 @@ export const CardSpotlight = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "group relative rounded-xl border p-6 overflow-hidden transition-all duration-300",
+        // DESIGN.md: no drop shadows on cards. Depth is canvas ascent +
+        // border-strong on hover. The spotlight gradient itself is the
+        // hover affordance.
+        "group relative rounded-xl border p-6 overflow-hidden transition-[background-color,border-color] duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]",
         variant === "dark"
-          ? "border-white/10 bg-[#180630] hover:border-[#A769FF]/40 hover:shadow-2xl hover:shadow-[#7F24FF]/20"
-          : "border-white/10 bg-[#180630] hover:border-[#A769FF]/35 hover:shadow-xl hover:shadow-[#7F24FF]/15",
+          ? "border-white/10 bg-[#180630] hover:bg-[#1f0a3d] hover:border-white/[0.18]"
+          : "border-white/10 bg-[#180630] hover:bg-[#1f0a3d] hover:border-white/[0.18]",
         className
       )}
     >
