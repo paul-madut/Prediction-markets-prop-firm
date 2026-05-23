@@ -105,7 +105,7 @@ export default function SignInPage() {
             <button
               type="button"
               className="text-xs text-slate-500 dark:text-slate-400 hover:text-[#A769FF] dark:hover:text-[#A769FF]"
-              onClick={() => setError("Password reset is coming soon. Email hello@oraclefunded.dev for help.")}
+              onClick={() => setError("Password reset is coming soon. Email hello@blueberryfunded.com for help.")}
             >
               Forgot?
             </button>

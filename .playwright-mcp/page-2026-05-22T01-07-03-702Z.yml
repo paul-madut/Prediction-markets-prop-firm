@@ -1,0 +1,204 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - button "Expand sidebar" [ref=e6]:
+            - img [ref=e7]
+          - generic [ref=e11]: Blueberry Funded
+        - generic [ref=e12]:
+          - link "Dashboard" [ref=e13] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e15]
+            - generic: Dashboard
+          - link "Challenge" [ref=e18] [cursor=pointer]:
+            - /url: /dashboard/challenge
+            - img [ref=e20]
+            - generic: Challenge
+          - link "Markets" [ref=e23] [cursor=pointer]:
+            - /url: /dashboard/markets
+            - img [ref=e25]
+            - generic: Markets
+          - link "Portfolio" [ref=e28] [cursor=pointer]:
+            - /url: /dashboard/portfolio
+            - img [ref=e30]
+            - generic: Portfolio
+          - link "History" [ref=e33] [cursor=pointer]:
+            - /url: /dashboard/history
+            - img [ref=e35]
+            - generic: History
+          - link "Analytics" [ref=e38] [cursor=pointer]:
+            - /url: /dashboard/analytics
+            - img [ref=e40]
+            - generic: Analytics
+          - link "Rules" [ref=e43] [cursor=pointer]:
+            - /url: /dashboard/rules
+            - img [ref=e45]
+            - generic: Rules
+          - link "Payouts" [ref=e48] [cursor=pointer]:
+            - /url: /dashboard/payouts
+            - img [ref=e50]
+            - generic: Payouts
+      - generic [ref=e53]:
+        - link [ref=e56] [cursor=pointer]:
+          - /url: /dashboard/new-challenge
+          - img [ref=e57]
+        - generic [ref=e59]:
+          - link "Help" [ref=e60] [cursor=pointer]:
+            - /url: /dashboard/help
+            - img [ref=e62]
+            - generic: Help
+          - link "Settings" [ref=e65] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e67]
+            - generic: Settings
+        - generic [ref=e71] [cursor=pointer]:
+          - generic [ref=e72]: T
+          - generic: Trader
+    - generic [ref=e73]:
+      - generic [ref=e74]:
+        - generic [ref=e75]: New Challenge
+        - generic [ref=e76]:
+          - button "Notifications" [ref=e78]:
+            - img [ref=e79]
+          - link "Settings" [ref=e81] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e82]
+          - button "T Trader Trader" [ref=e126]:
+            - generic [ref=e87]: T
+            - generic [ref=e88]:
+              - generic [ref=e89]: Trader
+              - generic [ref=e127]: Trader
+            - img [ref=e90]
+      - main [ref=e92]:
+        - generic [ref=e128]:
+          - generic [ref=e129]:
+            - heading "Choose Your Trading Challenge" [level=1] [ref=e130]
+            - paragraph [ref=e131]: Select the evaluation style that matches your trading approach. Each challenge type offers different requirements and pricing structures.
+          - generic [ref=e133]:
+            - generic [ref=e134]: Select Account Size
+            - generic [ref=e135]:
+              - combobox [ref=e136] [cursor=pointer]:
+                - option "$25,000.00" [selected]
+                - option "$50,000.00"
+                - option "$100,000.00"
+              - img
+          - generic [ref=e137]:
+            - generic [ref=e140]:
+              - generic [ref=e141]:
+                - generic [ref=e142]:
+                  - img [ref=e143]
+                  - generic [ref=e145]: 1 Phase
+                - heading "Blitz Challenge" [level=3] [ref=e146]
+                - paragraph [ref=e147]: Get funded instantly with our fastest path to funding
+              - generic [ref=e148]:
+                - generic [ref=e149]: $399.00
+                - generic [ref=e150]: one-time fee
+                - generic [ref=e151]: "Profit Target: $3,000.00"
+              - generic [ref=e152]:
+                - generic [ref=e153]:
+                  - img [ref=e155]
+                  - generic [ref=e157]: 12% profit target
+                - generic [ref=e158]:
+                  - img [ref=e160]
+                  - generic [ref=e162]: Single evaluation phase
+                - generic [ref=e163]:
+                  - img [ref=e165]
+                  - generic [ref=e167]: Instant funding on pass
+                - generic [ref=e168]:
+                  - img [ref=e170]
+                  - generic [ref=e172]: Higher risk tolerance
+              - button "Select Plan" [ref=e173]
+            - generic [ref=e176]:
+              - generic [ref=e177]:
+                - generic [ref=e178]:
+                  - img [ref=e179]
+                  - generic [ref=e181]: 2 Phases
+                - heading "2-Step Challenge" [level=3] [ref=e182]
+                - paragraph [ref=e183]: Our standard evaluation process with balanced requirements
+              - generic [ref=e185]: Not available at this size
+              - generic [ref=e186]:
+                - generic [ref=e187]:
+                  - img [ref=e189]
+                  - generic [ref=e191]: Two evaluation phases
+                - generic [ref=e192]:
+                  - img [ref=e194]
+                  - generic [ref=e196]: Balanced risk parameters
+                - generic [ref=e197]:
+                  - img [ref=e199]
+                  - generic [ref=e201]: Most popular choice
+              - button "Unavailable" [disabled] [ref=e202]
+            - generic [ref=e205]:
+              - generic [ref=e206]:
+                - generic [ref=e207]:
+                  - img [ref=e208]
+                  - generic [ref=e210]: 3 Phases
+                - heading "3-Step Challenge" [level=3] [ref=e211]
+                - paragraph [ref=e212]: Lower cost entry with gradual progression
+              - generic [ref=e214]: Not available at this size
+              - generic [ref=e215]:
+                - generic [ref=e216]:
+                  - img [ref=e218]
+                  - generic [ref=e220]: Three evaluation phases
+                - generic [ref=e221]:
+                  - img [ref=e223]
+                  - generic [ref=e225]: Lower entry cost
+                - generic [ref=e226]:
+                  - img [ref=e228]
+                  - generic [ref=e230]: Gradual skill building
+              - button "Unavailable" [disabled] [ref=e231]
+          - generic [ref=e232]:
+            - heading "Challenge Comparison" [level=2] [ref=e233]
+            - table [ref=e235]:
+              - rowgroup [ref=e236]:
+                - row "Feature Blitz Challenge 2-Step Challenge 3-Step Challenge" [ref=e237]:
+                  - columnheader "Feature" [ref=e238]
+                  - columnheader "Blitz Challenge" [ref=e239]
+                  - columnheader "2-Step Challenge" [ref=e240]
+                  - columnheader "3-Step Challenge" [ref=e241]
+              - rowgroup [ref=e242]:
+                - row "Evaluation Phases 1 2 3" [ref=e243]:
+                  - cell "Evaluation Phases" [ref=e244]
+                  - cell "1" [ref=e245]
+                  - cell "2" [ref=e246]
+                  - cell "3" [ref=e247]
+                - row "Profit Target 10% 8% 6%" [ref=e248]:
+                  - cell "Profit Target" [ref=e249]
+                  - cell "10%" [ref=e250]
+                  - cell "8%" [ref=e251]
+                  - cell "6%" [ref=e252]
+                - row "Daily Loss Limit 4% 5% 5%" [ref=e253]:
+                  - cell "Daily Loss Limit" [ref=e254]
+                  - cell "4%" [ref=e255]
+                  - cell "5%" [ref=e256]
+                  - cell "5%" [ref=e257]
+                - row "Max Drawdown 8% 10% 10%" [ref=e258]:
+                  - cell "Max Drawdown" [ref=e259]
+                  - cell "8%" [ref=e260]
+                  - cell "10%" [ref=e261]
+                  - cell "10%" [ref=e262]
+                - row "Min Trading Days 5 10 15" [ref=e263]:
+                  - cell "Min Trading Days" [ref=e264]
+                  - cell "5" [ref=e265]
+                  - cell "10" [ref=e266]
+                  - cell "15" [ref=e267]
+                - row "Price Multiplier 1.2x 1x 0.8x" [ref=e268]:
+                  - cell "Price Multiplier" [ref=e269]
+                  - cell "1.2x" [ref=e270]
+                  - cell "1x" [ref=e271]
+                  - cell "0.8x" [ref=e272]
+          - generic [ref=e273]:
+            - heading "What's Included in All Challenges" [level=3] [ref=e274]
+            - generic [ref=e275]:
+              - generic [ref=e278]: Access to all prediction markets
+              - generic [ref=e281]: Real-time market data
+              - generic [ref=e284]: 80/20 profit split when funded
+              - generic [ref=e287]: Bi-weekly payouts
+              - generic [ref=e290]: No time limit on phases
+              - generic [ref=e293]: Scale up to larger accounts
+              - generic [ref=e296]: Trade on weekends
+              - generic [ref=e299]: Professional trader dashboard
+              - generic [ref=e302]: 24/7 support
+  - button "Open Next.js Dev Tools" [ref=e121] [cursor=pointer]:
+    - img [ref=e122]
+  - alert [ref=e125]

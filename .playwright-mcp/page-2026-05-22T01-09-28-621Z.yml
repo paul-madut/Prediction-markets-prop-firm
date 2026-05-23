@@ -1,0 +1,144 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - button "Expand sidebar" [ref=e6]:
+            - img [ref=e7]
+          - generic [ref=e11]: Blueberry Funded
+        - generic [ref=e12]:
+          - link "Dashboard" [ref=e13] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e15]
+            - generic: Dashboard
+          - link "Challenge" [ref=e18] [cursor=pointer]:
+            - /url: /dashboard/challenge
+            - img [ref=e20]
+            - generic: Challenge
+          - link "Markets" [ref=e23] [cursor=pointer]:
+            - /url: /dashboard/markets
+            - img [ref=e25]
+            - generic: Markets
+          - link "Portfolio" [ref=e28] [cursor=pointer]:
+            - /url: /dashboard/portfolio
+            - img [ref=e30]
+            - generic: Portfolio
+          - link "History" [ref=e33] [cursor=pointer]:
+            - /url: /dashboard/history
+            - img [ref=e35]
+            - generic: History
+          - link "Analytics" [ref=e38] [cursor=pointer]:
+            - /url: /dashboard/analytics
+            - img [ref=e40]
+            - generic: Analytics
+          - link "Rules" [ref=e43] [cursor=pointer]:
+            - /url: /dashboard/rules
+            - img [ref=e45]
+            - generic: Rules
+          - link "Payouts" [ref=e48] [cursor=pointer]:
+            - /url: /dashboard/payouts
+            - img [ref=e50]
+            - generic: Payouts
+      - generic [ref=e53]:
+        - link [ref=e56] [cursor=pointer]:
+          - /url: /dashboard/new-challenge
+          - img [ref=e57]
+        - generic [ref=e59]:
+          - link "Help" [ref=e60] [cursor=pointer]:
+            - /url: /dashboard/help
+            - img [ref=e62]
+            - generic: Help
+          - link "Settings" [ref=e65] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e67]
+            - generic: Settings
+        - generic [ref=e71] [cursor=pointer]:
+          - generic [ref=e72]: T
+          - generic: Trader
+    - generic [ref=e73]:
+      - generic [ref=e74]:
+        - generic [ref=e75]: Help Center
+        - generic [ref=e76]:
+          - button "Notifications" [ref=e78]:
+            - img [ref=e79]
+          - link "Settings" [ref=e81] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e82]
+          - button "T Trader Trader" [ref=e178]:
+            - generic [ref=e87]: T
+            - generic [ref=e88]:
+              - generic [ref=e89]: Trader
+              - generic [ref=e179]: Trader
+            - img [ref=e90]
+      - main [ref=e92]:
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - heading "Help" [level=1] [ref=e96]:
+              - img [ref=e97]
+              - text: Help
+            - paragraph [ref=e99]: Quick answers about challenges, drawdown, fills, and payouts. For anything else, email support.
+          - generic [ref=e103]:
+            - generic [ref=e104]:
+              - heading "Email support" [level=2] [ref=e105]
+              - paragraph [ref=e106]: We answer within 24 hours on business days.
+            - link "support@oraclefunded.com" [ref=e107] [cursor=pointer]:
+              - /url: mailto:support@oraclefunded.com
+              - img [ref=e108]
+              - text: support@oraclefunded.com
+          - generic [ref=e111]:
+            - heading "FAQ" [level=2] [ref=e112]
+            - button "How do I start trading? Buy a challenge from the Buy Challenge page. Once Stripe confirms the payment, your account is provisioned automatically and you can place orders from any market detail page." [ref=e113]:
+              - generic [ref=e114]:
+                - generic [ref=e115]: How do I start trading?
+                - img [ref=e116]
+              - generic [ref=e118]:
+                - text: Buy a challenge from the
+                - link "Buy Challenge" [ref=e119] [cursor=pointer]:
+                  - /url: /dashboard/new-challenge
+                - text: page. Once Stripe confirms the payment, your account is provisioned automatically and you can place orders from any market detail page.
+            - button "What's the difference between a Phase 1, 2, 3 challenge?" [ref=e120]:
+              - generic [ref=e121]:
+                - generic [ref=e122]: What's the difference between a Phase 1, 2, 3 challenge?
+                - img [ref=e123]
+            - button "How is drawdown calculated?" [ref=e125]:
+              - generic [ref=e126]:
+                - generic [ref=e127]: How is drawdown calculated?
+                - img [ref=e128]
+            - button "What happens if I breach?" [ref=e130]:
+              - generic [ref=e131]:
+                - generic [ref=e132]: What happens if I breach?
+                - img [ref=e133]
+            - button "What does 'mark-to-floor' mean?" [ref=e135]:
+              - generic [ref=e136]:
+                - generic [ref=e137]: What does 'mark-to-floor' mean?
+                - img [ref=e138]
+            - button "How do payouts work?" [ref=e140]:
+              - generic [ref=e141]:
+                - generic [ref=e142]: How do payouts work?
+                - img [ref=e143]
+            - button "Why was my order rejected?" [ref=e145]:
+              - generic [ref=e146]:
+                - generic [ref=e147]: Why was my order rejected?
+                - img [ref=e148]
+            - button "How fresh is the price data?" [ref=e150]:
+              - generic [ref=e151]:
+                - generic [ref=e152]: How fresh is the price data?
+                - img [ref=e153]
+            - button "Can I trade outside US market hours?" [ref=e155]:
+              - generic [ref=e156]:
+                - generic [ref=e157]: Can I trade outside US market hours?
+                - img [ref=e158]
+            - button "How do I cancel my challenge?" [ref=e160]:
+              - generic [ref=e161]:
+                - generic [ref=e162]: How do I cancel my challenge?
+                - img [ref=e163]
+          - generic [ref=e165]:
+            - text: "See also:"
+            - link "Rules" [ref=e166] [cursor=pointer]:
+              - /url: /dashboard/rules
+            - text: ·
+            - link "Challenge progress" [ref=e167] [cursor=pointer]:
+              - /url: /dashboard/challenge
+  - button "Open Next.js Dev Tools" [ref=e173] [cursor=pointer]:
+    - img [ref=e174]
+  - alert [ref=e177]

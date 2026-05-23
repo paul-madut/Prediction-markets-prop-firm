@@ -1,0 +1,81 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - button "Expand sidebar" [ref=e6]:
+            - img [ref=e7]
+          - generic [ref=e11]: Blueberry Funded
+        - generic [ref=e12]:
+          - link "Dashboard" [ref=e13] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e15]
+            - generic: Dashboard
+          - link "Challenge" [ref=e18] [cursor=pointer]:
+            - /url: /dashboard/challenge
+            - img [ref=e20]
+            - generic: Challenge
+          - link "Markets" [ref=e23] [cursor=pointer]:
+            - /url: /dashboard/markets
+            - img [ref=e25]
+            - generic: Markets
+          - link "Portfolio" [ref=e28] [cursor=pointer]:
+            - /url: /dashboard/portfolio
+            - img [ref=e30]
+            - generic: Portfolio
+          - link "History" [ref=e33] [cursor=pointer]:
+            - /url: /dashboard/history
+            - img [ref=e35]
+            - generic: History
+          - link "Analytics" [ref=e38] [cursor=pointer]:
+            - /url: /dashboard/analytics
+            - img [ref=e40]
+            - generic: Analytics
+          - link "Rules" [ref=e43] [cursor=pointer]:
+            - /url: /dashboard/rules
+            - img [ref=e45]
+            - generic: Rules
+          - link "Payouts" [ref=e48] [cursor=pointer]:
+            - /url: /dashboard/payouts
+            - img [ref=e50]
+            - generic: Payouts
+      - generic [ref=e53]:
+        - link [ref=e56] [cursor=pointer]:
+          - /url: /dashboard/new-challenge
+          - img [ref=e57]
+        - generic [ref=e59]:
+          - link "Help" [ref=e60] [cursor=pointer]:
+            - /url: /dashboard/help
+            - img [ref=e62]
+            - generic: Help
+          - link "Settings" [ref=e65] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e67]
+            - generic: Settings
+        - generic [ref=e71] [cursor=pointer]:
+          - generic [ref=e72]: T
+          - generic: Trader
+    - generic [ref=e73]:
+      - generic [ref=e74]:
+        - generic [ref=e75]: Challenge
+        - generic [ref=e76]:
+          - button "Notifications" [ref=e78]:
+            - img [ref=e79]
+          - link "Settings" [ref=e81] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e82]
+          - button "T Trader Trader" [ref=e105]:
+            - generic [ref=e87]: T
+            - generic [ref=e88]:
+              - generic [ref=e89]: Trader
+              - generic [ref=e106]: Trader
+            - img [ref=e90]
+      - main [ref=e92]:
+        - generic [ref=e94]:
+          - heading "Challenge Progress" [level=1] [ref=e107]
+          - paragraph [ref=e108]: Buy a challenge to see your progress.
+          - link "Browse challenges" [ref=e109] [cursor=pointer]:
+            - /url: /dashboard/new-challenge
+  - button "Open Next.js Dev Tools" [ref=e100] [cursor=pointer]:
+    - img [ref=e101]
+  - alert [ref=e104]

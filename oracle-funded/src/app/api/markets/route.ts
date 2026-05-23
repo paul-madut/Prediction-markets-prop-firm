@@ -30,12 +30,18 @@ function mapTagToCategory(tags: { label: string }[]): string {
   return "Other";
 }
 
-// Safely parse JSON string or return default
-function safeParseJSON<T>(str: string | T[], defaultValue: T[]): T[] {
+// Safely parse JSON string or return default.
+//
+// Polymarket sometimes ships `outcomePrices` as the literal string "null" (or
+// other non-array JSON), so we must guard the post-parse value — not just the
+// pre-parse type. Returning a non-array from here used to crash the route on
+// `outcomePrices[0]`, killing the entire feed for one bad upstream event.
+function safeParseJSON<T>(str: string | T[] | null | undefined, defaultValue: T[]): T[] {
   if (Array.isArray(str)) return str;
   if (typeof str !== "string") return defaultValue;
   try {
-    return JSON.parse(str);
+    const parsed = JSON.parse(str);
+    return Array.isArray(parsed) ? parsed : defaultValue;
   } catch {
     return defaultValue;
   }
@@ -126,7 +132,18 @@ export async function GET(request: Request) {
     const allMarkets: Market[] = [];
 
     for (const pe of polyEvents) {
-      const allOutcomes = transformToMarket(pe);
+      // Per-event isolation: one malformed upstream payload (missing
+      // `markets`, unexpected `outcomePrices` shape, etc.) must not take down
+      // the whole feed. Skip the bad event, keep serving the rest.
+      let allOutcomes: Market[];
+      try {
+        allOutcomes = transformToMarket(pe);
+      } catch (err) {
+        console.warn(
+          `[markets] skipping event ${pe.ticker || pe.slug || pe.id}: ${err instanceof Error ? err.message : String(err)}`,
+        );
+        continue;
+      }
       const outcomes = allOutcomes.filter((o) => {
         if (o.status === "closed") return false;
         if (o.close_time) {

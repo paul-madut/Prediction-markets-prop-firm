@@ -1,0 +1,82 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - button "Expand sidebar" [ref=e6]:
+            - img [ref=e7]
+          - generic [ref=e10]: Blueberry Funded
+        - generic [ref=e11]:
+          - link "Dashboard" [ref=e12] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e14]
+            - generic: Dashboard
+          - link "Challenge" [ref=e17] [cursor=pointer]:
+            - /url: /dashboard/challenge
+            - img [ref=e19]
+            - generic: Challenge
+          - link "Markets" [ref=e22] [cursor=pointer]:
+            - /url: /dashboard/markets
+            - img [ref=e24]
+            - generic: Markets
+          - link "Portfolio" [ref=e27] [cursor=pointer]:
+            - /url: /dashboard/portfolio
+            - img [ref=e29]
+            - generic: Portfolio
+          - link "History" [ref=e32] [cursor=pointer]:
+            - /url: /dashboard/history
+            - img [ref=e34]
+            - generic: History
+          - link "Analytics" [ref=e37] [cursor=pointer]:
+            - /url: /dashboard/analytics
+            - img [ref=e39]
+            - generic: Analytics
+          - link "Rules" [ref=e42] [cursor=pointer]:
+            - /url: /dashboard/rules
+            - img [ref=e44]
+            - generic: Rules
+          - link "Payouts" [ref=e47] [cursor=pointer]:
+            - /url: /dashboard/payouts
+            - img [ref=e49]
+            - generic: Payouts
+      - generic [ref=e52]:
+        - link [ref=e55] [cursor=pointer]:
+          - /url: /dashboard/new-challenge
+          - img [ref=e56]
+        - generic [ref=e58]:
+          - link "Help" [ref=e59] [cursor=pointer]:
+            - /url: /dashboard/help
+            - img [ref=e61]
+            - generic: Help
+          - link "Settings" [ref=e64] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e66]
+            - generic: Settings
+        - generic [ref=e70] [cursor=pointer]:
+          - generic [ref=e71]: T
+          - generic: Trader
+    - generic [ref=e72]:
+      - generic [ref=e73]:
+        - generic [ref=e74]: Dashboard
+        - generic [ref=e75]:
+          - button "Notifications" [ref=e77]:
+            - img [ref=e78]
+          - link "Settings" [ref=e80] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e81]
+          - button "T Trader Trader" [ref=e110]:
+            - generic [ref=e86]: T
+            - generic [ref=e87]:
+              - generic [ref=e88]: Trader
+              - generic [ref=e111]: Trader
+            - img [ref=e89]
+      - main [ref=e91]:
+        - generic [ref=e116]:
+          - img [ref=e117]
+          - heading "Welcome, Trader" [level=2] [ref=e120]
+          - paragraph [ref=e121]: You don't have a challenge account yet. Pick one to get started.
+          - link "Browse Challenges" [ref=e122] [cursor=pointer]:
+            - /url: /dashboard/new-challenge
+  - button "Open Next.js Dev Tools" [ref=e105] [cursor=pointer]:
+    - img [ref=e106]
+  - alert [ref=e109]

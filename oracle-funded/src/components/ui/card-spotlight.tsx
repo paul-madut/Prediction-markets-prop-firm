@@ -69,8 +69,8 @@ export const CardSpotlight = ({
       className={cn(
         "group relative rounded-xl border p-6 overflow-hidden transition-all duration-300",
         variant === "dark"
-          ? "border-gray-700/20 bg-gradient-to-br from-gray-900 to-gray-800 hover:border-gray-600/40 hover:shadow-2xl hover:shadow-blue-500/10"
-          : "border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-gray-300 hover:shadow-xl hover:shadow-gray-200/50",
+          ? "border-white/10 bg-[#180630] hover:border-[#A769FF]/40 hover:shadow-2xl hover:shadow-[#7F24FF]/20"
+          : "border-white/10 bg-[#180630] hover:border-[#A769FF]/35 hover:shadow-xl hover:shadow-[#7F24FF]/15",
         className
       )}
     >
@@ -111,19 +111,19 @@ export const CardSpotlight = ({
       {/* Corner accents */}
       <div className={cn(
         "pointer-events-none absolute top-0 left-0 h-px w-20 bg-gradient-to-r to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100",
-        variant === "dark" ? "from-blue-500/50" : "from-blue-500/30"
+        variant === "dark" ? "from-[#A769FF]/60" : "from-[#A769FF]/40"
       )} />
       <div className={cn(
         "pointer-events-none absolute top-0 left-0 w-px h-20 bg-gradient-to-b to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100",
-        variant === "dark" ? "from-blue-500/50" : "from-blue-500/30"
+        variant === "dark" ? "from-[#A769FF]/60" : "from-[#A769FF]/40"
       )} />
       <div className={cn(
         "pointer-events-none absolute bottom-0 right-0 h-px w-20 bg-gradient-to-l to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100",
-        variant === "dark" ? "from-blue-500/50" : "from-blue-500/30"
+        variant === "dark" ? "from-[#A769FF]/60" : "from-[#A769FF]/40"
       )} />
       <div className={cn(
         "pointer-events-none absolute bottom-0 right-0 w-px h-20 bg-gradient-to-t to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100",
-        variant === "dark" ? "from-blue-500/50" : "from-blue-500/30"
+        variant === "dark" ? "from-[#A769FF]/60" : "from-[#A769FF]/40"
       )} />
     </div>
   );

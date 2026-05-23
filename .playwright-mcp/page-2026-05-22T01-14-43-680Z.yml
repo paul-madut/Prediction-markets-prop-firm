@@ -1,0 +1,2016 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "Blueberry Funded · Admin" [ref=e5] [cursor=pointer]:
+          - /url: /admin
+          - text: Blueberry Funded · Admin
+        - navigation [ref=e7]:
+          - link "Traders" [ref=e8] [cursor=pointer]:
+            - /url: /admin/traders
+          - link "Configs" [ref=e9] [cursor=pointer]:
+            - /url: /admin/configs
+          - link "Payouts" [ref=e10] [cursor=pointer]:
+            - /url: /admin/payouts
+          - link "Audit" [ref=e11] [cursor=pointer]:
+            - /url: /admin/audit
+          - link "Trader view →" [ref=e12] [cursor=pointer]:
+            - /url: /dashboard
+    - main [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]:
+            - heading "Traders" [level=1] [ref=e17]
+            - paragraph [ref=e18]: Every challenge account in the firm. Click a row to drill into actions.
+          - generic [ref=e21]: Live data
+        - generic [ref=e22]:
+          - generic [ref=e23]:
+            - button "All" [ref=e24]
+            - button "Active" [ref=e25]
+            - button "Pending" [ref=e26]
+            - button "Passed phase" [ref=e27]
+            - button "Funded" [ref=e28]
+            - button "Breached" [ref=e29]
+            - button "Disabled" [ref=e30]
+          - generic [ref=e31]:
+            - img [ref=e32]
+            - textbox "Search user ID or account ID" [ref=e34]
+          - button "Refresh" [ref=e35]:
+            - img [ref=e36]
+            - text: Refresh
+        - table [ref=e54]:
+          - rowgroup [ref=e55]:
+            - row "Trader / Account Config Phase Status Balance DD floor Trading days Created" [ref=e56]:
+              - columnheader "Trader / Account" [ref=e57]
+              - columnheader "Config" [ref=e58]
+              - columnheader "Phase" [ref=e59]
+              - columnheader "Status" [ref=e60]
+              - columnheader "Balance" [ref=e61]
+              - columnheader "DD floor" [ref=e62]
+              - columnheader "Trading days" [ref=e63]
+              - columnheader "Created" [ref=e64]
+              - columnheader [ref=e65]
+          - rowgroup [ref=e66]:
+            - row "c9ce4ecd… acct e7255e98… TEST $1 Stripe $5,000.00 · Static Evaluation target 8% active $4,994.70 -0.11% $4,500.00 1% used 0 May 11, 2026 All accounts Open" [ref=e67]:
+              - cell "c9ce4ecd… acct e7255e98…" [ref=e68]:
+                - generic [ref=e69]: c9ce4ecd…
+                - generic [ref=e70]: acct e7255e98…
+              - cell "TEST $1 Stripe $5,000.00 · Static" [ref=e71]:
+                - generic [ref=e72]: TEST $1 Stripe
+                - generic [ref=e73]: $5,000.00 · Static
+              - cell "Evaluation target 8%" [ref=e74]:
+                - generic [ref=e75]: Evaluation
+                - generic [ref=e76]: target 8%
+              - cell "active" [ref=e77]:
+                - generic [ref=e78]: active
+              - cell "$4,994.70 -0.11%" [ref=e79]:
+                - generic [ref=e80]: $4,994.70
+                - generic [ref=e81]: "-0.11%"
+              - cell "$4,500.00 1% used" [ref=e82]:
+                - generic [ref=e83]: $4,500.00
+                - generic [ref=e84]: 1% used
+              - cell "0" [ref=e85]
+              - cell "May 11, 2026" [ref=e86]
+              - cell "All accounts Open" [ref=e87]:
+                - generic [ref=e88]:
+                  - link "All accounts" [ref=e89] [cursor=pointer]:
+                    - /url: /admin/traders/c9ce4ecd-825f-4eb3-b15b-e3123a4f7ad5
+                  - link "Open" [ref=e90] [cursor=pointer]:
+                    - /url: /admin/accounts/e7255e98-1cb5-4423-a1c8-3b59d9cf715e
+                    - text: Open
+                    - img [ref=e91]
+            - row "c9ce4ecd… acct babdfecf… TEST $1 Stripe $5,000.00 · Static Evaluation target 8% active $4,999.00 -0.02% $4,500.00 0% used 0 May 11, 2026 All accounts Open" [ref=e93]:
+              - cell "c9ce4ecd… acct babdfecf…" [ref=e94]:
+                - generic [ref=e95]: c9ce4ecd…
+                - generic [ref=e96]: acct babdfecf…
+              - cell "TEST $1 Stripe $5,000.00 · Static" [ref=e97]:
+                - generic [ref=e98]: TEST $1 Stripe
+                - generic [ref=e99]: $5,000.00 · Static
+              - cell "Evaluation target 8%" [ref=e100]:
+                - generic [ref=e101]: Evaluation
+                - generic [ref=e102]: target 8%
+              - cell "active" [ref=e103]:
+                - generic [ref=e104]: active
+              - cell "$4,999.00 -0.02%" [ref=e105]:
+                - generic [ref=e106]: $4,999.00
+                - generic [ref=e107]: "-0.02%"
+              - cell "$4,500.00 0% used" [ref=e108]:
+                - generic [ref=e109]: $4,500.00
+                - generic [ref=e110]: 0% used
+              - cell "0" [ref=e111]
+              - cell "May 11, 2026" [ref=e112]
+              - cell "All accounts Open" [ref=e113]:
+                - generic [ref=e114]:
+                  - link "All accounts" [ref=e115] [cursor=pointer]:
+                    - /url: /admin/traders/c9ce4ecd-825f-4eb3-b15b-e3123a4f7ad5
+                  - link "Open" [ref=e116] [cursor=pointer]:
+                    - /url: /admin/accounts/babdfecf-6056-4f43-b3a8-adb1e01ae950
+                    - text: Open
+                    - img [ref=e117]
+            - row "c0160e37… acct 16143125… PRO6 — $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 6% active $50,000.00 +0.00% $47,500.00 0% used 0 May 10, 2026 All accounts Open" [ref=e119]:
+              - cell "c0160e37… acct 16143125…" [ref=e120]:
+                - generic [ref=e121]: c0160e37…
+                - generic [ref=e122]: acct 16143125…
+              - cell "PRO6 — $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e123]:
+                - generic [ref=e124]: PRO6 — $50K Evaluation
+                - generic [ref=e125]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 6%" [ref=e126]:
+                - generic [ref=e127]: Evaluation
+                - generic [ref=e128]: target 6%
+              - cell "active" [ref=e129]:
+                - generic [ref=e130]: active
+              - cell "$50,000.00 +0.00%" [ref=e131]:
+                - generic [ref=e132]: $50,000.00
+                - generic [ref=e133]: +0.00%
+              - cell "$47,500.00 0% used" [ref=e134]:
+                - generic [ref=e135]: $47,500.00
+                - generic [ref=e136]: 0% used
+              - cell "0" [ref=e137]
+              - cell "May 10, 2026" [ref=e138]
+              - cell "All accounts Open" [ref=e139]:
+                - generic [ref=e140]:
+                  - link "All accounts" [ref=e141] [cursor=pointer]:
+                    - /url: /admin/traders/c0160e37-8298-4b07-aa8b-424c037af466
+                  - link "Open" [ref=e142] [cursor=pointer]:
+                    - /url: /admin/accounts/16143125-0bc3-47af-8bcd-d81ab2d875ab
+                    - text: Open
+                    - img [ref=e143]
+            - row "c0160e37… acct 42d83499… TEST $1 Stripe $5,000.00 · Static Evaluation target 8% active $4,999.90 -0.00% $4,500.00 0% used 0 May 09, 2026 All accounts Open" [ref=e145]:
+              - cell "c0160e37… acct 42d83499…" [ref=e146]:
+                - generic [ref=e147]: c0160e37…
+                - generic [ref=e148]: acct 42d83499…
+              - cell "TEST $1 Stripe $5,000.00 · Static" [ref=e149]:
+                - generic [ref=e150]: TEST $1 Stripe
+                - generic [ref=e151]: $5,000.00 · Static
+              - cell "Evaluation target 8%" [ref=e152]:
+                - generic [ref=e153]: Evaluation
+                - generic [ref=e154]: target 8%
+              - cell "active" [ref=e155]:
+                - generic [ref=e156]: active
+              - cell "$4,999.90 -0.00%" [ref=e157]:
+                - generic [ref=e158]: $4,999.90
+                - generic [ref=e159]: "-0.00%"
+              - cell "$4,500.00 0% used" [ref=e160]:
+                - generic [ref=e161]: $4,500.00
+                - generic [ref=e162]: 0% used
+              - cell "0" [ref=e163]
+              - cell "May 09, 2026" [ref=e164]
+              - cell "All accounts Open" [ref=e165]:
+                - generic [ref=e166]:
+                  - link "All accounts" [ref=e167] [cursor=pointer]:
+                    - /url: /admin/traders/c0160e37-8298-4b07-aa8b-424c037af466
+                  - link "Open" [ref=e168] [cursor=pointer]:
+                    - /url: /admin/accounts/42d83499-c5e7-4758-88af-a6beacb09fb3
+                    - text: Open
+                    - img [ref=e169]
+            - row "cc75ab41… acct e9d95d23… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% funded $54,000.00 +8.00% $45,000.00 -80% used 0 May 08, 2026 All accounts Open" [ref=e171]:
+              - cell "cc75ab41… acct e9d95d23…" [ref=e172]:
+                - generic [ref=e173]: cc75ab41…
+                - generic [ref=e174]: acct e9d95d23…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e175]:
+                - generic [ref=e176]: Demo $50K Evaluation
+                - generic [ref=e177]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e178]:
+                - generic [ref=e179]: Evaluation
+                - generic [ref=e180]: target 8%
+              - cell "funded" [ref=e181]:
+                - generic [ref=e182]: funded
+              - cell "$54,000.00 +8.00%" [ref=e183]:
+                - generic [ref=e184]: $54,000.00
+                - generic [ref=e185]: +8.00%
+              - cell "$45,000.00 -80% used" [ref=e186]:
+                - generic [ref=e187]: $45,000.00
+                - generic [ref=e188]: "-80% used"
+              - cell "0" [ref=e189]
+              - cell "May 08, 2026" [ref=e190]
+              - cell "All accounts Open" [ref=e191]:
+                - generic [ref=e192]:
+                  - link "All accounts" [ref=e193] [cursor=pointer]:
+                    - /url: /admin/traders/cc75ab41-edad-405c-a99d-b3e61f0998e4
+                  - link "Open" [ref=e194] [cursor=pointer]:
+                    - /url: /admin/accounts/e9d95d23-7c28-496a-9109-50790b78a3c4
+                    - text: Open
+                    - img [ref=e195]
+            - row "ed88f46f… acct ad3b32a4… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% funded $53,000.00 +6.00% $45,000.00 -60% used 0 May 08, 2026 All accounts Open" [ref=e197]:
+              - cell "ed88f46f… acct ad3b32a4…" [ref=e198]:
+                - generic [ref=e199]: ed88f46f…
+                - generic [ref=e200]: acct ad3b32a4…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e201]:
+                - generic [ref=e202]: Demo $50K Evaluation
+                - generic [ref=e203]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e204]:
+                - generic [ref=e205]: Evaluation
+                - generic [ref=e206]: target 8%
+              - cell "funded" [ref=e207]:
+                - generic [ref=e208]: funded
+              - cell "$53,000.00 +6.00%" [ref=e209]:
+                - generic [ref=e210]: $53,000.00
+                - generic [ref=e211]: +6.00%
+              - cell "$45,000.00 -60% used" [ref=e212]:
+                - generic [ref=e213]: $45,000.00
+                - generic [ref=e214]: "-60% used"
+              - cell "0" [ref=e215]
+              - cell "May 08, 2026" [ref=e216]
+              - cell "All accounts Open" [ref=e217]:
+                - generic [ref=e218]:
+                  - link "All accounts" [ref=e219] [cursor=pointer]:
+                    - /url: /admin/traders/ed88f46f-8979-4886-bc74-8eb8ee538f0d
+                  - link "Open" [ref=e220] [cursor=pointer]:
+                    - /url: /admin/accounts/ad3b32a4-ad8f-4c3b-93a0-1d4fb7541b5c
+                    - text: Open
+                    - img [ref=e221]
+            - row "640e6408… acct 71955b7a… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 1 May 08, 2026 All accounts Open" [ref=e223]:
+              - cell "640e6408… acct 71955b7a…" [ref=e224]:
+                - generic [ref=e225]: 640e6408…
+                - generic [ref=e226]: acct 71955b7a…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e227]:
+                - generic [ref=e228]: Demo $50K Evaluation
+                - generic [ref=e229]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e230]:
+                - generic [ref=e231]: Evaluation
+                - generic [ref=e232]: target 8%
+              - cell "active" [ref=e233]:
+                - generic [ref=e234]: active
+              - cell "$50,000.00 +0.00%" [ref=e235]:
+                - generic [ref=e236]: $50,000.00
+                - generic [ref=e237]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e238]:
+                - generic [ref=e239]: $45,000.00
+                - generic [ref=e240]: 0% used
+              - cell "1" [ref=e241]
+              - cell "May 08, 2026" [ref=e242]
+              - cell "All accounts Open" [ref=e243]:
+                - generic [ref=e244]:
+                  - link "All accounts" [ref=e245] [cursor=pointer]:
+                    - /url: /admin/traders/640e6408-5367-455d-8470-cab7badba56c
+                  - link "Open" [ref=e246] [cursor=pointer]:
+                    - /url: /admin/accounts/71955b7a-c8a3-4cd5-9aee-3d518df37ca5
+                    - text: Open
+                    - img [ref=e247]
+            - row "16133925… acct 4eea145e… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% disabled $50,000.00 +0.00% $45,000.00 0% used 0 May 08, 2026 All accounts Open" [ref=e249]:
+              - cell "16133925… acct 4eea145e…" [ref=e250]:
+                - generic [ref=e251]: 16133925…
+                - generic [ref=e252]: acct 4eea145e…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e253]:
+                - generic [ref=e254]: Demo $50K Evaluation
+                - generic [ref=e255]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e256]:
+                - generic [ref=e257]: Evaluation
+                - generic [ref=e258]: target 8%
+              - cell "disabled" [ref=e259]:
+                - generic [ref=e260]: disabled
+              - cell "$50,000.00 +0.00%" [ref=e261]:
+                - generic [ref=e262]: $50,000.00
+                - generic [ref=e263]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e264]:
+                - generic [ref=e265]: $45,000.00
+                - generic [ref=e266]: 0% used
+              - cell "0" [ref=e267]
+              - cell "May 08, 2026" [ref=e268]
+              - cell "All accounts Open" [ref=e269]:
+                - generic [ref=e270]:
+                  - link "All accounts" [ref=e271] [cursor=pointer]:
+                    - /url: /admin/traders/16133925-6a78-4b43-8097-925b0c5087e6
+                  - link "Open" [ref=e272] [cursor=pointer]:
+                    - /url: /admin/accounts/4eea145e-8521-4bc8-8274-16f081d223f6
+                    - text: Open
+                    - img [ref=e273]
+            - row "8cc05b9f… acct 27214e5e… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% breached $60,000.00 -50.00% $56,000.00 94% used 0 May 08, 2026 All accounts Open" [ref=e275]:
+              - cell "8cc05b9f… acct 27214e5e…" [ref=e276]:
+                - generic [ref=e277]: 8cc05b9f…
+                - generic [ref=e278]: acct 27214e5e…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e279]:
+                - generic [ref=e280]: Demo $50K Evaluation
+                - generic [ref=e281]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e282]:
+                - generic [ref=e283]: Evaluation
+                - generic [ref=e284]: target 8%
+              - cell "breached" [ref=e285]:
+                - generic [ref=e286]: breached
+              - cell "$60,000.00 -50.00%" [ref=e287]:
+                - generic [ref=e288]: $60,000.00
+                - generic [ref=e289]: "-50.00%"
+              - cell "$56,000.00 94% used" [ref=e290]:
+                - generic [ref=e291]: $56,000.00
+                - generic [ref=e292]: 94% used
+              - cell "0" [ref=e293]
+              - cell "May 08, 2026" [ref=e294]
+              - cell "All accounts Open" [ref=e295]:
+                - generic [ref=e296]:
+                  - link "All accounts" [ref=e297] [cursor=pointer]:
+                    - /url: /admin/traders/8cc05b9f-6559-41db-97a2-5adc77e34557
+                  - link "Open" [ref=e298] [cursor=pointer]:
+                    - /url: /admin/accounts/27214e5e-3718-4dca-8e41-967dafdc27dd
+                    - text: Open
+                    - img [ref=e299]
+            - row "500153f2… acct f04a1037… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,994.50 -0.01% $45,000.00 0% used 1 May 08, 2026 All accounts Open" [ref=e301]:
+              - cell "500153f2… acct f04a1037…" [ref=e302]:
+                - generic [ref=e303]: 500153f2…
+                - generic [ref=e304]: acct f04a1037…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e305]:
+                - generic [ref=e306]: Demo $50K Evaluation
+                - generic [ref=e307]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e308]:
+                - generic [ref=e309]: Evaluation
+                - generic [ref=e310]: target 8%
+              - cell "active" [ref=e311]:
+                - generic [ref=e312]: active
+              - cell "$49,994.50 -0.01%" [ref=e313]:
+                - generic [ref=e314]: $49,994.50
+                - generic [ref=e315]: "-0.01%"
+              - cell "$45,000.00 0% used" [ref=e316]:
+                - generic [ref=e317]: $45,000.00
+                - generic [ref=e318]: 0% used
+              - cell "1" [ref=e319]
+              - cell "May 08, 2026" [ref=e320]
+              - cell "All accounts Open" [ref=e321]:
+                - generic [ref=e322]:
+                  - link "All accounts" [ref=e323] [cursor=pointer]:
+                    - /url: /admin/traders/500153f2-4f58-4a3a-8f11-eb610d468279
+                  - link "Open" [ref=e324] [cursor=pointer]:
+                    - /url: /admin/accounts/f04a1037-4161-4510-b678-602fc47c7469
+                    - text: Open
+                    - img [ref=e325]
+            - row "9c4bfbc7… acct 866dc2a5… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% funded $54,000.00 +8.00% $45,000.00 -80% used 0 May 08, 2026 All accounts Open" [ref=e327]:
+              - cell "9c4bfbc7… acct 866dc2a5…" [ref=e328]:
+                - generic [ref=e329]: 9c4bfbc7…
+                - generic [ref=e330]: acct 866dc2a5…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e331]:
+                - generic [ref=e332]: Demo $50K Evaluation
+                - generic [ref=e333]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e334]:
+                - generic [ref=e335]: Evaluation
+                - generic [ref=e336]: target 8%
+              - cell "funded" [ref=e337]:
+                - generic [ref=e338]: funded
+              - cell "$54,000.00 +8.00%" [ref=e339]:
+                - generic [ref=e340]: $54,000.00
+                - generic [ref=e341]: +8.00%
+              - cell "$45,000.00 -80% used" [ref=e342]:
+                - generic [ref=e343]: $45,000.00
+                - generic [ref=e344]: "-80% used"
+              - cell "0" [ref=e345]
+              - cell "May 08, 2026" [ref=e346]
+              - cell "All accounts Open" [ref=e347]:
+                - generic [ref=e348]:
+                  - link "All accounts" [ref=e349] [cursor=pointer]:
+                    - /url: /admin/traders/9c4bfbc7-3af1-4e44-80af-377244f891cb
+                  - link "Open" [ref=e350] [cursor=pointer]:
+                    - /url: /admin/accounts/866dc2a5-1cac-4977-bf7e-7ccfd325f4e3
+                    - text: Open
+                    - img [ref=e351]
+            - row "ccfb5559… acct 803a9778… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% funded $53,000.00 +6.00% $45,000.00 -60% used 0 May 08, 2026 All accounts Open" [ref=e353]:
+              - cell "ccfb5559… acct 803a9778…" [ref=e354]:
+                - generic [ref=e355]: ccfb5559…
+                - generic [ref=e356]: acct 803a9778…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e357]:
+                - generic [ref=e358]: Demo $50K Evaluation
+                - generic [ref=e359]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e360]:
+                - generic [ref=e361]: Evaluation
+                - generic [ref=e362]: target 8%
+              - cell "funded" [ref=e363]:
+                - generic [ref=e364]: funded
+              - cell "$53,000.00 +6.00%" [ref=e365]:
+                - generic [ref=e366]: $53,000.00
+                - generic [ref=e367]: +6.00%
+              - cell "$45,000.00 -60% used" [ref=e368]:
+                - generic [ref=e369]: $45,000.00
+                - generic [ref=e370]: "-60% used"
+              - cell "0" [ref=e371]
+              - cell "May 08, 2026" [ref=e372]
+              - cell "All accounts Open" [ref=e373]:
+                - generic [ref=e374]:
+                  - link "All accounts" [ref=e375] [cursor=pointer]:
+                    - /url: /admin/traders/ccfb5559-7afb-4a66-8610-b6155ac8c170
+                  - link "Open" [ref=e376] [cursor=pointer]:
+                    - /url: /admin/accounts/803a9778-af53-4e41-9c4b-d9c4e2590a1a
+                    - text: Open
+                    - img [ref=e377]
+            - row "a84e84f0… acct f7783e44… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 1 May 08, 2026 All accounts Open" [ref=e379]:
+              - cell "a84e84f0… acct f7783e44…" [ref=e380]:
+                - generic [ref=e381]: a84e84f0…
+                - generic [ref=e382]: acct f7783e44…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e383]:
+                - generic [ref=e384]: Demo $50K Evaluation
+                - generic [ref=e385]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e386]:
+                - generic [ref=e387]: Evaluation
+                - generic [ref=e388]: target 8%
+              - cell "active" [ref=e389]:
+                - generic [ref=e390]: active
+              - cell "$50,000.00 +0.00%" [ref=e391]:
+                - generic [ref=e392]: $50,000.00
+                - generic [ref=e393]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e394]:
+                - generic [ref=e395]: $45,000.00
+                - generic [ref=e396]: 0% used
+              - cell "1" [ref=e397]
+              - cell "May 08, 2026" [ref=e398]
+              - cell "All accounts Open" [ref=e399]:
+                - generic [ref=e400]:
+                  - link "All accounts" [ref=e401] [cursor=pointer]:
+                    - /url: /admin/traders/a84e84f0-3623-49bd-809c-5fdc0cb66069
+                  - link "Open" [ref=e402] [cursor=pointer]:
+                    - /url: /admin/accounts/f7783e44-6606-4ab0-97a1-0c3416d88522
+                    - text: Open
+                    - img [ref=e403]
+            - row "28f655ab… acct 0722456e… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% disabled $50,000.00 +0.00% $45,000.00 0% used 0 May 08, 2026 All accounts Open" [ref=e405]:
+              - cell "28f655ab… acct 0722456e…" [ref=e406]:
+                - generic [ref=e407]: 28f655ab…
+                - generic [ref=e408]: acct 0722456e…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e409]:
+                - generic [ref=e410]: Demo $50K Evaluation
+                - generic [ref=e411]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e412]:
+                - generic [ref=e413]: Evaluation
+                - generic [ref=e414]: target 8%
+              - cell "disabled" [ref=e415]:
+                - generic [ref=e416]: disabled
+              - cell "$50,000.00 +0.00%" [ref=e417]:
+                - generic [ref=e418]: $50,000.00
+                - generic [ref=e419]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e420]:
+                - generic [ref=e421]: $45,000.00
+                - generic [ref=e422]: 0% used
+              - cell "0" [ref=e423]
+              - cell "May 08, 2026" [ref=e424]
+              - cell "All accounts Open" [ref=e425]:
+                - generic [ref=e426]:
+                  - link "All accounts" [ref=e427] [cursor=pointer]:
+                    - /url: /admin/traders/28f655ab-ae6a-49ef-9cea-384ebcef3ed3
+                  - link "Open" [ref=e428] [cursor=pointer]:
+                    - /url: /admin/accounts/0722456e-5630-4eb8-adbb-cdaa5557421a
+                    - text: Open
+                    - img [ref=e429]
+            - row "a1a8570d… acct 12550fe2… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% breached $60,000.00 -50.00% $56,000.00 94% used 0 May 08, 2026 All accounts Open" [ref=e431]:
+              - cell "a1a8570d… acct 12550fe2…" [ref=e432]:
+                - generic [ref=e433]: a1a8570d…
+                - generic [ref=e434]: acct 12550fe2…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e435]:
+                - generic [ref=e436]: Demo $50K Evaluation
+                - generic [ref=e437]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e438]:
+                - generic [ref=e439]: Evaluation
+                - generic [ref=e440]: target 8%
+              - cell "breached" [ref=e441]:
+                - generic [ref=e442]: breached
+              - cell "$60,000.00 -50.00%" [ref=e443]:
+                - generic [ref=e444]: $60,000.00
+                - generic [ref=e445]: "-50.00%"
+              - cell "$56,000.00 94% used" [ref=e446]:
+                - generic [ref=e447]: $56,000.00
+                - generic [ref=e448]: 94% used
+              - cell "0" [ref=e449]
+              - cell "May 08, 2026" [ref=e450]
+              - cell "All accounts Open" [ref=e451]:
+                - generic [ref=e452]:
+                  - link "All accounts" [ref=e453] [cursor=pointer]:
+                    - /url: /admin/traders/a1a8570d-329a-4dde-94aa-6f88b5aec975
+                  - link "Open" [ref=e454] [cursor=pointer]:
+                    - /url: /admin/accounts/12550fe2-e424-4121-987c-68565c602fa2
+                    - text: Open
+                    - img [ref=e455]
+            - row "7141c506… acct 149b2fbd… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,994.50 -0.01% $45,000.00 0% used 1 May 08, 2026 All accounts Open" [ref=e457]:
+              - cell "7141c506… acct 149b2fbd…" [ref=e458]:
+                - generic [ref=e459]: 7141c506…
+                - generic [ref=e460]: acct 149b2fbd…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e461]:
+                - generic [ref=e462]: Demo $50K Evaluation
+                - generic [ref=e463]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e464]:
+                - generic [ref=e465]: Evaluation
+                - generic [ref=e466]: target 8%
+              - cell "active" [ref=e467]:
+                - generic [ref=e468]: active
+              - cell "$49,994.50 -0.01%" [ref=e469]:
+                - generic [ref=e470]: $49,994.50
+                - generic [ref=e471]: "-0.01%"
+              - cell "$45,000.00 0% used" [ref=e472]:
+                - generic [ref=e473]: $45,000.00
+                - generic [ref=e474]: 0% used
+              - cell "1" [ref=e475]
+              - cell "May 08, 2026" [ref=e476]
+              - cell "All accounts Open" [ref=e477]:
+                - generic [ref=e478]:
+                  - link "All accounts" [ref=e479] [cursor=pointer]:
+                    - /url: /admin/traders/7141c506-4ff4-4270-8c2a-80057a796c0d
+                  - link "Open" [ref=e480] [cursor=pointer]:
+                    - /url: /admin/accounts/149b2fbd-e939-41a3-9af7-59d5309a0c10
+                    - text: Open
+                    - img [ref=e481]
+            - row "8d5d4ac7… acct 8b970d93… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% funded $54,000.00 +8.00% $45,000.00 -80% used 0 May 08, 2026 All accounts Open" [ref=e483]:
+              - cell "8d5d4ac7… acct 8b970d93…" [ref=e484]:
+                - generic [ref=e485]: 8d5d4ac7…
+                - generic [ref=e486]: acct 8b970d93…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e487]:
+                - generic [ref=e488]: Demo $50K Evaluation
+                - generic [ref=e489]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e490]:
+                - generic [ref=e491]: Evaluation
+                - generic [ref=e492]: target 8%
+              - cell "funded" [ref=e493]:
+                - generic [ref=e494]: funded
+              - cell "$54,000.00 +8.00%" [ref=e495]:
+                - generic [ref=e496]: $54,000.00
+                - generic [ref=e497]: +8.00%
+              - cell "$45,000.00 -80% used" [ref=e498]:
+                - generic [ref=e499]: $45,000.00
+                - generic [ref=e500]: "-80% used"
+              - cell "0" [ref=e501]
+              - cell "May 08, 2026" [ref=e502]
+              - cell "All accounts Open" [ref=e503]:
+                - generic [ref=e504]:
+                  - link "All accounts" [ref=e505] [cursor=pointer]:
+                    - /url: /admin/traders/8d5d4ac7-f380-42c9-a2b9-850159918a83
+                  - link "Open" [ref=e506] [cursor=pointer]:
+                    - /url: /admin/accounts/8b970d93-69d2-440f-9b46-23a43c359c78
+                    - text: Open
+                    - img [ref=e507]
+            - row "9df665e4… acct 5e75ad7a… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% funded $53,000.00 +6.00% $45,000.00 -60% used 0 May 08, 2026 All accounts Open" [ref=e509]:
+              - cell "9df665e4… acct 5e75ad7a…" [ref=e510]:
+                - generic [ref=e511]: 9df665e4…
+                - generic [ref=e512]: acct 5e75ad7a…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e513]:
+                - generic [ref=e514]: Demo $50K Evaluation
+                - generic [ref=e515]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e516]:
+                - generic [ref=e517]: Evaluation
+                - generic [ref=e518]: target 8%
+              - cell "funded" [ref=e519]:
+                - generic [ref=e520]: funded
+              - cell "$53,000.00 +6.00%" [ref=e521]:
+                - generic [ref=e522]: $53,000.00
+                - generic [ref=e523]: +6.00%
+              - cell "$45,000.00 -60% used" [ref=e524]:
+                - generic [ref=e525]: $45,000.00
+                - generic [ref=e526]: "-60% used"
+              - cell "0" [ref=e527]
+              - cell "May 08, 2026" [ref=e528]
+              - cell "All accounts Open" [ref=e529]:
+                - generic [ref=e530]:
+                  - link "All accounts" [ref=e531] [cursor=pointer]:
+                    - /url: /admin/traders/9df665e4-62ae-4a8a-8380-3c0e918a3de0
+                  - link "Open" [ref=e532] [cursor=pointer]:
+                    - /url: /admin/accounts/5e75ad7a-0a08-4b3c-bb17-4f3d020fcb62
+                    - text: Open
+                    - img [ref=e533]
+            - row "85d5b398… acct 78dbc781… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 1 May 08, 2026 All accounts Open" [ref=e535]:
+              - cell "85d5b398… acct 78dbc781…" [ref=e536]:
+                - generic [ref=e537]: 85d5b398…
+                - generic [ref=e538]: acct 78dbc781…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e539]:
+                - generic [ref=e540]: Demo $50K Evaluation
+                - generic [ref=e541]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e542]:
+                - generic [ref=e543]: Evaluation
+                - generic [ref=e544]: target 8%
+              - cell "active" [ref=e545]:
+                - generic [ref=e546]: active
+              - cell "$50,000.00 +0.00%" [ref=e547]:
+                - generic [ref=e548]: $50,000.00
+                - generic [ref=e549]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e550]:
+                - generic [ref=e551]: $45,000.00
+                - generic [ref=e552]: 0% used
+              - cell "1" [ref=e553]
+              - cell "May 08, 2026" [ref=e554]
+              - cell "All accounts Open" [ref=e555]:
+                - generic [ref=e556]:
+                  - link "All accounts" [ref=e557] [cursor=pointer]:
+                    - /url: /admin/traders/85d5b398-5cfc-48d0-b057-b2049a754107
+                  - link "Open" [ref=e558] [cursor=pointer]:
+                    - /url: /admin/accounts/78dbc781-e5c2-4ebb-b91e-01cfe05e3e13
+                    - text: Open
+                    - img [ref=e559]
+            - row "5f45b05c… acct 5806627e… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% disabled $50,000.00 +0.00% $45,000.00 0% used 0 May 08, 2026 All accounts Open" [ref=e561]:
+              - cell "5f45b05c… acct 5806627e…" [ref=e562]:
+                - generic [ref=e563]: 5f45b05c…
+                - generic [ref=e564]: acct 5806627e…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e565]:
+                - generic [ref=e566]: Demo $50K Evaluation
+                - generic [ref=e567]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e568]:
+                - generic [ref=e569]: Evaluation
+                - generic [ref=e570]: target 8%
+              - cell "disabled" [ref=e571]:
+                - generic [ref=e572]: disabled
+              - cell "$50,000.00 +0.00%" [ref=e573]:
+                - generic [ref=e574]: $50,000.00
+                - generic [ref=e575]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e576]:
+                - generic [ref=e577]: $45,000.00
+                - generic [ref=e578]: 0% used
+              - cell "0" [ref=e579]
+              - cell "May 08, 2026" [ref=e580]
+              - cell "All accounts Open" [ref=e581]:
+                - generic [ref=e582]:
+                  - link "All accounts" [ref=e583] [cursor=pointer]:
+                    - /url: /admin/traders/5f45b05c-d746-4a01-90cf-8af6bd6f3e13
+                  - link "Open" [ref=e584] [cursor=pointer]:
+                    - /url: /admin/accounts/5806627e-6e43-456c-b1c1-e18b3f95e7d0
+                    - text: Open
+                    - img [ref=e585]
+            - row "6c8c9360… acct ef51b1e2… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% breached $60,000.00 -50.00% $56,000.00 94% used 0 May 08, 2026 All accounts Open" [ref=e587]:
+              - cell "6c8c9360… acct ef51b1e2…" [ref=e588]:
+                - generic [ref=e589]: 6c8c9360…
+                - generic [ref=e590]: acct ef51b1e2…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e591]:
+                - generic [ref=e592]: Demo $50K Evaluation
+                - generic [ref=e593]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e594]:
+                - generic [ref=e595]: Evaluation
+                - generic [ref=e596]: target 8%
+              - cell "breached" [ref=e597]:
+                - generic [ref=e598]: breached
+              - cell "$60,000.00 -50.00%" [ref=e599]:
+                - generic [ref=e600]: $60,000.00
+                - generic [ref=e601]: "-50.00%"
+              - cell "$56,000.00 94% used" [ref=e602]:
+                - generic [ref=e603]: $56,000.00
+                - generic [ref=e604]: 94% used
+              - cell "0" [ref=e605]
+              - cell "May 08, 2026" [ref=e606]
+              - cell "All accounts Open" [ref=e607]:
+                - generic [ref=e608]:
+                  - link "All accounts" [ref=e609] [cursor=pointer]:
+                    - /url: /admin/traders/6c8c9360-6ed8-454e-9649-9d052fb95d5b
+                  - link "Open" [ref=e610] [cursor=pointer]:
+                    - /url: /admin/accounts/ef51b1e2-19a4-4820-b575-a924783d47a1
+                    - text: Open
+                    - img [ref=e611]
+            - row "0b9ba7a2… acct 74044aee… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,994.50 -0.01% $45,000.00 0% used 1 May 08, 2026 All accounts Open" [ref=e613]:
+              - cell "0b9ba7a2… acct 74044aee…" [ref=e614]:
+                - generic [ref=e615]: 0b9ba7a2…
+                - generic [ref=e616]: acct 74044aee…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e617]:
+                - generic [ref=e618]: Demo $50K Evaluation
+                - generic [ref=e619]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e620]:
+                - generic [ref=e621]: Evaluation
+                - generic [ref=e622]: target 8%
+              - cell "active" [ref=e623]:
+                - generic [ref=e624]: active
+              - cell "$49,994.50 -0.01%" [ref=e625]:
+                - generic [ref=e626]: $49,994.50
+                - generic [ref=e627]: "-0.01%"
+              - cell "$45,000.00 0% used" [ref=e628]:
+                - generic [ref=e629]: $45,000.00
+                - generic [ref=e630]: 0% used
+              - cell "1" [ref=e631]
+              - cell "May 08, 2026" [ref=e632]
+              - cell "All accounts Open" [ref=e633]:
+                - generic [ref=e634]:
+                  - link "All accounts" [ref=e635] [cursor=pointer]:
+                    - /url: /admin/traders/0b9ba7a2-592f-4cf3-8a94-c71dece1e095
+                  - link "Open" [ref=e636] [cursor=pointer]:
+                    - /url: /admin/accounts/74044aee-7545-4642-94d5-4e36cb9aa6ae
+                    - text: Open
+                    - img [ref=e637]
+            - row "7853bd5d… acct 4a92d3f1… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% funded $53,000.00 +6.00% $45,000.00 -60% used 0 May 08, 2026 All accounts Open" [ref=e639]:
+              - cell "7853bd5d… acct 4a92d3f1…" [ref=e640]:
+                - generic [ref=e641]: 7853bd5d…
+                - generic [ref=e642]: acct 4a92d3f1…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e643]:
+                - generic [ref=e644]: Demo $50K Evaluation
+                - generic [ref=e645]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e646]:
+                - generic [ref=e647]: Evaluation
+                - generic [ref=e648]: target 8%
+              - cell "funded" [ref=e649]:
+                - generic [ref=e650]: funded
+              - cell "$53,000.00 +6.00%" [ref=e651]:
+                - generic [ref=e652]: $53,000.00
+                - generic [ref=e653]: +6.00%
+              - cell "$45,000.00 -60% used" [ref=e654]:
+                - generic [ref=e655]: $45,000.00
+                - generic [ref=e656]: "-60% used"
+              - cell "0" [ref=e657]
+              - cell "May 08, 2026" [ref=e658]
+              - cell "All accounts Open" [ref=e659]:
+                - generic [ref=e660]:
+                  - link "All accounts" [ref=e661] [cursor=pointer]:
+                    - /url: /admin/traders/7853bd5d-4383-4ef9-bba5-4d542dcc477b
+                  - link "Open" [ref=e662] [cursor=pointer]:
+                    - /url: /admin/accounts/4a92d3f1-cd92-4d3f-98cd-f50d2ec9b44b
+                    - text: Open
+                    - img [ref=e663]
+            - row "50574eca… acct 313b969a… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 1 May 08, 2026 All accounts Open" [ref=e665]:
+              - cell "50574eca… acct 313b969a…" [ref=e666]:
+                - generic [ref=e667]: 50574eca…
+                - generic [ref=e668]: acct 313b969a…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e669]:
+                - generic [ref=e670]: Demo $50K Evaluation
+                - generic [ref=e671]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e672]:
+                - generic [ref=e673]: Evaluation
+                - generic [ref=e674]: target 8%
+              - cell "active" [ref=e675]:
+                - generic [ref=e676]: active
+              - cell "$50,000.00 +0.00%" [ref=e677]:
+                - generic [ref=e678]: $50,000.00
+                - generic [ref=e679]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e680]:
+                - generic [ref=e681]: $45,000.00
+                - generic [ref=e682]: 0% used
+              - cell "1" [ref=e683]
+              - cell "May 08, 2026" [ref=e684]
+              - cell "All accounts Open" [ref=e685]:
+                - generic [ref=e686]:
+                  - link "All accounts" [ref=e687] [cursor=pointer]:
+                    - /url: /admin/traders/50574eca-6305-4573-a7be-0292d99301ed
+                  - link "Open" [ref=e688] [cursor=pointer]:
+                    - /url: /admin/accounts/313b969a-955e-4d87-882f-42511e2d5d1b
+                    - text: Open
+                    - img [ref=e689]
+            - row "090cfdc4… acct 793dd747… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% disabled $50,000.00 +0.00% $45,000.00 0% used 0 May 08, 2026 All accounts Open" [ref=e691]:
+              - cell "090cfdc4… acct 793dd747…" [ref=e692]:
+                - generic [ref=e693]: 090cfdc4…
+                - generic [ref=e694]: acct 793dd747…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e695]:
+                - generic [ref=e696]: Demo $50K Evaluation
+                - generic [ref=e697]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e698]:
+                - generic [ref=e699]: Evaluation
+                - generic [ref=e700]: target 8%
+              - cell "disabled" [ref=e701]:
+                - generic [ref=e702]: disabled
+              - cell "$50,000.00 +0.00%" [ref=e703]:
+                - generic [ref=e704]: $50,000.00
+                - generic [ref=e705]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e706]:
+                - generic [ref=e707]: $45,000.00
+                - generic [ref=e708]: 0% used
+              - cell "0" [ref=e709]
+              - cell "May 08, 2026" [ref=e710]
+              - cell "All accounts Open" [ref=e711]:
+                - generic [ref=e712]:
+                  - link "All accounts" [ref=e713] [cursor=pointer]:
+                    - /url: /admin/traders/090cfdc4-3052-4675-9972-1df048723d96
+                  - link "Open" [ref=e714] [cursor=pointer]:
+                    - /url: /admin/accounts/793dd747-725a-49cb-a5d1-b0d8c04764cf
+                    - text: Open
+                    - img [ref=e715]
+            - row "16da99d0… acct af3d70b2… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% breached $60,000.00 -50.00% $56,000.00 94% used 0 May 08, 2026 All accounts Open" [ref=e717]:
+              - cell "16da99d0… acct af3d70b2…" [ref=e718]:
+                - generic [ref=e719]: 16da99d0…
+                - generic [ref=e720]: acct af3d70b2…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e721]:
+                - generic [ref=e722]: Demo $50K Evaluation
+                - generic [ref=e723]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e724]:
+                - generic [ref=e725]: Evaluation
+                - generic [ref=e726]: target 8%
+              - cell "breached" [ref=e727]:
+                - generic [ref=e728]: breached
+              - cell "$60,000.00 -50.00%" [ref=e729]:
+                - generic [ref=e730]: $60,000.00
+                - generic [ref=e731]: "-50.00%"
+              - cell "$56,000.00 94% used" [ref=e732]:
+                - generic [ref=e733]: $56,000.00
+                - generic [ref=e734]: 94% used
+              - cell "0" [ref=e735]
+              - cell "May 08, 2026" [ref=e736]
+              - cell "All accounts Open" [ref=e737]:
+                - generic [ref=e738]:
+                  - link "All accounts" [ref=e739] [cursor=pointer]:
+                    - /url: /admin/traders/16da99d0-b709-485b-b496-31ce1405da78
+                  - link "Open" [ref=e740] [cursor=pointer]:
+                    - /url: /admin/accounts/af3d70b2-eab9-4b8f-9414-88a5932d672c
+                    - text: Open
+                    - img [ref=e741]
+            - row "227116d5… acct 6672b964… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,994.50 -0.01% $45,000.00 0% used 1 May 08, 2026 All accounts Open" [ref=e743]:
+              - cell "227116d5… acct 6672b964…" [ref=e744]:
+                - generic [ref=e745]: 227116d5…
+                - generic [ref=e746]: acct 6672b964…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e747]:
+                - generic [ref=e748]: Demo $50K Evaluation
+                - generic [ref=e749]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e750]:
+                - generic [ref=e751]: Evaluation
+                - generic [ref=e752]: target 8%
+              - cell "active" [ref=e753]:
+                - generic [ref=e754]: active
+              - cell "$49,994.50 -0.01%" [ref=e755]:
+                - generic [ref=e756]: $49,994.50
+                - generic [ref=e757]: "-0.01%"
+              - cell "$45,000.00 0% used" [ref=e758]:
+                - generic [ref=e759]: $45,000.00
+                - generic [ref=e760]: 0% used
+              - cell "1" [ref=e761]
+              - cell "May 08, 2026" [ref=e762]
+              - cell "All accounts Open" [ref=e763]:
+                - generic [ref=e764]:
+                  - link "All accounts" [ref=e765] [cursor=pointer]:
+                    - /url: /admin/traders/227116d5-11e0-413b-ac7d-1233d83b8be8
+                  - link "Open" [ref=e766] [cursor=pointer]:
+                    - /url: /admin/accounts/6672b964-d1fc-4a86-bac4-8b70231d7cf6
+                    - text: Open
+                    - img [ref=e767]
+            - row "a1a2697c… acct 15d9320d… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% funded $53,000.00 +6.00% $45,000.00 -60% used 0 May 07, 2026 All accounts Open" [ref=e769]:
+              - cell "a1a2697c… acct 15d9320d…" [ref=e770]:
+                - generic [ref=e771]: a1a2697c…
+                - generic [ref=e772]: acct 15d9320d…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e773]:
+                - generic [ref=e774]: Demo $50K Evaluation
+                - generic [ref=e775]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e776]:
+                - generic [ref=e777]: Evaluation
+                - generic [ref=e778]: target 8%
+              - cell "funded" [ref=e779]:
+                - generic [ref=e780]: funded
+              - cell "$53,000.00 +6.00%" [ref=e781]:
+                - generic [ref=e782]: $53,000.00
+                - generic [ref=e783]: +6.00%
+              - cell "$45,000.00 -60% used" [ref=e784]:
+                - generic [ref=e785]: $45,000.00
+                - generic [ref=e786]: "-60% used"
+              - cell "0" [ref=e787]
+              - cell "May 07, 2026" [ref=e788]
+              - cell "All accounts Open" [ref=e789]:
+                - generic [ref=e790]:
+                  - link "All accounts" [ref=e791] [cursor=pointer]:
+                    - /url: /admin/traders/a1a2697c-4231-4f3a-8ddb-76b80a608c60
+                  - link "Open" [ref=e792] [cursor=pointer]:
+                    - /url: /admin/accounts/15d9320d-57f5-4159-b5a8-0bc7d561663f
+                    - text: Open
+                    - img [ref=e793]
+            - row "30e40023… acct 25d43465… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 1 May 07, 2026 All accounts Open" [ref=e795]:
+              - cell "30e40023… acct 25d43465…" [ref=e796]:
+                - generic [ref=e797]: 30e40023…
+                - generic [ref=e798]: acct 25d43465…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e799]:
+                - generic [ref=e800]: Demo $50K Evaluation
+                - generic [ref=e801]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e802]:
+                - generic [ref=e803]: Evaluation
+                - generic [ref=e804]: target 8%
+              - cell "active" [ref=e805]:
+                - generic [ref=e806]: active
+              - cell "$50,000.00 +0.00%" [ref=e807]:
+                - generic [ref=e808]: $50,000.00
+                - generic [ref=e809]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e810]:
+                - generic [ref=e811]: $45,000.00
+                - generic [ref=e812]: 0% used
+              - cell "1" [ref=e813]
+              - cell "May 07, 2026" [ref=e814]
+              - cell "All accounts Open" [ref=e815]:
+                - generic [ref=e816]:
+                  - link "All accounts" [ref=e817] [cursor=pointer]:
+                    - /url: /admin/traders/30e40023-dfc8-46ef-8286-64b8d89dfdf9
+                  - link "Open" [ref=e818] [cursor=pointer]:
+                    - /url: /admin/accounts/25d43465-b189-4bf1-9a7f-4d4d3f5be42c
+                    - text: Open
+                    - img [ref=e819]
+            - row "04d3e776… acct 29953f1b… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% disabled $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e821]:
+              - cell "04d3e776… acct 29953f1b…" [ref=e822]:
+                - generic [ref=e823]: 04d3e776…
+                - generic [ref=e824]: acct 29953f1b…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e825]:
+                - generic [ref=e826]: Demo $50K Evaluation
+                - generic [ref=e827]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e828]:
+                - generic [ref=e829]: Evaluation
+                - generic [ref=e830]: target 8%
+              - cell "disabled" [ref=e831]:
+                - generic [ref=e832]: disabled
+              - cell "$50,000.00 +0.00%" [ref=e833]:
+                - generic [ref=e834]: $50,000.00
+                - generic [ref=e835]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e836]:
+                - generic [ref=e837]: $45,000.00
+                - generic [ref=e838]: 0% used
+              - cell "0" [ref=e839]
+              - cell "May 07, 2026" [ref=e840]
+              - cell "All accounts Open" [ref=e841]:
+                - generic [ref=e842]:
+                  - link "All accounts" [ref=e843] [cursor=pointer]:
+                    - /url: /admin/traders/04d3e776-fba3-4308-a966-5cb73775c96a
+                  - link "Open" [ref=e844] [cursor=pointer]:
+                    - /url: /admin/accounts/29953f1b-9453-4ae5-879a-7634da0b3452
+                    - text: Open
+                    - img [ref=e845]
+            - row "1e502460… acct b99797ce… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% breached $60,000.00 -50.00% $56,000.00 94% used 0 May 07, 2026 All accounts Open" [ref=e847]:
+              - cell "1e502460… acct b99797ce…" [ref=e848]:
+                - generic [ref=e849]: 1e502460…
+                - generic [ref=e850]: acct b99797ce…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e851]:
+                - generic [ref=e852]: Demo $50K Evaluation
+                - generic [ref=e853]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e854]:
+                - generic [ref=e855]: Evaluation
+                - generic [ref=e856]: target 8%
+              - cell "breached" [ref=e857]:
+                - generic [ref=e858]: breached
+              - cell "$60,000.00 -50.00%" [ref=e859]:
+                - generic [ref=e860]: $60,000.00
+                - generic [ref=e861]: "-50.00%"
+              - cell "$56,000.00 94% used" [ref=e862]:
+                - generic [ref=e863]: $56,000.00
+                - generic [ref=e864]: 94% used
+              - cell "0" [ref=e865]
+              - cell "May 07, 2026" [ref=e866]
+              - cell "All accounts Open" [ref=e867]:
+                - generic [ref=e868]:
+                  - link "All accounts" [ref=e869] [cursor=pointer]:
+                    - /url: /admin/traders/1e502460-4b6a-4130-9679-a2e3fc8b310f
+                  - link "Open" [ref=e870] [cursor=pointer]:
+                    - /url: /admin/accounts/b99797ce-7a10-4939-a4cd-949b3aa53d32
+                    - text: Open
+                    - img [ref=e871]
+            - row "c09c4755… acct 18c82b2a… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,994.50 -0.01% $45,000.00 0% used 1 May 07, 2026 All accounts Open" [ref=e873]:
+              - cell "c09c4755… acct 18c82b2a…" [ref=e874]:
+                - generic [ref=e875]: c09c4755…
+                - generic [ref=e876]: acct 18c82b2a…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e877]:
+                - generic [ref=e878]: Demo $50K Evaluation
+                - generic [ref=e879]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e880]:
+                - generic [ref=e881]: Evaluation
+                - generic [ref=e882]: target 8%
+              - cell "active" [ref=e883]:
+                - generic [ref=e884]: active
+              - cell "$49,994.50 -0.01%" [ref=e885]:
+                - generic [ref=e886]: $49,994.50
+                - generic [ref=e887]: "-0.01%"
+              - cell "$45,000.00 0% used" [ref=e888]:
+                - generic [ref=e889]: $45,000.00
+                - generic [ref=e890]: 0% used
+              - cell "1" [ref=e891]
+              - cell "May 07, 2026" [ref=e892]
+              - cell "All accounts Open" [ref=e893]:
+                - generic [ref=e894]:
+                  - link "All accounts" [ref=e895] [cursor=pointer]:
+                    - /url: /admin/traders/c09c4755-f7d5-4b8b-bf83-6977fd961b8a
+                  - link "Open" [ref=e896] [cursor=pointer]:
+                    - /url: /admin/accounts/18c82b2a-4692-4e2f-8641-da727a48cfef
+                    - text: Open
+                    - img [ref=e897]
+            - row "3d47d42f… acct 397bcd9b… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% funded $53,000.00 +6.00% $45,000.00 -60% used 0 May 07, 2026 All accounts Open" [ref=e899]:
+              - cell "3d47d42f… acct 397bcd9b…" [ref=e900]:
+                - generic [ref=e901]: 3d47d42f…
+                - generic [ref=e902]: acct 397bcd9b…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e903]:
+                - generic [ref=e904]: Demo $50K Evaluation
+                - generic [ref=e905]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e906]:
+                - generic [ref=e907]: Evaluation
+                - generic [ref=e908]: target 8%
+              - cell "funded" [ref=e909]:
+                - generic [ref=e910]: funded
+              - cell "$53,000.00 +6.00%" [ref=e911]:
+                - generic [ref=e912]: $53,000.00
+                - generic [ref=e913]: +6.00%
+              - cell "$45,000.00 -60% used" [ref=e914]:
+                - generic [ref=e915]: $45,000.00
+                - generic [ref=e916]: "-60% used"
+              - cell "0" [ref=e917]
+              - cell "May 07, 2026" [ref=e918]
+              - cell "All accounts Open" [ref=e919]:
+                - generic [ref=e920]:
+                  - link "All accounts" [ref=e921] [cursor=pointer]:
+                    - /url: /admin/traders/3d47d42f-2939-49bf-95d2-516b17b895c0
+                  - link "Open" [ref=e922] [cursor=pointer]:
+                    - /url: /admin/accounts/397bcd9b-6e50-456a-9e11-6e16175392e1
+                    - text: Open
+                    - img [ref=e923]
+            - row "114f75d1… acct 1ab1d362… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% funded $53,000.00 +6.00% $45,000.00 -60% used 0 May 07, 2026 All accounts Open" [ref=e925]:
+              - cell "114f75d1… acct 1ab1d362…" [ref=e926]:
+                - generic [ref=e927]: 114f75d1…
+                - generic [ref=e928]: acct 1ab1d362…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e929]:
+                - generic [ref=e930]: Demo $50K Evaluation
+                - generic [ref=e931]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e932]:
+                - generic [ref=e933]: Evaluation
+                - generic [ref=e934]: target 8%
+              - cell "funded" [ref=e935]:
+                - generic [ref=e936]: funded
+              - cell "$53,000.00 +6.00%" [ref=e937]:
+                - generic [ref=e938]: $53,000.00
+                - generic [ref=e939]: +6.00%
+              - cell "$45,000.00 -60% used" [ref=e940]:
+                - generic [ref=e941]: $45,000.00
+                - generic [ref=e942]: "-60% used"
+              - cell "0" [ref=e943]
+              - cell "May 07, 2026" [ref=e944]
+              - cell "All accounts Open" [ref=e945]:
+                - generic [ref=e946]:
+                  - link "All accounts" [ref=e947] [cursor=pointer]:
+                    - /url: /admin/traders/114f75d1-5222-4ad6-a010-a80ac7725bdd
+                  - link "Open" [ref=e948] [cursor=pointer]:
+                    - /url: /admin/accounts/1ab1d362-5bca-4a99-84cc-94a0f07354b0
+                    - text: Open
+                    - img [ref=e949]
+            - row "209dd939… acct 8243275c… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% funded $55,000.00 +10.00% $45,000.00 -100% used 0 May 07, 2026 All accounts Open" [ref=e951]:
+              - cell "209dd939… acct 8243275c…" [ref=e952]:
+                - generic [ref=e953]: 209dd939…
+                - generic [ref=e954]: acct 8243275c…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e955]:
+                - generic [ref=e956]: Demo $50K Evaluation
+                - generic [ref=e957]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e958]:
+                - generic [ref=e959]: Evaluation
+                - generic [ref=e960]: target 8%
+              - cell "funded" [ref=e961]:
+                - generic [ref=e962]: funded
+              - cell "$55,000.00 +10.00%" [ref=e963]:
+                - generic [ref=e964]: $55,000.00
+                - generic [ref=e965]: +10.00%
+              - cell "$45,000.00 -100% used" [ref=e966]:
+                - generic [ref=e967]: $45,000.00
+                - generic [ref=e968]: "-100% used"
+              - cell "0" [ref=e969]
+              - cell "May 07, 2026" [ref=e970]
+              - cell "All accounts Open" [ref=e971]:
+                - generic [ref=e972]:
+                  - link "All accounts" [ref=e973] [cursor=pointer]:
+                    - /url: /admin/traders/209dd939-a105-4b33-9b09-170bc79ca364
+                  - link "Open" [ref=e974] [cursor=pointer]:
+                    - /url: /admin/accounts/8243275c-d274-4445-a3ca-685a68037f25
+                    - text: Open
+                    - img [ref=e975]
+            - row "9807bfce… acct 4b527957… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% funded $55,000.00 +10.00% $45,000.00 -100% used 0 May 07, 2026 All accounts Open" [ref=e977]:
+              - cell "9807bfce… acct 4b527957…" [ref=e978]:
+                - generic [ref=e979]: 9807bfce…
+                - generic [ref=e980]: acct 4b527957…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e981]:
+                - generic [ref=e982]: Demo $50K Evaluation
+                - generic [ref=e983]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e984]:
+                - generic [ref=e985]: Evaluation
+                - generic [ref=e986]: target 8%
+              - cell "funded" [ref=e987]:
+                - generic [ref=e988]: funded
+              - cell "$55,000.00 +10.00%" [ref=e989]:
+                - generic [ref=e990]: $55,000.00
+                - generic [ref=e991]: +10.00%
+              - cell "$45,000.00 -100% used" [ref=e992]:
+                - generic [ref=e993]: $45,000.00
+                - generic [ref=e994]: "-100% used"
+              - cell "0" [ref=e995]
+              - cell "May 07, 2026" [ref=e996]
+              - cell "All accounts Open" [ref=e997]:
+                - generic [ref=e998]:
+                  - link "All accounts" [ref=e999] [cursor=pointer]:
+                    - /url: /admin/traders/9807bfce-8fb8-4194-af6e-991529099c8a
+                  - link "Open" [ref=e1000] [cursor=pointer]:
+                    - /url: /admin/accounts/4b527957-5047-45af-8175-89f8c2dc4a51
+                    - text: Open
+                    - img [ref=e1001]
+            - row "8f3c064d… acct b418f429… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% funded $55,000.00 +10.00% $45,000.00 -100% used 0 May 07, 2026 All accounts Open" [ref=e1003]:
+              - cell "8f3c064d… acct b418f429…" [ref=e1004]:
+                - generic [ref=e1005]: 8f3c064d…
+                - generic [ref=e1006]: acct b418f429…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1007]:
+                - generic [ref=e1008]: Demo $50K Evaluation
+                - generic [ref=e1009]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1010]:
+                - generic [ref=e1011]: Evaluation
+                - generic [ref=e1012]: target 8%
+              - cell "funded" [ref=e1013]:
+                - generic [ref=e1014]: funded
+              - cell "$55,000.00 +10.00%" [ref=e1015]:
+                - generic [ref=e1016]: $55,000.00
+                - generic [ref=e1017]: +10.00%
+              - cell "$45,000.00 -100% used" [ref=e1018]:
+                - generic [ref=e1019]: $45,000.00
+                - generic [ref=e1020]: "-100% used"
+              - cell "0" [ref=e1021]
+              - cell "May 07, 2026" [ref=e1022]
+              - cell "All accounts Open" [ref=e1023]:
+                - generic [ref=e1024]:
+                  - link "All accounts" [ref=e1025] [cursor=pointer]:
+                    - /url: /admin/traders/8f3c064d-76bb-4a16-8226-7cd82bdb0575
+                  - link "Open" [ref=e1026] [cursor=pointer]:
+                    - /url: /admin/accounts/b418f429-0373-4555-ae9e-4a92e471e6a1
+                    - text: Open
+                    - img [ref=e1027]
+            - row "8f15f670… acct 9f7a80e7… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 1 May 07, 2026 All accounts Open" [ref=e1029]:
+              - cell "8f15f670… acct 9f7a80e7…" [ref=e1030]:
+                - generic [ref=e1031]: 8f15f670…
+                - generic [ref=e1032]: acct 9f7a80e7…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1033]:
+                - generic [ref=e1034]: Demo $50K Evaluation
+                - generic [ref=e1035]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1036]:
+                - generic [ref=e1037]: Evaluation
+                - generic [ref=e1038]: target 8%
+              - cell "active" [ref=e1039]:
+                - generic [ref=e1040]: active
+              - cell "$50,000.00 +0.00%" [ref=e1041]:
+                - generic [ref=e1042]: $50,000.00
+                - generic [ref=e1043]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1044]:
+                - generic [ref=e1045]: $45,000.00
+                - generic [ref=e1046]: 0% used
+              - cell "1" [ref=e1047]
+              - cell "May 07, 2026" [ref=e1048]
+              - cell "All accounts Open" [ref=e1049]:
+                - generic [ref=e1050]:
+                  - link "All accounts" [ref=e1051] [cursor=pointer]:
+                    - /url: /admin/traders/8f15f670-8a5e-4d4b-914d-beda96680596
+                  - link "Open" [ref=e1052] [cursor=pointer]:
+                    - /url: /admin/accounts/9f7a80e7-296f-4359-aee5-fdbcc987d7cf
+                    - text: Open
+                    - img [ref=e1053]
+            - row "f00b924f… acct 5cd4d6bf… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% disabled $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e1055]:
+              - cell "f00b924f… acct 5cd4d6bf…" [ref=e1056]:
+                - generic [ref=e1057]: f00b924f…
+                - generic [ref=e1058]: acct 5cd4d6bf…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1059]:
+                - generic [ref=e1060]: Demo $50K Evaluation
+                - generic [ref=e1061]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1062]:
+                - generic [ref=e1063]: Evaluation
+                - generic [ref=e1064]: target 8%
+              - cell "disabled" [ref=e1065]:
+                - generic [ref=e1066]: disabled
+              - cell "$50,000.00 +0.00%" [ref=e1067]:
+                - generic [ref=e1068]: $50,000.00
+                - generic [ref=e1069]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1070]:
+                - generic [ref=e1071]: $45,000.00
+                - generic [ref=e1072]: 0% used
+              - cell "0" [ref=e1073]
+              - cell "May 07, 2026" [ref=e1074]
+              - cell "All accounts Open" [ref=e1075]:
+                - generic [ref=e1076]:
+                  - link "All accounts" [ref=e1077] [cursor=pointer]:
+                    - /url: /admin/traders/f00b924f-bc6a-4ba7-9312-31b2f8cd53db
+                  - link "Open" [ref=e1078] [cursor=pointer]:
+                    - /url: /admin/accounts/5cd4d6bf-6610-4f57-91bf-e088054043e7
+                    - text: Open
+                    - img [ref=e1079]
+            - row "1562c1f3… acct 64a93de8… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% breached $60,000.00 -50.00% $56,000.00 94% used 0 May 07, 2026 All accounts Open" [ref=e1081]:
+              - cell "1562c1f3… acct 64a93de8…" [ref=e1082]:
+                - generic [ref=e1083]: 1562c1f3…
+                - generic [ref=e1084]: acct 64a93de8…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1085]:
+                - generic [ref=e1086]: Demo $50K Evaluation
+                - generic [ref=e1087]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1088]:
+                - generic [ref=e1089]: Evaluation
+                - generic [ref=e1090]: target 8%
+              - cell "breached" [ref=e1091]:
+                - generic [ref=e1092]: breached
+              - cell "$60,000.00 -50.00%" [ref=e1093]:
+                - generic [ref=e1094]: $60,000.00
+                - generic [ref=e1095]: "-50.00%"
+              - cell "$56,000.00 94% used" [ref=e1096]:
+                - generic [ref=e1097]: $56,000.00
+                - generic [ref=e1098]: 94% used
+              - cell "0" [ref=e1099]
+              - cell "May 07, 2026" [ref=e1100]
+              - cell "All accounts Open" [ref=e1101]:
+                - generic [ref=e1102]:
+                  - link "All accounts" [ref=e1103] [cursor=pointer]:
+                    - /url: /admin/traders/1562c1f3-46a6-480f-8d89-6e565aaf5b0f
+                  - link "Open" [ref=e1104] [cursor=pointer]:
+                    - /url: /admin/accounts/64a93de8-9564-4ded-8bb4-dd74cb4cb4ef
+                    - text: Open
+                    - img [ref=e1105]
+            - row "ab388238… acct a131c3d7… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,994.50 -0.01% $45,000.00 0% used 1 May 07, 2026 All accounts Open" [ref=e1107]:
+              - cell "ab388238… acct a131c3d7…" [ref=e1108]:
+                - generic [ref=e1109]: ab388238…
+                - generic [ref=e1110]: acct a131c3d7…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1111]:
+                - generic [ref=e1112]: Demo $50K Evaluation
+                - generic [ref=e1113]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1114]:
+                - generic [ref=e1115]: Evaluation
+                - generic [ref=e1116]: target 8%
+              - cell "active" [ref=e1117]:
+                - generic [ref=e1118]: active
+              - cell "$49,994.50 -0.01%" [ref=e1119]:
+                - generic [ref=e1120]: $49,994.50
+                - generic [ref=e1121]: "-0.01%"
+              - cell "$45,000.00 0% used" [ref=e1122]:
+                - generic [ref=e1123]: $45,000.00
+                - generic [ref=e1124]: 0% used
+              - cell "1" [ref=e1125]
+              - cell "May 07, 2026" [ref=e1126]
+              - cell "All accounts Open" [ref=e1127]:
+                - generic [ref=e1128]:
+                  - link "All accounts" [ref=e1129] [cursor=pointer]:
+                    - /url: /admin/traders/ab388238-a2cb-4ea6-af30-c27083eebd2a
+                  - link "Open" [ref=e1130] [cursor=pointer]:
+                    - /url: /admin/accounts/a131c3d7-403c-49ae-934f-7f20ed189d5f
+                    - text: Open
+                    - img [ref=e1131]
+            - row "8e594608… acct b8771363… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 1 May 07, 2026 All accounts Open" [ref=e1133]:
+              - cell "8e594608… acct b8771363…" [ref=e1134]:
+                - generic [ref=e1135]: 8e594608…
+                - generic [ref=e1136]: acct b8771363…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1137]:
+                - generic [ref=e1138]: Demo $50K Evaluation
+                - generic [ref=e1139]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1140]:
+                - generic [ref=e1141]: Evaluation
+                - generic [ref=e1142]: target 8%
+              - cell "active" [ref=e1143]:
+                - generic [ref=e1144]: active
+              - cell "$50,000.00 +0.00%" [ref=e1145]:
+                - generic [ref=e1146]: $50,000.00
+                - generic [ref=e1147]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1148]:
+                - generic [ref=e1149]: $45,000.00
+                - generic [ref=e1150]: 0% used
+              - cell "1" [ref=e1151]
+              - cell "May 07, 2026" [ref=e1152]
+              - cell "All accounts Open" [ref=e1153]:
+                - generic [ref=e1154]:
+                  - link "All accounts" [ref=e1155] [cursor=pointer]:
+                    - /url: /admin/traders/8e594608-a653-402c-8e6b-9a641dff154b
+                  - link "Open" [ref=e1156] [cursor=pointer]:
+                    - /url: /admin/accounts/b8771363-e6bc-48ac-b45f-1cca593ce25f
+                    - text: Open
+                    - img [ref=e1157]
+            - row "31bb2681… acct 92184ba3… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% disabled $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e1159]:
+              - cell "31bb2681… acct 92184ba3…" [ref=e1160]:
+                - generic [ref=e1161]: 31bb2681…
+                - generic [ref=e1162]: acct 92184ba3…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1163]:
+                - generic [ref=e1164]: Demo $50K Evaluation
+                - generic [ref=e1165]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1166]:
+                - generic [ref=e1167]: Evaluation
+                - generic [ref=e1168]: target 8%
+              - cell "disabled" [ref=e1169]:
+                - generic [ref=e1170]: disabled
+              - cell "$50,000.00 +0.00%" [ref=e1171]:
+                - generic [ref=e1172]: $50,000.00
+                - generic [ref=e1173]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1174]:
+                - generic [ref=e1175]: $45,000.00
+                - generic [ref=e1176]: 0% used
+              - cell "0" [ref=e1177]
+              - cell "May 07, 2026" [ref=e1178]
+              - cell "All accounts Open" [ref=e1179]:
+                - generic [ref=e1180]:
+                  - link "All accounts" [ref=e1181] [cursor=pointer]:
+                    - /url: /admin/traders/31bb2681-77bd-4715-9c2b-42ec1f92011f
+                  - link "Open" [ref=e1182] [cursor=pointer]:
+                    - /url: /admin/accounts/92184ba3-a107-4afa-b4ae-43e34cbf0bbb
+                    - text: Open
+                    - img [ref=e1183]
+            - row "5e2b60c4… acct e3b93b47… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% breached $60,000.00 -50.00% $56,000.00 94% used 0 May 07, 2026 All accounts Open" [ref=e1185]:
+              - cell "5e2b60c4… acct e3b93b47…" [ref=e1186]:
+                - generic [ref=e1187]: 5e2b60c4…
+                - generic [ref=e1188]: acct e3b93b47…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1189]:
+                - generic [ref=e1190]: Demo $50K Evaluation
+                - generic [ref=e1191]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1192]:
+                - generic [ref=e1193]: Evaluation
+                - generic [ref=e1194]: target 8%
+              - cell "breached" [ref=e1195]:
+                - generic [ref=e1196]: breached
+              - cell "$60,000.00 -50.00%" [ref=e1197]:
+                - generic [ref=e1198]: $60,000.00
+                - generic [ref=e1199]: "-50.00%"
+              - cell "$56,000.00 94% used" [ref=e1200]:
+                - generic [ref=e1201]: $56,000.00
+                - generic [ref=e1202]: 94% used
+              - cell "0" [ref=e1203]
+              - cell "May 07, 2026" [ref=e1204]
+              - cell "All accounts Open" [ref=e1205]:
+                - generic [ref=e1206]:
+                  - link "All accounts" [ref=e1207] [cursor=pointer]:
+                    - /url: /admin/traders/5e2b60c4-e2d2-474e-8aba-e7fb75304541
+                  - link "Open" [ref=e1208] [cursor=pointer]:
+                    - /url: /admin/accounts/e3b93b47-6109-4b55-9eb8-230729ffb8d0
+                    - text: Open
+                    - img [ref=e1209]
+            - row "8783a4b0… acct 12800539… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,994.50 -0.01% $45,000.00 0% used 1 May 07, 2026 All accounts Open" [ref=e1211]:
+              - cell "8783a4b0… acct 12800539…" [ref=e1212]:
+                - generic [ref=e1213]: 8783a4b0…
+                - generic [ref=e1214]: acct 12800539…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1215]:
+                - generic [ref=e1216]: Demo $50K Evaluation
+                - generic [ref=e1217]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1218]:
+                - generic [ref=e1219]: Evaluation
+                - generic [ref=e1220]: target 8%
+              - cell "active" [ref=e1221]:
+                - generic [ref=e1222]: active
+              - cell "$49,994.50 -0.01%" [ref=e1223]:
+                - generic [ref=e1224]: $49,994.50
+                - generic [ref=e1225]: "-0.01%"
+              - cell "$45,000.00 0% used" [ref=e1226]:
+                - generic [ref=e1227]: $45,000.00
+                - generic [ref=e1228]: 0% used
+              - cell "1" [ref=e1229]
+              - cell "May 07, 2026" [ref=e1230]
+              - cell "All accounts Open" [ref=e1231]:
+                - generic [ref=e1232]:
+                  - link "All accounts" [ref=e1233] [cursor=pointer]:
+                    - /url: /admin/traders/8783a4b0-529c-4f31-9aa0-a17bd7ad511a
+                  - link "Open" [ref=e1234] [cursor=pointer]:
+                    - /url: /admin/accounts/12800539-8f03-49f1-b15e-760f0393d225
+                    - text: Open
+                    - img [ref=e1235]
+            - row "9840c6e9… acct c3df5c95… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% disabled $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e1237]:
+              - cell "9840c6e9… acct c3df5c95…" [ref=e1238]:
+                - generic [ref=e1239]: 9840c6e9…
+                - generic [ref=e1240]: acct c3df5c95…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1241]:
+                - generic [ref=e1242]: Demo $50K Evaluation
+                - generic [ref=e1243]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1244]:
+                - generic [ref=e1245]: Evaluation
+                - generic [ref=e1246]: target 8%
+              - cell "disabled" [ref=e1247]:
+                - generic [ref=e1248]: disabled
+              - cell "$50,000.00 +0.00%" [ref=e1249]:
+                - generic [ref=e1250]: $50,000.00
+                - generic [ref=e1251]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1252]:
+                - generic [ref=e1253]: $45,000.00
+                - generic [ref=e1254]: 0% used
+              - cell "0" [ref=e1255]
+              - cell "May 07, 2026" [ref=e1256]
+              - cell "All accounts Open" [ref=e1257]:
+                - generic [ref=e1258]:
+                  - link "All accounts" [ref=e1259] [cursor=pointer]:
+                    - /url: /admin/traders/9840c6e9-70aa-4ea4-b66f-573d5e6f801a
+                  - link "Open" [ref=e1260] [cursor=pointer]:
+                    - /url: /admin/accounts/c3df5c95-e5ea-4db2-909f-f7777600febb
+                    - text: Open
+                    - img [ref=e1261]
+            - row "a2404afe… acct 937c54bf… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% disabled $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e1263]:
+              - cell "a2404afe… acct 937c54bf…" [ref=e1264]:
+                - generic [ref=e1265]: a2404afe…
+                - generic [ref=e1266]: acct 937c54bf…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1267]:
+                - generic [ref=e1268]: Demo $50K Evaluation
+                - generic [ref=e1269]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1270]:
+                - generic [ref=e1271]: Evaluation
+                - generic [ref=e1272]: target 8%
+              - cell "disabled" [ref=e1273]:
+                - generic [ref=e1274]: disabled
+              - cell "$50,000.00 +0.00%" [ref=e1275]:
+                - generic [ref=e1276]: $50,000.00
+                - generic [ref=e1277]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1278]:
+                - generic [ref=e1279]: $45,000.00
+                - generic [ref=e1280]: 0% used
+              - cell "0" [ref=e1281]
+              - cell "May 07, 2026" [ref=e1282]
+              - cell "All accounts Open" [ref=e1283]:
+                - generic [ref=e1284]:
+                  - link "All accounts" [ref=e1285] [cursor=pointer]:
+                    - /url: /admin/traders/a2404afe-df78-4bf0-91f6-3321796ff7e3
+                  - link "Open" [ref=e1286] [cursor=pointer]:
+                    - /url: /admin/accounts/937c54bf-9229-4817-8a0a-786a1aab7ba2
+                    - text: Open
+                    - img [ref=e1287]
+            - row "ec2dc83a… acct 376cb0f8… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% breached $60,000.00 -50.00% $56,000.00 94% used 0 May 07, 2026 All accounts Open" [ref=e1289]:
+              - cell "ec2dc83a… acct 376cb0f8…" [ref=e1290]:
+                - generic [ref=e1291]: ec2dc83a…
+                - generic [ref=e1292]: acct 376cb0f8…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1293]:
+                - generic [ref=e1294]: Demo $50K Evaluation
+                - generic [ref=e1295]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1296]:
+                - generic [ref=e1297]: Evaluation
+                - generic [ref=e1298]: target 8%
+              - cell "breached" [ref=e1299]:
+                - generic [ref=e1300]: breached
+              - cell "$60,000.00 -50.00%" [ref=e1301]:
+                - generic [ref=e1302]: $60,000.00
+                - generic [ref=e1303]: "-50.00%"
+              - cell "$56,000.00 94% used" [ref=e1304]:
+                - generic [ref=e1305]: $56,000.00
+                - generic [ref=e1306]: 94% used
+              - cell "0" [ref=e1307]
+              - cell "May 07, 2026" [ref=e1308]
+              - cell "All accounts Open" [ref=e1309]:
+                - generic [ref=e1310]:
+                  - link "All accounts" [ref=e1311] [cursor=pointer]:
+                    - /url: /admin/traders/ec2dc83a-0d43-497b-8f7a-8b94960c93a9
+                  - link "Open" [ref=e1312] [cursor=pointer]:
+                    - /url: /admin/accounts/376cb0f8-d9ab-4750-aaa2-884a961ea579
+                    - text: Open
+                    - img [ref=e1313]
+            - row "fe6a6198… acct 5d968df4… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,994.50 -0.01% $45,000.00 0% used 1 May 07, 2026 All accounts Open" [ref=e1315]:
+              - cell "fe6a6198… acct 5d968df4…" [ref=e1316]:
+                - generic [ref=e1317]: fe6a6198…
+                - generic [ref=e1318]: acct 5d968df4…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1319]:
+                - generic [ref=e1320]: Demo $50K Evaluation
+                - generic [ref=e1321]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1322]:
+                - generic [ref=e1323]: Evaluation
+                - generic [ref=e1324]: target 8%
+              - cell "active" [ref=e1325]:
+                - generic [ref=e1326]: active
+              - cell "$49,994.50 -0.01%" [ref=e1327]:
+                - generic [ref=e1328]: $49,994.50
+                - generic [ref=e1329]: "-0.01%"
+              - cell "$45,000.00 0% used" [ref=e1330]:
+                - generic [ref=e1331]: $45,000.00
+                - generic [ref=e1332]: 0% used
+              - cell "1" [ref=e1333]
+              - cell "May 07, 2026" [ref=e1334]
+              - cell "All accounts Open" [ref=e1335]:
+                - generic [ref=e1336]:
+                  - link "All accounts" [ref=e1337] [cursor=pointer]:
+                    - /url: /admin/traders/fe6a6198-0bed-4cbf-88e2-2b0dd00d4b82
+                  - link "Open" [ref=e1338] [cursor=pointer]:
+                    - /url: /admin/accounts/5d968df4-2b54-4fe8-8cac-7f4bfd10c653
+                    - text: Open
+                    - img [ref=e1339]
+            - row "70a54a2f… acct ac7a381c… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% breached $60,000.00 -50.00% $56,000.00 94% used 0 May 07, 2026 All accounts Open" [ref=e1341]:
+              - cell "70a54a2f… acct ac7a381c…" [ref=e1342]:
+                - generic [ref=e1343]: 70a54a2f…
+                - generic [ref=e1344]: acct ac7a381c…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1345]:
+                - generic [ref=e1346]: Demo $50K Evaluation
+                - generic [ref=e1347]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1348]:
+                - generic [ref=e1349]: Evaluation
+                - generic [ref=e1350]: target 8%
+              - cell "breached" [ref=e1351]:
+                - generic [ref=e1352]: breached
+              - cell "$60,000.00 -50.00%" [ref=e1353]:
+                - generic [ref=e1354]: $60,000.00
+                - generic [ref=e1355]: "-50.00%"
+              - cell "$56,000.00 94% used" [ref=e1356]:
+                - generic [ref=e1357]: $56,000.00
+                - generic [ref=e1358]: 94% used
+              - cell "0" [ref=e1359]
+              - cell "May 07, 2026" [ref=e1360]
+              - cell "All accounts Open" [ref=e1361]:
+                - generic [ref=e1362]:
+                  - link "All accounts" [ref=e1363] [cursor=pointer]:
+                    - /url: /admin/traders/70a54a2f-4446-470a-9f5f-7b8a5e29a4da
+                  - link "Open" [ref=e1364] [cursor=pointer]:
+                    - /url: /admin/accounts/ac7a381c-0163-4875-baaf-7b7a68a4b6b1
+                    - text: Open
+                    - img [ref=e1365]
+            - row "da200817… acct c9e53619… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,900.00 -58.42% $45,000.00 93% used 0 May 07, 2026 All accounts Open" [ref=e1367]:
+              - cell "da200817… acct c9e53619…" [ref=e1368]:
+                - generic [ref=e1369]: da200817…
+                - generic [ref=e1370]: acct c9e53619…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1371]:
+                - generic [ref=e1372]: Demo $50K Evaluation
+                - generic [ref=e1373]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1374]:
+                - generic [ref=e1375]: Evaluation
+                - generic [ref=e1376]: target 8%
+              - cell "active" [ref=e1377]:
+                - generic [ref=e1378]: active
+              - cell "$49,900.00 -58.42%" [ref=e1379]:
+                - generic [ref=e1380]: $49,900.00
+                - generic [ref=e1381]: "-58.42%"
+              - cell "$45,000.00 93% used" [ref=e1382]:
+                - generic [ref=e1383]: $45,000.00
+                - generic [ref=e1384]: 93% used
+              - cell "0" [ref=e1385]
+              - cell "May 07, 2026" [ref=e1386]
+              - cell "All accounts Open" [ref=e1387]:
+                - generic [ref=e1388]:
+                  - link "All accounts" [ref=e1389] [cursor=pointer]:
+                    - /url: /admin/traders/da200817-8ba8-4355-82ba-e7ed7c23dd01
+                  - link "Open" [ref=e1390] [cursor=pointer]:
+                    - /url: /admin/accounts/c9e53619-bb08-46f6-a8e3-44800897d232
+                    - text: Open
+                    - img [ref=e1391]
+            - row "fb5e069c… acct 6f309bcc… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,900.00 -58.42% $56,000.00 100% used 0 May 07, 2026 All accounts Open" [ref=e1393]:
+              - cell "fb5e069c… acct 6f309bcc…" [ref=e1394]:
+                - generic [ref=e1395]: fb5e069c…
+                - generic [ref=e1396]: acct 6f309bcc…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1397]:
+                - generic [ref=e1398]: Demo $50K Evaluation
+                - generic [ref=e1399]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1400]:
+                - generic [ref=e1401]: Evaluation
+                - generic [ref=e1402]: target 8%
+              - cell "active" [ref=e1403]:
+                - generic [ref=e1404]: active
+              - cell "$49,900.00 -58.42%" [ref=e1405]:
+                - generic [ref=e1406]: $49,900.00
+                - generic [ref=e1407]: "-58.42%"
+              - cell "$56,000.00 100% used" [ref=e1408]:
+                - generic [ref=e1409]: $56,000.00
+                - generic [ref=e1410]: 100% used
+              - cell "0" [ref=e1411]
+              - cell "May 07, 2026" [ref=e1412]
+              - cell "All accounts Open" [ref=e1413]:
+                - generic [ref=e1414]:
+                  - link "All accounts" [ref=e1415] [cursor=pointer]:
+                    - /url: /admin/traders/fb5e069c-1d88-42b8-8545-d673c03404f9
+                  - link "Open" [ref=e1416] [cursor=pointer]:
+                    - /url: /admin/accounts/6f309bcc-f368-456a-9071-b726bfa2bc3d
+                    - text: Open
+                    - img [ref=e1417]
+            - row "650f4f55… acct 47cdc578… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,900.00 -58.42% $45,000.00 93% used 0 May 07, 2026 All accounts Open" [ref=e1419]:
+              - cell "650f4f55… acct 47cdc578…" [ref=e1420]:
+                - generic [ref=e1421]: 650f4f55…
+                - generic [ref=e1422]: acct 47cdc578…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1423]:
+                - generic [ref=e1424]: Demo $50K Evaluation
+                - generic [ref=e1425]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1426]:
+                - generic [ref=e1427]: Evaluation
+                - generic [ref=e1428]: target 8%
+              - cell "active" [ref=e1429]:
+                - generic [ref=e1430]: active
+              - cell "$49,900.00 -58.42%" [ref=e1431]:
+                - generic [ref=e1432]: $49,900.00
+                - generic [ref=e1433]: "-58.42%"
+              - cell "$45,000.00 93% used" [ref=e1434]:
+                - generic [ref=e1435]: $45,000.00
+                - generic [ref=e1436]: 93% used
+              - cell "0" [ref=e1437]
+              - cell "May 07, 2026" [ref=e1438]
+              - cell "All accounts Open" [ref=e1439]:
+                - generic [ref=e1440]:
+                  - link "All accounts" [ref=e1441] [cursor=pointer]:
+                    - /url: /admin/traders/650f4f55-a0c0-4eda-a6bd-fc520a536c60
+                  - link "Open" [ref=e1442] [cursor=pointer]:
+                    - /url: /admin/accounts/47cdc578-d384-45a8-a7da-c4d4f39f29e7
+                    - text: Open
+                    - img [ref=e1443]
+            - row "ca3aebd5… acct b64981d2… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,900.00 -58.42% $56,000.00 100% used 0 May 07, 2026 All accounts Open" [ref=e1445]:
+              - cell "ca3aebd5… acct b64981d2…" [ref=e1446]:
+                - generic [ref=e1447]: ca3aebd5…
+                - generic [ref=e1448]: acct b64981d2…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1449]:
+                - generic [ref=e1450]: Demo $50K Evaluation
+                - generic [ref=e1451]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1452]:
+                - generic [ref=e1453]: Evaluation
+                - generic [ref=e1454]: target 8%
+              - cell "active" [ref=e1455]:
+                - generic [ref=e1456]: active
+              - cell "$49,900.00 -58.42%" [ref=e1457]:
+                - generic [ref=e1458]: $49,900.00
+                - generic [ref=e1459]: "-58.42%"
+              - cell "$56,000.00 100% used" [ref=e1460]:
+                - generic [ref=e1461]: $56,000.00
+                - generic [ref=e1462]: 100% used
+              - cell "0" [ref=e1463]
+              - cell "May 07, 2026" [ref=e1464]
+              - cell "All accounts Open" [ref=e1465]:
+                - generic [ref=e1466]:
+                  - link "All accounts" [ref=e1467] [cursor=pointer]:
+                    - /url: /admin/traders/ca3aebd5-23d7-437c-9c8b-2d970e5f6123
+                  - link "Open" [ref=e1468] [cursor=pointer]:
+                    - /url: /admin/accounts/b64981d2-25e4-4a6b-8700-9409e9cd6089
+                    - text: Open
+                    - img [ref=e1469]
+            - row "7a1f6c03… acct fd57f23f… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,900.00 -58.42% $45,000.00 93% used 0 May 07, 2026 All accounts Open" [ref=e1471]:
+              - cell "7a1f6c03… acct fd57f23f…" [ref=e1472]:
+                - generic [ref=e1473]: 7a1f6c03…
+                - generic [ref=e1474]: acct fd57f23f…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1475]:
+                - generic [ref=e1476]: Demo $50K Evaluation
+                - generic [ref=e1477]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1478]:
+                - generic [ref=e1479]: Evaluation
+                - generic [ref=e1480]: target 8%
+              - cell "active" [ref=e1481]:
+                - generic [ref=e1482]: active
+              - cell "$49,900.00 -58.42%" [ref=e1483]:
+                - generic [ref=e1484]: $49,900.00
+                - generic [ref=e1485]: "-58.42%"
+              - cell "$45,000.00 93% used" [ref=e1486]:
+                - generic [ref=e1487]: $45,000.00
+                - generic [ref=e1488]: 93% used
+              - cell "0" [ref=e1489]
+              - cell "May 07, 2026" [ref=e1490]
+              - cell "All accounts Open" [ref=e1491]:
+                - generic [ref=e1492]:
+                  - link "All accounts" [ref=e1493] [cursor=pointer]:
+                    - /url: /admin/traders/7a1f6c03-9432-432a-b841-6d01ffe70407
+                  - link "Open" [ref=e1494] [cursor=pointer]:
+                    - /url: /admin/accounts/fd57f23f-9994-4dac-b332-26c794e31e9c
+                    - text: Open
+                    - img [ref=e1495]
+            - row "1d8bb78a… acct 093e3c74… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,900.00 -58.42% $56,000.00 100% used 0 May 07, 2026 All accounts Open" [ref=e1497]:
+              - cell "1d8bb78a… acct 093e3c74…" [ref=e1498]:
+                - generic [ref=e1499]: 1d8bb78a…
+                - generic [ref=e1500]: acct 093e3c74…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1501]:
+                - generic [ref=e1502]: Demo $50K Evaluation
+                - generic [ref=e1503]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1504]:
+                - generic [ref=e1505]: Evaluation
+                - generic [ref=e1506]: target 8%
+              - cell "active" [ref=e1507]:
+                - generic [ref=e1508]: active
+              - cell "$49,900.00 -58.42%" [ref=e1509]:
+                - generic [ref=e1510]: $49,900.00
+                - generic [ref=e1511]: "-58.42%"
+              - cell "$56,000.00 100% used" [ref=e1512]:
+                - generic [ref=e1513]: $56,000.00
+                - generic [ref=e1514]: 100% used
+              - cell "0" [ref=e1515]
+              - cell "May 07, 2026" [ref=e1516]
+              - cell "All accounts Open" [ref=e1517]:
+                - generic [ref=e1518]:
+                  - link "All accounts" [ref=e1519] [cursor=pointer]:
+                    - /url: /admin/traders/1d8bb78a-55d3-4cea-80f0-15cb157d1f73
+                  - link "Open" [ref=e1520] [cursor=pointer]:
+                    - /url: /admin/accounts/093e3c74-2600-4de3-b1f2-ac7d3e10b186
+                    - text: Open
+                    - img [ref=e1521]
+            - row "f2a33121… acct 9b33baa7… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,900.00 -58.42% $45,000.00 93% used 0 May 07, 2026 All accounts Open" [ref=e1523]:
+              - cell "f2a33121… acct 9b33baa7…" [ref=e1524]:
+                - generic [ref=e1525]: f2a33121…
+                - generic [ref=e1526]: acct 9b33baa7…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1527]:
+                - generic [ref=e1528]: Demo $50K Evaluation
+                - generic [ref=e1529]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1530]:
+                - generic [ref=e1531]: Evaluation
+                - generic [ref=e1532]: target 8%
+              - cell "active" [ref=e1533]:
+                - generic [ref=e1534]: active
+              - cell "$49,900.00 -58.42%" [ref=e1535]:
+                - generic [ref=e1536]: $49,900.00
+                - generic [ref=e1537]: "-58.42%"
+              - cell "$45,000.00 93% used" [ref=e1538]:
+                - generic [ref=e1539]: $45,000.00
+                - generic [ref=e1540]: 93% used
+              - cell "0" [ref=e1541]
+              - cell "May 07, 2026" [ref=e1542]
+              - cell "All accounts Open" [ref=e1543]:
+                - generic [ref=e1544]:
+                  - link "All accounts" [ref=e1545] [cursor=pointer]:
+                    - /url: /admin/traders/f2a33121-2c02-45fc-8041-cfeb3de92ad2
+                  - link "Open" [ref=e1546] [cursor=pointer]:
+                    - /url: /admin/accounts/9b33baa7-57f7-4960-bfb5-dcb1f47df27c
+                    - text: Open
+                    - img [ref=e1547]
+            - row "a0ed349e… acct 6c67062c… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,900.00 -58.42% $56,000.00 100% used 0 May 07, 2026 All accounts Open" [ref=e1549]:
+              - cell "a0ed349e… acct 6c67062c…" [ref=e1550]:
+                - generic [ref=e1551]: a0ed349e…
+                - generic [ref=e1552]: acct 6c67062c…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1553]:
+                - generic [ref=e1554]: Demo $50K Evaluation
+                - generic [ref=e1555]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1556]:
+                - generic [ref=e1557]: Evaluation
+                - generic [ref=e1558]: target 8%
+              - cell "active" [ref=e1559]:
+                - generic [ref=e1560]: active
+              - cell "$49,900.00 -58.42%" [ref=e1561]:
+                - generic [ref=e1562]: $49,900.00
+                - generic [ref=e1563]: "-58.42%"
+              - cell "$56,000.00 100% used" [ref=e1564]:
+                - generic [ref=e1565]: $56,000.00
+                - generic [ref=e1566]: 100% used
+              - cell "0" [ref=e1567]
+              - cell "May 07, 2026" [ref=e1568]
+              - cell "All accounts Open" [ref=e1569]:
+                - generic [ref=e1570]:
+                  - link "All accounts" [ref=e1571] [cursor=pointer]:
+                    - /url: /admin/traders/a0ed349e-5e84-4e5d-aa18-ddef18a56198
+                  - link "Open" [ref=e1572] [cursor=pointer]:
+                    - /url: /admin/accounts/6c67062c-984a-4220-8c90-bb3122c4d880
+                    - text: Open
+                    - img [ref=e1573]
+            - row "877a55b2… acct 6529633a… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,900.00 -58.42% $56,000.00 100% used 0 May 07, 2026 All accounts Open" [ref=e1575]:
+              - cell "877a55b2… acct 6529633a…" [ref=e1576]:
+                - generic [ref=e1577]: 877a55b2…
+                - generic [ref=e1578]: acct 6529633a…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1579]:
+                - generic [ref=e1580]: Demo $50K Evaluation
+                - generic [ref=e1581]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1582]:
+                - generic [ref=e1583]: Evaluation
+                - generic [ref=e1584]: target 8%
+              - cell "active" [ref=e1585]:
+                - generic [ref=e1586]: active
+              - cell "$49,900.00 -58.42%" [ref=e1587]:
+                - generic [ref=e1588]: $49,900.00
+                - generic [ref=e1589]: "-58.42%"
+              - cell "$56,000.00 100% used" [ref=e1590]:
+                - generic [ref=e1591]: $56,000.00
+                - generic [ref=e1592]: 100% used
+              - cell "0" [ref=e1593]
+              - cell "May 07, 2026" [ref=e1594]
+              - cell "All accounts Open" [ref=e1595]:
+                - generic [ref=e1596]:
+                  - link "All accounts" [ref=e1597] [cursor=pointer]:
+                    - /url: /admin/traders/877a55b2-4140-44ac-b258-5350a53a1e29
+                  - link "Open" [ref=e1598] [cursor=pointer]:
+                    - /url: /admin/accounts/6529633a-ec2f-4443-af78-5bcf7a714250
+                    - text: Open
+                    - img [ref=e1599]
+            - row "96528a1a… acct 03a27a32… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,994.50 -0.01% $45,000.00 0% used 1 May 07, 2026 All accounts Open" [ref=e1601]:
+              - cell "96528a1a… acct 03a27a32…" [ref=e1602]:
+                - generic [ref=e1603]: 96528a1a…
+                - generic [ref=e1604]: acct 03a27a32…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1605]:
+                - generic [ref=e1606]: Demo $50K Evaluation
+                - generic [ref=e1607]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1608]:
+                - generic [ref=e1609]: Evaluation
+                - generic [ref=e1610]: target 8%
+              - cell "active" [ref=e1611]:
+                - generic [ref=e1612]: active
+              - cell "$49,994.50 -0.01%" [ref=e1613]:
+                - generic [ref=e1614]: $49,994.50
+                - generic [ref=e1615]: "-0.01%"
+              - cell "$45,000.00 0% used" [ref=e1616]:
+                - generic [ref=e1617]: $45,000.00
+                - generic [ref=e1618]: 0% used
+              - cell "1" [ref=e1619]
+              - cell "May 07, 2026" [ref=e1620]
+              - cell "All accounts Open" [ref=e1621]:
+                - generic [ref=e1622]:
+                  - link "All accounts" [ref=e1623] [cursor=pointer]:
+                    - /url: /admin/traders/96528a1a-8b05-43b7-aac4-d7eaa040a499
+                  - link "Open" [ref=e1624] [cursor=pointer]:
+                    - /url: /admin/accounts/03a27a32-1a67-4828-b249-f9d7f3ad206b
+                    - text: Open
+                    - img [ref=e1625]
+            - row "dbf21f41… acct 9bc1b203… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $49,994.50 -0.01% $45,000.00 0% used 1 May 07, 2026 All accounts Open" [ref=e1627]:
+              - cell "dbf21f41… acct 9bc1b203…" [ref=e1628]:
+                - generic [ref=e1629]: dbf21f41…
+                - generic [ref=e1630]: acct 9bc1b203…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1631]:
+                - generic [ref=e1632]: Demo $50K Evaluation
+                - generic [ref=e1633]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1634]:
+                - generic [ref=e1635]: Evaluation
+                - generic [ref=e1636]: target 8%
+              - cell "active" [ref=e1637]:
+                - generic [ref=e1638]: active
+              - cell "$49,994.50 -0.01%" [ref=e1639]:
+                - generic [ref=e1640]: $49,994.50
+                - generic [ref=e1641]: "-0.01%"
+              - cell "$45,000.00 0% used" [ref=e1642]:
+                - generic [ref=e1643]: $45,000.00
+                - generic [ref=e1644]: 0% used
+              - cell "1" [ref=e1645]
+              - cell "May 07, 2026" [ref=e1646]
+              - cell "All accounts Open" [ref=e1647]:
+                - generic [ref=e1648]:
+                  - link "All accounts" [ref=e1649] [cursor=pointer]:
+                    - /url: /admin/traders/dbf21f41-266c-49bd-a82d-dd0d8d31cb78
+                  - link "Open" [ref=e1650] [cursor=pointer]:
+                    - /url: /admin/accounts/9bc1b203-2bbf-4596-83bf-88170da6cc25
+                    - text: Open
+                    - img [ref=e1651]
+            - row "c696ce78… acct cd5c8a24… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e1653]:
+              - cell "c696ce78… acct cd5c8a24…" [ref=e1654]:
+                - generic [ref=e1655]: c696ce78…
+                - generic [ref=e1656]: acct cd5c8a24…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1657]:
+                - generic [ref=e1658]: Demo $50K Evaluation
+                - generic [ref=e1659]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1660]:
+                - generic [ref=e1661]: Evaluation
+                - generic [ref=e1662]: target 8%
+              - cell "active" [ref=e1663]:
+                - generic [ref=e1664]: active
+              - cell "$50,000.00 +0.00%" [ref=e1665]:
+                - generic [ref=e1666]: $50,000.00
+                - generic [ref=e1667]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1668]:
+                - generic [ref=e1669]: $45,000.00
+                - generic [ref=e1670]: 0% used
+              - cell "0" [ref=e1671]
+              - cell "May 07, 2026" [ref=e1672]
+              - cell "All accounts Open" [ref=e1673]:
+                - generic [ref=e1674]:
+                  - link "All accounts" [ref=e1675] [cursor=pointer]:
+                    - /url: /admin/traders/c696ce78-5ffb-45fd-a78d-bf1c08ebb65b
+                  - link "Open" [ref=e1676] [cursor=pointer]:
+                    - /url: /admin/accounts/cd5c8a24-b5ef-4267-9f2a-b31aff635363
+                    - text: Open
+                    - img [ref=e1677]
+            - row "421659b7… acct 61f8bc4f… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e1679]:
+              - cell "421659b7… acct 61f8bc4f…" [ref=e1680]:
+                - generic [ref=e1681]: 421659b7…
+                - generic [ref=e1682]: acct 61f8bc4f…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1683]:
+                - generic [ref=e1684]: Demo $50K Evaluation
+                - generic [ref=e1685]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1686]:
+                - generic [ref=e1687]: Evaluation
+                - generic [ref=e1688]: target 8%
+              - cell "active" [ref=e1689]:
+                - generic [ref=e1690]: active
+              - cell "$50,000.00 +0.00%" [ref=e1691]:
+                - generic [ref=e1692]: $50,000.00
+                - generic [ref=e1693]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1694]:
+                - generic [ref=e1695]: $45,000.00
+                - generic [ref=e1696]: 0% used
+              - cell "0" [ref=e1697]
+              - cell "May 07, 2026" [ref=e1698]
+              - cell "All accounts Open" [ref=e1699]:
+                - generic [ref=e1700]:
+                  - link "All accounts" [ref=e1701] [cursor=pointer]:
+                    - /url: /admin/traders/421659b7-50ff-42b9-9757-77d7d6c20de6
+                  - link "Open" [ref=e1702] [cursor=pointer]:
+                    - /url: /admin/accounts/61f8bc4f-7ed5-44d8-9290-73600da8d3e6
+                    - text: Open
+                    - img [ref=e1703]
+            - row "87093e5e… acct 9f9dccc5… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e1705]:
+              - cell "87093e5e… acct 9f9dccc5…" [ref=e1706]:
+                - generic [ref=e1707]: 87093e5e…
+                - generic [ref=e1708]: acct 9f9dccc5…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1709]:
+                - generic [ref=e1710]: Demo $50K Evaluation
+                - generic [ref=e1711]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1712]:
+                - generic [ref=e1713]: Evaluation
+                - generic [ref=e1714]: target 8%
+              - cell "active" [ref=e1715]:
+                - generic [ref=e1716]: active
+              - cell "$50,000.00 +0.00%" [ref=e1717]:
+                - generic [ref=e1718]: $50,000.00
+                - generic [ref=e1719]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1720]:
+                - generic [ref=e1721]: $45,000.00
+                - generic [ref=e1722]: 0% used
+              - cell "0" [ref=e1723]
+              - cell "May 07, 2026" [ref=e1724]
+              - cell "All accounts Open" [ref=e1725]:
+                - generic [ref=e1726]:
+                  - link "All accounts" [ref=e1727] [cursor=pointer]:
+                    - /url: /admin/traders/87093e5e-00d9-4868-ae94-ba1ce3c67f4d
+                  - link "Open" [ref=e1728] [cursor=pointer]:
+                    - /url: /admin/accounts/9f9dccc5-9d3d-4cc6-97d4-4621457f439b
+                    - text: Open
+                    - img [ref=e1729]
+            - row "d9f8ad55… acct 92e87cba… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e1731]:
+              - cell "d9f8ad55… acct 92e87cba…" [ref=e1732]:
+                - generic [ref=e1733]: d9f8ad55…
+                - generic [ref=e1734]: acct 92e87cba…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1735]:
+                - generic [ref=e1736]: Demo $50K Evaluation
+                - generic [ref=e1737]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1738]:
+                - generic [ref=e1739]: Evaluation
+                - generic [ref=e1740]: target 8%
+              - cell "active" [ref=e1741]:
+                - generic [ref=e1742]: active
+              - cell "$50,000.00 +0.00%" [ref=e1743]:
+                - generic [ref=e1744]: $50,000.00
+                - generic [ref=e1745]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1746]:
+                - generic [ref=e1747]: $45,000.00
+                - generic [ref=e1748]: 0% used
+              - cell "0" [ref=e1749]
+              - cell "May 07, 2026" [ref=e1750]
+              - cell "All accounts Open" [ref=e1751]:
+                - generic [ref=e1752]:
+                  - link "All accounts" [ref=e1753] [cursor=pointer]:
+                    - /url: /admin/traders/d9f8ad55-1ad7-40b7-8d74-4d6950d56849
+                  - link "Open" [ref=e1754] [cursor=pointer]:
+                    - /url: /admin/accounts/92e87cba-91b7-454e-98ef-55144af54a40
+                    - text: Open
+                    - img [ref=e1755]
+            - row "1b09aedd… acct 662a3581… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e1757]:
+              - cell "1b09aedd… acct 662a3581…" [ref=e1758]:
+                - generic [ref=e1759]: 1b09aedd…
+                - generic [ref=e1760]: acct 662a3581…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1761]:
+                - generic [ref=e1762]: Demo $50K Evaluation
+                - generic [ref=e1763]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1764]:
+                - generic [ref=e1765]: Evaluation
+                - generic [ref=e1766]: target 8%
+              - cell "active" [ref=e1767]:
+                - generic [ref=e1768]: active
+              - cell "$50,000.00 +0.00%" [ref=e1769]:
+                - generic [ref=e1770]: $50,000.00
+                - generic [ref=e1771]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1772]:
+                - generic [ref=e1773]: $45,000.00
+                - generic [ref=e1774]: 0% used
+              - cell "0" [ref=e1775]
+              - cell "May 07, 2026" [ref=e1776]
+              - cell "All accounts Open" [ref=e1777]:
+                - generic [ref=e1778]:
+                  - link "All accounts" [ref=e1779] [cursor=pointer]:
+                    - /url: /admin/traders/1b09aedd-54b6-4323-a450-91ffeb5caa26
+                  - link "Open" [ref=e1780] [cursor=pointer]:
+                    - /url: /admin/accounts/662a3581-4805-420b-a58e-9bcbbd1eb33d
+                    - text: Open
+                    - img [ref=e1781]
+            - row "eb967370… acct 63785a34… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e1783]:
+              - cell "eb967370… acct 63785a34…" [ref=e1784]:
+                - generic [ref=e1785]: eb967370…
+                - generic [ref=e1786]: acct 63785a34…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1787]:
+                - generic [ref=e1788]: Demo $50K Evaluation
+                - generic [ref=e1789]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1790]:
+                - generic [ref=e1791]: Evaluation
+                - generic [ref=e1792]: target 8%
+              - cell "active" [ref=e1793]:
+                - generic [ref=e1794]: active
+              - cell "$50,000.00 +0.00%" [ref=e1795]:
+                - generic [ref=e1796]: $50,000.00
+                - generic [ref=e1797]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1798]:
+                - generic [ref=e1799]: $45,000.00
+                - generic [ref=e1800]: 0% used
+              - cell "0" [ref=e1801]
+              - cell "May 07, 2026" [ref=e1802]
+              - cell "All accounts Open" [ref=e1803]:
+                - generic [ref=e1804]:
+                  - link "All accounts" [ref=e1805] [cursor=pointer]:
+                    - /url: /admin/traders/eb967370-848a-4294-8a70-42cb5e7b3777
+                  - link "Open" [ref=e1806] [cursor=pointer]:
+                    - /url: /admin/accounts/63785a34-eaf4-4e8b-81d7-f763aca951cd
+                    - text: Open
+                    - img [ref=e1807]
+            - row "776e2a7f… acct 21a28bc4… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e1809]:
+              - cell "776e2a7f… acct 21a28bc4…" [ref=e1810]:
+                - generic [ref=e1811]: 776e2a7f…
+                - generic [ref=e1812]: acct 21a28bc4…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1813]:
+                - generic [ref=e1814]: Demo $50K Evaluation
+                - generic [ref=e1815]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1816]:
+                - generic [ref=e1817]: Evaluation
+                - generic [ref=e1818]: target 8%
+              - cell "active" [ref=e1819]:
+                - generic [ref=e1820]: active
+              - cell "$50,000.00 +0.00%" [ref=e1821]:
+                - generic [ref=e1822]: $50,000.00
+                - generic [ref=e1823]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1824]:
+                - generic [ref=e1825]: $45,000.00
+                - generic [ref=e1826]: 0% used
+              - cell "0" [ref=e1827]
+              - cell "May 07, 2026" [ref=e1828]
+              - cell "All accounts Open" [ref=e1829]:
+                - generic [ref=e1830]:
+                  - link "All accounts" [ref=e1831] [cursor=pointer]:
+                    - /url: /admin/traders/776e2a7f-f234-41d0-9258-34a43853cbf1
+                  - link "Open" [ref=e1832] [cursor=pointer]:
+                    - /url: /admin/accounts/21a28bc4-d8d4-4329-a531-a14a03c7a8e9
+                    - text: Open
+                    - img [ref=e1833]
+            - row "f35c4f09… acct 8e8e11b2… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e1835]:
+              - cell "f35c4f09… acct 8e8e11b2…" [ref=e1836]:
+                - generic [ref=e1837]: f35c4f09…
+                - generic [ref=e1838]: acct 8e8e11b2…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1839]:
+                - generic [ref=e1840]: Demo $50K Evaluation
+                - generic [ref=e1841]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1842]:
+                - generic [ref=e1843]: Evaluation
+                - generic [ref=e1844]: target 8%
+              - cell "active" [ref=e1845]:
+                - generic [ref=e1846]: active
+              - cell "$50,000.00 +0.00%" [ref=e1847]:
+                - generic [ref=e1848]: $50,000.00
+                - generic [ref=e1849]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1850]:
+                - generic [ref=e1851]: $45,000.00
+                - generic [ref=e1852]: 0% used
+              - cell "0" [ref=e1853]
+              - cell "May 07, 2026" [ref=e1854]
+              - cell "All accounts Open" [ref=e1855]:
+                - generic [ref=e1856]:
+                  - link "All accounts" [ref=e1857] [cursor=pointer]:
+                    - /url: /admin/traders/f35c4f09-9d18-48c5-bb7f-888bb146a4c1
+                  - link "Open" [ref=e1858] [cursor=pointer]:
+                    - /url: /admin/accounts/8e8e11b2-a975-4c3c-85ba-99b8421c5f54
+                    - text: Open
+                    - img [ref=e1859]
+            - row "cf8d347b… acct 6ec8778c… Demo $50K Evaluation $50,000.00 · Trailing-EOD Evaluation target 8% active $50,000.00 +0.00% $45,000.00 0% used 0 May 07, 2026 All accounts Open" [ref=e1861]:
+              - cell "cf8d347b… acct 6ec8778c…" [ref=e1862]:
+                - generic [ref=e1863]: cf8d347b…
+                - generic [ref=e1864]: acct 6ec8778c…
+              - cell "Demo $50K Evaluation $50,000.00 · Trailing-EOD" [ref=e1865]:
+                - generic [ref=e1866]: Demo $50K Evaluation
+                - generic [ref=e1867]: $50,000.00 · Trailing-EOD
+              - cell "Evaluation target 8%" [ref=e1868]:
+                - generic [ref=e1869]: Evaluation
+                - generic [ref=e1870]: target 8%
+              - cell "active" [ref=e1871]:
+                - generic [ref=e1872]: active
+              - cell "$50,000.00 +0.00%" [ref=e1873]:
+                - generic [ref=e1874]: $50,000.00
+                - generic [ref=e1875]: +0.00%
+              - cell "$45,000.00 0% used" [ref=e1876]:
+                - generic [ref=e1877]: $45,000.00
+                - generic [ref=e1878]: 0% used
+              - cell "0" [ref=e1879]
+              - cell "May 07, 2026" [ref=e1880]
+              - cell "All accounts Open" [ref=e1881]:
+                - generic [ref=e1882]:
+                  - link "All accounts" [ref=e1883] [cursor=pointer]:
+                    - /url: /admin/traders/cf8d347b-a4cf-4dbb-81f9-4fd84ca4dc33
+                  - link "Open" [ref=e1884] [cursor=pointer]:
+                    - /url: /admin/accounts/6ec8778c-eed7-49ec-9a95-2ceb397c708d
+                    - text: Open
+                    - img [ref=e1885]
+  - button "Open Next.js Dev Tools" [ref=e48] [cursor=pointer]:
+    - img [ref=e49]
+  - alert [ref=e52]

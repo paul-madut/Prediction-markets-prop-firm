@@ -1,0 +1,925 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - button "Expand sidebar" [ref=e6]:
+            - img [ref=e7]
+          - generic [ref=e11]: Blueberry Funded
+        - generic [ref=e12]:
+          - link "Dashboard" [ref=e13] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e15]
+            - generic: Dashboard
+          - link "Challenge" [ref=e18] [cursor=pointer]:
+            - /url: /dashboard/challenge
+            - img [ref=e20]
+            - generic: Challenge
+          - link "Markets" [ref=e23] [cursor=pointer]:
+            - /url: /dashboard/markets
+            - img [ref=e25]
+            - generic: Markets
+          - link "Portfolio" [ref=e28] [cursor=pointer]:
+            - /url: /dashboard/portfolio
+            - img [ref=e30]
+            - generic: Portfolio
+          - link "History" [ref=e33] [cursor=pointer]:
+            - /url: /dashboard/history
+            - img [ref=e35]
+            - generic: History
+          - link "Analytics" [ref=e38] [cursor=pointer]:
+            - /url: /dashboard/analytics
+            - img [ref=e40]
+            - generic: Analytics
+          - link "Rules" [ref=e43] [cursor=pointer]:
+            - /url: /dashboard/rules
+            - img [ref=e45]
+            - generic: Rules
+          - link "Payouts" [ref=e48] [cursor=pointer]:
+            - /url: /dashboard/payouts
+            - img [ref=e50]
+            - generic: Payouts
+      - generic [ref=e53]:
+        - link [ref=e56] [cursor=pointer]:
+          - /url: /dashboard/new-challenge
+          - img [ref=e57]
+        - generic [ref=e59]:
+          - link "Help" [ref=e60] [cursor=pointer]:
+            - /url: /dashboard/help
+            - img [ref=e62]
+            - generic: Help
+          - link "Settings" [ref=e65] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e67]
+            - generic: Settings
+        - generic [ref=e71] [cursor=pointer]:
+          - generic [ref=e72]: T
+          - generic: Trader
+    - generic [ref=e73]:
+      - generic [ref=e74]:
+        - generic [ref=e75]: Markets
+        - generic [ref=e76]:
+          - button "Notifications" [ref=e78]:
+            - img [ref=e79]
+          - link "Settings" [ref=e81] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e82]
+          - button "T Trader Trader" [ref=e306]:
+            - generic [ref=e87]: T
+            - generic [ref=e88]:
+              - generic [ref=e89]: Trader
+              - generic [ref=e307]: Trader
+            - img [ref=e90]
+      - main [ref=e92]:
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - generic [ref=e97]:
+              - generic [ref=e98]:
+                - img [ref=e99]
+                - textbox "Search markets..." [ref=e101]
+              - generic [ref=e102]:
+                - button "All" [ref=e103]
+                - button "Crypto" [ref=e104]
+                - button "Politics" [ref=e105]
+                - button "Sports" [ref=e106]
+                - button "Economics" [ref=e107]
+                - button "Tech" [ref=e108]
+                - button "Culture" [ref=e109]
+                - button "Other" [ref=e110]
+            - button "Trending" [ref=e112]:
+              - generic [ref=e113]: Trending
+              - img [ref=e114]
+          - generic [ref=e308]:
+            - 'link "2026 FIFA World Cup Winner Sports Featured 2026 FIFA World Cup Winner Will France win the 2026 FIFA World Cup? 18% Will Spain win the 2026 FIFA World Cup? 17% Will England win the 2026 FIFA World Cup? 11% + 3 more outcomes Volume: $1.1B Closes: Jul 19, 2026" [ref=e309] [cursor=pointer]':
+              - /url: /dashboard/markets/2026-fifa-world-cup-winner-595
+              - generic [ref=e311]:
+                - generic [ref=e312]:
+                  - img "2026 FIFA World Cup Winner" [ref=e314]
+                  - generic [ref=e315]:
+                    - generic [ref=e316]: Sports
+                    - generic [ref=e317]:
+                      - img [ref=e318]
+                      - text: Featured
+                - heading "2026 FIFA World Cup Winner" [level=3] [ref=e320]
+                - generic [ref=e322]:
+                  - generic [ref=e325]:
+                    - generic [ref=e326]: Will France win the 2026 FIFA World Cup?
+                    - generic [ref=e327]: 18%
+                  - generic [ref=e332]:
+                    - generic [ref=e333]: Will Spain win the 2026 FIFA World Cup?
+                    - generic [ref=e334]: 17%
+                  - generic [ref=e339]:
+                    - generic [ref=e340]: Will England win the 2026 FIFA World Cup?
+                    - generic [ref=e341]: 11%
+                  - generic [ref=e344]: + 3 more outcomes
+                - generic [ref=e345]:
+                  - generic [ref=e346]:
+                    - generic [ref=e347]: "Volume:"
+                    - generic [ref=e348]: $1.1B
+                  - generic [ref=e349]:
+                    - generic [ref=e350]: "Closes:"
+                    - generic [ref=e351]: Jul 19, 2026
+            - 'link "US x Iran permanent peace deal by...? Politics Featured US x Iran permanent peace deal by...? US x Iran permanent peace deal by December 31, 2026? 72% US x Iran permanent peace deal by July 31, 2026? 56% US x Iran permanent peace deal by June 30, 2026? 39% + 3 more outcomes Volume: $50.9M Closes: Dec 30, 2026" [ref=e352] [cursor=pointer]':
+              - /url: /dashboard/markets/us-x-iran-permanent-peace-deal-by
+              - generic [ref=e354]:
+                - generic [ref=e355]:
+                  - img "US x Iran permanent peace deal by...?" [ref=e357]
+                  - generic [ref=e358]:
+                    - generic [ref=e359]: Politics
+                    - generic [ref=e360]:
+                      - img [ref=e361]
+                      - text: Featured
+                - heading "US x Iran permanent peace deal by...?" [level=3] [ref=e363]
+                - generic [ref=e365]:
+                  - generic [ref=e368]:
+                    - generic [ref=e369]: US x Iran permanent peace deal by December 31, 2026?
+                    - generic [ref=e370]: 72%
+                  - generic [ref=e375]:
+                    - generic [ref=e376]: US x Iran permanent peace deal by July 31, 2026?
+                    - generic [ref=e377]: 56%
+                  - generic [ref=e382]:
+                    - generic [ref=e383]: US x Iran permanent peace deal by June 30, 2026?
+                    - generic [ref=e384]: 39%
+                  - generic [ref=e387]: + 3 more outcomes
+                - generic [ref=e388]:
+                  - generic [ref=e389]:
+                    - generic [ref=e390]: "Volume:"
+                    - generic [ref=e391]: $50.9M
+                  - generic [ref=e392]:
+                    - generic [ref=e393]: "Closes:"
+                    - generic [ref=e394]: Dec 30, 2026
+            - 'link "When will Bitcoin hit $150k? Crypto When will Bitcoin hit $150k? YES: 10% Volume: $16M Closes: Dec 31, 2026" [ref=e395] [cursor=pointer]':
+              - /url: /dashboard/markets/when-will-bitcoin-hit-150k
+              - generic [ref=e397]:
+                - generic [ref=e398]:
+                  - img "When will Bitcoin hit $150k?" [ref=e400]
+                  - generic [ref=e402]: Crypto
+                - heading "When will Bitcoin hit $150k?" [level=3] [ref=e403]
+                - generic [ref=e406]: "YES: 10%"
+                - generic [ref=e409]:
+                  - generic [ref=e410]:
+                    - generic [ref=e411]: "Volume:"
+                    - generic [ref=e412]: $16M
+                  - generic [ref=e413]:
+                    - generic [ref=e414]: "Closes:"
+                    - generic [ref=e415]: Dec 31, 2026
+            - 'link "Will Reza Pahlavi lead Iran in 2026? Politics Will Reza Pahlavi lead Iran in 2026? YES: 7% Volume: $8.8M Closes: Dec 30, 2026" [ref=e416] [cursor=pointer]':
+              - /url: /dashboard/markets/will-reza-pahlavi-lead-iran-in-2026
+              - generic [ref=e418]:
+                - generic [ref=e419]:
+                  - img "Will Reza Pahlavi lead Iran in 2026?" [ref=e421]
+                  - generic [ref=e423]: Politics
+                - heading "Will Reza Pahlavi lead Iran in 2026?" [level=3] [ref=e424]
+                - generic [ref=e427]: "YES: 7%"
+                - generic [ref=e430]:
+                  - generic [ref=e431]:
+                    - generic [ref=e432]: "Volume:"
+                    - generic [ref=e433]: $8.8M
+                  - generic [ref=e434]:
+                    - generic [ref=e435]: "Closes:"
+                    - generic [ref=e436]: Dec 30, 2026
+            - 'link "Elon Musk # tweets May 15 - May 22, 2026? Politics Elon Musk # tweets May 15 - May 22, 2026? Will Elon Musk post 260-279 tweets from May 15 to May 22, 2026? 47% Will Elon Musk post 280-299 tweets from May 15 to May 22, 2026? 40% Will Elon Musk post 300-319 tweets from May 15 to May 22, 2026? 9% Volume: $7.1M Closes: May 22, 2026" [ref=e437] [cursor=pointer]':
+              - /url: /dashboard/markets/elon-musk-of-tweets-may-15-may-22
+              - generic [ref=e439]:
+                - generic [ref=e440]:
+                  - 'img "Elon Musk # tweets May 15 - May 22, 2026?" [ref=e442]'
+                  - generic [ref=e444]: Politics
+                - 'heading "Elon Musk # tweets May 15 - May 22, 2026?" [level=3] [ref=e445]'
+                - generic [ref=e447]:
+                  - generic [ref=e450]:
+                    - generic [ref=e451]: Will Elon Musk post 260-279 tweets from May 15 to May 22, 2026?
+                    - generic [ref=e452]: 47%
+                  - generic [ref=e457]:
+                    - generic [ref=e458]: Will Elon Musk post 280-299 tweets from May 15 to May 22, 2026?
+                    - generic [ref=e459]: 40%
+                  - generic [ref=e464]:
+                    - generic [ref=e465]: Will Elon Musk post 300-319 tweets from May 15 to May 22, 2026?
+                    - generic [ref=e466]: 9%
+                - generic [ref=e469]:
+                  - generic [ref=e470]:
+                    - generic [ref=e471]: "Volume:"
+                    - generic [ref=e472]: $7.1M
+                  - generic [ref=e473]:
+                    - generic [ref=e474]: "Closes:"
+                    - generic [ref=e475]: May 22, 2026
+            - 'link "Iran ceasefire continues through...? Politics Featured Iran ceasefire continues through...? Will the Iran ceasefire continue through May 22? 94% Will the Iran ceasefire continue through May 24? 86% Will the Iran ceasefire continue through May 27? 75% + 6 more outcomes Volume: $3.3M Closes: N/A" [ref=e476] [cursor=pointer]':
+              - /url: /dashboard/markets/iran-ceasefire-continues-through
+              - generic [ref=e478]:
+                - generic [ref=e479]:
+                  - img "Iran ceasefire continues through...?" [ref=e481]
+                  - generic [ref=e482]:
+                    - generic [ref=e483]: Politics
+                    - generic [ref=e484]:
+                      - img [ref=e485]
+                      - text: Featured
+                - heading "Iran ceasefire continues through...?" [level=3] [ref=e487]
+                - generic [ref=e489]:
+                  - generic [ref=e492]:
+                    - generic [ref=e493]: Will the Iran ceasefire continue through May 22?
+                    - generic [ref=e494]: 94%
+                  - generic [ref=e499]:
+                    - generic [ref=e500]: Will the Iran ceasefire continue through May 24?
+                    - generic [ref=e501]: 86%
+                  - generic [ref=e506]:
+                    - generic [ref=e507]: Will the Iran ceasefire continue through May 27?
+                    - generic [ref=e508]: 75%
+                  - generic [ref=e511]: + 6 more outcomes
+                - generic [ref=e512]:
+                  - generic [ref=e513]:
+                    - generic [ref=e514]: "Volume:"
+                    - generic [ref=e515]: $3.3M
+                  - generic [ref=e516]:
+                    - generic [ref=e517]: "Closes:"
+                    - generic [ref=e518]: N/A
+            - 'link "Democratic Presidential Nominee 2028 Politics Featured Democratic Presidential Nominee 2028 Will Gavin Newsom win the 2028 Democratic presidential nomination? 25% Will Alexandria Ocasio-Cortez win the 2028 Democratic presidential nomination? 9% Will Kamala Harris win the 2028 Democratic presidential nomination? 9% + 1 more outcomes Volume: $1.2B Closes: Nov 06, 2028" [ref=e519] [cursor=pointer]':
+              - /url: /dashboard/markets/democratic-presidential-nominee-2028
+              - generic [ref=e521]:
+                - generic [ref=e522]:
+                  - img "Democratic Presidential Nominee 2028" [ref=e524]
+                  - generic [ref=e525]:
+                    - generic [ref=e526]: Politics
+                    - generic [ref=e527]:
+                      - img [ref=e528]
+                      - text: Featured
+                - heading "Democratic Presidential Nominee 2028" [level=3] [ref=e530]
+                - generic [ref=e532]:
+                  - generic [ref=e535]:
+                    - generic [ref=e536]: Will Gavin Newsom win the 2028 Democratic presidential nomination?
+                    - generic [ref=e537]: 25%
+                  - generic [ref=e542]:
+                    - generic [ref=e543]: Will Alexandria Ocasio-Cortez win the 2028 Democratic presidential nomination?
+                    - generic [ref=e544]: 9%
+                  - generic [ref=e549]:
+                    - generic [ref=e550]: Will Kamala Harris win the 2028 Democratic presidential nomination?
+                    - generic [ref=e551]: 9%
+                  - generic [ref=e554]: + 1 more outcomes
+                - generic [ref=e555]:
+                  - generic [ref=e556]:
+                    - generic [ref=e557]: "Volume:"
+                    - generic [ref=e558]: $1.2B
+                  - generic [ref=e559]:
+                    - generic [ref=e560]: "Closes:"
+                    - generic [ref=e561]: Nov 06, 2028
+            - 'link "What will WTI Crude Oil (WTI) hit in May 2026? Other Featured What will WTI Crude Oil (WTI) hit in May 2026? Will WTI Crude Oil (WTI) hit (LOW) $95 in May? 78% Will WTI Crude Oil (WTI) hit (HIGH) $105 in May? 58% Will WTI Crude Oil (WTI) hit (LOW) $90 in May? 55% + 5 more outcomes Volume: $21M Closes: May 31, 2026" [ref=e562] [cursor=pointer]':
+              - /url: /dashboard/markets/what-price-will-wti-hit-in-may-2026
+              - generic [ref=e564]:
+                - generic [ref=e565]:
+                  - img "What will WTI Crude Oil (WTI) hit in May 2026?" [ref=e567]
+                  - generic [ref=e568]:
+                    - generic [ref=e569]: Other
+                    - generic [ref=e570]:
+                      - img [ref=e571]
+                      - text: Featured
+                - heading "What will WTI Crude Oil (WTI) hit in May 2026?" [level=3] [ref=e573]
+                - generic [ref=e575]:
+                  - generic [ref=e578]:
+                    - generic [ref=e579]: Will WTI Crude Oil (WTI) hit (LOW) $95 in May?
+                    - generic [ref=e580]: 78%
+                  - generic [ref=e585]:
+                    - generic [ref=e586]: Will WTI Crude Oil (WTI) hit (HIGH) $105 in May?
+                    - generic [ref=e587]: 58%
+                  - generic [ref=e592]:
+                    - generic [ref=e593]: Will WTI Crude Oil (WTI) hit (LOW) $90 in May?
+                    - generic [ref=e594]: 55%
+                  - generic [ref=e597]: + 5 more outcomes
+                - generic [ref=e598]:
+                  - generic [ref=e599]:
+                    - generic [ref=e600]: "Volume:"
+                    - generic [ref=e601]: $21M
+                  - generic [ref=e602]:
+                    - generic [ref=e603]: "Closes:"
+                    - generic [ref=e604]: May 31, 2026
+            - 'link "What price will Bitcoin hit in May? Crypto What price will Bitcoin hit in May? Will Bitcoin dip to $75,000 in May? 50% Will Bitcoin dip to $70,000 in May? 9% Will Bitcoin reach $85,000 in May? 8% Volume: $25M Closes: Jun 01, 2026" [ref=e605] [cursor=pointer]':
+              - /url: /dashboard/markets/what-price-will-bitcoin-hit-in-may-2026
+              - generic [ref=e607]:
+                - generic [ref=e608]:
+                  - img "What price will Bitcoin hit in May?" [ref=e610]
+                  - generic [ref=e612]: Crypto
+                - heading "What price will Bitcoin hit in May?" [level=3] [ref=e613]
+                - generic [ref=e615]:
+                  - generic [ref=e618]:
+                    - generic [ref=e619]: Will Bitcoin dip to $75,000 in May?
+                    - generic [ref=e620]: 50%
+                  - generic [ref=e625]:
+                    - generic [ref=e626]: Will Bitcoin dip to $70,000 in May?
+                    - generic [ref=e627]: 9%
+                  - generic [ref=e632]:
+                    - generic [ref=e633]: Will Bitcoin reach $85,000 in May?
+                    - generic [ref=e634]: 8%
+                - generic [ref=e637]:
+                  - generic [ref=e638]:
+                    - generic [ref=e639]: "Volume:"
+                    - generic [ref=e640]: $25M
+                  - generic [ref=e641]:
+                    - generic [ref=e642]: "Closes:"
+                    - generic [ref=e643]: Jun 01, 2026
+            - 'link "Republican Presidential Nominee 2028 Politics Featured Republican Presidential Nominee 2028 Will J.D. Vance win the 2028 Republican presidential nomination? 35% Will Marco Rubio win the 2028 Republican presidential nomination? 24% Will Tucker Carlson win the 2028 Republican presidential nomination? 6% Volume: $634.1M Closes: Nov 06, 2028" [ref=e644] [cursor=pointer]':
+              - /url: /dashboard/markets/republican-presidential-nominee-2028
+              - generic [ref=e646]:
+                - generic [ref=e647]:
+                  - img "Republican Presidential Nominee 2028" [ref=e649]
+                  - generic [ref=e650]:
+                    - generic [ref=e651]: Politics
+                    - generic [ref=e652]:
+                      - img [ref=e653]
+                      - text: Featured
+                - heading "Republican Presidential Nominee 2028" [level=3] [ref=e655]
+                - generic [ref=e657]:
+                  - generic [ref=e660]:
+                    - generic [ref=e661]: Will J.D. Vance win the 2028 Republican presidential nomination?
+                    - generic [ref=e662]: 35%
+                  - generic [ref=e667]:
+                    - generic [ref=e668]: Will Marco Rubio win the 2028 Republican presidential nomination?
+                    - generic [ref=e669]: 24%
+                  - generic [ref=e674]:
+                    - generic [ref=e675]: Will Tucker Carlson win the 2028 Republican presidential nomination?
+                    - generic [ref=e676]: 6%
+                - generic [ref=e679]:
+                  - generic [ref=e680]:
+                    - generic [ref=e681]: "Volume:"
+                    - generic [ref=e682]: $634.1M
+                  - generic [ref=e683]:
+                    - generic [ref=e684]: "Closes:"
+                    - generic [ref=e685]: Nov 06, 2028
+            - 'link "2026 NBA Champion Sports Featured 2026 NBA Champion Will the Oklahoma City Thunder win the 2026 NBA Finals? 49% Will the San Antonio Spurs win the 2026 NBA Finals? 32% Will the New York Knicks win the 2026 NBA Finals? 17% Volume: $73.6M Closes: Jun 30, 2026" [ref=e686] [cursor=pointer]':
+              - /url: /dashboard/markets/2026-nba-champion
+              - generic [ref=e688]:
+                - generic [ref=e689]:
+                  - img "2026 NBA Champion" [ref=e691]
+                  - generic [ref=e692]:
+                    - generic [ref=e693]: Sports
+                    - generic [ref=e694]:
+                      - img [ref=e695]
+                      - text: Featured
+                - heading "2026 NBA Champion" [level=3] [ref=e697]
+                - generic [ref=e699]:
+                  - generic [ref=e702]:
+                    - generic [ref=e703]: Will the Oklahoma City Thunder win the 2026 NBA Finals?
+                    - generic [ref=e704]: 49%
+                  - generic [ref=e709]:
+                    - generic [ref=e710]: Will the San Antonio Spurs win the 2026 NBA Finals?
+                    - generic [ref=e711]: 32%
+                  - generic [ref=e716]:
+                    - generic [ref=e717]: Will the New York Knicks win the 2026 NBA Finals?
+                    - generic [ref=e718]: 17%
+                - generic [ref=e721]:
+                  - generic [ref=e722]:
+                    - generic [ref=e723]: "Volume:"
+                    - generic [ref=e724]: $73.6M
+                  - generic [ref=e725]:
+                    - generic [ref=e726]: "Closes:"
+                    - generic [ref=e727]: Jun 30, 2026
+            - 'link "Brazil Presidential Election Politics Brazil Presidential Election Will Luiz Inácio Lula da Silva win the 2026 Brazilian presidential election? 46% Will Flávio Bolsonaro win the 2026 Brazilian presidential election? 25% Will Renan Santos win the 2026 Brazilian presidential election? 12% Volume: $83.7M Closes: Oct 03, 2026" [ref=e728] [cursor=pointer]':
+              - /url: /dashboard/markets/brazil-presidential-election
+              - generic [ref=e730]:
+                - generic [ref=e731]:
+                  - img "Brazil Presidential Election" [ref=e733]
+                  - generic [ref=e735]: Politics
+                - heading "Brazil Presidential Election" [level=3] [ref=e736]
+                - generic [ref=e738]:
+                  - generic [ref=e741]:
+                    - generic [ref=e742]: Will Luiz Inácio Lula da Silva win the 2026 Brazilian presidential election?
+                    - generic [ref=e743]: 46%
+                  - generic [ref=e748]:
+                    - generic [ref=e749]: Will Flávio Bolsonaro win the 2026 Brazilian presidential election?
+                    - generic [ref=e750]: 25%
+                  - generic [ref=e755]:
+                    - generic [ref=e756]: Will Renan Santos win the 2026 Brazilian presidential election?
+                    - generic [ref=e757]: 12%
+                - generic [ref=e760]:
+                  - generic [ref=e761]:
+                    - generic [ref=e762]: "Volume:"
+                    - generic [ref=e763]: $83.7M
+                  - generic [ref=e764]:
+                    - generic [ref=e765]: "Closes:"
+                    - generic [ref=e766]: Oct 03, 2026
+            - 'link "Bitcoin above ___ on May 22? Crypto Bitcoin above ___ on May 22? Will the price of Bitcoin be above $76,000 on May 22? 95% Will the price of Bitcoin be above $78,000 on May 22? 27% Volume: $1.5M Closes: May 22, 2026" [ref=e767] [cursor=pointer]':
+              - /url: /dashboard/markets/bitcoin-above-on-may-22-2026
+              - generic [ref=e769]:
+                - generic [ref=e770]:
+                  - img "Bitcoin above ___ on May 22?" [ref=e772]
+                  - generic [ref=e774]: Crypto
+                - heading "Bitcoin above ___ on May 22?" [level=3] [ref=e775]
+                - generic [ref=e777]:
+                  - generic [ref=e780]:
+                    - generic [ref=e781]: Will the price of Bitcoin be above $76,000 on May 22?
+                    - generic [ref=e782]: 95%
+                  - generic [ref=e787]:
+                    - generic [ref=e788]: Will the price of Bitcoin be above $78,000 on May 22?
+                    - generic [ref=e789]: 27%
+                - generic [ref=e792]:
+                  - generic [ref=e793]:
+                    - generic [ref=e794]: "Volume:"
+                    - generic [ref=e795]: $1.5M
+                  - generic [ref=e796]:
+                    - generic [ref=e797]: "Closes:"
+                    - generic [ref=e798]: May 22, 2026
+            - 'link "Iran closes its airspace by...? Politics Featured Iran closes its airspace by...? Iran closes its airspace by June 30? 50% Iran closes its airspace by June 15? 42% Iran closes its airspace by May 31? 33% + 2 more outcomes Volume: $7.7M Closes: Jun 29, 2026" [ref=e799] [cursor=pointer]':
+              - /url: /dashboard/markets/iran-closes-its-airspace-by
+              - generic [ref=e801]:
+                - generic [ref=e802]:
+                  - img "Iran closes its airspace by...?" [ref=e804]
+                  - generic [ref=e805]:
+                    - generic [ref=e806]: Politics
+                    - generic [ref=e807]:
+                      - img [ref=e808]
+                      - text: Featured
+                - heading "Iran closes its airspace by...?" [level=3] [ref=e810]
+                - generic [ref=e812]:
+                  - generic [ref=e815]:
+                    - generic [ref=e816]: Iran closes its airspace by June 30?
+                    - generic [ref=e817]: 50%
+                  - generic [ref=e822]:
+                    - generic [ref=e823]: Iran closes its airspace by June 15?
+                    - generic [ref=e824]: 42%
+                  - generic [ref=e829]:
+                    - generic [ref=e830]: Iran closes its airspace by May 31?
+                    - generic [ref=e831]: 33%
+                  - generic [ref=e834]: + 2 more outcomes
+                - generic [ref=e835]:
+                  - generic [ref=e836]:
+                    - generic [ref=e837]: "Volume:"
+                    - generic [ref=e838]: $7.7M
+                  - generic [ref=e839]:
+                    - generic [ref=e840]: "Closes:"
+                    - generic [ref=e841]: Jun 29, 2026
+            - 'link "Presidential Election Winner 2028 Politics Featured Presidential Election Winner 2028 Will JD Vance win the 2028 US Presidential Election? 20% Will Gavin Newsom win the 2028 US Presidential Election? 16% Will Marco Rubio win the 2028 US Presidential Election? 13% + 1 more outcomes Volume: $593.1M Closes: Nov 06, 2028" [ref=e842] [cursor=pointer]':
+              - /url: /dashboard/markets/presidential-election-winner-2028
+              - generic [ref=e844]:
+                - generic [ref=e845]:
+                  - img "Presidential Election Winner 2028" [ref=e847]
+                  - generic [ref=e848]:
+                    - generic [ref=e849]: Politics
+                    - generic [ref=e850]:
+                      - img [ref=e851]
+                      - text: Featured
+                - heading "Presidential Election Winner 2028" [level=3] [ref=e853]
+                - generic [ref=e855]:
+                  - generic [ref=e858]:
+                    - generic [ref=e859]: Will JD Vance win the 2028 US Presidential Election?
+                    - generic [ref=e860]: 20%
+                  - generic [ref=e865]:
+                    - generic [ref=e866]: Will Gavin Newsom win the 2028 US Presidential Election?
+                    - generic [ref=e867]: 16%
+                  - generic [ref=e872]:
+                    - generic [ref=e873]: Will Marco Rubio win the 2028 US Presidential Election?
+                    - generic [ref=e874]: 13%
+                  - generic [ref=e877]: + 1 more outcomes
+                - generic [ref=e878]:
+                  - generic [ref=e879]:
+                    - generic [ref=e880]: "Volume:"
+                    - generic [ref=e881]: $593.1M
+                  - generic [ref=e882]:
+                    - generic [ref=e883]: "Closes:"
+                    - generic [ref=e884]: Nov 06, 2028
+            - 'link "Toronto Blue Jays vs. New York Yankees Sports Toronto Blue Jays vs. New York Yankees YES: 57% Volume: $902.3K Closes: May 28, 2026" [ref=e885] [cursor=pointer]':
+              - /url: /dashboard/markets/mlb-tor-nyy-2026-05-21
+              - generic [ref=e887]:
+                - generic [ref=e888]:
+                  - img "Toronto Blue Jays vs. New York Yankees" [ref=e890]
+                  - generic [ref=e892]: Sports
+                - heading "Toronto Blue Jays vs. New York Yankees" [level=3] [ref=e893]
+                - generic [ref=e896]: "YES: 57%"
+                - generic [ref=e899]:
+                  - generic [ref=e900]:
+                    - generic [ref=e901]: "Volume:"
+                    - generic [ref=e902]: $902.3K
+                  - generic [ref=e903]:
+                    - generic [ref=e904]: "Closes:"
+                    - generic [ref=e905]: May 28, 2026
+            - 'link "Next French Presidential Election Politics Next French Presidential Election Will Jordan Bardella win the 2027 French presidential election? 24% Will Édouard Philippe win the 2027 French presidential election? 21% Will Jean-Luc Mélenchon win the 2027 French presidential election? 12% + 1 more outcomes Volume: $77.5M Closes: Apr 29, 2027" [ref=e906] [cursor=pointer]':
+              - /url: /dashboard/markets/next-french-presidential-election
+              - generic [ref=e908]:
+                - generic [ref=e909]:
+                  - img "Next French Presidential Election" [ref=e911]
+                  - generic [ref=e913]: Politics
+                - heading "Next French Presidential Election" [level=3] [ref=e914]
+                - generic [ref=e916]:
+                  - generic [ref=e919]:
+                    - generic [ref=e920]: Will Jordan Bardella win the 2027 French presidential election?
+                    - generic [ref=e921]: 24%
+                  - generic [ref=e926]:
+                    - generic [ref=e927]: Will Édouard Philippe win the 2027 French presidential election?
+                    - generic [ref=e928]: 21%
+                  - generic [ref=e933]:
+                    - generic [ref=e934]: Will Jean-Luc Mélenchon win the 2027 French presidential election?
+                    - generic [ref=e935]: 12%
+                  - generic [ref=e938]: + 1 more outcomes
+                - generic [ref=e939]:
+                  - generic [ref=e940]:
+                    - generic [ref=e941]: "Volume:"
+                    - generic [ref=e942]: $77.5M
+                  - generic [ref=e943]:
+                    - generic [ref=e944]: "Closes:"
+                    - generic [ref=e945]: Apr 29, 2027
+            - 'link "Elon Musk # tweets May 19 - May 26, 2026? Politics Elon Musk # tweets May 19 - May 26, 2026? Will Elon Musk post 280-299 tweets from May 19 to May 26, 2026? 20% Will Elon Musk post 260-279 tweets from May 19 to May 26, 2026? 18% Will Elon Musk post 300-319 tweets from May 19 to May 26, 2026? 15% + 4 more outcomes Volume: $1.1M Closes: May 26, 2026" [ref=e946] [cursor=pointer]':
+              - /url: /dashboard/markets/elon-musk-of-tweets-may-19-may-26
+              - generic [ref=e948]:
+                - generic [ref=e949]:
+                  - 'img "Elon Musk # tweets May 19 - May 26, 2026?" [ref=e951]'
+                  - generic [ref=e953]: Politics
+                - 'heading "Elon Musk # tweets May 19 - May 26, 2026?" [level=3] [ref=e954]'
+                - generic [ref=e956]:
+                  - generic [ref=e959]:
+                    - generic [ref=e960]: Will Elon Musk post 280-299 tweets from May 19 to May 26, 2026?
+                    - generic [ref=e961]: 20%
+                  - generic [ref=e966]:
+                    - generic [ref=e967]: Will Elon Musk post 260-279 tweets from May 19 to May 26, 2026?
+                    - generic [ref=e968]: 18%
+                  - generic [ref=e973]:
+                    - generic [ref=e974]: Will Elon Musk post 300-319 tweets from May 19 to May 26, 2026?
+                    - generic [ref=e975]: 15%
+                  - generic [ref=e978]: + 4 more outcomes
+                - generic [ref=e979]:
+                  - generic [ref=e980]:
+                    - generic [ref=e981]: "Volume:"
+                    - generic [ref=e982]: $1.1M
+                  - generic [ref=e983]:
+                    - generic [ref=e984]: "Closes:"
+                    - generic [ref=e985]: May 26, 2026
+            - 'link "F1 Drivers'' Champion Sports F1 Drivers'' Champion Will Kimi Antonelli be the 2026 F1 Drivers'' Champion? 40% Will George Russell be the 2026 F1 Drivers'' Champion? 31% Will Lando Norris be the 2026 F1 Drivers'' Champion? 11% + 1 more outcomes Volume: $152.8M Closes: Dec 05, 2026" [ref=e986] [cursor=pointer]':
+              - /url: /dashboard/markets/2026-f1-drivers-champion
+              - generic [ref=e988]:
+                - generic [ref=e989]:
+                  - img "F1 Drivers' Champion" [ref=e991]
+                  - generic [ref=e993]: Sports
+                - heading "F1 Drivers' Champion" [level=3] [ref=e994]
+                - generic [ref=e996]:
+                  - generic [ref=e999]:
+                    - generic [ref=e1000]: Will Kimi Antonelli be the 2026 F1 Drivers' Champion?
+                    - generic [ref=e1001]: 40%
+                  - generic [ref=e1006]:
+                    - generic [ref=e1007]: Will George Russell be the 2026 F1 Drivers' Champion?
+                    - generic [ref=e1008]: 31%
+                  - generic [ref=e1013]:
+                    - generic [ref=e1014]: Will Lando Norris be the 2026 F1 Drivers' Champion?
+                    - generic [ref=e1015]: 11%
+                  - generic [ref=e1018]: + 1 more outcomes
+                - generic [ref=e1019]:
+                  - generic [ref=e1020]:
+                    - generic [ref=e1021]: "Volume:"
+                    - generic [ref=e1022]: $152.8M
+                  - generic [ref=e1023]:
+                    - generic [ref=e1024]: "Closes:"
+                    - generic [ref=e1025]: Dec 05, 2026
+            - 'link "LoL: KT Rolster vs Gen.G (BO3) - LCK Rounds 1-2 Sports LoL: KT Rolster vs Gen.G (BO3) - LCK Rounds 1-2 Game 3: Both Teams Slay Baron Nashor? 91% Game 3: Any Player Penta Kill? 91% Game 3: Any Player Quadra Kill? 86% + 30 more outcomes Volume: $621.6K Closes: May 22, 2026" [ref=e1026] [cursor=pointer]':
+              - /url: /dashboard/markets/lol-kt-gen-2026-05-22
+              - generic [ref=e1028]:
+                - generic [ref=e1029]:
+                  - 'img "LoL: KT Rolster vs Gen.G (BO3) - LCK Rounds 1-2" [ref=e1031]'
+                  - generic [ref=e1033]: Sports
+                - 'heading "LoL: KT Rolster vs Gen.G (BO3) - LCK Rounds 1-2" [level=3] [ref=e1034]'
+                - generic [ref=e1036]:
+                  - generic [ref=e1039]:
+                    - generic [ref=e1040]: "Game 3: Both Teams Slay Baron Nashor?"
+                    - generic [ref=e1041]: 91%
+                  - generic [ref=e1046]:
+                    - generic [ref=e1047]: "Game 3: Any Player Penta Kill?"
+                    - generic [ref=e1048]: 91%
+                  - generic [ref=e1053]:
+                    - generic [ref=e1054]: "Game 3: Any Player Quadra Kill?"
+                    - generic [ref=e1055]: 86%
+                  - generic [ref=e1058]: + 30 more outcomes
+                - generic [ref=e1059]:
+                  - generic [ref=e1060]:
+                    - generic [ref=e1061]: "Volume:"
+                    - generic [ref=e1062]: $621.6K
+                  - generic [ref=e1063]:
+                    - generic [ref=e1064]: "Closes:"
+                    - generic [ref=e1065]: May 22, 2026
+            - 'link "2026 Men''s French Open Winner Sports 2026 Men''s French Open Winner Will Jannik Sinner win the 2026 Men''s French Open? 72% Will Alexander Zverev win the 2026 Men''s French Open? 7% Will Novak Djokovic win the 2026 Men''s French Open? 7% Volume: $26.7M Closes: Jun 06, 2026" [ref=e1066] [cursor=pointer]':
+              - /url: /dashboard/markets/2026-mens-french-open-winner
+              - generic [ref=e1068]:
+                - generic [ref=e1069]:
+                  - img "2026 Men's French Open Winner" [ref=e1071]
+                  - generic [ref=e1073]: Sports
+                - heading "2026 Men's French Open Winner" [level=3] [ref=e1074]
+                - generic [ref=e1076]:
+                  - generic [ref=e1079]:
+                    - generic [ref=e1080]: Will Jannik Sinner win the 2026 Men's French Open?
+                    - generic [ref=e1081]: 72%
+                  - generic [ref=e1086]:
+                    - generic [ref=e1087]: Will Alexander Zverev win the 2026 Men's French Open?
+                    - generic [ref=e1088]: 7%
+                  - generic [ref=e1093]:
+                    - generic [ref=e1094]: Will Novak Djokovic win the 2026 Men's French Open?
+                    - generic [ref=e1095]: 7%
+                - generic [ref=e1098]:
+                  - generic [ref=e1099]:
+                    - generic [ref=e1100]: "Volume:"
+                    - generic [ref=e1101]: $26.7M
+                  - generic [ref=e1102]:
+                    - generic [ref=e1103]: "Closes:"
+                    - generic [ref=e1104]: Jun 06, 2026
+            - 'link "Athletics vs. Los Angeles Angels Sports Athletics vs. Los Angeles Angels Will there be a run scored in the first inning?: Athletics vs. Los Angeles Angels 49% Athletics vs. Los Angeles Angels 47% Volume: $570.3K Closes: May 28, 2026" [ref=e1105] [cursor=pointer]':
+              - /url: /dashboard/markets/mlb-oak-laa-2026-05-21
+              - generic [ref=e1107]:
+                - generic [ref=e1108]:
+                  - img "Athletics vs. Los Angeles Angels" [ref=e1110]
+                  - generic [ref=e1112]: Sports
+                - heading "Athletics vs. Los Angeles Angels" [level=3] [ref=e1113]
+                - generic [ref=e1115]:
+                  - generic [ref=e1118]:
+                    - generic [ref=e1119]: "Will there be a run scored in the first inning?: Athletics vs. Los Angeles Angels"
+                    - generic [ref=e1120]: 49%
+                  - generic [ref=e1125]:
+                    - generic [ref=e1126]: Athletics vs. Los Angeles Angels
+                    - generic [ref=e1127]: 47%
+                - generic [ref=e1130]:
+                  - generic [ref=e1131]:
+                    - generic [ref=e1132]: "Volume:"
+                    - generic [ref=e1133]: $570.3K
+                  - generic [ref=e1134]:
+                    - generic [ref=e1135]: "Closes:"
+                    - generic [ref=e1136]: May 28, 2026
+            - 'link "Which company has best AI model end of June? Tech Which company has best AI model end of June? Will Anthropic have the best AI model at the end of June 2026? 75% Will Google have the best AI model at the end of June 2026? 23% Volume: $7.1M Closes: Jun 29, 2026" [ref=e1137] [cursor=pointer]':
+              - /url: /dashboard/markets/which-company-has-best-ai-model-end-of-june
+              - generic [ref=e1139]:
+                - generic [ref=e1140]:
+                  - img "Which company has best AI model end of June?" [ref=e1142]
+                  - generic [ref=e1144]: Tech
+                - heading "Which company has best AI model end of June?" [level=3] [ref=e1145]
+                - generic [ref=e1147]:
+                  - generic [ref=e1150]:
+                    - generic [ref=e1151]: Will Anthropic have the best AI model at the end of June 2026?
+                    - generic [ref=e1152]: 75%
+                  - generic [ref=e1157]:
+                    - generic [ref=e1158]: Will Google have the best AI model at the end of June 2026?
+                    - generic [ref=e1159]: 23%
+                - generic [ref=e1162]:
+                  - generic [ref=e1163]:
+                    - generic [ref=e1164]: "Volume:"
+                    - generic [ref=e1165]: $7.1M
+                  - generic [ref=e1166]:
+                    - generic [ref=e1167]: "Closes:"
+                    - generic [ref=e1168]: Jun 29, 2026
+            - 'link "US obtains Iranian enriched uranium by...? Politics US obtains Iranian enriched uranium by...? US obtains Iranian enriched uranium by December 31? 25% US obtains Iranian enriched uranium by June 30? 15% Volume: $16.6M Closes: Dec 30, 2026" [ref=e1169] [cursor=pointer]':
+              - /url: /dashboard/markets/us-obtains-iranian-enriched-uranium-by
+              - generic [ref=e1171]:
+                - generic [ref=e1172]:
+                  - img "US obtains Iranian enriched uranium by...?" [ref=e1174]
+                  - generic [ref=e1176]: Politics
+                - heading "US obtains Iranian enriched uranium by...?" [level=3] [ref=e1177]
+                - generic [ref=e1179]:
+                  - generic [ref=e1182]:
+                    - generic [ref=e1183]: US obtains Iranian enriched uranium by December 31?
+                    - generic [ref=e1184]: 25%
+                  - generic [ref=e1189]:
+                    - generic [ref=e1190]: US obtains Iranian enriched uranium by June 30?
+                    - generic [ref=e1191]: 15%
+                - generic [ref=e1194]:
+                  - generic [ref=e1195]:
+                    - generic [ref=e1196]: "Volume:"
+                    - generic [ref=e1197]: $16.6M
+                  - generic [ref=e1198]:
+                    - generic [ref=e1199]: "Closes:"
+                    - generic [ref=e1200]: Dec 30, 2026
+            - 'link "Thunder vs. Spurs Sports Thunder vs. Spurs Luguentz Dort: Points O/U 2.5 95% Victor Wembanyama: Points O/U 24.5 61% Thunder vs. Spurs: 1H O/U 105.5 60% + 29 more outcomes Volume: $539.9K Closes: May 22, 2026" [ref=e1201] [cursor=pointer]':
+              - /url: /dashboard/markets/nba-okc-sas-2026-05-22
+              - generic [ref=e1203]:
+                - generic [ref=e1204]:
+                  - img "Thunder vs. Spurs" [ref=e1206]
+                  - generic [ref=e1208]: Sports
+                - heading "Thunder vs. Spurs" [level=3] [ref=e1209]
+                - generic [ref=e1211]:
+                  - generic [ref=e1214]:
+                    - generic [ref=e1215]: "Luguentz Dort: Points O/U 2.5"
+                    - generic [ref=e1216]: 95%
+                  - generic [ref=e1221]:
+                    - generic [ref=e1222]: "Victor Wembanyama: Points O/U 24.5"
+                    - generic [ref=e1223]: 61%
+                  - generic [ref=e1228]:
+                    - generic [ref=e1229]: "Thunder vs. Spurs: 1H O/U 105.5"
+                    - generic [ref=e1230]: 60%
+                  - generic [ref=e1233]: + 29 more outcomes
+                - generic [ref=e1234]:
+                  - generic [ref=e1235]:
+                    - generic [ref=e1236]: "Volume:"
+                    - generic [ref=e1237]: $539.9K
+                  - generic [ref=e1238]:
+                    - generic [ref=e1239]: "Closes:"
+                    - generic [ref=e1240]: May 22, 2026
+            - 'link "What Iranian demands will Trump agree to by May 31? Politics What Iranian demands will Trump agree to by May 31? Will Trump agree to Iranian oil sanction relief by May 31? 27% Will Trump agree to unfreeze Iranian assets by May 31? 19% Will Trump agree to Iranian enrichment of uranium by May 31? 6% Volume: $3.9M Closes: May 30, 2026" [ref=e1241] [cursor=pointer]':
+              - /url: /dashboard/markets/what-iranian-demands-will-trump-agree-to-by-may-31
+              - generic [ref=e1243]:
+                - generic [ref=e1244]:
+                  - img "What Iranian demands will Trump agree to by May 31?" [ref=e1246]
+                  - generic [ref=e1248]: Politics
+                - heading "What Iranian demands will Trump agree to by May 31?" [level=3] [ref=e1249]
+                - generic [ref=e1251]:
+                  - generic [ref=e1254]:
+                    - generic [ref=e1255]: Will Trump agree to Iranian oil sanction relief by May 31?
+                    - generic [ref=e1256]: 27%
+                  - generic [ref=e1261]:
+                    - generic [ref=e1262]: Will Trump agree to unfreeze Iranian assets by May 31?
+                    - generic [ref=e1263]: 19%
+                  - generic [ref=e1268]:
+                    - generic [ref=e1269]: Will Trump agree to Iranian enrichment of uranium by May 31?
+                    - generic [ref=e1270]: 6%
+                - generic [ref=e1273]:
+                  - generic [ref=e1274]:
+                    - generic [ref=e1275]: "Volume:"
+                    - generic [ref=e1276]: $3.9M
+                  - generic [ref=e1277]:
+                    - generic [ref=e1278]: "Closes:"
+                    - generic [ref=e1279]: May 30, 2026
+            - 'link "Will the US confirm that aliens exist by...? Politics Featured Will the US confirm that aliens exist by...? Will the US confirm that aliens exist before 2027? 16% Will the US confirm that aliens exist by September 30? 9% Volume: $38.5M Closes: Dec 30, 2026" [ref=e1280] [cursor=pointer]':
+              - /url: /dashboard/markets/will-the-us-confirm-that-aliens-exist-before-2027
+              - generic [ref=e1282]:
+                - generic [ref=e1283]:
+                  - img "Will the US confirm that aliens exist by...?" [ref=e1285]
+                  - generic [ref=e1286]:
+                    - generic [ref=e1287]: Politics
+                    - generic [ref=e1288]:
+                      - img [ref=e1289]
+                      - text: Featured
+                - heading "Will the US confirm that aliens exist by...?" [level=3] [ref=e1291]
+                - generic [ref=e1293]:
+                  - generic [ref=e1296]:
+                    - generic [ref=e1297]: Will the US confirm that aliens exist before 2027?
+                    - generic [ref=e1298]: 16%
+                  - generic [ref=e1303]:
+                    - generic [ref=e1304]: Will the US confirm that aliens exist by September 30?
+                    - generic [ref=e1305]: 9%
+                - generic [ref=e1308]:
+                  - generic [ref=e1309]:
+                    - generic [ref=e1310]: "Volume:"
+                    - generic [ref=e1311]: $38.5M
+                  - generic [ref=e1312]:
+                    - generic [ref=e1313]: "Closes:"
+                    - generic [ref=e1314]: Dec 30, 2026
+            - 'link "Will the U.S. invade Iran before 2027? Politics Will the U.S. invade Iran before 2027? YES: 26% Volume: $30.5M Closes: Dec 30, 2026" [ref=e1315] [cursor=pointer]':
+              - /url: /dashboard/markets/will-the-us-invade-iran-before-2027
+              - generic [ref=e1317]:
+                - generic [ref=e1318]:
+                  - img "Will the U.S. invade Iran before 2027?" [ref=e1320]
+                  - generic [ref=e1322]: Politics
+                - heading "Will the U.S. invade Iran before 2027?" [level=3] [ref=e1323]
+                - generic [ref=e1326]: "YES: 26%"
+                - generic [ref=e1329]:
+                  - generic [ref=e1330]:
+                    - generic [ref=e1331]: "Volume:"
+                    - generic [ref=e1332]: $30.5M
+                  - generic [ref=e1333]:
+                    - generic [ref=e1334]: "Closes:"
+                    - generic [ref=e1335]: Dec 30, 2026
+            - 'link "MicroStrategy sells any Bitcoin by ___ ? Crypto Featured MicroStrategy sells any Bitcoin by ___ ? MicroStrategy sells any Bitcoin by December 31, 2026? 79% MicroStrategy sells any Bitcoin by June 30, 2026? 51% MicroStrategy sells any Bitcoin by May 31, 2026? 16% Volume: $9.5M Closes: Jan 01, 2027" [ref=e1336] [cursor=pointer]':
+              - /url: /dashboard/markets/microstrategy-sell-any-bitcoin-in-2025
+              - generic [ref=e1338]:
+                - generic [ref=e1339]:
+                  - img "MicroStrategy sells any Bitcoin by ___ ?" [ref=e1341]
+                  - generic [ref=e1342]:
+                    - generic [ref=e1343]: Crypto
+                    - generic [ref=e1344]:
+                      - img [ref=e1345]
+                      - text: Featured
+                - heading "MicroStrategy sells any Bitcoin by ___ ?" [level=3] [ref=e1347]
+                - generic [ref=e1349]:
+                  - generic [ref=e1352]:
+                    - generic [ref=e1353]: MicroStrategy sells any Bitcoin by December 31, 2026?
+                    - generic [ref=e1354]: 79%
+                  - generic [ref=e1359]:
+                    - generic [ref=e1360]: MicroStrategy sells any Bitcoin by June 30, 2026?
+                    - generic [ref=e1361]: 51%
+                  - generic [ref=e1366]:
+                    - generic [ref=e1367]: MicroStrategy sells any Bitcoin by May 31, 2026?
+                    - generic [ref=e1368]: 16%
+                - generic [ref=e1371]:
+                  - generic [ref=e1372]:
+                    - generic [ref=e1373]: "Volume:"
+                    - generic [ref=e1374]: $9.5M
+                  - generic [ref=e1375]:
+                    - generic [ref=e1376]: "Closes:"
+                    - generic [ref=e1377]: Jan 01, 2027
+            - 'link "NBA: 2027 Champion Sports NBA: 2027 Champion Will Oklahoma City Thunder win the 2027 NBA Finals? 21% Will San Antonio Spurs win the 2027 NBA Finals? 19% Will New York Knicks win the 2027 NBA Finals? 11% + 2 more outcomes Volume: $527.7K Closes: Jun 30, 2027" [ref=e1378] [cursor=pointer]':
+              - /url: /dashboard/markets/nba-2027-champion
+              - generic [ref=e1380]:
+                - generic [ref=e1381]:
+                  - 'img "NBA: 2027 Champion" [ref=e1383]'
+                  - generic [ref=e1385]: Sports
+                - 'heading "NBA: 2027 Champion" [level=3] [ref=e1386]'
+                - generic [ref=e1388]:
+                  - generic [ref=e1391]:
+                    - generic [ref=e1392]: Will Oklahoma City Thunder win the 2027 NBA Finals?
+                    - generic [ref=e1393]: 21%
+                  - generic [ref=e1398]:
+                    - generic [ref=e1399]: Will San Antonio Spurs win the 2027 NBA Finals?
+                    - generic [ref=e1400]: 19%
+                  - generic [ref=e1405]:
+                    - generic [ref=e1406]: Will New York Knicks win the 2027 NBA Finals?
+                    - generic [ref=e1407]: 11%
+                  - generic [ref=e1410]: + 2 more outcomes
+                - generic [ref=e1411]:
+                  - generic [ref=e1412]:
+                    - generic [ref=e1413]: "Volume:"
+                    - generic [ref=e1414]: $527.7K
+                  - generic [ref=e1415]:
+                    - generic [ref=e1416]: "Closes:"
+                    - generic [ref=e1417]: Jun 30, 2027
+            - 'link "ACF Fiorentina vs. Atalanta BC Sports ACF Fiorentina vs. Atalanta BC Will Atalanta BC win on 2026-05-24? 38% Will ACF Fiorentina win on 2026-05-24? 37% Will ACF Fiorentina vs. Atalanta BC end in a draw? 28% Volume: $366.8K Closes: May 24, 2026" [ref=e1418] [cursor=pointer]':
+              - /url: /dashboard/markets/sea-fio-ata-2026-05-24
+              - generic [ref=e1420]:
+                - generic [ref=e1421]:
+                  - img "ACF Fiorentina vs. Atalanta BC" [ref=e1423]
+                  - generic [ref=e1425]: Sports
+                - heading "ACF Fiorentina vs. Atalanta BC" [level=3] [ref=e1426]
+                - generic [ref=e1428]:
+                  - generic [ref=e1431]:
+                    - generic [ref=e1432]: Will Atalanta BC win on 2026-05-24?
+                    - generic [ref=e1433]: 38%
+                  - generic [ref=e1438]:
+                    - generic [ref=e1439]: Will ACF Fiorentina win on 2026-05-24?
+                    - generic [ref=e1440]: 37%
+                  - generic [ref=e1445]:
+                    - generic [ref=e1446]: Will ACF Fiorentina vs. Atalanta BC end in a draw?
+                    - generic [ref=e1447]: 28%
+                - generic [ref=e1450]:
+                  - generic [ref=e1451]:
+                    - generic [ref=e1452]: "Volume:"
+                    - generic [ref=e1453]: $366.8K
+                  - generic [ref=e1454]:
+                    - generic [ref=e1455]: "Closes:"
+                    - generic [ref=e1456]: May 24, 2026
+            - 'link "Will China invade Taiwan by end of 2026? Politics Will China invade Taiwan by end of 2026? YES: 8% Volume: $23.4M Closes: Dec 30, 2026" [ref=e1457] [cursor=pointer]':
+              - /url: /dashboard/markets/will-china-invade-taiwan-before-2027
+              - generic [ref=e1459]:
+                - generic [ref=e1460]:
+                  - img "Will China invade Taiwan by end of 2026?" [ref=e1462]
+                  - generic [ref=e1464]: Politics
+                - heading "Will China invade Taiwan by end of 2026?" [level=3] [ref=e1465]
+                - generic [ref=e1468]: "YES: 8%"
+                - generic [ref=e1471]:
+                  - generic [ref=e1472]:
+                    - generic [ref=e1473]: "Volume:"
+                    - generic [ref=e1474]: $23.4M
+                  - generic [ref=e1475]:
+                    - generic [ref=e1476]: "Closes:"
+                    - generic [ref=e1477]: Dec 30, 2026
+            - 'link "Largest Company end of June? Economics Featured Largest Company end of June? Will NVIDIA be the largest company in the world by market cap on June 30? 90% Will Alphabet be the largest company in the world by market cap on June 30? 8% Volume: $14.5M Closes: Jun 29, 2026" [ref=e1478] [cursor=pointer]':
+              - /url: /dashboard/markets/largest-company-end-of-june-712
+              - generic [ref=e1480]:
+                - generic [ref=e1481]:
+                  - img "Largest Company end of June?" [ref=e1483]
+                  - generic [ref=e1484]:
+                    - generic [ref=e1485]: Economics
+                    - generic [ref=e1486]:
+                      - img [ref=e1487]
+                      - text: Featured
+                - heading "Largest Company end of June?" [level=3] [ref=e1489]
+                - generic [ref=e1491]:
+                  - generic [ref=e1494]:
+                    - generic [ref=e1495]: Will NVIDIA be the largest company in the world by market cap on June 30?
+                    - generic [ref=e1496]: 90%
+                  - generic [ref=e1501]:
+                    - generic [ref=e1502]: Will Alphabet be the largest company in the world by market cap on June 30?
+                    - generic [ref=e1503]: 8%
+                - generic [ref=e1506]:
+                  - generic [ref=e1507]:
+                    - generic [ref=e1508]: "Volume:"
+                    - generic [ref=e1509]: $14.5M
+                  - generic [ref=e1510]:
+                    - generic [ref=e1511]: "Closes:"
+                    - generic [ref=e1512]: Jun 29, 2026
+            - 'link "Strait of Hormuz traffic returns to normal by end of June? Politics Strait of Hormuz traffic returns to normal by end of June? YES: 32% Volume: $7.8M Closes: Jun 29, 2026" [ref=e1513] [cursor=pointer]':
+              - /url: /dashboard/markets/strait-of-hormuz-traffic-returns-to-normal-by-end-of-june
+              - generic [ref=e1515]:
+                - generic [ref=e1516]:
+                  - img "Strait of Hormuz traffic returns to normal by end of June?" [ref=e1518]
+                  - generic [ref=e1520]: Politics
+                - heading "Strait of Hormuz traffic returns to normal by end of June?" [level=3] [ref=e1521]
+                - generic [ref=e1524]: "YES: 32%"
+                - generic [ref=e1527]:
+                  - generic [ref=e1528]:
+                    - generic [ref=e1529]: "Volume:"
+                    - generic [ref=e1530]: $7.8M
+                  - generic [ref=e1531]:
+                    - generic [ref=e1532]: "Closes:"
+                    - generic [ref=e1533]: Jun 29, 2026
+            - 'link "Trump announces US blockade of Hormuz lifted by...? Politics Featured Trump announces US blockade of Hormuz lifted by...? Will Donald Trump announce that the United States blockade of the Strait of Hormuz has been lifted by June 30, 2026? 61% Will Donald Trump announce that the United States blockade of the Strait of Hormuz has been lifted by May 31, 2026? 27% Volume: $4.7M Closes: Jun 29, 2026" [ref=e1534] [cursor=pointer]':
+              - /url: /dashboard/markets/trump-announces-us-blockade-of-hormuz-lifted-by
+              - generic [ref=e1536]:
+                - generic [ref=e1537]:
+                  - img "Trump announces US blockade of Hormuz lifted by...?" [ref=e1539]
+                  - generic [ref=e1540]:
+                    - generic [ref=e1541]: Politics
+                    - generic [ref=e1542]:
+                      - img [ref=e1543]
+                      - text: Featured
+                - heading "Trump announces US blockade of Hormuz lifted by...?" [level=3] [ref=e1545]
+                - generic [ref=e1547]:
+                  - generic [ref=e1550]:
+                    - generic [ref=e1551]: Will Donald Trump announce that the United States blockade of the Strait of Hormuz has been lifted by June 30, 2026?
+                    - generic [ref=e1552]: 61%
+                  - generic [ref=e1557]:
+                    - generic [ref=e1558]: Will Donald Trump announce that the United States blockade of the Strait of Hormuz has been lifted by May 31, 2026?
+                    - generic [ref=e1559]: 27%
+                - generic [ref=e1562]:
+                  - generic [ref=e1563]:
+                    - generic [ref=e1564]: "Volume:"
+                    - generic [ref=e1565]: $4.7M
+                  - generic [ref=e1566]:
+                    - generic [ref=e1567]: "Closes:"
+                    - generic [ref=e1568]: Jun 29, 2026
+  - button "Open Next.js Dev Tools" [ref=e302] [cursor=pointer]:
+    - img [ref=e303]
+  - alert [ref=e1569]

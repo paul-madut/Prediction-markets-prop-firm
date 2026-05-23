@@ -172,7 +172,7 @@ export function MovingBorderCard({
         <MovingBorder duration={duration} rx="20" ry="20">
           <div
             className={cn(
-              "h-48 w-48 opacity-[0.8] bg-[radial-gradient(var(--blue-500)_40%,transparent_60%)]",
+              "h-48 w-48 opacity-[0.85] bg-[radial-gradient(#A769FF_40%,transparent_60%)]",
               borderClassName
             )}
           />
@@ -181,7 +181,7 @@ export function MovingBorderCard({
 
       <div
         className={cn(
-          "relative bg-white dark:bg-slate-900 border border-blue-200 backdrop-blur-xl w-full h-full antialiased",
+          "relative bg-[#180630] border border-[#A769FF]/25 backdrop-blur-xl w-full h-full antialiased",
           className
         )}
         style={{

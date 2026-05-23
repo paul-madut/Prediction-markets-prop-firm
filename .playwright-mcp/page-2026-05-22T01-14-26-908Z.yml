@@ -1,0 +1,40 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "Blueberry Funded · Admin" [ref=e5] [cursor=pointer]:
+          - /url: /admin
+          - text: Blueberry Funded · Admin
+        - navigation [ref=e7]:
+          - link "Traders" [ref=e8] [cursor=pointer]:
+            - /url: /admin/traders
+          - link "Configs" [ref=e9] [cursor=pointer]:
+            - /url: /admin/configs
+          - link "Payouts" [ref=e10] [cursor=pointer]:
+            - /url: /admin/payouts
+          - link "Audit" [ref=e11] [cursor=pointer]:
+            - /url: /admin/audit
+          - link "Trader view →" [ref=e12] [cursor=pointer]:
+            - /url: /dashboard
+    - main [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]:
+            - heading "Payouts Queue" [level=1] [ref=e17]
+            - paragraph [ref=e18]: Review trader payout requests, approve/reject, and mark paid once funds are sent.
+          - generic [ref=e21]: Live data
+        - generic [ref=e22]:
+          - button "Requested" [ref=e23]
+          - button "Approved" [ref=e24]
+          - button "Paid" [ref=e25]
+          - button "Rejected" [ref=e26]
+          - button "All" [ref=e27]
+          - button "Refresh" [ref=e28]:
+            - img [ref=e29]
+            - text: Refresh
+        - generic [ref=e46]:
+          - img [ref=e47]
+          - generic [ref=e50]: No payouts in this view.
+  - button "Open Next.js Dev Tools" [ref=e41] [cursor=pointer]:
+    - img [ref=e42]
+  - alert [ref=e45]

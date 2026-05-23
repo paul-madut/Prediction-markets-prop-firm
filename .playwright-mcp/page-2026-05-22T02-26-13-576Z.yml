@@ -1,0 +1,336 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - button "Expand sidebar" [ref=e6]:
+            - img [ref=e7]
+          - generic:
+            - img "Blueberry Funded"
+        - generic [ref=e11]:
+          - link "Dashboard" [ref=e12] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e14]
+            - generic: Dashboard
+          - link "Challenge" [ref=e17] [cursor=pointer]:
+            - /url: /dashboard/challenge
+            - img [ref=e19]
+            - generic: Challenge
+          - link "Markets" [ref=e22] [cursor=pointer]:
+            - /url: /dashboard/markets
+            - img [ref=e24]
+            - generic: Markets
+          - link "Portfolio" [ref=e27] [cursor=pointer]:
+            - /url: /dashboard/portfolio
+            - img [ref=e29]
+            - generic: Portfolio
+          - link "History" [ref=e32] [cursor=pointer]:
+            - /url: /dashboard/history
+            - img [ref=e34]
+            - generic: History
+          - link "Analytics" [ref=e37] [cursor=pointer]:
+            - /url: /dashboard/analytics
+            - img [ref=e39]
+            - generic: Analytics
+          - link "Rules" [ref=e42] [cursor=pointer]:
+            - /url: /dashboard/rules
+            - img [ref=e44]
+            - generic: Rules
+          - link "Payouts" [ref=e47] [cursor=pointer]:
+            - /url: /dashboard/payouts
+            - img [ref=e49]
+            - generic: Payouts
+      - generic [ref=e52]:
+        - link [ref=e55] [cursor=pointer]:
+          - /url: /dashboard/new-challenge
+          - img [ref=e56]
+        - generic [ref=e58]:
+          - link "Help" [ref=e59] [cursor=pointer]:
+            - /url: /dashboard/help
+            - img [ref=e61]
+            - generic: Help
+          - link "Settings" [ref=e64] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e66]
+            - generic: Settings
+        - generic [ref=e70] [cursor=pointer]:
+          - generic [ref=e71]: O
+          - generic: Owner
+    - generic [ref=e72]:
+      - generic [ref=e73]:
+        - generic [ref=e74]: Dashboard
+        - generic [ref=e75]:
+          - button "Notifications" [ref=e77]:
+            - img [ref=e78]
+          - link "Settings" [ref=e80] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e81]
+          - button "O Owner Evaluation" [ref=e110]:
+            - generic [ref=e86]: O
+            - generic [ref=e87]:
+              - generic [ref=e88]: Owner
+              - generic [ref=e111]: Evaluation
+            - img [ref=e89]
+      - main [ref=e91]:
+        - generic [ref=e112]:
+          - generic [ref=e113]:
+            - generic [ref=e114]:
+              - generic [ref=e117]: Demo
+              - generic [ref=e118]: Sample data. Fully customizable for your brand.
+            - link "Learn more" [ref=e119] [cursor=pointer]:
+              - /url: /
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - button "Account Size $5,000" [ref=e128]:
+                - img [ref=e130]
+                - generic [ref=e133]:
+                  - generic [ref=e134]: Account Size
+                  - generic [ref=e135]: $5,000
+                - img [ref=e136]
+              - generic [ref=e139]:
+                - generic [ref=e140]:
+                  - img [ref=e141]
+                  - generic [ref=e143]: May 11, 2026
+                - generic [ref=e145]:
+                  - img [ref=e146]
+                  - generic [ref=e148]: 90% split
+                - generic [ref=e152]: Phase 1
+            - code [ref=e153]: E7255E981C
+          - generic [ref=e158]:
+            - generic [ref=e160]:
+              - heading "Welcome back," [level=1] [ref=e161]
+              - heading "Owner" [level=2] [ref=e162]
+              - generic [ref=e163]:
+                - link "Get Funded" [ref=e164] [cursor=pointer]:
+                  - /url: /dashboard/new-challenge
+                  - img [ref=e165]
+                  - text: Get Funded
+                - link "Browse Markets" [ref=e168] [cursor=pointer]:
+                  - /url: /dashboard/markets
+                  - img [ref=e169]
+                  - text: Browse Markets
+            - generic [ref=e173]:
+              - generic [ref=e174]:
+                - generic [ref=e175]: 0%
+                - generic [ref=e176]: Win Rate
+              - generic [ref=e177]:
+                - generic [ref=e178]: "-0.11%"
+                - generic [ref=e179]: Profit
+              - generic [ref=e180]:
+                - generic [ref=e181]:
+                  - text: "0"
+                  - generic [ref=e182]: /10
+                - generic [ref=e183]: Trading Days
+          - generic [ref=e184]:
+            - generic [ref=e185]:
+              - generic [ref=e186]:
+                - generic [ref=e190]:
+                  - generic [ref=e191]: Account Balance
+                  - generic [ref=e192]: $4,994.70
+                - generic [ref=e196]:
+                  - generic [ref=e197]: Today's P&L
+                  - generic [ref=e198]: +$0.00
+                - generic [ref=e202]:
+                  - generic [ref=e203]: Open Positions
+                  - generic [ref=e204]: "0"
+                - generic [ref=e208]:
+                  - generic [ref=e209]: Total Trades
+                  - generic [ref=e210]: "0"
+              - generic [ref=e214]:
+                - generic [ref=e215]:
+                  - heading "Account Performance" [level=3] [ref=e216]
+                  - generic [ref=e217]: "Profit: -0.11%"
+                - application [ref=e220]:
+                  - generic [ref=e233]:
+                    - generic [ref=e234]:
+                      - generic [ref=e236]: "8"
+                      - generic [ref=e238]: "9"
+                      - generic [ref=e240]: "10"
+                      - generic [ref=e242]: "11"
+                      - generic [ref=e244]: "12"
+                      - generic [ref=e246]: "13"
+                      - generic [ref=e248]: "14"
+                      - generic [ref=e250]: "15"
+                      - generic [ref=e252]: "16"
+                      - generic [ref=e254]: "17"
+                      - generic [ref=e256]: "18"
+                      - generic [ref=e258]: "19"
+                      - generic [ref=e260]: "20"
+                      - generic [ref=e262]: "21"
+                    - generic [ref=e263]:
+                      - generic [ref=e265]: $5k
+                      - generic [ref=e267]: $5k
+                      - generic [ref=e269]: $5k
+                      - generic [ref=e271]: $5k
+                      - generic [ref=e273]: $5k
+              - generic [ref=e277]:
+                - generic [ref=e278]:
+                  - heading "Objectives" [level=3] [ref=e279]
+                  - link "View Rules" [ref=e280] [cursor=pointer]:
+                    - /url: /dashboard/rules
+                    - text: View Rules
+                    - img [ref=e281]
+                - generic [ref=e283]:
+                  - generic [ref=e284]:
+                    - generic [ref=e285]:
+                      - generic [ref=e286]: Profit Target
+                      - img [ref=e287]
+                    - generic [ref=e289]:
+                      - generic [ref=e290]:
+                        - img [ref=e291]
+                        - generic [ref=e295]: "-1%"
+                      - generic [ref=e296]:
+                        - generic [ref=e297]: "-$5.30"
+                        - generic [ref=e298]: of $400.00
+                  - generic [ref=e299]:
+                    - generic [ref=e300]:
+                      - generic [ref=e301]: Daily Drawdown
+                      - img [ref=e302]
+                    - generic [ref=e304]:
+                      - generic [ref=e305]:
+                        - img [ref=e306]
+                        - generic [ref=e310]: 0%
+                      - generic [ref=e311]:
+                        - generic [ref=e312]: $0.00
+                        - generic [ref=e313]: of $250.00
+                  - generic [ref=e314]:
+                    - generic [ref=e315]:
+                      - generic [ref=e316]: Max Drawdown
+                      - img [ref=e317]
+                    - generic [ref=e319]:
+                      - generic [ref=e320]:
+                        - img [ref=e321]
+                        - generic [ref=e325]: 1%
+                      - generic [ref=e326]:
+                        - generic [ref=e327]: $5.30
+                        - generic [ref=e328]: of $500.00
+                  - generic [ref=e329]:
+                    - generic [ref=e330]:
+                      - generic [ref=e331]: Trading Days
+                      - img [ref=e332]
+                    - generic [ref=e334]:
+                      - generic [ref=e335]:
+                        - img [ref=e336]
+                        - generic [ref=e340]: 0%
+                      - generic [ref=e341]:
+                        - generic [ref=e342]:
+                          - text: "0"
+                          - generic [ref=e343]: / 10
+                        - generic [ref=e344]: days completed
+            - generic [ref=e345]:
+              - generic [ref=e349]:
+                - heading "Account Data" [level=3] [ref=e350]
+                - generic [ref=e351]:
+                  - generic [ref=e352]:
+                    - generic [ref=e353]: Login
+                    - generic [ref=e355]: EDD19056A7
+                  - generic [ref=e356]:
+                    - generic [ref=e357]: Start
+                    - generic [ref=e359]: 05/11/2026
+                  - generic [ref=e360]:
+                    - generic [ref=e361]: Result
+                    - generic [ref=e363]: Active
+                - generic [ref=e365]:
+                  - button "Credentials" [ref=e366]:
+                    - img [ref=e367]
+                    - text: Credentials
+                  - button "Share Metrics" [ref=e369]:
+                    - img [ref=e370]
+                    - text: Share Metrics
+                  - link "Request Payout" [ref=e372] [cursor=pointer]:
+                    - /url: /dashboard/payouts
+                    - img [ref=e373]
+                    - text: Request Payout
+              - generic [ref=e379]:
+                - generic [ref=e380]:
+                  - img [ref=e381]
+                  - heading "Volume" [level=3] [ref=e383]
+                - generic [ref=e384]:
+                  - generic [ref=e385]:
+                    - generic [ref=e386]: Highest volume
+                    - generic [ref=e387]: $0.00
+                  - generic [ref=e388]:
+                    - generic [ref=e389]: Lowest volume
+                    - generic [ref=e390]: $0.00
+              - generic [ref=e394]:
+                - generic [ref=e395]:
+                  - img [ref=e396]
+                  - heading "Time since challenge start" [level=3] [ref=e398]
+                - generic [ref=e400]:
+                  - generic [ref=e401]:
+                    - generic [ref=e402]: "09"
+                    - generic [ref=e403]: DAY
+                  - generic [ref=e404]:
+                    - generic [ref=e405]: "23"
+                    - generic [ref=e406]: HR
+                  - generic [ref=e407]:
+                    - generic [ref=e408]: "02"
+                    - generic [ref=e409]: MIN
+                  - generic [ref=e410]:
+                    - generic [ref=e411]: "24"
+                    - generic [ref=e412]: SEC
+          - generic [ref=e416]:
+            - tablist [ref=e417]:
+              - tab "Statistics" [ref=e418]
+              - tab "Journal" [ref=e419]
+              - tab "Calendar" [selected] [ref=e420]
+              - tab "Rules" [ref=e421]
+            - tabpanel "Calendar" [ref=e422]:
+              - generic [ref=e423]:
+                - generic [ref=e424]:
+                  - heading "P&L Calendar" [level=3] [ref=e425]
+                  - generic [ref=e426]:
+                    - generic [ref=e427]:
+                      - button "Month" [ref=e428]
+                      - button "Year" [ref=e429]
+                    - generic [ref=e430]:
+                      - button "Previous month" [ref=e431]:
+                        - img [ref=e432]
+                      - generic [ref=e434]: 2026-05
+                      - button "Next month" [ref=e435]:
+                        - img [ref=e436]
+                - generic [ref=e438]:
+                  - generic [ref=e439]: Sun
+                  - generic [ref=e440]: Mon
+                  - generic [ref=e441]: Tue
+                  - generic [ref=e442]: Wed
+                  - generic [ref=e443]: Thu
+                  - generic [ref=e444]: Fri
+                  - generic [ref=e445]: Sat
+                - generic [ref=e446]:
+                  - generic [ref=e453]: "1"
+                  - generic [ref=e455]: "2"
+                  - generic [ref=e457]: "3"
+                  - generic [ref=e459]: "4"
+                  - generic [ref=e461]: "5"
+                  - generic [ref=e463]: "6"
+                  - generic [ref=e465]: "7"
+                  - generic [ref=e467]: "8"
+                  - generic [ref=e469]: "9"
+                  - generic [ref=e471]: "10"
+                  - generic [ref=e473]: "11"
+                  - generic [ref=e475]: "12"
+                  - generic [ref=e477]: "13"
+                  - generic [ref=e479]: "14"
+                  - generic [ref=e481]: "15"
+                  - generic [ref=e483]: "16"
+                  - generic [ref=e485]: "17"
+                  - generic [ref=e487]: "18"
+                  - generic [ref=e489]: "19"
+                  - generic [ref=e491]: "20"
+                  - generic [ref=e493]: "21"
+                  - generic [ref=e495]: "22"
+                  - generic [ref=e497]: "23"
+                  - generic [ref=e499]: "24"
+                  - generic [ref=e501]: "25"
+                  - generic [ref=e503]: "26"
+                  - generic [ref=e505]: "27"
+                  - generic [ref=e507]: "28"
+                  - generic [ref=e509]: "29"
+                  - generic [ref=e511]: "30"
+                  - generic [ref=e513]: "31"
+                - paragraph [ref=e514]: Trade activity will appear here once you place your first order.
+  - button "Open Next.js Dev Tools" [ref=e105] [cursor=pointer]:
+    - img [ref=e106]
+  - alert [ref=e109]
+  - generic [ref=e515]: $5k

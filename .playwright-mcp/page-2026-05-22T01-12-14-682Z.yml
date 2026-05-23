@@ -1,0 +1,74 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - button "Expand sidebar" [ref=e6]:
+            - img [ref=e7]
+          - generic [ref=e10]: Blueberry Funded
+        - generic [ref=e11]:
+          - link "Dashboard" [ref=e12] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e14]
+            - generic [ref=e16]: Dashboard
+          - link "Challenge" [ref=e17] [cursor=pointer]:
+            - /url: /dashboard/challenge
+            - img [ref=e19]
+            - generic [ref=e21]: Challenge
+          - link "Markets" [ref=e22] [cursor=pointer]:
+            - /url: /dashboard/markets
+            - img [ref=e24]
+            - generic [ref=e26]: Markets
+          - link "Portfolio" [ref=e27] [cursor=pointer]:
+            - /url: /dashboard/portfolio
+            - img [ref=e29]
+            - generic [ref=e31]: Portfolio
+          - link "History" [ref=e32] [cursor=pointer]:
+            - /url: /dashboard/history
+            - img [ref=e34]
+            - generic [ref=e36]: History
+          - link "Analytics" [ref=e37] [cursor=pointer]:
+            - /url: /dashboard/analytics
+            - img [ref=e39]
+            - generic [ref=e41]: Analytics
+          - link "Rules" [ref=e42] [cursor=pointer]:
+            - /url: /dashboard/rules
+            - img [ref=e44]
+            - generic [ref=e46]: Rules
+          - link "Payouts" [ref=e47] [cursor=pointer]:
+            - /url: /dashboard/payouts
+            - img [ref=e49]
+            - generic [ref=e51]: Payouts
+      - generic [ref=e52]:
+        - link [ref=e55] [cursor=pointer]:
+          - /url: /dashboard/new-challenge
+          - img [ref=e56]
+        - generic [ref=e58]:
+          - link "Help" [ref=e59] [cursor=pointer]:
+            - /url: /dashboard/help
+            - img [ref=e61]
+            - generic [ref=e63]: Help
+          - link "Settings" [ref=e64] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e66]
+            - generic [ref=e69]: Settings
+        - generic [ref=e70] [cursor=pointer]:
+          - generic [ref=e71]: "?"
+          - generic: Account
+    - generic [ref=e72]:
+      - generic [ref=e73]:
+        - generic [ref=e74]: Dashboard
+        - generic [ref=e75]:
+          - button "Notifications" [ref=e77]:
+            - img [ref=e78]
+          - link "Settings" [ref=e80] [cursor=pointer]:
+            - /url: /dashboard/settings
+            - img [ref=e81]
+          - button "? Account" [ref=e85]:
+            - generic [ref=e86]: "?"
+            - generic [ref=e88]: Account
+            - img [ref=e89]
+      - main [ref=e91]
+  - button "Open Next.js Dev Tools" [ref=e105] [cursor=pointer]:
+    - img [ref=e106]
+  - alert [ref=e109]

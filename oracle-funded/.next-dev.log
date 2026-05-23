@@ -1,0 +1,38 @@
+
+> oracle-funded@0.1.0 dev
+> next dev
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/paulmadut/Desktop/Projects/Prediction-markets-prop-firm/pnpm-lock.yaml as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /Users/paulmadut/Desktop/Projects/Prediction-markets-prop-firm/oracle-funded/pnpm-lock.yaml
+
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.43:3000
+- Environments: .env.local
+
+✓ Starting...
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 1938ms
+ GET /sign-in 200 in 1419ms (compile: 1123ms, proxy.ts: 69ms, render: 226ms)
+ GET /sign-in?redirect_url=%2Fapi%2Fauth%2Fme 200 in 176ms (compile: 19ms, proxy.ts: 6ms, render: 151ms)
+ GET /sign-in?redirect_url=%2Fapi%2Faccounts 200 in 83ms (compile: 9ms, proxy.ts: 9ms, render: 65ms)
+ GET /dashboard 200 in 564ms (compile: 165ms, proxy.ts: 230ms, render: 169ms)
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."firms"."id", "public"."firms"."name", "public"."firms"."slug", "public"."firms"."status", "public"."firms"."one_sided_threshold_pct", "public"."firms"."enabled_venues" FROM "public"."firms" WHERE ("public"."firms"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+ GET /api/auth/me 200 in 1094ms (compile: 281ms, proxy.ts: 29ms, render: 784ms)
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."accounts"."id", "public"."accounts"."user_id", "public"."accounts"."status", "public"."accounts"."starting_balance_cents", "public"."accounts"."current_balance_cents", "public"."accounts"."highest_eod_balance_cents", "public"."accounts"."drawdown_floor_cents", "public"."accounts"."daily_loss_floor_cents", "public"."accounts"."trading_days_count", "public"."accounts"."first_trade_at", "public"."accounts"."breach_at", "public"."accounts"."created_at", "public"."accounts"."config_id", "public"."accounts"."current_phase_id" FROM "public"."accounts" WHERE ("public"."accounts"."firm_id" = $1 AND "public"."accounts"."user_id" = $2) ORDER BY "public"."accounts"."created_at" DESC OFFSET $3
+prisma:query SELECT "public"."challenge_configs"."id", "public"."challenge_configs"."name", "public"."challenge_configs"."account_size_cents", "public"."challenge_configs"."drawdown_type", "public"."challenge_configs"."total_drawdown_pct", "public"."challenge_configs"."daily_drawdown_pct", "public"."challenge_configs"."profit_split_pct" FROM "public"."challenge_configs" WHERE "public"."challenge_configs"."id" IN ($1) OFFSET $2
+prisma:query SELECT "public"."challenge_phases"."id", "public"."challenge_phases"."phase_number", "public"."challenge_phases"."name", "public"."challenge_phases"."profit_target_pct" FROM "public"."challenge_phases" WHERE "public"."challenge_phases"."id" IN ($1) OFFSET $2
+ GET /api/accounts 200 in 327ms (compile: 31ms, proxy.ts: 7ms, render: 288ms)
+ GET /sign-in 200 in 345ms (compile: 68ms, proxy.ts: 21ms, render: 257ms)
+ GET /sign-in?redirect_url=%2Fapi%2Fauth%2Fme 200 in 493ms (compile: 58ms, proxy.ts: 112ms, render: 322ms)
+ GET /sign-in?redirect_url=%2Fapi%2Faccounts 200 in 174ms (compile: 39ms, proxy.ts: 9ms, render: 127ms)
+ GET /sign-in 200 in 146ms (compile: 15ms, proxy.ts: 11ms, render: 121ms)
+ GET /sign-in?redirect_url=%2Fapi%2Fauth%2Fme 200 in 122ms (compile: 28ms, proxy.ts: 9ms, render: 84ms)
+ GET /sign-in?redirect_url=%2Fapi%2Faccounts 200 in 88ms (compile: 12ms, proxy.ts: 8ms, render: 68ms)
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }

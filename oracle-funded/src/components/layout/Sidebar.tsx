@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -174,18 +175,16 @@ const SidebarHeader = () => {
           width: open ? "auto" : 0,
         }}
         transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-        className="flex items-center gap-2 whitespace-pre overflow-hidden"
+        className="flex items-center whitespace-pre overflow-hidden"
       >
-        <span
-          aria-hidden
-          className="inline-block h-6 w-6 rounded-full bg-gradient-to-br from-[#A769FF] to-[#7F24FF] shadow-[0_4px_14px_-2px_rgba(127,36,255,0.6)]"
+        <Image
+          src="/blueberry-logo.png"
+          alt="Blueberry Funded"
+          width={520}
+          height={200}
+          priority
+          className="h-7 w-auto"
         />
-        <span
-          className="font-bold tracking-tight text-white text-lg"
-          style={{ fontFamily: "var(--font-heading)" }}
-        >
-          Blueberry Funded
-        </span>
       </motion.div>
     </div>
   );

@@ -7,6 +7,7 @@
 // Mobile collapses to a single column with the form first; the marketing
 // content is hidden below `lg` to keep mobile load lean.
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { CheckIcon } from "@heroicons/react/16/solid";
@@ -68,16 +69,15 @@ export function AuthShell({
           transition={{ duration: 0.4 }}
           className="relative z-10"
         >
-          <Link href="/" className="inline-flex items-center gap-2.5 text-white hover:opacity-90">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#A769FF] to-[#7F24FF] shadow-[0_8px_24px_-4px_rgba(127,36,255,0.6)] flex items-center justify-center">
-              <span className="block w-2.5 h-2.5 rounded-full bg-white/95" />
-            </div>
-            <span
-              className="text-lg font-bold tracking-tight"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              Blueberry Funded
-            </span>
+          <Link href="/" className="inline-flex items-center text-white hover:opacity-90">
+            <Image
+              src="/blueberry-logo.png"
+              alt="Blueberry Funded"
+              width={520}
+              height={200}
+              priority
+              className="h-10 w-auto"
+            />
           </Link>
         </motion.div>
 
@@ -174,13 +174,15 @@ export function AuthShell({
           className="w-full max-w-md relative z-10"
         >
           {/* Mobile-only wordmark — left column is hidden < lg */}
-          <Link href="/" className="lg:hidden inline-flex items-center gap-2 text-white mb-8">
-            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#A769FF] to-[#7F24FF] flex items-center justify-center shadow-[0_6px_18px_-4px_rgba(127,36,255,0.55)]">
-              <span className="block w-2 h-2 rounded-full bg-white/95" />
-            </div>
-            <span className="font-bold tracking-tight" style={{ fontFamily: "var(--font-heading)" }}>
-              Blueberry Funded
-            </span>
+          <Link href="/" className="lg:hidden inline-flex items-center text-white mb-8">
+            <Image
+              src="/blueberry-logo.png"
+              alt="Blueberry Funded"
+              width={520}
+              height={200}
+              priority
+              className="h-8 w-auto"
+            />
           </Link>
 
           {children}
