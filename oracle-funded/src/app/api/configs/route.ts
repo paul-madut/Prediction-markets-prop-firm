@@ -36,7 +36,7 @@ export async function GET() {
     },
   });
 
-  // Filter dev-only "TEST …" Stripe-testing configs out of the trader-facing
+  // Filter dev-only "TEST …" payment-testing configs out of the trader-facing
   // catalog. They live in the same table as production products so the admin
   // CLI can reuse the same code paths; the buy-challenge UI must not show them.
   // Also dedupe by accountSize: when an older "Demo …" config coexists with a

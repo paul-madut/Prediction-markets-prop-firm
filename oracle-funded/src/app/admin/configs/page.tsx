@@ -3,9 +3,9 @@
 // /admin/configs — challenge config list. Shows ALL configs (active +
 // inactive) from GET /api/admin/configs so admins can flip the "for sale"
 // toggle. Each row links to /admin/configs/[id]/edit. "For sale" toggle
-// PATCHes /api/admin/configs/[id] with { isActive }. Stripe sync isn't
-// needed — checkout builds price_data dynamically per session, so flipping
-// is instant.
+// PATCHes /api/admin/configs/[id] with { isActive }. No external sync
+// required — checkout builds amount + description dynamically per session,
+// so flipping is instant.
 
 import { useEffect, useState } from "react";
 import Link from "next/link";

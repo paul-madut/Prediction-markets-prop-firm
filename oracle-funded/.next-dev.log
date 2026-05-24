@@ -344,3 +344,477 @@ prisma:query INSERT INTO "public"."audit_log" ("firm_id","actor_user_id","action
 prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
 prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
  GET /dashboard 200 in 1515ms (compile: 86ms, proxy.ts: 1374ms, render: 55ms)
+✓ Compiled in 1342ms
+ GET /dashboard 200 in 1271ms (compile: 107ms, proxy.ts: 1108ms, render: 56ms)
+ GET /dashboard 200 in 92ms (compile: 1839µs, proxy.ts: 76ms, render: 14ms)
+ GET /dashboard 200 in 87ms (compile: 2ms, proxy.ts: 73ms, render: 13ms)
+ GET /dashboard 200 in 79ms (compile: 1865µs, proxy.ts: 63ms, render: 14ms)
+ GET /dashboard 200 in 89ms (compile: 3ms, proxy.ts: 70ms, render: 16ms)
+ GET /dashboard 200 in 88ms (compile: 2ms, proxy.ts: 66ms, render: 20ms)
+ GET /dashboard 200 in 82ms (compile: 1916µs, proxy.ts: 64ms, render: 16ms)
+ GET /dashboard 200 in 77ms (compile: 1965µs, proxy.ts: 60ms, render: 15ms)
+ GET /dashboard 200 in 75ms (compile: 3ms, proxy.ts: 59ms, render: 13ms)
+ GET /dashboard 200 in 96ms (compile: 1944µs, proxy.ts: 75ms, render: 19ms)
+ GET /dashboard 200 in 84ms (compile: 3ms, proxy.ts: 67ms, render: 14ms)
+ GET /dashboard 200 in 115ms (compile: 4ms, proxy.ts: 89ms, render: 21ms)
+ GET /dashboard 200 in 87ms (compile: 2ms, proxy.ts: 68ms, render: 17ms)
+ GET /dashboard 200 in 80ms (compile: 3ms, proxy.ts: 60ms, render: 17ms)
+ GET /dashboard 200 in 73ms (compile: 2ms, proxy.ts: 63ms, render: 8ms)
+ GET /dashboard 200 in 82ms (compile: 1828µs, proxy.ts: 72ms, render: 8ms)
+ GET /dashboard 200 in 85ms (compile: 1964µs, proxy.ts: 68ms, render: 15ms)
+ GET /dashboard 200 in 78ms (compile: 1947µs, proxy.ts: 61ms, render: 15ms)
+ GET /dashboard 200 in 80ms (compile: 1916µs, proxy.ts: 63ms, render: 15ms)
+ GET /dashboard 200 in 81ms (compile: 3ms, proxy.ts: 62ms, render: 16ms)
+ GET /dashboard 200 in 78ms (compile: 3ms, proxy.ts: 62ms, render: 14ms)
+ GET /dashboard 200 in 84ms (compile: 2ms, proxy.ts: 65ms, render: 17ms)
+ GET /dashboard 200 in 90ms (compile: 2ms, proxy.ts: 72ms, render: 15ms)
+ GET /dashboard 200 in 90ms (compile: 3ms, proxy.ts: 73ms, render: 14ms)
+ GET /dashboard 200 in 76ms (compile: 1777µs, proxy.ts: 61ms, render: 13ms)
+ GET /dashboard 200 in 80ms (compile: 1967µs, proxy.ts: 68ms, render: 10ms)
+ GET /dashboard 200 in 75ms (compile: 1781µs, proxy.ts: 61ms, render: 12ms)
+ GET /dashboard 200 in 78ms (compile: 1711µs, proxy.ts: 62ms, render: 14ms)
+ GET /dashboard 200 in 86ms (compile: 1791µs, proxy.ts: 71ms, render: 13ms)
+ GET /dashboard 200 in 84ms (compile: 1997µs, proxy.ts: 69ms, render: 14ms)
+ GET /dashboard 200 in 82ms (compile: 1982µs, proxy.ts: 69ms, render: 12ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 174ms (compile: 105ms, proxy.ts: 13ms, render: 56ms)
+ GET /dashboard 200 in 41ms (compile: 6ms, proxy.ts: 9ms, render: 25ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 134ms (compile: 4ms, proxy.ts: 17ms, render: 113ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 122ms (compile: 7ms, proxy.ts: 10ms, render: 106ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /dashboard 200 in 175ms (compile: 2ms, proxy.ts: 5ms, render: 167ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 297ms (compile: 12ms, proxy.ts: 11ms, render: 274ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 303ms (compile: 4ms, proxy.ts: 11ms, render: 289ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."firms"."id", "public"."firms"."name", "public"."firms"."slug", "public"."firms"."status", "public"."firms"."one_sided_threshold_pct", "public"."firms"."enabled_venues" FROM "public"."firms" WHERE ("public"."firms"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+ GET /api/auth/me 200 in 890ms (compile: 73ms, proxy.ts: 4ms, render: 812ms)
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."accounts"."id", "public"."accounts"."user_id", "public"."accounts"."status", "public"."accounts"."starting_balance_cents", "public"."accounts"."current_balance_cents", "public"."accounts"."highest_eod_balance_cents", "public"."accounts"."drawdown_floor_cents", "public"."accounts"."daily_loss_floor_cents", "public"."accounts"."trading_days_count", "public"."accounts"."first_trade_at", "public"."accounts"."breach_at", "public"."accounts"."created_at", "public"."accounts"."config_id", "public"."accounts"."current_phase_id" FROM "public"."accounts" WHERE ("public"."accounts"."firm_id" = $1 AND "public"."accounts"."user_id" = $2) ORDER BY "public"."accounts"."created_at" DESC OFFSET $3
+prisma:query SELECT "public"."challenge_configs"."id", "public"."challenge_configs"."name", "public"."challenge_configs"."account_size_cents", "public"."challenge_configs"."drawdown_type", "public"."challenge_configs"."total_drawdown_pct", "public"."challenge_configs"."daily_drawdown_pct", "public"."challenge_configs"."profit_split_pct" FROM "public"."challenge_configs" WHERE "public"."challenge_configs"."id" IN ($1) OFFSET $2
+prisma:query SELECT "public"."challenge_phases"."id", "public"."challenge_phases"."phase_number", "public"."challenge_phases"."name", "public"."challenge_phases"."profit_target_pct" FROM "public"."challenge_phases" WHERE "public"."challenge_phases"."id" IN ($1) OFFSET $2
+ GET /api/accounts 200 in 317ms (compile: 25ms, proxy.ts: 6ms, render: 286ms)
+✓ Compiled in 273ms
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 571ms (compile: 79ms, proxy.ts: 384ms, render: 108ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 108ms (compile: 11ms, proxy.ts: 10ms, render: 86ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 88ms (compile: 15ms, proxy.ts: 11ms, render: 63ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 57ms (compile: 4ms, proxy.ts: 11ms, render: 42ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 51ms (compile: 5ms, proxy.ts: 5ms, render: 41ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 51ms (compile: 6ms, proxy.ts: 7ms, render: 39ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 47ms (compile: 4ms, proxy.ts: 5ms, render: 38ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 53ms (compile: 3ms, proxy.ts: 10ms, render: 40ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 52ms (compile: 4ms, proxy.ts: 7ms, render: 41ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 49ms (compile: 4ms, proxy.ts: 8ms, render: 36ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 32ms (compile: 5ms, proxy.ts: 6ms, render: 20ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 40ms (compile: 5ms, proxy.ts: 5ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 26ms (compile: 3ms, proxy.ts: 4ms, render: 19ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 4ms, proxy.ts: 5ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 4ms, proxy.ts: 4ms, render: 35ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 44ms (compile: 5ms, proxy.ts: 6ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 47ms (compile: 3ms, proxy.ts: 5ms, render: 39ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 58ms (compile: 5ms, proxy.ts: 7ms, render: 46ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 73ms (compile: 4ms, proxy.ts: 8ms, render: 61ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 66ms (compile: 8ms, proxy.ts: 6ms, render: 51ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 46ms (compile: 4ms, proxy.ts: 6ms, render: 36ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 6ms, proxy.ts: 5ms, render: 25ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 4ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 42ms (compile: 4ms, proxy.ts: 4ms, render: 34ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 42ms (compile: 4ms, proxy.ts: 6ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 3ms, proxy.ts: 4ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 41ms (compile: 3ms, proxy.ts: 5ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 24ms (compile: 5ms, proxy.ts: 5ms, render: 15ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 4ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 24ms (compile: 5ms, proxy.ts: 5ms, render: 15ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 35ms (compile: 4ms, proxy.ts: 4ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 3ms, proxy.ts: 4ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 3ms, proxy.ts: 5ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 35ms (compile: 3ms, proxy.ts: 5ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 35ms (compile: 3ms, proxy.ts: 4ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 40ms (compile: 3ms, proxy.ts: 5ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 4ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 47ms (compile: 3ms, proxy.ts: 5ms, render: 39ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 49ms (compile: 4ms, proxy.ts: 5ms, render: 40ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 40ms (compile: 3ms, proxy.ts: 5ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 51ms (compile: 3ms, proxy.ts: 6ms, render: 43ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 63ms (compile: 7ms, proxy.ts: 6ms, render: 50ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 64ms (compile: 7ms, proxy.ts: 8ms, render: 49ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 55ms (compile: 6ms, proxy.ts: 7ms, render: 41ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 58ms (compile: 6ms, proxy.ts: 6ms, render: 46ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 51ms (compile: 4ms, proxy.ts: 7ms, render: 40ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 54ms (compile: 5ms, proxy.ts: 7ms, render: 42ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 51ms (compile: 4ms, proxy.ts: 7ms, render: 41ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 57ms (compile: 4ms, proxy.ts: 5ms, render: 48ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 55ms (compile: 4ms, proxy.ts: 9ms, render: 42ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 46ms (compile: 4ms, proxy.ts: 7ms, render: 35ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 58ms (compile: 4ms, proxy.ts: 5ms, render: 49ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 85ms (compile: 6ms, proxy.ts: 7ms, render: 72ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 116ms (compile: 7ms, proxy.ts: 15ms, render: 94ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 96ms (compile: 13ms, proxy.ts: 8ms, render: 75ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 40ms (compile: 3ms, proxy.ts: 6ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 4ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 27ms (compile: 6ms, proxy.ts: 5ms, render: 16ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 4ms, proxy.ts: 5ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 22ms (compile: 3ms, proxy.ts: 4ms, render: 14ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 4ms, proxy.ts: 4ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 4ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 6ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 21ms (compile: 3ms, proxy.ts: 4ms, render: 14ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 34ms (compile: 4ms, proxy.ts: 4ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 34ms (compile: 2ms, proxy.ts: 4ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 23ms (compile: 4ms, proxy.ts: 4ms, render: 14ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 40ms (compile: 3ms, proxy.ts: 4ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 42ms (compile: 3ms, proxy.ts: 4ms, render: 35ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 3ms, proxy.ts: 6ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 5ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 4ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 3ms, proxy.ts: 6ms, render: 34ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 53ms (compile: 3ms, proxy.ts: 7ms, render: 43ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 49ms (compile: 5ms, proxy.ts: 7ms, render: 36ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 33ms (compile: 5ms, proxy.ts: 5ms, render: 24ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 49ms (compile: 4ms, proxy.ts: 8ms, render: 37ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 50ms (compile: 5ms, proxy.ts: 6ms, render: 39ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 45ms (compile: 5ms, proxy.ts: 6ms, render: 34ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 44ms (compile: 3ms, proxy.ts: 5ms, render: 35ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 6ms, proxy.ts: 6ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 29ms (compile: 4ms, proxy.ts: 5ms, render: 21ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 27ms (compile: 4ms, proxy.ts: 5ms, render: 18ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 30ms (compile: 4ms, proxy.ts: 5ms, render: 20ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 21ms (compile: 3ms, proxy.ts: 4ms, render: 14ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 22ms (compile: 3ms, proxy.ts: 4ms, render: 15ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 33ms (compile: 3ms, proxy.ts: 4ms, render: 26ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 34ms (compile: 2ms, proxy.ts: 4ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 35ms (compile: 2ms, proxy.ts: 5ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 53ms (compile: 3ms, proxy.ts: 5ms, render: 46ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 57ms (compile: 5ms, proxy.ts: 6ms, render: 47ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 47ms (compile: 6ms, proxy.ts: 6ms, render: 35ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 49ms (compile: 4ms, proxy.ts: 7ms, render: 38ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 47ms (compile: 3ms, proxy.ts: 7ms, render: 37ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 4ms, proxy.ts: 5ms, render: 35ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 45ms (compile: 5ms, proxy.ts: 6ms, render: 34ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 47ms (compile: 3ms, proxy.ts: 8ms, render: 36ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 51ms (compile: 4ms, proxy.ts: 6ms, render: 41ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 49ms (compile: 4ms, proxy.ts: 7ms, render: 38ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 41ms (compile: 3ms, proxy.ts: 6ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 41ms (compile: 3ms, proxy.ts: 5ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 46ms (compile: 4ms, proxy.ts: 5ms, render: 37ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 49ms (compile: 4ms, proxy.ts: 9ms, render: 36ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 32ms (compile: 4ms, proxy.ts: 5ms, render: 23ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 47ms (compile: 4ms, proxy.ts: 6ms, render: 37ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 48ms (compile: 4ms, proxy.ts: 7ms, render: 37ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 51ms (compile: 4ms, proxy.ts: 7ms, render: 40ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 67ms (compile: 4ms, proxy.ts: 6ms, render: 57ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 111ms (compile: 8ms, proxy.ts: 10ms, render: 93ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 88ms (compile: 12ms, proxy.ts: 10ms, render: 67ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 4ms, proxy.ts: 5ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 45ms (compile: 2ms, proxy.ts: 6ms, render: 36ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 44ms (compile: 5ms, proxy.ts: 5ms, render: 34ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 51ms (compile: 3ms, proxy.ts: 6ms, render: 42ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 56ms (compile: 5ms, proxy.ts: 6ms, render: 44ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 53ms (compile: 5ms, proxy.ts: 6ms, render: 43ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 49ms (compile: 4ms, proxy.ts: 5ms, render: 41ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 45ms (compile: 4ms, proxy.ts: 6ms, render: 36ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 44ms (compile: 4ms, proxy.ts: 5ms, render: 34ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 5ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 2ms, proxy.ts: 6ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 40ms (compile: 3ms, proxy.ts: 4ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 4ms, proxy.ts: 5ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 35ms (compile: 3ms, proxy.ts: 4ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 35ms (compile: 3ms, proxy.ts: 4ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 34ms (compile: 3ms, proxy.ts: 4ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 33ms (compile: 3ms, proxy.ts: 4ms, render: 26ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 33ms (compile: 3ms, proxy.ts: 4ms, render: 25ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 33ms (compile: 3ms, proxy.ts: 4ms, render: 26ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 106ms (compile: 3ms, proxy.ts: 4ms, render: 99ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 229ms (compile: 3ms, proxy.ts: 5ms, render: 221ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 280ms (compile: 15ms, proxy.ts: 141ms, render: 125ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 152ms (compile: 10ms, proxy.ts: 15ms, render: 127ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 241ms (compile: 4ms, proxy.ts: 15ms, render: 223ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 275ms (compile: 69ms, proxy.ts: 17ms, render: 188ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 141ms (compile: 16ms, proxy.ts: 25ms, render: 100ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 93ms (compile: 21ms, proxy.ts: 18ms, render: 54ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 66ms (compile: 6ms, proxy.ts: 8ms, render: 52ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 105ms (compile: 20ms, proxy.ts: 23ms, render: 61ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 101ms (compile: 14ms, proxy.ts: 25ms, render: 62ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 41ms (compile: 3ms, proxy.ts: 13ms, render: 25ms)
+✓ Compiled in 181ms
+✓ Compiled in 191ms
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 1558ms (compile: 89ms, proxy.ts: 1369ms, render: 100ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 88ms (compile: 10ms, proxy.ts: 11ms, render: 68ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 90ms (compile: 8ms, proxy.ts: 13ms, render: 69ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 59ms (compile: 5ms, proxy.ts: 22ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 45ms (compile: 3ms, proxy.ts: 5ms, render: 37ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 50ms (compile: 4ms, proxy.ts: 7ms, render: 40ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 45ms (compile: 3ms, proxy.ts: 5ms, render: 36ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 3ms, proxy.ts: 5ms, render: 35ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 30ms (compile: 6ms, proxy.ts: 6ms, render: 17ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 4ms, proxy.ts: 4ms, render: 35ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 4ms, proxy.ts: 4ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 4ms, proxy.ts: 5ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 47ms (compile: 3ms, proxy.ts: 5ms, render: 39ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 35ms (compile: 4ms, proxy.ts: 5ms, render: 26ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 5ms, proxy.ts: 5ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 5ms, proxy.ts: 4ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 41ms (compile: 3ms, proxy.ts: 4ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 5ms, proxy.ts: 5ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 42ms (compile: 4ms, proxy.ts: 5ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 5ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 40ms (compile: 4ms, proxy.ts: 6ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 4ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 5ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 3ms, proxy.ts: 4ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 3ms, proxy.ts: 5ms, render: 35ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 44ms (compile: 5ms, proxy.ts: 5ms, render: 34ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 45ms (compile: 3ms, proxy.ts: 6ms, render: 36ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 48ms (compile: 3ms, proxy.ts: 6ms, render: 38ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 8ms, proxy.ts: 6ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 5ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 3ms, proxy.ts: 6ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 3ms, proxy.ts: 4ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 5ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 29ms (compile: 3ms, proxy.ts: 5ms, render: 21ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 5ms, proxy.ts: 4ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 4ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 3ms, proxy.ts: 5ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 3ms, proxy.ts: 4ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 42ms (compile: 3ms, proxy.ts: 5ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 41ms (compile: 4ms, proxy.ts: 5ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 4ms, proxy.ts: 5ms, render: 34ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 41ms (compile: 6ms, proxy.ts: 5ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 45ms (compile: 3ms, proxy.ts: 4ms, render: 38ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 45ms (compile: 4ms, proxy.ts: 8ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 25ms (compile: 4ms, proxy.ts: 5ms, render: 16ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 4ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 5ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 4ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 3ms, proxy.ts: 5ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 3ms, proxy.ts: 5ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 41ms (compile: 3ms, proxy.ts: 5ms, render: 34ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 40ms (compile: 3ms, proxy.ts: 5ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 4ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 2ms, proxy.ts: 4ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 40ms (compile: 5ms, proxy.ts: 6ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 24ms (compile: 3ms, proxy.ts: 5ms, render: 16ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 44ms (compile: 3ms, proxy.ts: 5ms, render: 36ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 5ms, proxy.ts: 4ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 60ms (compile: 3ms, proxy.ts: 5ms, render: 53ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 83ms (compile: 8ms, proxy.ts: 7ms, render: 68ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 102ms (compile: 6ms, proxy.ts: 12ms, render: 84ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 76ms (compile: 40ms, proxy.ts: 7ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 23ms (compile: 3ms, proxy.ts: 4ms, render: 16ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 6ms, proxy.ts: 5ms, render: 26ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 3ms, proxy.ts: 4ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 26ms (compile: 3ms, proxy.ts: 4ms, render: 18ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 5ms, proxy.ts: 5ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 35ms (compile: 3ms, proxy.ts: 5ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 2ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 42ms (compile: 3ms, proxy.ts: 6ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 35ms (compile: 3ms, proxy.ts: 4ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 35ms (compile: 3ms, proxy.ts: 5ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 3ms, proxy.ts: 5ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 32ms (compile: 3ms, proxy.ts: 6ms, render: 22ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 45ms (compile: 6ms, proxy.ts: 6ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 3ms, proxy.ts: 4ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 6ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 2ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 3ms, proxy.ts: 5ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 41ms (compile: 3ms, proxy.ts: 5ms, render: 34ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 5ms, proxy.ts: 5ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 44ms (compile: 4ms, proxy.ts: 6ms, render: 35ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 45ms (compile: 4ms, proxy.ts: 6ms, render: 35ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 44ms (compile: 7ms, proxy.ts: 4ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 41ms (compile: 4ms, proxy.ts: 5ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 27ms (compile: 3ms, proxy.ts: 5ms, render: 19ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 4ms, proxy.ts: 5ms, render: 27ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 35ms (compile: 3ms, proxy.ts: 3ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 3ms, proxy.ts: 5ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 2ms, proxy.ts: 4ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 44ms (compile: 3ms, proxy.ts: 6ms, render: 36ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 42ms (compile: 4ms, proxy.ts: 5ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 5ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 7ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 4ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 28ms (compile: 4ms, proxy.ts: 6ms, render: 17ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 35ms (compile: 3ms, proxy.ts: 4ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 4ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 4ms, proxy.ts: 5ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 3ms, proxy.ts: 5ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 6ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 6ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 3ms, proxy.ts: 6ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 4ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 3ms, proxy.ts: 5ms, render: 35ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 42ms (compile: 3ms, proxy.ts: 5ms, render: 34ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 42ms (compile: 3ms, proxy.ts: 7ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 41ms (compile: 5ms, proxy.ts: 7ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 3ms, proxy.ts: 5ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 30ms (compile: 3ms, proxy.ts: 6ms, render: 21ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 39ms (compile: 5ms, proxy.ts: 6ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 2ms, proxy.ts: 4ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 6ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 2ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 24ms (compile: 3ms, proxy.ts: 6ms, render: 15ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 4ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 3ms, proxy.ts: 4ms, render: 31ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 3ms, proxy.ts: 4ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 24ms (compile: 4ms, proxy.ts: 5ms, render: 16ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 5ms, proxy.ts: 5ms, render: 34ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 3ms, proxy.ts: 4ms, render: 36ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 58ms (compile: 5ms, proxy.ts: 5ms, render: 48ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 88ms (compile: 9ms, proxy.ts: 7ms, render: 72ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 118ms (compile: 7ms, proxy.ts: 12ms, render: 99ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 88ms (compile: 9ms, proxy.ts: 11ms, render: 68ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 3ms, proxy.ts: 5ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 38ms (compile: 5ms, proxy.ts: 5ms, render: 28ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 36ms (compile: 3ms, proxy.ts: 5ms, render: 29ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 26ms (compile: 3ms, proxy.ts: 6ms, render: 18ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 5ms, proxy.ts: 5ms, render: 32ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 43ms (compile: 3ms, proxy.ts: 5ms, render: 35ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 30ms (compile: 5ms, proxy.ts: 5ms, render: 20ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 34ms (compile: 4ms, proxy.ts: 5ms, render: 25ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 37ms (compile: 3ms, proxy.ts: 4ms, render: 30ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 44ms (compile: 4ms, proxy.ts: 5ms, render: 36ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 48ms (compile: 3ms, proxy.ts: 6ms, render: 40ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 44ms (compile: 4ms, proxy.ts: 7ms, render: 33ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 22ms (compile: 4ms, proxy.ts: 6ms, render: 12ms)
+ GET /dashboard/new-challenge 200 in 1162ms (compile: 135ms, proxy.ts: 768ms, render: 259ms)
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."firms"."id", "public"."firms"."name", "public"."firms"."slug", "public"."firms"."status", "public"."firms"."one_sided_threshold_pct", "public"."firms"."enabled_venues" FROM "public"."firms" WHERE ("public"."firms"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+ GET /api/auth/me 200 in 773ms (compile: 145ms, proxy.ts: 15ms, render: 613ms)
+prisma:query SELECT "public"."challenge_configs"."id", "public"."challenge_configs"."firm_id", "public"."challenge_configs"."name", "public"."challenge_configs"."account_size_cents", "public"."challenge_configs"."challenge_fee_cents", "public"."challenge_configs"."drawdown_type", "public"."challenge_configs"."trailing_reference", "public"."challenge_configs"."total_drawdown_pct", "public"."challenge_configs"."daily_drawdown_pct", "public"."challenge_configs"."min_trading_days", "public"."challenge_configs"."profit_split_pct", "public"."challenge_configs"."breach_comparison", "public"."challenge_configs"."breach_close_behavior", "public"."challenge_configs"."refund_disables_account", "public"."challenge_configs"."max_positions_per_market", "public"."challenge_configs"."max_positions_total", "public"."challenge_configs"."max_contracts_per_order", "public"."challenge_configs"."is_active", "public"."challenge_configs"."created_at" FROM "public"."challenge_configs" WHERE ("public"."challenge_configs"."firm_id" = $1 AND "public"."challenge_configs"."is_active" = $2) ORDER BY "public"."challenge_configs"."account_size_cents" ASC OFFSET $3
+prisma:query SELECT "public"."challenge_phases"."id", "public"."challenge_phases"."phase_number", "public"."challenge_phases"."name", "public"."challenge_phases"."profit_target_pct", "public"."challenge_phases"."min_trading_days", "public"."challenge_phases"."config_id" FROM "public"."challenge_phases" WHERE "public"."challenge_phases"."config_id" IN ($1,$2,$3,$4,$5) ORDER BY "public"."challenge_phases"."phase_number" ASC OFFSET $6
+ GET /api/configs 200 in 905ms (compile: 333ms, proxy.ts: 16ms, render: 556ms)
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."accounts"."id", "public"."accounts"."user_id", "public"."accounts"."status", "public"."accounts"."starting_balance_cents", "public"."accounts"."current_balance_cents", "public"."accounts"."highest_eod_balance_cents", "public"."accounts"."drawdown_floor_cents", "public"."accounts"."daily_loss_floor_cents", "public"."accounts"."trading_days_count", "public"."accounts"."first_trade_at", "public"."accounts"."breach_at", "public"."accounts"."created_at", "public"."accounts"."config_id", "public"."accounts"."current_phase_id" FROM "public"."accounts" WHERE ("public"."accounts"."firm_id" = $1 AND "public"."accounts"."user_id" = $2) ORDER BY "public"."accounts"."created_at" DESC OFFSET $3
+ GET /api/accounts 200 in 244ms (compile: 118ms, proxy.ts: 5ms, render: 121ms)
+ GET /dashboard 200 in 1389ms (compile: 202ms, proxy.ts: 1128ms, render: 59ms)
+ GET /dashboard 200 in 22ms (compile: 2ms, proxy.ts: 4ms, render: 16ms)
+ GET /dashboard/history 200 in 140ms (compile: 71ms, proxy.ts: 9ms, render: 60ms)
+ GET /dashboard 200 in 241ms (compile: 13ms, proxy.ts: 204ms, render: 23ms)
+ GET /dashboard 200 in 72ms (compile: 18ms, proxy.ts: 16ms, render: 38ms)

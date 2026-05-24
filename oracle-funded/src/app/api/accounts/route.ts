@@ -80,7 +80,7 @@ export async function GET() {
  *
  * Provisions a trading account directly (admin/owner only).
  * Used for admin-initiated provisioning; the payment flow provisions
- * accounts via the Stripe webhook handler (Phase 6).
+ * accounts via the Authorize.net / NOWPayments webhook handlers.
  *
  * Body: { userId: string, configId: string }
  *

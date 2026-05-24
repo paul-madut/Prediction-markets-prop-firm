@@ -3,7 +3,9 @@
 // Buy Challenge — visual structure mirrors the original mock design
 // (account-size selector + 3 ChallengeTypeCards + comparison table) but
 // data is sourced from the live /api/configs endpoint, and "Proceed"
-// posts to /api/checkout to create a Stripe Checkout Session.
+// posts to /api/checkout, which returns either an Authorize.net hosted-form
+// token (cards) or a NOWPayments invoice URL (crypto), then redirects the
+// browser accordingly. See src/lib/payments/README.md for the design notes.
 
 import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
@@ -15,6 +17,11 @@ import { challengeTypes } from "@/data/challengeTypes";
 import { formatCurrency } from "@/lib/formatters";
 import { api, ApiError } from "@/lib/api-client";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
+import {
+  PaymentMethodPicker,
+  type PaymentMethod,
+} from "@/components/payments/PaymentMethodPicker";
+import { submitAuthnetHostedForm } from "@/lib/payments/submit-card-form";
 
 // DESIGN.md spring presets.
 const SNAPPY = { type: "spring" as const, stiffness: 500, damping: 35 };
@@ -73,6 +80,7 @@ export default function NewChallengePage() {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [localSelectedPlan, setLocalSelectedPlan] = useState<ChallengePlan | null>(null);
   const [selectedAccountSize, setSelectedAccountSize] = useState<number>(0);
+  const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
   const [purchaseError, setPurchaseError] = useState<string | null>(null);
   const [isCheckoutPending, setIsCheckoutPending] = useState(false);
 
@@ -107,14 +115,29 @@ export default function NewChallengePage() {
   if (configs === null && !loadError) return <NewChallengeSkeleton />;
 
   const handleProceed = async (): Promise<void> => {
-    if (!localSelectedPlan) return;
+    if (!localSelectedPlan || !selectedMethod) return;
     setPurchaseError(null);
     try {
-      const { url } = await api.post<{ url: string | null }>("/api/checkout", {
+      const res = await api.post<{
+        method: "card" | "crypto";
+        url?: string;
+        formUrl?: string;
+        token?: string;
+      }>("/api/checkout", {
         configId: localSelectedPlan.planId,
+        method: selectedMethod,
       });
-      if (!url) throw new Error("Checkout session created but URL missing");
-      window.location.href = url;
+
+      if (res.method === "crypto") {
+        if (!res.url) throw new Error("Invoice created but URL missing");
+        window.location.href = res.url;
+        return;
+      }
+      // card path: auto-POST the hosted-form token to authorize.net
+      if (!res.formUrl || !res.token) {
+        throw new Error("Hosted payment token missing");
+      }
+      submitAuthnetHostedForm(res.formUrl, res.token);
     } catch (err) {
       setPurchaseError(err instanceof Error ? err.message : String(err));
       throw err;
@@ -213,6 +236,33 @@ export default function NewChallengePage() {
             })}
           </div>
 
+          {/* Payment method — picked after a challenge plan; gates the CTA. */}
+          {localSelectedPlan && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+              className="max-w-2xl mx-auto space-y-3"
+            >
+              <div className="flex items-baseline justify-between">
+                <h2
+                  className="text-lg font-semibold text-white tracking-[-0.01em]"
+                  style={{ fontFamily: "var(--font-heading)" }}
+                >
+                  Payment method
+                </h2>
+                <span className="text-[11px] uppercase tracking-[0.08em] text-white/45 font-mono">
+                  Step 2 of 2
+                </span>
+              </div>
+              <PaymentMethodPicker
+                value={selectedMethod}
+                onChange={setSelectedMethod}
+                disabled={isCheckoutPending}
+              />
+            </motion.div>
+          )}
+
           {/* Start challenge — primary with brand glow. NB: the selected
               ChallengeTypeCard already carries its own glow; this footer
               CTA is the single primary glow for the bottom of the page. */}
@@ -220,7 +270,7 @@ export default function NewChallengePage() {
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+              transition={{ duration: 0.25, delay: 0.05, ease: [0.4, 0, 0.2, 1] }}
               className="max-w-md mx-auto"
             >
               <motion.button
@@ -233,8 +283,10 @@ export default function NewChallengePage() {
                     setIsCheckoutPending(false);
                   }
                 }}
-                disabled={isCheckoutPending}
-                whileTap={isCheckoutPending ? undefined : { scale: 0.97 }}
+                disabled={isCheckoutPending || !selectedMethod}
+                whileTap={
+                  isCheckoutPending || !selectedMethod ? undefined : { scale: 0.97 }
+                }
                 transition={SNAPPY}
                 className="w-full inline-flex items-center justify-center gap-2 h-12 rounded-lg
                            bg-[#7F24FF] hover:bg-[#A769FF] text-white text-base font-semibold
@@ -245,8 +297,13 @@ export default function NewChallengePage() {
               >
                 {isCheckoutPending ? (
                   <Loader size="sm" className="w-5 h-5" />
+                ) : !selectedMethod ? (
+                  <>Choose a payment method to continue</>
                 ) : (
-                  <>Start challenge — {formatCurrency(localSelectedPlan.monthlyPrice)}</>
+                  <>
+                    Pay {formatCurrency(localSelectedPlan.monthlyPrice)} with{" "}
+                    {selectedMethod === "card" ? "card" : "crypto"}
+                  </>
                 )}
               </motion.button>
             </motion.div>

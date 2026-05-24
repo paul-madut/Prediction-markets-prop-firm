@@ -34,8 +34,9 @@ const FAQ: QA[] = [
         >
           Buy Challenge
         </Link>{" "}
-        page. Once Stripe confirms the payment, your account is provisioned
-        automatically and you can place orders from any market detail page.
+        page. Pay by card (Authorize.net) or crypto (NOWPayments) — once
+        the payment confirms, your account is provisioned automatically and
+        you can place orders from any market detail page.
       </>
     ),
   },
