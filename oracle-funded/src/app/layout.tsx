@@ -1,24 +1,26 @@
 import type { Metadata } from "next";
-import { Inter_Tight, Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, IBM_Plex_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/context/AppContext";
 
-// Body sans — Inter Tight is the font Blueberry Funded uses on the live site
-// for body copy. It is freely available via Google Fonts.
-const interTight = Inter_Tight({
-  variable: "--font-inter-tight",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-// Display / heading face — the live site uses Creato Display, which is
-// proprietary. Plus Jakarta Sans is a close open-source geometric sans that
-// reads similarly at large sizes; it ships with next/font.
+// Unified sans across the whole app — body + display.
+// next/font auto-generates a "Plus Jakarta Sans Fallback" metric-matched
+// fallback face to suppress CLS during the swap window.
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500", "600", "700", "800"],
+});
+
+// Loaded as a real web font (not just CSS-level fallback) so the
+// "IBM Plex Sans" + "IBM Plex Sans Fallback" entries in the stack are
+// served from /_next, not the system. Same CLS-suppression mechanic.
+const ibmPlex = IBM_Plex_Sans({
+  variable: "--font-ibm-plex",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
@@ -40,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${interTight.variable} ${jakarta.variable} ${geistMono.variable} antialiased`}
+        className={`${jakarta.variable} ${ibmPlex.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
         <AppProvider>{children}</AppProvider>

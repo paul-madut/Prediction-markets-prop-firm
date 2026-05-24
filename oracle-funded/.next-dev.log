@@ -818,3 +818,566 @@ prisma:query SELECT "public"."accounts"."id", "public"."accounts"."user_id", "pu
  GET /dashboard/history 200 in 140ms (compile: 71ms, proxy.ts: 9ms, render: 60ms)
  GET /dashboard 200 in 241ms (compile: 13ms, proxy.ts: 204ms, render: 23ms)
  GET /dashboard 200 in 72ms (compile: 18ms, proxy.ts: 16ms, render: 38ms)
+✓ Compiled in 7.1s
+ GET /dashboard 200 in 7.3s (compile: 5.8s, proxy.ts: 1186ms, render: 323ms)
+ GET /dashboard/history 200 in 7.3s (compile: 5.9s, proxy.ts: 1179ms, render: 181ms)
+ GET /dashboard/history 200 in 285ms (compile: 3ms, proxy.ts: 269ms, render: 13ms)
+ GET /dashboard 200 in 419ms (compile: 4ms, proxy.ts: 391ms, render: 24ms)
+ GET /dashboard/history 200 in 215ms (compile: 3ms, proxy.ts: 193ms, render: 19ms)
+ GET /dashboard 200 in 379ms (compile: 3ms, proxy.ts: 361ms, render: 15ms)
+ GET /dashboard/history 200 in 422ms (compile: 3ms, proxy.ts: 404ms, render: 16ms)
+ GET /dashboard/history 200 in 402ms (compile: 4ms, proxy.ts: 383ms, render: 15ms)
+ GET /dashboard 200 in 685ms (compile: 3ms, proxy.ts: 663ms, render: 19ms)
+ GET /dashboard/history 200 in 434ms (compile: 4ms, proxy.ts: 403ms, render: 27ms)
+ GET /dashboard 200 in 426ms (compile: 3ms, proxy.ts: 405ms, render: 18ms)
+ GET /dashboard/history 200 in 438ms (compile: 6ms, proxy.ts: 405ms, render: 27ms)
+ GET /dashboard/history 200 in 182ms (compile: 18ms, proxy.ts: 142ms, render: 22ms)
+ GET /dashboard 200 in 455ms (compile: 4ms, proxy.ts: 413ms, render: 38ms)
+ GET /dashboard/history 200 in 118ms (compile: 4ms, proxy.ts: 80ms, render: 35ms)
+ GET /dashboard 200 in 122ms (compile: 20ms, proxy.ts: 81ms, render: 21ms)
+ GET /dashboard 200 in 114ms (compile: 4ms, proxy.ts: 68ms, render: 43ms)
+ GET /dashboard/history 200 in 116ms (compile: 1943µs, proxy.ts: 92ms, render: 23ms)
+ GET /dashboard 200 in 150ms (compile: 9ms, proxy.ts: 74ms, render: 67ms)
+ GET /dashboard/history 200 in 129ms (compile: 4ms, proxy.ts: 93ms, render: 32ms)
+ GET /dashboard 200 in 94ms (compile: 2ms, proxy.ts: 72ms, render: 21ms)
+ GET /dashboard/history 200 in 93ms (compile: 5ms, proxy.ts: 66ms, render: 22ms)
+ GET /dashboard 200 in 92ms (compile: 3ms, proxy.ts: 70ms, render: 19ms)
+ GET /dashboard/history 200 in 113ms (compile: 3ms, proxy.ts: 65ms, render: 45ms)
+ GET /dashboard 200 in 104ms (compile: 2ms, proxy.ts: 74ms, render: 27ms)
+ GET /dashboard/history 200 in 225ms (compile: 8ms, proxy.ts: 122ms, render: 94ms)
+ GET /dashboard 200 in 190ms (compile: 14ms, proxy.ts: 123ms, render: 53ms)
+ GET /dashboard/history 200 in 312ms (compile: 4ms, proxy.ts: 233ms, render: 75ms)
+ GET /dashboard 200 in 250ms (compile: 4ms, proxy.ts: 211ms, render: 35ms)
+ GET /dashboard/history 200 in 145ms (compile: 8ms, proxy.ts: 74ms, render: 64ms)
+ GET /dashboard 200 in 113ms (compile: 4ms, proxy.ts: 91ms, render: 18ms)
+ GET /dashboard/history 200 in 178ms (compile: 5ms, proxy.ts: 82ms, render: 91ms)
+ GET /dashboard 200 in 151ms (compile: 16ms, proxy.ts: 88ms, render: 48ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 812ms (compile: 240ms, proxy.ts: 32ms, render: 541ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 821ms (compile: 351ms, proxy.ts: 18ms, render: 452ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /dashboard/history 200 in 690ms (compile: 10ms, proxy.ts: 390ms, render: 290ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 515ms (compile: 204ms, proxy.ts: 50ms, render: 261ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 520ms (compile: 195ms, proxy.ts: 50ms, render: 274ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /dashboard/history 200 in 375ms (compile: 73ms, proxy.ts: 40ms, render: 262ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 387ms (compile: 130ms, proxy.ts: 12ms, render: 245ms)
+ GET /dashboard 200 in 323ms (compile: 56ms, proxy.ts: 53ms, render: 213ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 328ms (compile: 116ms, proxy.ts: 50ms, render: 162ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /dashboard/history 200 in 274ms (compile: 27ms, proxy.ts: 10ms, render: 237ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 285ms (compile: 52ms, proxy.ts: 8ms, render: 225ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 565ms (compile: 104ms, proxy.ts: 18ms, render: 443ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 527ms (compile: 41ms, proxy.ts: 8ms, render: 477ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 549ms (compile: 359ms, proxy.ts: 25ms, render: 166ms)
+ GET /dashboard/history 200 in 729ms (compile: 53ms, proxy.ts: 11ms, render: 665ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 733ms (compile: 111ms, proxy.ts: 11ms, render: 611ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /dashboard/history 200 in 721ms (compile: 267ms, proxy.ts: 23ms, render: 431ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 742ms (compile: 429ms, proxy.ts: 102ms, render: 211ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 891ms (compile: 156ms, proxy.ts: 76ms, render: 659ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /dashboard/history 200 in 348ms (compile: 26ms, proxy.ts: 26ms, render: 296ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 359ms (compile: 112ms, proxy.ts: 36ms, render: 211ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /dashboard/history 200 in 283ms (compile: 27ms, proxy.ts: 7ms, render: 249ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 296ms (compile: 133ms, proxy.ts: 24ms, render: 139ms)
+ GET /sign-in?redirect_url=%2Fmanifest.json 200 in 340ms (compile: 66ms, proxy.ts: 4ms, render: 270ms)
+ GET /dashboard/history 200 in 151ms (compile: 6ms, proxy.ts: 14ms, render: 131ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 163ms (compile: 71ms, proxy.ts: 14ms, render: 77ms)
+ GET /dashboard/history 200 in 117ms (compile: 7ms, proxy.ts: 13ms, render: 97ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 163ms (compile: 21ms, proxy.ts: 13ms, render: 128ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /dashboard/history 200 in 197ms (compile: 11ms, proxy.ts: 10ms, render: 176ms)
+ GET /dashboard/history 200 in 274ms (compile: 23ms, proxy.ts: 88ms, render: 162ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 204ms (compile: 60ms, proxy.ts: 9ms, render: 134ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /dashboard/history 200 in 221ms (compile: 6ms, proxy.ts: 9ms, render: 205ms)
+ GET /dashboard/history 200 in 153ms (compile: 5ms, proxy.ts: 7ms, render: 142ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 175ms (compile: 44ms, proxy.ts: 20ms, render: 111ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 110ms (compile: 11ms, proxy.ts: 13ms, render: 86ms)
+ GET /dashboard/history 200 in 95ms (compile: 4ms, proxy.ts: 11ms, render: 80ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 35ms (compile: 11ms, proxy.ts: 8ms, render: 15ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 75ms (compile: 5ms, proxy.ts: 4ms, render: 66ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 60ms (compile: 5ms, proxy.ts: 12ms, render: 43ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 452ms (compile: 5ms, proxy.ts: 4ms, render: 444ms)
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+AuthApiError: Request rate limit reached
+    at ignore-listed frames {
+  __isAuthError: true,
+  status: 429,
+  code: 'over_request_rate_limit'
+}
+ GET /sign-in?redirect_url=%2Fmanifest.json 200 in 191ms (compile: 47ms, proxy.ts: 41ms, render: 103ms)
+ GET /sign-in?redirect_url=%2Fmanifest.json 200 in 282ms (compile: 45ms, proxy.ts: 10ms, render: 227ms)
+ GET /sign-in?redirect_url=%2Fmanifest.json 200 in 132ms (compile: 20ms, proxy.ts: 4ms, render: 107ms)
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."firms"."id", "public"."firms"."name", "public"."firms"."slug", "public"."firms"."status", "public"."firms"."one_sided_threshold_pct", "public"."firms"."enabled_venues" FROM "public"."firms" WHERE ("public"."firms"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."firms"."id", "public"."firms"."name", "public"."firms"."slug", "public"."firms"."status", "public"."firms"."one_sided_threshold_pct", "public"."firms"."enabled_venues" FROM "public"."firms" WHERE ("public"."firms"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+ GET /api/auth/me 200 in 965ms (compile: 142ms, proxy.ts: 16ms, render: 808ms)
+ GET /api/auth/me 200 in 645ms (compile: 7ms, proxy.ts: 12ms, render: 626ms)
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."accounts"."id", "public"."accounts"."user_id", "public"."accounts"."status", "public"."accounts"."starting_balance_cents", "public"."accounts"."current_balance_cents", "public"."accounts"."highest_eod_balance_cents", "public"."accounts"."drawdown_floor_cents", "public"."accounts"."daily_loss_floor_cents", "public"."accounts"."trading_days_count", "public"."accounts"."first_trade_at", "public"."accounts"."breach_at", "public"."accounts"."created_at", "public"."accounts"."config_id", "public"."accounts"."current_phase_id" FROM "public"."accounts" WHERE "public"."accounts"."firm_id" = $1 ORDER BY "public"."accounts"."created_at" DESC OFFSET $2
+ GET /api/accounts 200 in 169ms (compile: 1785µs, proxy.ts: 6ms, render: 161ms)
+prisma:query SELECT "public"."accounts"."id", "public"."accounts"."user_id", "public"."accounts"."status", "public"."accounts"."starting_balance_cents", "public"."accounts"."current_balance_cents", "public"."accounts"."highest_eod_balance_cents", "public"."accounts"."drawdown_floor_cents", "public"."accounts"."daily_loss_floor_cents", "public"."accounts"."trading_days_count", "public"."accounts"."first_trade_at", "public"."accounts"."breach_at", "public"."accounts"."created_at", "public"."accounts"."config_id", "public"."accounts"."current_phase_id" FROM "public"."accounts" WHERE ("public"."accounts"."firm_id" = $1 AND "public"."accounts"."user_id" = $2) ORDER BY "public"."accounts"."created_at" DESC OFFSET $3
+prisma:query SELECT "public"."challenge_configs"."id", "public"."challenge_configs"."name", "public"."challenge_configs"."account_size_cents", "public"."challenge_configs"."drawdown_type", "public"."challenge_configs"."total_drawdown_pct", "public"."challenge_configs"."daily_drawdown_pct", "public"."challenge_configs"."profit_split_pct" FROM "public"."challenge_configs" WHERE "public"."challenge_configs"."id" IN ($1,$2,$3) OFFSET $4
+prisma:query SELECT "public"."challenge_phases"."id", "public"."challenge_phases"."phase_number", "public"."challenge_phases"."name", "public"."challenge_phases"."profit_target_pct" FROM "public"."challenge_phases" WHERE "public"."challenge_phases"."id" IN ($1,$2,$3) OFFSET $4
+ GET /api/accounts 200 in 379ms (compile: 55ms, proxy.ts: 9ms, render: 315ms)
+✓ Compiled in 0ms
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 1034ms (compile: 518ms, proxy.ts: 91ms, render: 426ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 958ms (compile: 387ms, proxy.ts: 37ms, render: 535ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 525ms (compile: 67ms, proxy.ts: 27ms, render: 431ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 828ms (compile: 34ms, proxy.ts: 26ms, render: 769ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 753ms (compile: 276ms, proxy.ts: 252ms, render: 225ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 123ms (compile: 61ms, proxy.ts: 36ms, render: 25ms)
+ GET /sign-in?redirect_url=%2Fdashboard 200 in 938ms (compile: 143ms, proxy.ts: 18ms, render: 777ms)
+ GET /sign-in?redirect_url=%2Fdashboard%2Fhistory 200 in 579ms (compile: 337ms, proxy.ts: 61ms, render: 181ms)
+ GET /sign-in?redirect_url=%2Fmanifest.json 200 in 219ms (compile: 46ms, proxy.ts: 5ms, render: 169ms)
+ GET /sign-in?redirect_url=%2Fmanifest.json 200 in 145ms (compile: 32ms, proxy.ts: 14ms, render: 99ms)
+ GET /sign-in?redirect_url=%2Fmanifest.json 200 in 95ms (compile: 11ms, proxy.ts: 4ms, render: 80ms)
+ GET /sign-in?redirect_url=%2Fmanifest.json 200 in 61ms (compile: 12ms, proxy.ts: 7ms, render: 43ms)
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."firms"."id", "public"."firms"."name", "public"."firms"."slug", "public"."firms"."status", "public"."firms"."one_sided_threshold_pct", "public"."firms"."enabled_venues" FROM "public"."firms" WHERE ("public"."firms"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."firms"."id", "public"."firms"."name", "public"."firms"."slug", "public"."firms"."status", "public"."firms"."one_sided_threshold_pct", "public"."firms"."enabled_venues" FROM "public"."firms" WHERE ("public"."firms"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+ GET /api/auth/me 200 in 928ms (compile: 3ms, proxy.ts: 10ms, render: 915ms)
+ GET /api/auth/me 200 in 1184ms (compile: 13ms, proxy.ts: 7ms, render: 1164ms)
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."firm_members"."id", "public"."firm_members"."firm_id", "public"."firm_members"."role" FROM "public"."firm_members" WHERE "public"."firm_members"."user_id" = $1 ORDER BY "public"."firm_members"."created_at" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."accounts"."id", "public"."accounts"."user_id", "public"."accounts"."status", "public"."accounts"."starting_balance_cents", "public"."accounts"."current_balance_cents", "public"."accounts"."highest_eod_balance_cents", "public"."accounts"."drawdown_floor_cents", "public"."accounts"."daily_loss_floor_cents", "public"."accounts"."trading_days_count", "public"."accounts"."first_trade_at", "public"."accounts"."breach_at", "public"."accounts"."created_at", "public"."accounts"."config_id", "public"."accounts"."current_phase_id" FROM "public"."accounts" WHERE ("public"."accounts"."firm_id" = $1 AND "public"."accounts"."user_id" = $2) ORDER BY "public"."accounts"."created_at" DESC OFFSET $3
+ GET /api/accounts 200 in 137ms (compile: 6ms, proxy.ts: 6ms, render: 124ms)
+prisma:query SELECT "public"."accounts"."id", "public"."accounts"."user_id", "public"."accounts"."status", "public"."accounts"."starting_balance_cents", "public"."accounts"."current_balance_cents", "public"."accounts"."highest_eod_balance_cents", "public"."accounts"."drawdown_floor_cents", "public"."accounts"."daily_loss_floor_cents", "public"."accounts"."trading_days_count", "public"."accounts"."first_trade_at", "public"."accounts"."breach_at", "public"."accounts"."created_at", "public"."accounts"."config_id", "public"."accounts"."current_phase_id" FROM "public"."accounts" WHERE "public"."accounts"."firm_id" = $1 ORDER BY "public"."accounts"."created_at" DESC OFFSET $2
+prisma:query SELECT "public"."challenge_configs"."id", "public"."challenge_configs"."name", "public"."challenge_configs"."account_size_cents", "public"."challenge_configs"."drawdown_type", "public"."challenge_configs"."total_drawdown_pct", "public"."challenge_configs"."daily_drawdown_pct", "public"."challenge_configs"."profit_split_pct" FROM "public"."challenge_configs" WHERE "public"."challenge_configs"."id" IN ($1,$2,$3) OFFSET $4
+prisma:query SELECT "public"."challenge_phases"."id", "public"."challenge_phases"."phase_number", "public"."challenge_phases"."name", "public"."challenge_phases"."profit_target_pct" FROM "public"."challenge_phases" WHERE "public"."challenge_phases"."id" IN ($1,$2,$3) OFFSET $4
+ GET /api/accounts 200 in 299ms (compile: 12ms, proxy.ts: 5ms, render: 282ms)
+✓ Compiled in 220ms

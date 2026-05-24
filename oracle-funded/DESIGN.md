@@ -58,33 +58,33 @@ typography:
     lineHeight: 30px
     letterSpacing: -0.015em
   title-lg:
-    fontFamily: "Inter Tight"
+    fontFamily: "Plus Jakarta Sans"
     fontSize: 18px
     fontWeight: "600"
     lineHeight: 26px
     letterSpacing: -0.01em
   title-md:
-    fontFamily: "Inter Tight"
+    fontFamily: "Plus Jakarta Sans"
     fontSize: 16px
     fontWeight: "600"
     lineHeight: 22px
   body-lg:
-    fontFamily: "Inter Tight"
+    fontFamily: "Plus Jakarta Sans"
     fontSize: 16px
     fontWeight: "400"
     lineHeight: 24px
   body-md:
-    fontFamily: "Inter Tight"
+    fontFamily: "Plus Jakarta Sans"
     fontSize: 14px
     fontWeight: "400"
     lineHeight: 20px
   body-sm:
-    fontFamily: "Inter Tight"
+    fontFamily: "Plus Jakarta Sans"
     fontSize: 13px
     fontWeight: "400"
     lineHeight: 18px
   label:
-    fontFamily: "Inter Tight"
+    fontFamily: "Plus Jakarta Sans"
     fontSize: 12px
     fontWeight: "600"
     lineHeight: 16px
@@ -263,10 +263,18 @@ Color is split into four roles: **canvas**, **brand**, **text**, and **semantic*
 
 ## Typography
 
-Two custom families plus one mono:
+One unified sans plus one mono. The whole app reads in a single voice; hierarchy is created by weight + size, not by switching families.
 
-- **Plus Jakarta Sans** — display + headlines. Tight tracking (negative letter-spacing), heavy weight (700). Used above 24px.
-- **Inter Tight** — UI and body. Default weight 400; 600 for titles and emphasis. Used at 13–18px.
+**Font stack** (set on `--font-sans` and `--font-heading`):
+
+```
+"Plus Jakarta Sans", "Plus Jakarta Sans Fallback",
+"IBM Plex Sans",     "IBM Plex Sans Fallback",
+system-ui, sans-serif
+```
+
+- **Plus Jakarta Sans** — primary face, body + display + headlines. Geometric, slightly humanist. Default weight 400; 600 for titles; 700 for headlines; 800 reserved for hero display.
+- **IBM Plex Sans** — secondary web font, loaded but used only as a fallback if Jakarta fails. Picked because its x-height and stroke contrast are close enough to Jakarta to avoid layout shift, and because both are loaded via `next/font` so the `…Fallback` entries are metric-matched faces next/font generates to suppress CLS during the swap window.
 - **Geist Mono** — numeric stats, overlines, identifiers (tickers, order IDs, durations). Slight negative tracking on stats to align glyphs.
 
 Hierarchy collapses to **five concrete sizes** in practice: 64/48 (display, hero only), 32/24 (page headings), 18/16 (titles), 14 (body), 12/11 (label/overline). Don't invent intermediate sizes.
