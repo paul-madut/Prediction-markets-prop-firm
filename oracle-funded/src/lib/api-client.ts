@@ -46,12 +46,28 @@ async function request<T>(
   return body as T;
 }
 
+// Caller-passable request options. Intentionally narrower than RequestInit:
+// `method` and `body` are owned by the verb (get/post/etc.) and `Content-Type`
+// is forced to JSON — exposing those would let callers silently break the
+// uniform error-handling contract. `signal` is what we need for AbortController
+// integration; `headers` and `cache` are useful passthroughs.
+export type ApiInit = Pick<RequestInit, "signal" | "headers" | "cache">;
+
 export const api = {
-  get: <T>(path: string): Promise<T> => request<T>(path, { method: "GET" }),
-  post: <T>(path: string, body?: unknown): Promise<T> =>
-    request<T>(path, { method: "POST", body: body ? JSON.stringify(body) : undefined }),
-  patch: <T>(path: string, body?: unknown): Promise<T> =>
-    request<T>(path, { method: "PATCH", body: body ? JSON.stringify(body) : undefined }),
-  delete: <T>(path: string): Promise<T> =>
-    request<T>(path, { method: "DELETE" }),
+  get: <T>(path: string, init?: ApiInit): Promise<T> =>
+    request<T>(path, { ...init, method: "GET" }),
+  post: <T>(path: string, body?: unknown, init?: ApiInit): Promise<T> =>
+    request<T>(path, {
+      ...init,
+      method: "POST",
+      body: body ? JSON.stringify(body) : undefined,
+    }),
+  patch: <T>(path: string, body?: unknown, init?: ApiInit): Promise<T> =>
+    request<T>(path, {
+      ...init,
+      method: "PATCH",
+      body: body ? JSON.stringify(body) : undefined,
+    }),
+  delete: <T>(path: string, init?: ApiInit): Promise<T> =>
+    request<T>(path, { ...init, method: "DELETE" }),
 };

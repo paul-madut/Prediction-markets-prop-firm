@@ -93,21 +93,55 @@ function transformToMarket(event: PolymarketEvent): Market[] {
   });
 }
 
+// Map our internal sort key (which the UI exposes) to Polymarket's `order` +
+// `ascending` pair. Keeping the mapping server-side means the API contract is
+// stable even if Polymarket renames a field.
+const SORT_MAP: Record<string, { order: string; ascending: boolean }> = {
+  trending: { order: "volume24hr", ascending: false },
+  newest: { order: "startDate", ascending: false },
+  volume: { order: "volume", ascending: false },
+  closing: { order: "endDate", ascending: true },
+};
+
+// When the user is searching, we widen the upstream fetch to this many events
+// in a single call. Polymarket's Gamma /events endpoint accepts large limits;
+// we filter the response by title/subtitle/ticker substring at this route
+// because Polymarket's own `search=` parameter is unreliable (returns
+// unrelated events in practice). The wider window means a search reaches
+// markets far beyond the trending top-50; the trade-off is one heavier
+// upstream call, gated by the 10s route cache.
+const SEARCH_WINDOW_SIZE = 300;
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const limit = searchParams.get("limit") || "50";
-    const offset = searchParams.get("offset") || "0";
+    // Cap at 100 — Polymarket allows higher but our category-filter pass is
+    // O(n*outcomes) and we don't want a single request to hold the route open.
+    const rawLimit = Number(searchParams.get("limit") ?? "50");
+    const limit = Math.min(Math.max(1, Number.isFinite(rawLimit) ? rawLimit : 50), 100);
+    const rawOffset = Number(searchParams.get("offset") ?? "0");
+    const offset = Math.max(0, Number.isFinite(rawOffset) ? rawOffset : 0);
     const category = searchParams.get("category");
+    const query = (searchParams.get("q") || "").trim();
+    const sortKey = searchParams.get("sort") || "trending";
+    const sort = SORT_MAP[sortKey] ?? SORT_MAP.trending;
+    const isSearch = query.length > 0;
+
+    // Search mode swaps the pagination strategy: instead of relying on
+    // upstream offset/limit (which would only see results within the wrong
+    // 50-event slice), we fetch a wide window once and paginate the
+    // filtered result ourselves. Browse mode keeps the simple passthrough.
+    const upstreamLimit = isSearch ? SEARCH_WINDOW_SIZE : limit;
+    const upstreamOffset = isSearch ? 0 : offset;
 
     // Fetch active events from Polymarket
     const url = new URL(`${POLYMARKET_API}/events`);
-    url.searchParams.set("limit", limit);
-    url.searchParams.set("offset", offset);
+    url.searchParams.set("limit", String(upstreamLimit));
+    url.searchParams.set("offset", String(upstreamOffset));
     url.searchParams.set("active", "true");
     url.searchParams.set("closed", "false");
-    url.searchParams.set("order", "volume24hr");
-    url.searchParams.set("ascending", "false");
+    url.searchParams.set("order", sort.order);
+    url.searchParams.set("ascending", String(sort.ascending));
 
     const response = await fetch(url.toString(), {
       headers: {
@@ -129,7 +163,6 @@ export async function GET(request: Request) {
     // with no_quote_for_market. Defense in depth: filter both flags.
     const nowMs = Date.now();
     const eventEnvelopes: Event[] = [];
-    const allMarkets: Market[] = [];
 
     for (const pe of polyEvents) {
       // Per-event isolation: one malformed upstream payload (missing
@@ -186,25 +219,55 @@ export async function GET(request: Request) {
         resolution_criteria: pe.description,
       };
       eventEnvelopes.push(evt);
-      allMarkets.push(...outcomes);
     }
 
-    // Filter by category if specified
-    let filteredMarkets = allMarkets;
+    // ── Category + search filtering (both applied at this route, not upstream)
     let filteredEvents = eventEnvelopes;
     if (category && category !== "All") {
-      filteredMarkets = filteredMarkets.filter((m) => m.category === category);
       filteredEvents = filteredEvents.filter((e) => e.category === category);
     }
+    if (isSearch) {
+      const needle = query.toLowerCase();
+      filteredEvents = filteredEvents.filter((e) => {
+        return (
+          e.title.toLowerCase().includes(needle) ||
+          e.subtitle?.toLowerCase().includes(needle) ||
+          e.eventTicker.toLowerCase().includes(needle) ||
+          e.outcomes.some((o) => o.title.toLowerCase().includes(needle))
+        );
+      });
+    }
 
-    // Sort by 24h volume
-    filteredMarkets.sort((a, b) => b.volume_24h - a.volume_24h);
-    filteredEvents.sort((a, b) => b.volume_24h_total - a.volume_24h_total);
+    // ── Pagination
+    // Search mode: we have the full filtered set in memory; slice it.
+    // Browse mode: upstream already returned the right slice; pass through.
+    const pageEvents = isSearch
+      ? filteredEvents.slice(offset, offset + limit)
+      : filteredEvents;
+
+    // hasMore semantics differ per mode:
+    //   - Search: there are more matches beyond what we sliced.
+    //   - Browse: upstream returned a full page, so there's likely more
+    //     behind it. (Edge case: if it returned exactly `limit` AND we're
+    //     at the very end, the next request will simply return zero and
+    //     hasMore will flip to false then.)
+    const hasMore = isSearch
+      ? filteredEvents.length > offset + limit
+      : polyEvents.length >= upstreamLimit;
+
+    // Build the flat per-outcome markets array from the paginated events
+    // (not the full filteredEvents) so the two arrays stay in lock-step.
+    const pageMarkets: Market[] = [];
+    for (const evt of pageEvents) {
+      pageMarkets.push(...evt.outcomes);
+    }
+    pageMarkets.sort((a, b) => b.volume_24h - a.volume_24h);
 
     return NextResponse.json({
-      markets: filteredMarkets,
-      events: filteredEvents,
-      count: filteredMarkets.length,
+      markets: pageMarkets,
+      events: pageEvents,
+      count: pageMarkets.length,
+      hasMore,
       source: "polymarket",
     });
   } catch (error) {
@@ -216,6 +279,7 @@ export async function GET(request: Request) {
         markets: [],
         events: [],
         count: 0,
+        hasMore: false,
         error: error instanceof Error ? error.message : "Failed to fetch markets",
         source: "polymarket",
       },
